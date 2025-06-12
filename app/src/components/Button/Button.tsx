@@ -14,7 +14,7 @@ export interface ButtonProps extends BaseComponentProps {
 }
 
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'contained',
   size = 'medium',
@@ -54,9 +54,7 @@ const Button: React.FC<ButtonProps> = ({
       {...rest}
     >
       {loading && <span className={`${baseClass}__spinner`}>⟳</span>}
-      <span className={`${baseClass}__content`}>{children}</span>
+      <span className={`${baseClass}__content`}>!{children}</span>
     </button>
   );
 };
-
-export default Button; 

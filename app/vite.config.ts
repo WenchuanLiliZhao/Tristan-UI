@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
       build: {
         lib: {
           entry: './src/index.ts',
-          name: 'TristanDesignSystem',
+          name: 'Tristan',
           formats: ['es', 'umd'],
           fileName: (format) => format === 'es' ? 'index.esm.js' : 'index.js',
         },
@@ -34,13 +34,6 @@ export default defineConfig(({ mode }) => {
   
   // Development configuration
   return {
-    plugins: [react()],
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "./src/styles/variables.scss" as *;`
-        }
-      }
-    }
+    plugins: [react()]
   }
 })

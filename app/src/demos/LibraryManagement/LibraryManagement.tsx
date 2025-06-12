@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../components';
+import { Button } from '../../components/Button/Button';
 import { mockBooks, mockUsers } from '../../data/mockData';
 import type { Book, User } from '../../data/mockData';
 import './LibraryManagement.scss';
