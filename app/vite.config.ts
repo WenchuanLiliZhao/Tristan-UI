@@ -10,9 +10,9 @@ export default defineConfig(({ mode }) => {
       build: {
         lib: {
           entry: './src/index.ts',
-          name: 'LiliDesignSystem',
+          name: 'TristanDesignSystem',
           formats: ['es', 'umd'],
-          fileName: (format) => `index.${format}.js`,
+          fileName: (format) => format === 'es' ? 'index.esm.js' : 'index.js',
         },
         rollupOptions: {
           external: ['react', 'react-dom'],
@@ -25,12 +25,22 @@ export default defineConfig(({ mode }) => {
         },
         sourcemap: true,
         minify: 'esbuild',
-      },
+        cssCodeSplit: false,
+        outDir: 'dist',
+        emptyOutDir: true,
+      }
     }
   }
   
   // Development configuration
   return {
     plugins: [react()],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "./src/styles/variables.scss" as *;`
+        }
+      }
+    }
   }
 })

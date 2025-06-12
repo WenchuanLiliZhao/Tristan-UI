@@ -1,6 +1,18 @@
 import React from 'react';
-import type { ButtonProps } from '../types';
+
 import './Button.scss';
+import type { BaseComponentProps, Color, Size } from '../types';
+
+export interface ButtonProps extends BaseComponentProps {
+  variant?: 'contained' | 'outlined' | 'text';
+  size?: Size;
+  color?: Color;
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: 'button' | 'submit' | 'reset';
+}
+
 
 const Button: React.FC<ButtonProps> = ({
   children,

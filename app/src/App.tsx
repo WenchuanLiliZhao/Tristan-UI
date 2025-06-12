@@ -12,7 +12,7 @@ function App() {
   const renderHomePage = () => (
     <div className="home-page">
       <header className="hero-section">
-        <h1>🎨 Lili Design System</h1>
+        <h1>🎨 Tristan Design System</h1>
         <p>一个现代化的 React 组件库，专为优雅的用户界面而设计</p>
         <div className="hero-actions">
           <Button
@@ -63,13 +63,13 @@ function App() {
         <h2>快速开始</h2>
         <div className="install-section">
           <h3>安装</h3>
-          <pre><code>npm install lili-design-system</code></pre>
+          <pre><code>npm install tristan-design-system</code></pre>
           <p>或者</p>
-          <pre><code>yarn add lili-design-system</code></pre>
+          <pre><code>yarn add tristan-design-system</code></pre>
         </div>
         <div className="usage-section">
           <h3>使用</h3>
-          <pre><code>{`import { Button, Input, Card } from 'lili-design-system';
+          <pre><code>{`import { Button, Input, Card } from 'tristan-design-system';
 
 function MyApp() {
   return (

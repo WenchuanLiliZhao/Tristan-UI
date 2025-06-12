@@ -11,16 +11,6 @@ export type Size = 'small' | 'medium' | 'large';
 // Color variants
 export type Color = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
 
-// Button specific types
-export interface ButtonProps extends BaseComponentProps {
-  variant?: 'contained' | 'outlined' | 'text';
-  size?: Size;
-  color?: Color;
-  disabled?: boolean;
-  loading?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: 'button' | 'submit' | 'reset';
-}
 
 // Input specific types
 export interface InputProps extends BaseComponentProps {
