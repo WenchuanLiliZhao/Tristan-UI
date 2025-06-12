@@ -1,0 +1,161 @@
+// Button Base Styles
+.lili-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  outline: none;
+  
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+
+  // Size variants
+  &--small {
+    padding: 6px 12px;
+    font-size: 14px;
+    min-height: 32px;
+  }
+
+  &--medium {
+    padding: 8px 16px;
+    font-size: 16px;
+    min-height: 40px;
+  }
+
+  &--large {
+    padding: 12px 20px;
+    font-size: 18px;
+    min-height: 48px;
+  }
+
+  // Variant styles - Contained
+  &--contained {
+    &.lili-button--primary {
+      background-color: #3b82f6;
+      color: white;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: #2563eb;
+      }
+    }
+
+    &.lili-button--secondary {
+      background-color: #6b7280;
+      color: white;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: #4b5563;
+      }
+    }
+
+    &.lili-button--success {
+      background-color: #10b981;
+      color: white;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: #059669;
+      }
+    }
+
+    &.lili-button--warning {
+      background-color: #f59e0b;
+      color: white;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: #d97706;
+      }
+    }
+
+    &.lili-button--error {
+      background-color: #ef4444;
+      color: white;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: #dc2626;
+      }
+    }
+  }
+
+  // Variant styles - Outlined
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid;
+
+    &.lili-button--primary {
+      border-color: #3b82f6;
+      color: #3b82f6;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+    }
+
+    &.lili-button--secondary {
+      border-color: #6b7280;
+      color: #6b7280;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: rgba(107, 114, 128, 0.1);
+      }
+    }
+  }
+
+  // Variant styles - Text
+  &--text {
+    background-color: transparent;
+    border: none;
+
+    &.lili-button--primary {
+      color: #3b82f6;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+    }
+
+    &.lili-button--secondary {
+      color: #6b7280;
+      
+      &:hover:not(.lili-button--disabled) {
+        background-color: rgba(107, 114, 128, 0.1);
+      }
+    }
+  }
+
+  // States
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--loading {
+    cursor: not-allowed;
+  }
+
+  &__spinner {
+    animation: spin 1s linear infinite;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: inherit;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} 
