@@ -39,7 +39,7 @@
   // Variant styles - Contained
   &--contained {
     &.lili-button--primary {
-      background-color: #3b82f6;
+      background-color: var(--background-primary);
       color: white;
       
       &:hover:not(.lili-button--disabled) {
@@ -158,4 +158,5 @@
   to {
     transform: rotate(360deg);
   }
-} 
+}
+

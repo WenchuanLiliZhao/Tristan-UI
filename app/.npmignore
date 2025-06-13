@@ -1,5 +1,6 @@
 # Development files
 src/
+!src/styles/
 public/
 .vscode/
 .idea/

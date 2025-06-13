@@ -1,4 +1,5 @@
 import Home from "./Home/_Config";
+import Color from "./Color/_Config";
 
 
 export type DemoPageType = {
@@ -9,4 +10,5 @@ export type DemoPageType = {
 
 export const DemoPages = {
   Home,
+  Color,
 }
