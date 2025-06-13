@@ -1,0 +1,32 @@
+// 首先，通过 SCSS 的 `@mixin` 分别设置 light mode 以及 dark mode 的配色方案：
+
+@mixin light-theme {
+
+}
+
+@mixin dark-theme {
+
+}
+
+// 其次，通过 SCSS 的 `@include` 将它们分别引用到 light mode 以及 dark mode 中：
+
+:root {
+  @include light-theme;
+}
+
+:root[data-theme="dark"] {
+  @include dark-theme;
+}
+
+// 为了安全起见，我们增加一组 system theme detection 设置：
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    @include light-theme;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-theme;
+  }
+}

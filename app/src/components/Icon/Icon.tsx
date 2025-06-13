@@ -195,6 +195,7 @@ export const Icon: React.FC<IconProps> = ({
 };
 
 // 导出可用的图标名称
+// eslint-disable-next-line react-refresh/only-export-components
 export const availableIcons = Object.keys(iconRegistry);
 
 export default Icon; 
