@@ -14,22 +14,22 @@
   --gray-900: #171717;  // 最深灰
   
   // Semantic colors based on gray scale
-  --background-primary: var(--gray-50);
-  --background-secondary: var(--gray-100);
-  --background-tertiary: var(--gray-200);
+  --color-background-primary: var(--gray-50);
+  --color-background-secondary: var(--gray-100);
+  --color-background-tertiary: var(--gray-200);
   
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-700);
-  --text-tertiary: var(--gray-500);
-  --text-disabled: var(--gray-400);
+  --color-text-primary: var(--gray-900);
+  --color-text-secondary: var(--gray-700);
+  --color-text-tertiary: var(--gray-500);
+  --color-text-disabled: var(--gray-400);
   
-  --border-light: var(--gray-200);
-  --border-medium: var(--gray-300);
-  --border-strong: var(--gray-400);
+  --color-border-light: var(--gray-200);
+  --color-border-medium: var(--gray-300);
+  --color-border-strong: var(--gray-400);
   
-  --surface-primary: #ffffff;
-  --surface-secondary: var(--gray-50);
-  --surface-tertiary: var(--gray-100);
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: var(--gray-50);
+  --color-surface-tertiary: var(--gray-100);
 }
 
 @mixin dark-theme {
@@ -46,22 +46,22 @@
   --gray-900: #f5f5f5;  // 最浅灰（在暗模式中最浅）
   
   // Semantic colors based on gray scale
-  --background-primary: var(--gray-50);
-  --background-secondary: var(--gray-100);
-  --background-tertiary: var(--gray-200);
+  --color-background-primary: var(--gray-50);
+  --color-background-secondary: var(--gray-100);
+  --color-background-tertiary: var(--gray-200);
   
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-700);
-  --text-tertiary: var(--gray-500);
-  --text-disabled: var(--gray-400);
+  --color-text-primary: var(--gray-900);
+  --color-text-secondary: var(--gray-700);
+  --color-text-tertiary: var(--gray-500);
+  --color-text-disabled: var(--gray-400);
   
-  --border-light: var(--gray-200);
-  --border-medium: var(--gray-300);
-  --border-strong: var(--gray-400);
+  --color-border-light: var(--gray-200);
+  --color-border-medium: var(--gray-300);
+  --color-border-strong: var(--gray-400);
   
-  --surface-primary: var(--gray-100);
-  --surface-secondary: var(--gray-200);
-  --surface-tertiary: var(--gray-300);
+  --color-surface-primary: var(--gray-100);
+  --color-surface-secondary: var(--gray-200);
+  --color-surface-tertiary: var(--gray-300);
 }
 
 // 其次，通过 SCSS 的 `@include` 将它们分别引用到 light mode 以及 dark mode 中：
@@ -85,4 +85,10 @@
   :root:not([data-theme]) {
     @include dark-theme;
   }
+}
+
+
+html, body {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./styles.module.scss";
-import type { BaseComponentProps, Color, Size } from "../types";
+import type { BaseComponentProps, Color, Size } from "../../types";
 
 export interface ButtonProps extends BaseComponentProps {
   variant?: "contained" | "outlined" | "text";

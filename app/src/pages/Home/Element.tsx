@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from '../../components/Button';
-import { Icon, availableIcons } from '../../components/Icon';
+
 import styles from './Element.module.scss';
-import { Navigation } from '../../components/Navigation';
+import { Button, Icon } from '../../components/General';
+import { TopNav } from '../../components/Navigation';
+import { availableIcons } from '../../components/General/Icon';
+
 
 export const Element: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,7 @@ export const Element: React.FC = () => {
 
   return (
     <>
-    <Navigation left={[]} right={[]} />
+    <TopNav left={[<Icon name="ellipsis-vertical" strokeWidth={1} />]} />
     <div className={styles["component-showcase"]}>
       <div className={styles["showcase-container"]}>
         <h1>Lili Design System - Component Showcase</h1>

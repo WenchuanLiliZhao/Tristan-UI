@@ -2,23 +2,35 @@ import React from 'react';
 import styles from './styles.module.scss';
 
 
-const Test = () => {
+const NavPlaceholderItem = () => {
   return (
-    <div>test</div>
+    <div className={styles["nav-placeholder-item"]} />
   )
 }
 
 
 export interface NavigationProps {
-  left: React.ReactNode[];
-  right: React.ReactNode[];
+  left?: React.ReactNode[];
+  right?: React.ReactNode[];
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ left, right }) => {
+export const TopNav: React.FC<NavigationProps> = ({
+  left = [
+    <NavPlaceholderItem />,
+    <NavPlaceholderItem />,
+  ],
+  right = [
+    <NavPlaceholderItem />,
+    <NavPlaceholderItem />,
+    <NavPlaceholderItem />,
+    <NavPlaceholderItem />,
+    <NavPlaceholderItem />,
+  ]
+}) => {
   return (
     <nav className={styles["nav"]}>
       <div className={styles["left"]}>
-        <Test />
+        <NavPlaceholderItem />
         {left.map((item, index) => (
           <div key={index} className={styles["item"]}>
             {item}
