@@ -1,4 +1,4 @@
-import type { DemoPageType } from "../_index";
+import type { DemoPageType } from "..";
 import { Element } from "./Element";
 
 

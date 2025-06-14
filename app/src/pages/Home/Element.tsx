@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '../../components/Button/Button';
-import Icon, { availableIcons } from '../../components/Icon/Icon';
+import { Button } from '../../components/Button';
+import { Icon, availableIcons } from '../../components/Icon';
 import styles from './Element.module.scss';
+import { Navigation } from '../../components/Navigation';
 
 export const Element: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,8 @@ export const Element: React.FC = () => {
   };
 
   return (
+    <>
+    <Navigation left={[]} right={[]} />
     <div className={styles["component-showcase"]}>
       <div className={styles["showcase-container"]}>
         <h1>Lili Design System - Component Showcase</h1>
@@ -168,5 +171,6 @@ export const Element: React.FC = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };

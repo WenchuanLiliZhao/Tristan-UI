@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./Button.module.scss";
+import styles from "./styles.module.scss";
 import type { BaseComponentProps, Color, Size } from "../types";
 
 export interface ButtonProps extends BaseComponentProps {
@@ -58,4 +58,4 @@ export const Button: React.FC<ButtonProps> = ({
       <span className={styles[`${baseClass}__content`]}>{children}</span>
     </button>
   );
-};
+}; 

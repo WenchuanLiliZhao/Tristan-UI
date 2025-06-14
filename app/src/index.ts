@@ -7,12 +7,10 @@ export type {
   Theme
 } from './components/types';
 
-// Import styles
+// Import global styles
 import './styles/_app.scss'
 
-// Lili Design System - Main Entry Point
-import './components/Button/Button.module.scss';
-export { Button, type ButtonProps } from './components/Button/Button';
-
-import './components/Icon/Icon.scss';
-export { default as Icon, availableIcons, type IconProps } from './components/Icon/Icon';
+// Export all components (组件自己管理样式导入)
+export * from './components/Navigation';
+export * from './components/Button';
+export * from './components/Icon';

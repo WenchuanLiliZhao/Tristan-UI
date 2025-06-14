@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { DemoPages } from "./pages/_index";
+import { DemoPages } from "./pages";
 
 
 function App() {
