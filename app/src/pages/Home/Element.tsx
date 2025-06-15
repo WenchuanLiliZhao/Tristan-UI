@@ -16,7 +16,7 @@ export const Element: React.FC = () => {
 
   return (
     <>
-    <TopNav left={[<Icon name="ellipsis-vertical" strokeWidth={1} />]} />
+    <TopNav left={[<Icon name="home" strokeWidth={1} size="medium" />, <Icon name="home" strokeWidth={1} size="large" />]} />
     <div className={styles["component-showcase"]}>
       <div className={styles["showcase-container"]}>
         <h1>Lili Design System - Component Showcase</h1>
