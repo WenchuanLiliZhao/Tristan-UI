@@ -1,6 +1,6 @@
 import React from 'react';
-import './styles.scss';
-import { iconRegistry } from './registry';
+import styles from './styles.module.scss';
+import { iconRegistry } from './_iconRegistry';
 
 export interface IconProps {
   /** 图标名称 */
@@ -45,14 +45,14 @@ export const Icon: React.FC<IconProps> = ({
   name, 
   size = 'medium', 
   color = 'currentColor',
-  strokeWidth = 2,
+  strokeWidth = 1,
   className = '',
   onClick,
   disabled = false,
   rotate = 0
 }) => {
   const sizeValue = getSizeValue(size);
-  const sizeClass = typeof size === 'string' ? `icon--${size}` : '';
+  const sizeClass = typeof size === 'string' ? styles[`icon--${size}`] : '';
   
   const handleClick = () => {
     if (!disabled && onClick) {
@@ -69,10 +69,10 @@ export const Icon: React.FC<IconProps> = ({
   return (
     <span 
       className={`
-        icon 
+        ${styles["icon"]} 
         ${sizeClass} 
-        ${onClick ? 'icon--clickable' : ''} 
-        ${disabled ? 'icon--disabled' : ''} 
+        ${onClick ? styles["icon--clickable"] : ''} 
+        ${disabled ? styles["icon--disabled"] : ''} 
         ${className}
       `.trim()}
       style={{ 
