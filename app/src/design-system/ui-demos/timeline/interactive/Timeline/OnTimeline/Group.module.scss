@@ -2,10 +2,10 @@
   position: relative;
 
   &:nth-child(odd) {
-    background-color: var(--color-bg-sec-trans);
+    background-color: rgba(0, 0, 0, 0.02);
   }
 
   &:nth-child(even) {
-    background-color: var(--color-bg-sec-2-trans);
+    background-color: rgba(0, 0, 0, 0.04);
   }
 }

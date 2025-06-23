@@ -4,5 +4,3 @@ export * from './design-system/ui-demos';
 
 // 引入全局样式
 import './styles/_app.scss'
-// 引入timeline特定的全局样式，包含CSS变量定义
-import './design-system/ui-demos/timeline/assets/global-style/_app.scss'

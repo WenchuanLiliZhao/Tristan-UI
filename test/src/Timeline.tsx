@@ -44,7 +44,7 @@ const mockProjects: ProjectData[] = [
   {
     id: "proj-002",
     name: "Mobile App Development",
-    startDate: new Date("2024-02-01"),
+    startDate: new Date("2024-05-01"),
     endDate: new Date("2024-07-15"),
     status: 'InProgress',
     priority: 'High',

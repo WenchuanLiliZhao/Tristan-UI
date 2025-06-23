@@ -204,8 +204,8 @@ const TimelineContent: React.FC = () => {
       <div
         style={{
           padding: "24px",
-          backgroundColor: "var(--color-bg-main, #ffffff)",
-          borderBottom: "1px solid var(--color-border-main, #e1e5e9)",
+          backgroundColor: "#ffffff",
+          borderBottom: "1px solid #e1e5e9",
           boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
           flexShrink: 0,
         }}
@@ -213,7 +213,7 @@ const TimelineContent: React.FC = () => {
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h1 style={{ 
             margin: "0 0 8px 0", 
-            color: "var(--color-text-main, #333)",
+            color: "#333333",
             fontSize: "28px",
             fontWeight: "600"
           }}>
@@ -221,7 +221,7 @@ const TimelineContent: React.FC = () => {
           </h1>
           <p style={{ 
             margin: "0 0 24px 0", 
-            color: "var(--color-text-sec, #666)", 
+            color: "#666666", 
             fontSize: "16px",
             lineHeight: "1.5"
           }}>
@@ -237,58 +237,58 @@ const TimelineContent: React.FC = () => {
           }}>
             <div style={{
               padding: "16px",
-              backgroundColor: "var(--color-bg-sec, #f8f9fa)",
+              backgroundColor: "#f8f9fa",
               borderRadius: "8px",
-              border: "1px solid var(--color-border-main, #e1e5e9)"
+              border: "1px solid #e1e5e9"
             }}>
-              <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--color-semantic-info, #0066cc)" }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#0066cc" }}>
                 {projectStats.totalProjects}
               </div>
-              <div style={{ fontSize: "14px", color: "var(--color-text-sec, #666)" }}>总项目数</div>
+              <div style={{ fontSize: "14px", color: "#666666" }}>总项目数</div>
             </div>
             <div style={{
               padding: "16px",
-              backgroundColor: "var(--color-bg-sec, #f8f9fa)",
+              backgroundColor: "#f8f9fa",
               borderRadius: "8px",
-              border: "1px solid var(--color-border-main, #e1e5e9)"
+              border: "1px solid #e1e5e9"
             }}>
-              <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--color-semantic-active, #28a745)" }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#28a745" }}>
                 {projectStats.inProgress}
               </div>
-              <div style={{ fontSize: "14px", color: "var(--color-text-sec, #666)" }}>进行中</div>
+              <div style={{ fontSize: "14px", color: "#666666" }}>进行中</div>
             </div>
             <div style={{
               padding: "16px",
-              backgroundColor: "var(--color-bg-sec, #f8f9fa)",
+              backgroundColor: "#f8f9fa",
               borderRadius: "8px",
-              border: "1px solid var(--color-border-main, #e1e5e9)"
+              border: "1px solid #e1e5e9"
             }}>
-              <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--color-semantic-success, #17a2b8)" }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#17a2b8" }}>
                 {projectStats.completed}
               </div>
-              <div style={{ fontSize: "14px", color: "var(--color-text-sec, #666)" }}>已完成</div>
+              <div style={{ fontSize: "14px", color: "#666666" }}>已完成</div>
             </div>
             <div style={{
               padding: "16px",
-              backgroundColor: "var(--color-bg-sec, #f8f9fa)",
+              backgroundColor: "#f8f9fa",
               borderRadius: "8px",
-              border: "1px solid var(--color-border-main, #e1e5e9)"
+              border: "1px solid #e1e5e9"
             }}>
-              <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--color-semantic-warning, #ffc107)" }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#ffc107" }}>
                 ¥{(projectStats.totalBudget / 10000).toFixed(0)}万
               </div>
-              <div style={{ fontSize: "14px", color: "var(--color-text-sec, #666)" }}>总预算</div>
+              <div style={{ fontSize: "14px", color: "#666666" }}>总预算</div>
             </div>
             <div style={{
               padding: "16px",
-              backgroundColor: "var(--color-bg-sec, #f8f9fa)",
+              backgroundColor: "#f8f9fa",
               borderRadius: "8px",
-              border: "1px solid var(--color-border-main, #e1e5e9)"
+              border: "1px solid #e1e5e9"
             }}>
-              <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--color-semantic-primary, #6f42c1)" }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#6f42c1" }}>
                 {projectStats.avgProgress}%
               </div>
-              <div style={{ fontSize: "14px", color: "var(--color-text-sec, #666)" }}>平均进度</div>
+              <div style={{ fontSize: "14px", color: "#666666" }}>平均进度</div>
             </div>
           </div>
 
@@ -306,7 +306,7 @@ const TimelineContent: React.FC = () => {
             }}>
               <label style={{ 
                 fontWeight: "600", 
-                color: "var(--color-text-main, #333)",
+                color: "#333333",
                 fontSize: "16px",
                 minWidth: "80px"
               }}>
@@ -326,14 +326,14 @@ const TimelineContent: React.FC = () => {
                     style={{
                       padding: "10px 16px",
                       backgroundColor: groupBy === option.key 
-                        ? "var(--color-semantic-active, #007bff)" 
-                        : "var(--color-bg-sec, #e9ecef)",
+                        ? "#007bff" 
+                        : "#e9ecef",
                       color: groupBy === option.key 
-                        ? "var(--color-text-contrast-main, white)" 
-                        : "var(--color-text-main, #495057)",
+                        ? "white" 
+                        : "#495057",
                       border: "1px solid " + (groupBy === option.key 
-                        ? "var(--color-semantic-active, #007bff)" 
-                        : "var(--color-border-main, #ced4da)"),
+                        ? "#007bff" 
+                        : "#ced4da"),
                       borderRadius: "6px",
                       cursor: "pointer",
                       fontSize: "14px",
@@ -345,12 +345,12 @@ const TimelineContent: React.FC = () => {
                     }}
                     onMouseEnter={(e) => {
                       if (groupBy !== option.key) {
-                        e.currentTarget.style.backgroundColor = "var(--color-border-main, #dee2e6)";
+                        e.currentTarget.style.backgroundColor = "#dee2e6";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (groupBy !== option.key) {
-                        e.currentTarget.style.backgroundColor = "var(--color-bg-sec, #e9ecef)";
+                        e.currentTarget.style.backgroundColor = "#e9ecef";
                       }
                     }}
                   >
@@ -362,7 +362,7 @@ const TimelineContent: React.FC = () => {
             
             <div style={{ 
               fontSize: "14px", 
-              color: "var(--color-text-sec, #666)",
+              color: "#666666",
               fontStyle: "italic"
             }}>
               当前分组：{groupingOptions.find(opt => opt.key === groupBy)?.description}

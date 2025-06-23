@@ -16,17 +16,19 @@
     flex-direction: column;
     justify-content: center;
 
-    background-color: var(--color-bg-main);
-    border: 1px solid var(--color-border-darken-trans);
-    box-shadow: 0 0px 4px 0 var(--box-shadow-color);
+    background-color: #ffffff;
+    border: 1px solid #e1e5e9;
+    box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     overflow: hidden;
     position: absolute;
     z-index: 1;
     padding: 8px;
 
+    color: black;
+
     &:hover {
-      border-color: var(--color-semantic-active);
+      border-color: #007bff;
     }
 
     .timeline-property-content {
