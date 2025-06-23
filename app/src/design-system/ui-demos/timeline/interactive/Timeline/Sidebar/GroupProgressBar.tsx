@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./GroupProgressBar.module.scss";
-import { MenuBox } from "../../../ui";
 
 export interface TermType {
   name: string; // eg., retail, marketing, etc.
@@ -44,36 +43,6 @@ export const GroupProgressBar: React.FC<GroupProgressBarProps> = ({
           />
         ))}
       </div>
-      <MenuBox
-        className={styles["group-progress-bar-display-item-list"]}
-        size="small"
-        tooltipStyle={true}
-        withAnimation={false}
-      >
-        {data.terms.map((term, index) => (
-          <div
-            key={index}
-            className={styles["group-progress-bar-display-item-list-item"]}
-          >
-            <div className={styles["group-progress-bar-display-item-list-item-left"]}>
-            <div
-              style={{
-                width: "8px",
-                height: "8px",
-                backgroundColor: term.color,
-                borderRadius: "2px",
-              }}
-            />
-            <div className={styles["group-progress-bar-display-item-list-item-name"]}>
-              {term.name}
-            </div>
-            </div>
-            <div className={styles["group-progress-bar-display-item-list-item-right"]}>
-              {term.count}
-            </div>
-          </div>
-        ))}
-      </MenuBox>
     </div>
   );
 };
