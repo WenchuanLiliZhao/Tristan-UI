@@ -1,5 +1,5 @@
 import type { DemoPageType } from "..";
-import { Element } from "./Element";
+import { Element } from "./_Element";
 
 
 const NotFound: DemoPageType = {

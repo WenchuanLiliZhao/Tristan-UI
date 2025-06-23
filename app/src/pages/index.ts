@@ -1,7 +1,6 @@
-import Home from "./Home/_Config";
-import Color from "./Color/_Config";
-import IconShowcase from "./IconShowcase/_Config";
-import Timeline from "./Timeline/_Config";
+import Home from "./Home";
+import NotFound from "./NotFound";
+import Timeline from "./Timeline";
 
 export type DemoPageType = {
   name: string;
@@ -11,7 +10,6 @@ export type DemoPageType = {
 
 export const DemoPages = {
   Home,
-  Color,
-  IconShowcase,
+  NotFound,
   Timeline,
 }
