@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Icon } from '../../components/General/Icon';
+import { Icon } from '../../design-system/ui-components/General/Icon';
 import styles from './Element.module.scss';
-import { Button } from '../../components/General';
+import { Button } from '../../design-system/ui-components/General';
 
 export const Element: React.FC = () => {
   return (

@@ -1,14 +1,3 @@
-// Export types
-export type {
-  BaseComponentProps,
-  Size,
-  Color,
-  InputProps,
-  Theme
-} from './components/types';
+export * from './design-system/ui-components';
 
-// Import global styles
 import './styles/_app.scss'
-
-export * from './components/General';
-export * from './components/Navigation'

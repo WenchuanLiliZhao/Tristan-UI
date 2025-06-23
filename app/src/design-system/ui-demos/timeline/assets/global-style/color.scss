@@ -1,0 +1,233 @@
+// 首先，通过 SCSS 的 `@mixin` 分别设置 light mode 以及 dark mode 的配色方案：
+
+:root {
+  --brand-color: #FF4646;
+
+  // Van Gogh-inspired team colors (base values with light/dark variants)
+  // 🔴 Red - "The Red Vineyard" passionate reds
+  --color-team-red: #DC2626;
+  --color-team-red-light: #F87171;
+  --color-team-red-dark: #991B1B;
+  
+  // 🔵 Blue - "The Starry Night" swirling blues  
+  --color-team-blue: #345de4;
+  --color-team-blue-light: #3e8ceb;
+  --color-team-blue-dark: #1E3A8A;
+  
+  // 🟢 Green - "The Cypresses" deep greens
+  --color-team-green: #16A34A;
+  --color-team-green-light: #4ADE80;
+  --color-team-green-dark: #15803D;
+  
+  // 🟡 Yellow - "Sunflowers" golden yellows
+  --color-team-yellow: #D97706;
+  --color-team-yellow-light: #FBBF24;
+  --color-team-yellow-dark: #A16207;
+  
+  // 🟣 Purple - "Irises" royal purples
+  --color-team-purple: #7C3AED;
+  --color-team-purple-light: #A78BFA;
+  --color-team-purple-dark: #5B21B6;
+  
+  // 🩷 Pink - "Almond Blossoms" delicate pinks
+  --color-team-pink: #EC4899;
+  --color-team-pink-light: #F472B6;
+  --color-team-pink-dark: #BE185D;
+  
+  // 🟦 Indigo - "The Potato Eaters" evening indigos
+  --color-team-indigo: #4338CA;
+  --color-team-indigo-light: #818CF8;
+  --color-team-indigo-dark: #3730A3;
+  
+  // 🩵 Cyan - "Wheatfield under Thunderclouds" storm cyans
+  --color-team-cyan: #0891B2;
+  --color-team-cyan-light: #22D3EE;
+  --color-team-cyan-dark: #155E75;
+  
+  // 🟠 Orange - "The Bedroom" warm oranges
+  --color-team-orange: #EA580C;
+  --color-team-orange-light: #FB923C;
+  --color-team-orange-dark: #C2410C;
+  
+  // 🟢 Lime - "The Mulberry Tree" fresh limes
+  --color-team-lime: #65A30D;
+  --color-team-lime-light: #84CC16;
+  --color-team-lime-dark: #4D7C0F;
+  
+  // 🟣 Violet - "Self-Portrait" artistic violets
+  --color-team-violet: #8B5CF6;
+  --color-team-violet-light: #A78BFA;
+  --color-team-violet-dark: #7C3AED;
+  
+  // 🌌 Sky - "Landscape with Snow" winter skies
+  --color-team-sky: #0284C7;
+  --color-team-sky-light: #0EA5E9;
+  --color-team-sky-dark: #0369A1;
+  
+  // ⚫ Gray - "The Potato Eaters" earthy grays
+  --color-team-gray: #6B7280;
+  --color-team-gray-light: #9CA3AF;
+  --color-team-gray-dark: #4B5563;
+  
+  // 🪨 Slate - "Peasant Woman" stone slates
+  --color-team-slate: #475569;
+  --color-team-slate-light: #64748B;
+  --color-team-slate-dark: #334155;
+  
+  // 💎 Emerald - "The Garden of Saint-Paul Hospital" emerald greens
+  --color-team-emerald: #059669;
+  --color-team-emerald-light: #10B981;
+  --color-team-emerald-dark: #047857;
+  
+  // 🌊 Teal - "Seascape near Les Saintes-Maries-de-la-Mer" ocean teals
+  --color-team-teal: #0D9488;
+  --color-team-teal-light: #14B8A6;
+  --color-team-teal-dark: #0F766E;
+  
+  // 🟨 Amber - "Still Life with Twelve Sunflowers" amber glow
+  --color-team-amber: #D97706;
+  --color-team-amber-light: #F59E0B;
+  --color-team-amber-dark: #92400E;
+  
+  // 🌹 Rose - "Roses" delicate roses
+  --color-team-rose: #E11D48;
+  --color-team-rose-light: #FB7185;
+  --color-team-rose-dark: #BE123C;
+
+  // Van Gogh-inspired semantic colors (base values)
+  // Active - Inspired by "The Starry Night" blues
+  --color-semantic-active: var(--color-team-blue);
+  
+  // Success - Inspired by "The Cypresses" and olive trees
+  --color-semantic-success: var(--color-team-green);
+  
+  // Warning - Inspired by "Sunflowers" yellows
+  --color-semantic-warning: var(--color-team-amber);
+  
+  // Error - Inspired by "The Red Vineyard" and sunset reds
+  --color-semantic-error: var(--color-team-red);
+}
+
+@mixin light-theme {
+  --box-shadow-color: rgba(0, 0, 0, 0.08);
+
+  --color-main: #1a1a1a;
+  --color-sec: #858585;
+  --color-sec-trans: rgba(0, 0, 0, 0.48);
+  --color-neg: #ADADAD;
+  --color-neg-trans: rgba(0, 0, 0, 0.32);
+
+  --color-bg-main: white;
+
+  --color-bg-sec: #fafafa;
+  --color-bg-sec-trans: rgba(0, 0, 0, 0.02);
+
+  --color-bg-sec-2: #f5f5f5;
+  --color-bg-sec-2-trans: rgba(0, 0, 0, 0.04);
+
+  --color-border-main: #ebebeb;
+  --color-border-main-trans: rgba(0, 0, 0, 0.08);
+
+  --color-border-darken-trans: rgba(0, 0, 0, 0.16);
+
+  // Text colors
+  --color-text-main: var(--color-main);
+  --color-text-sec: var(--color-sec);
+  
+  // Accent color
+  --color-accent: var(--brand-color);
+
+  // Van Gogh semantic colors for light mode
+  // Active - "Starry Night" swirling blues, using blue color system
+  --color-semantic-active: var(--color-team-blue-light);
+  --color-semantic-active-secondary: var(--color-team-blue);
+
+  // Success - "Wheatfield with Cypresses" greens, using green color system
+  --color-semantic-success: var(--color-team-green-light);
+  --color-semantic-success-secondary: var(--color-team-green);
+
+  // Warning - "Sunflowers" golden yellows, using amber color system
+  --color-semantic-warning: var(--color-team-amber);
+  --color-semantic-warning-secondary: var(--color-team-amber-dark);
+
+  // Error - "The Red Vineyard" passionate reds, using red color system
+  --color-semantic-error: var(--color-team-red);
+  --color-semantic-error-secondary: var(--color-team-red-dark);
+}
+
+@mixin dark-theme {
+  --box-shadow-color: rgba(0, 0, 0, 0.48);
+
+  --color-main: #eaeaea;
+  --color-sec: #b3b3b3;
+  --color-sec-trans: rgba(255, 255, 255, 0.48);
+
+  --color-neg: #4d4d4d;
+  --color-neg-trans: rgba(255, 255, 255, 0.32);
+
+  --color-bg-main: #121212;
+
+  --color-bg-sec: #1e1e1e;
+  --color-bg-sec-trans: rgba(255, 255, 255, 0.02);
+
+  --color-bg-sec-2: #2a2a2a;
+  --color-bg-sec-2-trans: rgba(255, 255, 255, 0.04);
+
+  --color-border-main: #333333;
+  --color-border-main-trans: rgba(255, 255, 255, 0.08);
+
+  --color-border-darken-trans: rgba(255, 255, 255, 0.16);
+
+  // Text colors
+  --color-text-main: var(--color-main);
+  --color-text-sec: var(--color-sec);
+  
+  // Accent color
+  --color-accent: var(--brand-color);
+
+  // Van Gogh semantic colors for dark mode - brighter and more vibrant
+  // Active - "Starry Night" luminous blues, using blue color system
+  --color-semantic-active: var(--color-team-blue-light);
+  --color-semantic-active-secondary: var(--color-team-blue);
+
+  // Success - "The Mulberry Tree" vibrant greens, using green color system
+  --color-semantic-success: var(--color-team-green-light);
+  --color-semantic-success-secondary: var(--color-team-green);
+
+  // Warning - "The Bedroom" warm yellows, using amber color system
+  --color-semantic-warning: var(--color-team-amber-light);
+  --color-semantic-warning-secondary: var(--color-team-amber);
+
+  // Error - "Self-Portrait with Bandaged Ear" expressive reds, using red color system
+  --color-semantic-error: var(--color-team-red);
+  --color-semantic-error-secondary: var(--color-team-red-dark);
+}
+
+// Apply themes to different modes
+:root {
+  @include light-theme;
+}
+
+:root[data-theme="dark"] {
+  @include dark-theme;
+}
+
+// System theme detection for better user experience
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    @include light-theme;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-theme;
+  }
+}
+
+html,
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-main);
+}
+

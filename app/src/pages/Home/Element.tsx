@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import styles from './Element.module.scss';
-import { Button, Icon } from '../../components/General';
-import { TopNav } from '../../components/Navigation';
-import { availableIcons } from '../../components/General/Icon';
+import { Button, Icon } from '../../design-system/ui-components/General';
+import { TopNav } from '../../design-system/ui-components/Navigation';
+import { availableIcons } from '../../design-system/ui-components/General/Icon';
 
 
 export const Element: React.FC = () => {

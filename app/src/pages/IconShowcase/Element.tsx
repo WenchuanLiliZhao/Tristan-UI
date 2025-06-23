@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, availableIcons } from '../../components/General/Icon';
+import { Icon, availableIcons } from '../../design-system/ui-components/General/Icon';
 import './styles.scss';
 
 const IconShowcase: React.FC = () => {

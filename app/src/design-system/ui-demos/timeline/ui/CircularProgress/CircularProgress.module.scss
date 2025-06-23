@@ -1,0 +1,11 @@
+.background {
+  stroke: var(--color-bg-sec-2-trans);
+}
+
+.progress {
+  stroke: var(--color-semantic-active);
+  
+  &.full {
+    stroke: var(--color-semantic-success);
+  }
+}
