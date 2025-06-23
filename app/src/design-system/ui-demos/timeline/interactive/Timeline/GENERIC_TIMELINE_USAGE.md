@@ -9,7 +9,7 @@ Timeline组件现已重构为通用化的设计系统组件，支持任意数据
 ### 1. 最简单的使用方式
 
 ```tsx
-import { GenericTimeline, groupTimelineItemsByField } from '@/design-system';
+import { Timeline, groupTimelineItemsByField } from '@/design-system';
 import type { BaseTimelineItem } from '@/data-layer';
 
 // 基础数据 - 只需要四个字段
@@ -33,7 +33,7 @@ const groupedData = groupTimelineItemsByField(basicData, 'name');
 
 function MyTimeline() {
   return (
-    <GenericTimeline
+    <Timeline
       inputData={groupedData}
     />
   );
@@ -43,7 +43,7 @@ function MyTimeline() {
 ### 2. 自定义数据类型
 
 ```tsx
-import { GenericTimeline, groupTimelineItemsByField } from '@/design-system';
+import { Timeline, groupTimelineItemsByField } from '@/design-system';
 import type { TimelineItem } from '@/data-layer';
 
 // 定义自定义数据类型
@@ -85,7 +85,7 @@ function CustomTimeline() {
   const groupedData = groupTimelineItemsByField(projectData, groupBy);
   
   return (
-    <GenericTimeline<ProjectData>
+    <Timeline<ProjectData>
       init={{
         dataType: {
           status: 'Planning' as const,
@@ -145,7 +145,7 @@ function TeamTimeline() {
   const groupedData = groupTimelineItemsByField(teamProjects, groupBy);
   
   return (
-    <GenericTimeline<TeamData>
+    <Timeline<TeamData>
       init={{
         dataType: {
           status: "On Track",
@@ -168,7 +168,7 @@ function TeamTimeline() {
 
 ## API参考
 
-### GenericTimeline Props
+### Timeline Props
 
 | 属性 | 类型 | 必需 | 描述 |
 |------|------|------|------|
@@ -194,20 +194,6 @@ interface BaseTimelineItem {
   startDate: Date;   // 开始日期
   endDate: Date;     // 结束日期
 }
-```
-
-## 向后兼容
-
-原有的Timeline组件保持不变，仍可正常使用：
-
-```tsx
-import { Timeline } from '@/design-system';
-
-// 传统用法仍然有效
-<Timeline 
-  inputData={groupIssuesByField(issues, 'category')} 
-  onGroupByChange={handleGroupByChange}
-/>
 ```
 
 ## 数据处理工具
@@ -242,27 +228,4 @@ const byName = groupTimelineItemsByField(data, 'name');
 2. **分组字段**：确保分组字段在所有数据项中都存在
 3. **日期格式**：始终使用Date对象，不要使用字符串
 4. **默认值**：在`init.dataType`中提供合理的默认值
-5. **性能考虑**：对于大量数据，考虑分页或虚拟滚动
-
-## 迁移指南
-
-### 从传统Timeline迁移
-
-1. 保持现有数据结构不变，或者：
-2. 创建数据转换函数：
-
-```tsx
-function convertLegacyData(legacyData: IssueShape[]): TimelineItem<MyExtendedType>[] {
-  return legacyData.map(item => ({
-    id: item.id,
-    name: item.name,
-    startDate: item.startDate,
-    endDate: item.endDate,
-    // 添加自定义字段
-    ...myCustomFields
-  }));
-}
-```
-
-3. 使用GenericTimeline替换原组件
-4. 更新分组逻辑使用新的工具函数 
+5. **性能考虑**：对于大量数据，考虑分页或虚拟滚动 

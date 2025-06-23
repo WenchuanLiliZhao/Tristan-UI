@@ -25,7 +25,7 @@ design-system/
 │   ├── CircularProgress/   # 进度条组件
 │   ├── Boxes/              # 容器组件
 │   ├── Icon/               # 图标组件
-│   └── BrowserCompatibility/ # 浏览器兼容性检查
+
 ├── interactive/            # 交互组件
 │   └── Timeline/           # 时间线组件
 │       ├── Timeline.tsx    # 主组件
@@ -178,7 +178,7 @@ interface MyCustomItem extends BaseTimelineItem {
 - `CircularProgress` - 圆形进度条
 - `HoverBox`, `MenuBox`, `TransBgBox` - 容器组件
 - `Icon` - 图标组件
-- `BrowserCompatibility` - 浏览器兼容性检查
+
 
 ### 交互组件
 - `Timeline` - 时间线组件，支持分组、缩放、响应式

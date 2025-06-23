@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
+import { type TimelineItem } from "../../../data/types";
 import { type PlacementResult } from "../../../data/utils";
-import { type IssueShape } from "../../../data/types";
 
 interface GroupPlacement {
   groupTitle: string;
-  groupItems: IssueShape[];
+  groupItems: TimelineItem[];
   placements: PlacementResult[];
 }
 

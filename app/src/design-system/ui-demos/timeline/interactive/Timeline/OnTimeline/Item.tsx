@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./Item.module.scss";
-import { IssueShapeKeys, type IssueShape } from "../../../data/types";
+import { type TimelineItem as TimelineItemType } from "../../../data/types";
 import { TimelineConst } from "../_constants";
 
 interface TimelineItemProps {
-  item: IssueShape;
+  item: TimelineItemType;
   durationInDays: number;
   dayWidth: number;
   cellHeight: number;
   column: number;
-  onIssueClick?: (issue: IssueShape) => void;
+  onIssueClick?: (issue: TimelineItemType) => void;
 }
 
 
@@ -40,7 +40,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
         }}
         onClick={() => onIssueClick?.(item)}
       >
-        {item[IssueShapeKeys.NAME]}
+        {item.name}
       </div>
     </div>
   );

@@ -32,7 +32,6 @@ import { useState, useRef, useCallback } from "react";
 import {
   TimelineItemInterval,
   sortTimelineItemsByStartDate,
-  IssueShapeKeys,
   type TimelineProps,
   type TimelineItem,
   BaseTimelineItemKeys,
@@ -83,16 +82,16 @@ export function Timeline<T = Record<string, unknown>>({
   
   // 构建用于计算时间间隔的数据，使用基础字段键
   const timelineIntervalData = sortedItems.map(item => ({
-    [IssueShapeKeys.ID]: item.id || '',
-    [IssueShapeKeys.NAME]: item.name || '',
-    [IssueShapeKeys.STATUS]: 'On Track' as const,
-    [IssueShapeKeys.DESCRIPTION]: '',
-    [IssueShapeKeys.START_DATE]: item.startDate || item[BaseTimelineItemKeys.START_DATE as keyof typeof item],
-    [IssueShapeKeys.END_DATE]: item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item],
-    [IssueShapeKeys.PROGRESS]: 0,
-    [IssueShapeKeys.CATEGORY]: '',
-    [IssueShapeKeys.TEAM]: 'Tech' as const,
-    [IssueShapeKeys.PRIORITY]: 'Medium' as const,
+    id: item.id || '',
+    name: item.name || '',
+    status: 'On Track' as const,
+    description: '',
+    startDate: item.startDate || item[BaseTimelineItemKeys.START_DATE as keyof typeof item],
+    endDate: item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item],
+    progress: 0,
+    category: '',
+    team: 'Tech' as const,
+    priority: 'Medium' as const,
   }));
 
   // Get list of years and start month that need to be displayed
@@ -170,8 +169,7 @@ export function Timeline<T = Record<string, unknown>>({
 
   return (
     <div className={styles["timeline-container"]}>
-      {/* 浏览器兼容性检查 */}
-      {/* <BrowserCompatibility /> */}
+
 
       <div className={styles["timeline-body"]}>
         {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
@@ -244,8 +242,7 @@ export function Timeline<T = Record<string, unknown>>({
   );
 }
 
-// 为了向后兼容，提供一个别名
-export const GenericTimeline = Timeline;
+
 
 // 默认导出Timeline组件
 export { Timeline as default };

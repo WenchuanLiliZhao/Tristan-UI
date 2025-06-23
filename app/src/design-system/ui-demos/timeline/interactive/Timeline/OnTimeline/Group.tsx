@@ -1,6 +1,6 @@
 import React from "react";
 import { calculateDurationInDays, calculateMaxOverlapCardinality, type PlacementResult } from "../../../data/utils";
-import { type IssueShape, IssueShapeKeys } from "../../../data/types";
+import { type TimelineItem as TimelineItemType } from "../../../data/types";
 import { TimelineItem } from "./Item";
 import styles from "./Group.module.scss";
 import { TimelineConstCalc } from "../_constants";
@@ -8,7 +8,7 @@ import { TimelineConstCalc } from "../_constants";
 interface TimelineGroupProps {
   groupData: {
     groupTitle: string;
-    groupItems: IssueShape[];
+    groupItems: TimelineItemType[];
     placements: PlacementResult[];
   };
   year: number;
@@ -17,7 +17,7 @@ interface TimelineGroupProps {
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
-  onIssueClick?: (issue: IssueShape) => void;
+  onIssueClick?: (issue: TimelineItemType) => void;
 }
 
 export const TimelineGroup: React.FC<TimelineGroupProps> = ({
@@ -60,7 +60,7 @@ export const TimelineGroup: React.FC<TimelineGroupProps> = ({
 
           return (
             <TimelineItem
-              key={placement.item[IssueShapeKeys.ID]}
+              key={placement.item.id}
               item={placement.item}
               durationInDays={durationInDays}
               dayWidth={dayWidth}

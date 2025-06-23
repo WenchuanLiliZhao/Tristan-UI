@@ -1,68 +1,67 @@
-import { IssueShapeKeys, type IssueShape, type StatusType, type TeamType } from "../../../data/types";
-import { getStatusColor, getTeamColor } from "../../../data/utils";
-import type { OutPutTermsType, TermType } from "./GroupProgressBar";
-import { cssVariables, getCssVar, semanticColors } from "../../../assets/global-style/css-variables";
-// 统计组中 items 的属性分布
+import { type TimelineItem } from "../../../data/types";
 
-export const getPropertyStats = (groupItems: IssueShape[], property: 'status' | 'team' ): OutPutTermsType => {
-  const propertyCounts: Record<string, number> = {};
+interface OutPutTermsType {
+  [key: string]: number;
+}
 
-  // 统计每个属性值的数量
+
+
+// 通用的属性统计函数 - 支持任意属性名和类型
+export function getPropertyStats<T extends Record<string, unknown>>(
+  groupItems: TimelineItem<T>[],
+  propertyKey: keyof (TimelineItem<T>)
+): OutPutTermsType {
+  const stats: OutPutTermsType = {};
+
   groupItems.forEach(item => {
-    const propertyValue = property === 'status' 
-      ? item[IssueShapeKeys.STATUS] 
-      : item[IssueShapeKeys.TEAM];
-    propertyCounts[propertyValue] = (propertyCounts[propertyValue] || 0) + 1;
-  });
+    const value = item[propertyKey];
+    // 将值转换为字符串作为统计的键
+    const key = value !== undefined && value !== null ? String(value) : 'Unknown';
 
-  // 转换为 TermType 数组
-  const terms: TermType[] = Object.entries(propertyCounts).map(([propertyName, count]) => ({
-    name: propertyName,
-    color: property === 'status' 
-      ? getStatusColor(propertyName as StatusType)
-      : getTeamColor(propertyName as TeamType),
-    count: count
-  }));
-
-  return {
-    key: property,
-    terms: terms
-  };
-};
-
-// 统计组中 items 的进度分布
-export const getProgressStats = (groupItems: IssueShape[]): OutPutTermsType => {
-  const progressCounts = {
-    'To Do': 0,
-    'In Progress': 0,
-    'Done': 0
-  };
-
-  // 统计每个进度状态的数量
-  groupItems.forEach(item => {
-    const progress = item[IssueShapeKeys.PROGRESS];
-    if (progress === 0) {
-      progressCounts['To Do']++;
-    } else if (progress === 100) {
-      progressCounts['Done']++;
+    if (stats[key]) {
+      stats[key]++;
     } else {
-      progressCounts['In Progress']++;
+      stats[key] = 1;
     }
   });
 
-  // 转换为 TermType 数组
-  const terms: TermType[] = Object.entries(progressCounts).map(([progressName, count]) => ({
-    name: progressName,
-    color: progressName === 'To Do' 
-      ? getCssVar(cssVariables.colorSec)
-      : progressName === 'In Progress'
-      ? getCssVar(semanticColors.active.primary)
-      : getCssVar(semanticColors.success.primary),
-    count: count
-  }));
+  return stats;
+}
 
-  return {
-    key: 'progress',
-    terms: terms
-  };
-};
+// 通用的数值范围统计函数
+export function getNumericRangeStats<T extends Record<string, unknown>>(
+  groupItems: TimelineItem<T>[],
+  propertyKey: keyof (TimelineItem<T>),
+  ranges: Array<{ label: string; min: number; max: number }>
+): OutPutTermsType {
+  const stats: OutPutTermsType = {};
+  
+  // 初始化所有范围的计数
+  ranges.forEach(range => {
+    stats[range.label] = 0;
+  });
+
+  groupItems.forEach(item => {
+    const value = item[propertyKey];
+    const numericValue = typeof value === 'number' ? value : 0;
+
+    // 找到匹配的范围
+    const matchedRange = ranges.find(range => 
+      numericValue >= range.min && numericValue < range.max
+    );
+
+    if (matchedRange) {
+      stats[matchedRange.label]++;
+    } else {
+      // 如果没有匹配的范围，归类为"未知"
+      if (!stats['Unknown']) {
+        stats['Unknown'] = 0;
+      }
+      stats['Unknown']++;
+    }
+  });
+
+  return stats;
+}
+
+

@@ -94,10 +94,9 @@ const cleanup = listenToHistoryChanges(() => {
    - 如果 URL 包含无效的 `view` 参数，自动回退到默认值
    - 支持的值：`year`, `month`, `day`
 
-3. **浏览器兼容性**
+3. **History API**
    - 使用 `window.history.replaceState()` 更新 URL
    - 不会触发页面刷新
-   - 支持现代浏览器的 History API
 
 4. **SSR 友好**
    - 包含 `typeof window === 'undefined'` 检查
@@ -148,7 +147,7 @@ useEffect(() => {
 ### 🎨 用户界面
 - Switch 组件行为保持不变
 - URL 变化对用户透明，无额外 UI 负担
-- 与现有功能完全兼容
+
 
 ## 测试场景
 

@@ -18,14 +18,14 @@
  * const { years, startMonth } = TimelineItemInterval({ inputData });
  */
 
-import { type IssueShape, IssueShapeKeys, type TimelineItem, BaseTimelineItemKeys } from "./types";
+import { type TimelineItem, BaseTimelineItemKeys } from "./types";
 
 /**
  * Represents the result of placing a timeline item in a specific column
  */
 export interface PlacementResult {
   column: number;
-  item: IssueShape;
+  item: TimelineItem;
   startDate: Date;
   endDate: Date;
 }
@@ -56,15 +56,15 @@ export const calculateDurationInDays = (startDate: Date, endDate: Date): number 
 /**
  * Calculate maximum overlap cardinality for timeline items
  */
-export const calculateMaxOverlapCardinality = (items: IssueShape[]): number => {
+export const calculateMaxOverlapCardinality = (items: TimelineItem[]): number => {
   if (items.length === 0) return 1;
   
   // Create events array with start and end events
   const events: Array<{ date: Date; type: 'start' | 'end' }> = [];
   
   items.forEach(item => {
-    events.push({ date: item[IssueShapeKeys.START_DATE], type: 'start' });
-    events.push({ date: item[IssueShapeKeys.END_DATE], type: 'end' });
+    events.push({ date: item.startDate, type: 'start' });
+    events.push({ date: item.endDate, type: 'end' });
   });
   
   // Sort events by date, with end events before start events for same date
@@ -138,7 +138,7 @@ export const doDateRangesOverlap = (
  */
 export const findPlacement = (
   placements: PlacementResult[],
-  _currentItem: IssueShape,
+  _currentItem: TimelineItem,
   currentStartDate: Date,
   currentEndDate: Date
 ): number => {
@@ -178,7 +178,7 @@ export const sortTimelineItemsByStartDate = <T = Record<string, unknown>>(
  * Timeline interval calculation
  */
 interface TimelineItemIntervalProps {
-  inputData: IssueShape[];
+  inputData: TimelineItem[];
 }
 
 export interface TimelineInterval {
@@ -196,12 +196,12 @@ export function TimelineItemInterval({ inputData }: TimelineItemIntervalProps): 
   }
 
   const earliestStartDate = inputData.reduce((earliest, item) => {
-    return item[IssueShapeKeys.START_DATE] < earliest ? item[IssueShapeKeys.START_DATE] : earliest;
-  }, inputData[0][IssueShapeKeys.START_DATE]);
+    return item.startDate < earliest ? item.startDate : earliest;
+  }, inputData[0].startDate);
 
   const latestEndDate = inputData.reduce((latest, item) => {
-    return item[IssueShapeKeys.END_DATE] > latest ? item[IssueShapeKeys.END_DATE] : latest;
-  }, inputData[0][IssueShapeKeys.END_DATE]);
+    return item.endDate > latest ? item.endDate : latest;
+  }, inputData[0].endDate);
 
   const earliestYear = earliestStartDate.getFullYear();
   const startMonth = earliestStartDate.getMonth();
