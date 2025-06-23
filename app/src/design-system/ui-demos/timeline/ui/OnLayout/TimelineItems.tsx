@@ -2,8 +2,8 @@ import React from "react";
 import {
   getDaysInMonth,
   type PlacementResult,
-} from "../../../data/utils";
-import { type TimelineItem } from "../../../data/types";
+} from "../../data/utils";
+import { type TimelineItem } from "../../data/types";
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 // import styles from "../../Timeline.module.scss";

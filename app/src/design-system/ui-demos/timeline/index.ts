@@ -1,2 +1,2 @@
-export * from './interactive';
 export * from './data';
+export { Timeline } from './ui/Timeline';

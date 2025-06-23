@@ -37,11 +37,11 @@ import {
   BaseTimelineItemKeys,
   findPlacement,
   type PlacementResult
-} from "../../data";
+} from "../data";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar, SIDEBAR_WIDTH } from "./Sidebar/TimelineSidebar";
-import { useCenterBasedZoom } from "../../data/hooks";
+import { useCenterBasedZoom } from "../data/hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 
