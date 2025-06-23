@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Timeline } from "../../design-system/ui-demos/timeline";
+import { Timeline } from "../../design-system/ui-demos";
 import { IssueShapeKeys } from "../../design-system/ui-demos/timeline/data/types";
 import type { IssueShape, SortedTimelineData } from "../../design-system/ui-demos/timeline/data/types";
 
