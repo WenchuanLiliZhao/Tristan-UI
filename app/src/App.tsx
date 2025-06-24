@@ -12,6 +12,7 @@ function App() {
     >
       <Routes>
         <Route path="/" element={DemoPages.Home.content} />
+        <Route path="*" element={DemoPages.NotFound.content} />
 
         {Object.values(DemoPages).map((page) => (
           <Route key={page.path} path={`/${page.path}`} element={page.content} />

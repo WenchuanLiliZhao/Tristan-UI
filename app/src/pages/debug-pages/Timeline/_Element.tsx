@@ -2,22 +2,16 @@ import React from "react";
 import {
   Timeline,
   groupTimelineItemsByField,
-} from "../../design-system/ui-demos";
+} from "../../../design-system/ui-demos";
 import {
   type TimelineConfigType,
   createFieldConfig,
-} from "../../design-system/ui-demos/timeline/data/types";
-import {
-  ExampleData,
-  type ProjectDataType,
-  status,
-  team,
-  priority,
-  riskLevel,
-} from "./example-data";
+} from "../../../design-system/ui-demos/timeline/data/types";
+import { ExampleData, priority, riskLevel, status, team, type ProjectDataType } from "./example-data";
+
 
 export function Element(): React.ReactElement {
-  // 🎯 方式 1: 使用 createFieldConfig 简化配置
+  // 🎯 Method 1: Use createFieldConfig to simplify configuration
   const itemDisplayConfigSimple = {
     graphicFields: [
       createFieldConfig.progress<ProjectDataType>("progress"),
@@ -28,20 +22,20 @@ export function Element(): React.ReactElement {
       createFieldConfig.tagFromMap<ProjectDataType>("team", team),
       createFieldConfig.tagFromMap<ProjectDataType>("riskLevel", riskLevel, {
         // variant: "outlined",
-        hideValue: "low", // 自动隐藏低风险项目
+        hideValue: "low", // Automatically hide low-risk items
       }),
     ],
   };
 
-  // 🎯 方式 2 和 3 的示例代码在下方注释中展示
+  // 🎯 Method 2 and 3 example code shown in comments below
 
-  // Timeline 配置 - 这里使用方式 1
+  // Timeline configuration - using Method 1 here
   const timelineConfig: TimelineConfigType<ProjectDataType> = {
     groupBy: "category",
     itemDisplayConfig: itemDisplayConfigSimple,
   };
 
-  // 按分类分组数据
+  // Group data by category
   const sortedData = groupTimelineItemsByField(ExampleData, "category");
 
   return (

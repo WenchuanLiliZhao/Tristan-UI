@@ -1,6 +1,6 @@
 
-import type { BaseTimelineItemType } from "../../../design-system/ui-demos";
-import { rainbowColorNames } from "../../../styles/color";
+import type { BaseTimelineItemType } from "../../../../design-system/ui-demos";
+import { rainbowColorNames } from "../../../../styles";
 import { Example_Issues_1 } from "./_example1";
 import { Example_Issues_2 } from "./_example2";
 import { Example_Issues_3 } from "./_example3";

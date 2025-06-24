@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Tag } from '../../design-system/ui-components/general';
-import { rainbowColorNames } from '../../styles/color';
+import { Tag } from '../../../design-system/ui-components';
+import { rainbowColorNames } from '../../../styles';
 
-const TagDemo: React.FC = () => {
+
+export const Element: React.FC = () => {
   const [tags, setTags] = useState(['React', 'TypeScript', 'CSS', 'JavaScript']);
 
   const handleRemoveTag = (index: number) => {
@@ -11,39 +12,39 @@ const TagDemo: React.FC = () => {
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', color: 'var(--color--text-prime)' }}>
-      <h1 style={{ color: 'var(--color--text-prime)' }}>Tag 组件演示</h1>
+      <h1 style={{ color: 'var(--color--text-prime)' }}>Tag Component Demo</h1>
       
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>基础用法</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Basic Usage</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag>默认标签</Tag>
-          <Tag color="secondary">次要标签</Tag>
-          <Tag color="success">成功标签</Tag>
-          <Tag color="warning">警告标签</Tag>
-          <Tag color="error">错误标签</Tag>
-          <Tag color="info">信息标签</Tag>
+          <Tag>Default Tag</Tag>
+          <Tag color="secondary">Secondary Tag</Tag>
+          <Tag color="success">Success Tag</Tag>
+          <Tag color="warning">Warning Tag</Tag>
+          <Tag color="error">Error Tag</Tag>
+          <Tag color="info">Info Tag</Tag>
         </div>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>不同变体</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Different Variants</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag variant="contained" color="primary">实心标签</Tag>
-          <Tag variant="outlined" color="primary">边框标签</Tag>
+          <Tag variant="contained" color="primary">Contained Tag</Tag>
+          <Tag variant="outlined" color="primary">Outlined Tag</Tag>
         </div>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>不同尺寸</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Different Sizes</h2>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag size="small">小尺寸</Tag>
-          <Tag size="medium">中等尺寸</Tag>
-          <Tag size="large">大尺寸</Tag>
+          <Tag size="small">Small Size</Tag>
+          <Tag size="medium">Medium Size</Tag>
+          <Tag size="large">Large Size</Tag>
         </div>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>可关闭的标签</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Closable Tags</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           {tags.map((tag, index) => (
             <Tag
@@ -57,30 +58,30 @@ const TagDemo: React.FC = () => {
           ))}
         </div>
         <p style={{ color: 'var(--color--text-secondary)', fontSize: '14px' }}>
-          点击 × 按钮可以删除标签
+          Click the × button to remove tags
         </p>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>禁用状态</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Disabled State</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag disabled>禁用标签</Tag>
-          <Tag disabled closable>禁用的可关闭标签</Tag>
-          <Tag disabled variant="outlined" color="warning">禁用边框标签</Tag>
+          <Tag disabled>Disabled Tag</Tag>
+          <Tag disabled closable>Disabled Closable Tag</Tag>
+          <Tag disabled variant="outlined" color="warning">Disabled Outlined Tag</Tag>
         </div>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>组合示例</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Combination Examples</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag size="small" variant="outlined" color="info">小信息</Tag>
-          <Tag closable color="success">可关闭成功</Tag>
-          <Tag size="large" variant="outlined" color="warning" closable>大警告可关闭</Tag>
+          <Tag size="small" variant="outlined" color="info">Small Info</Tag>
+          <Tag closable color="success">Closable Success</Tag>
+          <Tag size="large" variant="outlined" color="warning" closable>Large Warning Closable</Tag>
         </div>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>彩虹颜色</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Rainbow Colors</h2>
         <div style={{ marginBottom: '20px' }}>
           <h3>Contained Rainbow Tags</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
@@ -131,5 +132,3 @@ const TagDemo: React.FC = () => {
     </div>
   );
 };
-
-export default TagDemo; 

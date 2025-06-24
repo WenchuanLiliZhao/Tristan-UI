@@ -22,14 +22,14 @@ export const Element: React.FC = () => {
         margin: '0 0 1rem 0', 
         color: 'var(--color--text-prime)'
       }}>
-        页面未找到
+        Page Not Found
       </h2>
       <p style={{ 
         margin: '0 0 2rem 0', 
         color: 'var(--color--text-secondary)',
         fontSize: '1.1rem'
       }}>
-        抱歉，您访问的页面不存在。
+        Sorry, the page you are looking for does not exist.
       </p>
       <a 
         href="/" 
@@ -45,7 +45,7 @@ export const Element: React.FC = () => {
           margin: '0 auto'
         }}
       >
-        返回首页
+        Back to Home
       </a>
     </div>
   );

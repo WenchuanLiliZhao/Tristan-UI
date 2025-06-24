@@ -1,4 +1,4 @@
-import type { DemoPageType } from "..";
+import type { DemoPageType } from "../..";
 import { Element } from "./_Element";
 
 const Timeline: DemoPageType = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ProgressCircle } from '../../design-system/ui-components/general';
+import { ProgressCircle } from '../../design-system/ui-components/data-display';
 
 export const Element: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
@@ -13,17 +13,19 @@ export const Element: React.FC = () => {
   }, []);
 
   const pages = [
-    { name: 'Timeline Demo', path: '/timeline', description: '时间轴组件演示' },
-    { name: 'Material Icons Debug', path: '/icon-debug', description: 'Material Icons 图标测试页面' },
+    { name: 'Button Demo', path: '/button-demo', description: 'Button component demonstration - View all variants, sizes, colors and states of the button component' },
+    { name: 'Timeline Demo', path: '/timeline', description: 'Timeline component demonstration - Explore various usage patterns and configuration options for the timeline component' },
+    { name: 'Material Icons Debug', path: '/icon-debug', description: 'Material Icons testing page - Test and preview all available Material Icons' },
+    { name: 'Tag Demo', path: '/tag-demo', description: 'Tag component demonstration - View different styles and usage patterns of the tag component' },
   ];
 
   return (
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', color: 'var(--color--text-prime)' }}>
       <h1 style={{ color: 'var(--color--text-prime)' }}>Tristan-UI Component Showcase</h1>
-      <p style={{ color: 'var(--color--text-secondary)' }}>欢迎使用 Tristan-UI 设计系统组件库！</p>
+      <p style={{ color: 'var(--color--text-secondary)' }}>Welcome to the Tristan-UI design system component library!</p>
 
               <div style={{ marginTop: '2rem' }}>
-        <h2 style={{ color: 'var(--color--text-prime)' }}>可用页面</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Available Pages</h2>
         <div style={{ 
           display: 'grid', 
           gap: '1rem', 
@@ -73,10 +75,10 @@ export const Element: React.FC = () => {
         border: '1px solid var(--color--semantic-active)'
       }}>
         <h3 style={{ margin: '0 0 1rem 0', color: 'var(--color--semantic-active)' }}>
-          📦 最新更新 - Material Icons 集成
+          📦 Latest Update - Material Icons Integration
         </h3>
         <p style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>
-          Tristan-UI 现已集成 Google Material Icons！无需额外依赖，超过 200+ 精美图标开箱即用。
+          Tristan-UI now includes Google Material Icons! No additional dependencies required, 200+ beautiful icons ready to use out of the box.
         </p>
         <div style={{ backgroundColor: 'var(--color--bg-prime)', padding: '1rem', borderRadius: '4px', border: '1px solid var(--color--border-secondary-trans)' }}>
           <code>npm install tristan-ui</code>
@@ -89,7 +91,7 @@ export const Element: React.FC = () => {
           </code>
         </div>
         <p style={{ margin: '1rem 0 0 0', fontSize: '0.9rem', color: 'var(--color--text-secondary)' }}>
-          访问 <strong>Material Icons Debug</strong> 页面查看所有可用图标和使用示例。
+          Visit the <strong>Material Icons Debug</strong> page to view all available icons and usage examples.
         </p>
       </div>
 
@@ -101,10 +103,10 @@ export const Element: React.FC = () => {
         border: '1px solid var(--color--semantic-active)'
       }}>
         <h3 style={{ margin: '0 0 1rem 0', color: 'var(--color--semantic-active)' }}>
-          🔄 新组件 - ProgressCircle 进度圆圈
+          🔄 New Component - ProgressCircle
         </h3>
         <p style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>
-          基于 SVG 的可配置进度圆圈组件，支持自定义颜色、大小和动画效果。
+          SVG-based configurable progress circle component with support for custom colors, sizes, and animation effects.
         </p>
         
         <div style={{ 
@@ -114,7 +116,7 @@ export const Element: React.FC = () => {
           marginTop: '1.5rem'
         }}>
           <div>
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>不同尺寸</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>Different Sizes</h4>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <ProgressCircle progress={75} size="small" />
               <ProgressCircle progress={75} size="medium" />
@@ -124,7 +126,7 @@ export const Element: React.FC = () => {
           </div>
 
           <div>
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>不同颜色</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>Different Colors</h4>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <ProgressCircle progress={60} color="primary" />
               <ProgressCircle progress={60} color="success" />
@@ -134,16 +136,16 @@ export const Element: React.FC = () => {
           </div>
 
           <div>
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>显示文字</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>With Text Display</h4>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <ProgressCircle progress={85} showText size="large" />
               <ProgressCircle progress={50} showText text="50%" size="large" />
-              <ProgressCircle progress={100} showText text="完成" size="large" color="success" />
+              <ProgressCircle progress={100} showText text="Complete" size="large" color="success" />
             </div>
           </div>
 
           <div>
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>动画效果</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>Animation Effects</h4>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <ProgressCircle 
                 progress={animatedProgress} 
@@ -184,9 +186,9 @@ export const Element: React.FC = () => {
 
       <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--color--text-secondary)' }}>
         <p>
-          <strong style={{ color: 'var(--color--text-prime)' }}>版本:</strong> 0.2.1<br />
-          <strong style={{ color: 'var(--color--text-prime)' }}>文档:</strong> 查看各组件页面了解详细使用方法<br />
-          <strong style={{ color: 'var(--color--text-prime)' }}>源码:</strong> <a href="https://github.com/wenchuanlilizhao/tristan-ui" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color--semantic-active)' }}>GitHub</a>
+          <strong style={{ color: 'var(--color--text-prime)' }}>Version:</strong> 0.2.1<br />
+          <strong style={{ color: 'var(--color--text-prime)' }}>Documentation:</strong> View component pages for detailed usage instructions<br />
+          <strong style={{ color: 'var(--color--text-prime)' }}>Source Code:</strong> <a href="https://github.com/wenchuanlilizhao/tristan-ui" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color--semantic-active)' }}>GitHub</a>
         </p>
       </div>
     </div>
