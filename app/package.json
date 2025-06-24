@@ -81,8 +81,5 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
-  },
-  "dependencies": {
-    "react-router": "^7.6.2"
   }
 }
