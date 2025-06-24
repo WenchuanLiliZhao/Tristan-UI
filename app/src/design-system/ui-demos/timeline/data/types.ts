@@ -26,7 +26,7 @@
  */
 
 // 基础时间线项目接口 - 只包含四个必需字段
-export interface BaseTimelineItem {
+export interface BaseTimelineItemType {
   id: string;
   name: string;
   startDate: Date;
@@ -42,33 +42,33 @@ export const BaseTimelineItemKeys = {
 } as const;
 
 // 通用时间线项目类型 - 支持泛型扩展
-export type TimelineItem<T = Record<string, unknown>> = BaseTimelineItem & T;
+export type TimelineItemType<T = Record<string, unknown>> = BaseTimelineItemType & T;
 
 // Timeline 配置接口
-export interface TimelineConfig<TExtended = Record<string, unknown>> {
+export interface TimelineConfigType<TExtended = Record<string, unknown>> {
   dataType?: TExtended;
-  groupBy?: keyof (BaseTimelineItem & TExtended);
+  groupBy?: keyof (BaseTimelineItemType & TExtended);
 }
 
 // 分组数据结构 - 通用化
-export interface TimelineGroup<T = Record<string, unknown>> {
+export interface TimelineGroupType<T = Record<string, unknown>> {
   groupTitle: string;
-  groupItems: TimelineItem<T>[];
+  groupItems: TimelineItemType<T>[];
 }
 
 // 排序后的时间线数据结构 - 通用化
-export interface SortedTimelineData<T = Record<string, unknown>> {
+export interface SortedTimelineDataType<T = Record<string, unknown>> {
   meta: {
-    sortBy: keyof (BaseTimelineItem & T);
+    sortBy: keyof (BaseTimelineItemType & T);
   };
-  data: TimelineGroup<T>[];
+  data: TimelineGroupType<T>[];
 }
 
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
-  init?: TimelineConfig<T>;
-  inputData: SortedTimelineData<T>;
-  onGroupByChange?: (groupBy: keyof (BaseTimelineItem & T)) => void;
+  init?: TimelineConfigType<T>;
+  inputData: SortedTimelineDataType<T>;
+  onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
 }
 
  

@@ -18,14 +18,14 @@
  * const { years, startMonth } = TimelineItemInterval({ inputData });
  */
 
-import { type TimelineItem, BaseTimelineItemKeys } from "./types";
+import { type TimelineItemType, type SortedTimelineDataType, BaseTimelineItemKeys } from "./types";
 
 /**
  * Represents the result of placing a timeline item in a specific column
  */
 export interface PlacementResult {
   column: number;
-  item: TimelineItem;
+  item: TimelineItemType;
   startDate: Date;
   endDate: Date;
 }
@@ -56,7 +56,7 @@ export const calculateDurationInDays = (startDate: Date, endDate: Date): number 
 /**
  * Calculate maximum overlap cardinality for timeline items
  */
-export const calculateMaxOverlapCardinality = (items: TimelineItem[]): number => {
+export const calculateMaxOverlapCardinality = (items: TimelineItemType[]): number => {
   if (items.length === 0) return 1;
   
   // Create events array with start and end events
@@ -138,7 +138,7 @@ export const doDateRangesOverlap = (
  */
 export const findPlacement = (
   placements: PlacementResult[],
-  _currentItem: TimelineItem,
+  _currentItem: TimelineItemType,
   currentStartDate: Date,
   currentEndDate: Date
 ): number => {
@@ -165,8 +165,8 @@ export const findPlacement = (
  * Sort timeline items by start date
  */
 export const sortTimelineItemsByStartDate = <T = Record<string, unknown>>(
-  items: TimelineItem<T>[]
-): TimelineItem<T>[] => {
+  items: TimelineItemType<T>[]
+): TimelineItemType<T>[] => {
   return [...items].sort((a, b) => {
     const dateA = a.startDate || a[BaseTimelineItemKeys.START_DATE as keyof typeof a];
     const dateB = b.startDate || b[BaseTimelineItemKeys.START_DATE as keyof typeof b];
@@ -178,7 +178,7 @@ export const sortTimelineItemsByStartDate = <T = Record<string, unknown>>(
  * Timeline interval calculation
  */
 interface TimelineItemIntervalProps {
-  inputData: TimelineItem[];
+  inputData: TimelineItemType[];
 }
 
 export interface TimelineInterval {
@@ -215,5 +215,48 @@ export function TimelineItemInterval({ inputData }: TimelineItemIntervalProps): 
   return {
     years,
     startMonth
+  };
+}
+
+/**
+ * Group timeline items by a specified field
+ * 
+ * This function takes an array of timeline items and groups them by any field,
+ * returning a structured data format suitable for timeline display.
+ * 
+ * @param items - Array of timeline items to group
+ * @param groupBy - Field to group by (can be any field from the item)
+ * @returns Sorted timeline data with grouped items
+ * 
+ * @example
+ * ```typescript
+ * const groupedData = groupTimelineItemsByField(projects, 'team');
+ * // Returns: { meta: { sortBy: 'team' }, data: [...] }
+ * ```
+ */
+export function groupTimelineItemsByField<T = Record<string, unknown>>(
+  items: TimelineItemType<T>[],
+  groupBy: keyof (TimelineItemType<T>)
+): SortedTimelineDataType<T> {
+  const groups = new Map<string, TimelineItemType<T>[]>();
+  
+  items.forEach(item => {
+    const groupValue = String(item[groupBy] || 'Ungrouped');
+    if (!groups.has(groupValue)) {
+      groups.set(groupValue, []);
+    }
+    groups.get(groupValue)!.push(item);
+  });
+  
+  const data = Array.from(groups.entries()).map(([groupTitle, groupItems]) => ({
+    groupTitle,
+    groupItems: groupItems.sort((a, b) => 
+      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
+  }));
+  
+  return {
+    meta: { sortBy: groupBy },
+    data
   };
 } 

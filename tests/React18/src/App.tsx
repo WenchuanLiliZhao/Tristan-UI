@@ -1,19 +1,15 @@
 import { useState, useMemo } from 'react';
 import "tristan-ui/dist/tristan-ui.css"
 
-// 导入 Timeline 相关组件和类型
-// 注意：这里需要根据实际的模块路径调整导入
+// 导入 Timeline 相关组件和类型（现在从 tristan-ui 库导入）
 import { Timeline } from '../../../app/src/design-system/ui-demos/timeline/ui/Timeline';
-import type { TimelineItem, SortedTimelineData } from '../../../app/src/design-system/ui-demos/timeline/data/types';
+import { groupTimelineItemsByField } from '../../../app/src/design-system/ui-demos/timeline/data/utils';
+import type { 
+  BaseTimelineItemType
+} from '../../../app/src/design-system/ui-demos/timeline/data/types';
 
-// 步骤1：定义包含基础字段 + 自定义字段的接口
-interface ProjectData {
-  // 🔴 必需的基础字段（继承自 BaseTimelineItem）
-  id: string;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  
+// 步骤1：使用正确的类型扩展方式 - 继承 BaseTimelineItem
+interface ProjectData extends BaseTimelineItemType {
   // 🟢 您的自定义字段 - 根据指南建议添加
   priority: 'High' | 'Medium' | 'Low';
   department: string;
@@ -23,35 +19,9 @@ interface ProjectData {
   progress: number; // 0-100
 }
 
-// 通用分组函数 - 来自 Timeline/_Element.tsx 的实现
-function groupTimelineItemsByField<T = Record<string, unknown>>(
-  items: TimelineItem<T>[],
-  groupBy: keyof (TimelineItem<T>)
-): SortedTimelineData<T> {
-  const groups = new Map<string, TimelineItem<T>[]>();
-  
-  items.forEach(item => {
-    const groupValue = String(item[groupBy] || 'Ungrouped');
-    if (!groups.has(groupValue)) {
-      groups.set(groupValue, []);
-    }
-    groups.get(groupValue)!.push(item);
-  });
-  
-  const data = Array.from(groups.entries()).map(([groupTitle, groupItems]) => ({
-    groupTitle,
-    groupItems: groupItems.sort((a, b) => 
-      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    )
-  }));
-  
-  return {
-    meta: { sortBy: groupBy },
-    data
-  };
-}
+// 💡 备注：现在 groupTimelineItemsByField 函数已从 tristan-ui 库导入
 
-// 步骤2：创建符合接口的示例数据
+// 步骤2：创建符合 ProjectData 接口的示例数据
 const projectData: ProjectData[] = [
   {
     // 基础字段
@@ -225,11 +195,12 @@ function App() {
       <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#e8f4fd', borderRadius: '8px' }}>
         <h3>💡 使用说明：</h3>
         <ul style={{ lineHeight: '1.6' }}>
-          <li><strong>基础要求：</strong> 每个项目只需包含 4 个基础字段：id、name、startDate、endDate</li>
-          <li><strong>自定义扩展：</strong> 可以添加任意自定义字段（如 priority、department、status 等）</li>
-          <li><strong>智能分组：</strong> 可以按任意字段进行分组显示</li>
-          <li><strong>类型安全：</strong> 完整的 TypeScript 支持，确保编译时安全</li>
-          <li><strong>交互式操作：</strong> 点击上方按钮切换不同的分组方式</li>
+          <li><strong>✨ 类型扩展：</strong> 使用 <code>extends BaseTimelineItem</code> 正确继承基础时间线类型</li>
+          <li><strong>📋 基础字段：</strong> 自动获得 4 个必需字段：id、name、startDate、endDate</li>
+          <li><strong>🎯 自定义扩展：</strong> 可以添加任意自定义字段（如 priority、department、status 等）</li>
+          <li><strong>🏷️ 智能分组：</strong> 可以按任意字段进行分组显示</li>
+          <li><strong>🔒 类型安全：</strong> 完整的 TypeScript 支持，确保编译时安全</li>
+          <li><strong>🖱️ 交互式操作：</strong> 点击上方按钮切换不同的分组方式</li>
         </ul>
       </div>
     </div>

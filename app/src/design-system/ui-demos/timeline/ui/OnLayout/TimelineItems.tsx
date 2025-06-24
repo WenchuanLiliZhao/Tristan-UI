@@ -3,7 +3,7 @@ import {
   getDaysInMonth,
   type PlacementResult,
 } from "../../data/utils";
-import { type TimelineItem } from "../../data/types";
+import { type TimelineItemType } from "../../data/types";
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 // import styles from "../../Timeline.module.scss";
@@ -18,10 +18,10 @@ interface TimelineItemsProps {
   groupGap: number;
   groupPlacements: Array<{
     groupTitle: string;
-    groupItems: TimelineItem[];
+    groupItems: TimelineItemType[];
     placements: PlacementResult[];
   }>;
-  onIssueClick?: (issue: TimelineItem) => void;
+  onIssueClick?: (issue: TimelineItemType) => void;
 }
 
 

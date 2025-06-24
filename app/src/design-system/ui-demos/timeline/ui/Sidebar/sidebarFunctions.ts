@@ -1,4 +1,4 @@
-import { type TimelineItem } from "../../data/types";
+import { type TimelineItemType } from "../../data/types";
 
 interface OutPutTermsType {
   [key: string]: number;
@@ -8,8 +8,8 @@ interface OutPutTermsType {
 
 // 通用的属性统计函数 - 支持任意属性名和类型
 export function getPropertyStats<T extends Record<string, unknown>>(
-  groupItems: TimelineItem<T>[],
-  propertyKey: keyof (TimelineItem<T>)
+  groupItems: TimelineItemType<T>[],
+  propertyKey: keyof (TimelineItemType<T>)
 ): OutPutTermsType {
   const stats: OutPutTermsType = {};
 
@@ -30,8 +30,8 @@ export function getPropertyStats<T extends Record<string, unknown>>(
 
 // 通用的数值范围统计函数
 export function getNumericRangeStats<T extends Record<string, unknown>>(
-  groupItems: TimelineItem<T>[],
-  propertyKey: keyof (TimelineItem<T>),
+  groupItems: TimelineItemType<T>[],
+  propertyKey: keyof (TimelineItemType<T>),
   ranges: Array<{ label: string; min: number; max: number }>
 ): OutPutTermsType {
   const stats: OutPutTermsType = {};

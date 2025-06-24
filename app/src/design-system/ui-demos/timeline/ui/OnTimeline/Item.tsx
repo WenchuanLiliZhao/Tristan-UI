@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Item.module.scss";
-import { type TimelineItem as TimelineItemType } from "../../data/types";
+import { type TimelineItemType as TimelineItemType } from "../../data/types";
 import { TimelineConst } from "../_constants";
 
 interface TimelineItemProps {

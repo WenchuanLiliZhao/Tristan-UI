@@ -33,7 +33,7 @@ import {
   TimelineItemInterval,
   sortTimelineItemsByStartDate,
   type TimelineProps,
-  type TimelineItem,
+  type TimelineItemType,
   BaseTimelineItemKeys,
   findPlacement,
   type PlacementResult
@@ -78,7 +78,7 @@ export function Timeline<T = Record<string, unknown>>({
   const allItems = inputData.data.flatMap((group) => group.groupItems);
 
   // Sort items by start date to ensure consistent placement
-  const sortedItems = sortTimelineItemsByStartDate(allItems as TimelineItem<T>[]);
+  const sortedItems = sortTimelineItemsByStartDate(allItems as TimelineItemType<T>[]);
   
   // 构建用于计算时间间隔的数据，使用基础字段键
   const timelineIntervalData = sortedItems.map(item => ({
@@ -133,7 +133,7 @@ export function Timeline<T = Record<string, unknown>>({
 
   // Pre-calculate placements for each group separately
   const groupPlacements = inputData.data.map((group) => {
-    const sortedGroupItems = sortTimelineItemsByStartDate(group.groupItems as TimelineItem<T>[]);
+    const sortedGroupItems = sortTimelineItemsByStartDate(group.groupItems as TimelineItemType<T>[]);
     const placements: PlacementResult[] = [];
 
     sortedGroupItems.forEach((item) => {

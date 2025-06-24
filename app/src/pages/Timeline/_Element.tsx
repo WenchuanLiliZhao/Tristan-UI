@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Timeline } from "../../design-system/ui-demos";
-import type { TimelineItem, SortedTimelineData } from "../../design-system/ui-demos/timeline/data/types";
+import type { TimelineItemType } from "../../design-system/ui-demos/timeline/data/types";
 
 // 定义项目数据接口 - 遵循指南要求：基础4字段 + 自定义字段
 interface ProjectData {
@@ -22,36 +22,11 @@ interface ProjectData {
   category: 'Development' | 'Design' | 'Marketing' | 'Research';
 }
 
-// 通用分组函数 - 现代化实现
-function groupTimelineItemsByField<T = Record<string, unknown>>(
-  items: TimelineItem<T>[],
-  groupBy: keyof (TimelineItem<T>)
-): SortedTimelineData<T> {
-  const groups = new Map<string, TimelineItem<T>[]>();
-  
-  items.forEach(item => {
-    const groupValue = String(item[groupBy] || 'Ungrouped');
-    if (!groups.has(groupValue)) {
-      groups.set(groupValue, []);
-    }
-    groups.get(groupValue)!.push(item);
-  });
-  
-  const data = Array.from(groups.entries()).map(([groupTitle, groupItems]) => ({
-    groupTitle,
-    groupItems: groupItems.sort((a, b) => 
-      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    )
-  }));
-  
-  return {
-    meta: { sortBy: groupBy },
-    data
-  };
-}
+// 导入通用分组函数
+import { groupTimelineItemsByField } from "../../design-system/ui-demos/timeline/data/utils";
 
 // 现代化的项目数据 - 完全自定义的业务数据
-const projectData: TimelineItem<ProjectData>[] = [
+const projectData: TimelineItemType<ProjectData>[] = [
   {
     id: "proj-001",
     name: "电商平台重构",
