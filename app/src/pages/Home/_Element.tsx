@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ProgressCircle } from '../../design-system/ui-components/General';
+import { ProgressCircle } from '../../design-system/ui-components/general';
 
 export const Element: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);

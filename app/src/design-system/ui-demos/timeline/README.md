@@ -1,73 +1,76 @@
-# Design System
+# Timeline Component System
 
-一个独立的React设计系统，专注于Timeline组件和基础UI组件。
+A comprehensive React timeline component system designed for displaying chronological data with advanced features like grouping, zooming, and responsive layouts.
 
-## 🎯 核心特性
+## 🎯 Core Features
 
-- **完全独立**: 无外部数据层依赖，可直接复制到其他项目
-- **Timeline组件**: 强大的时间线展示组件，支持分组、缩放、响应式布局
-- **基础UI组件**: Button、Switch、CircularProgress等可复用组件
-- **TypeScript支持**: 完整的类型定义
-- **模块化设计**: 按需导入
+- **Fully Independent**: No external data layer dependencies, ready to copy to other projects
+- **Advanced Timeline**: Powerful timeline display component with grouping, zooming, and responsive layout
+- **Data Management**: Built-in data layer with TypeScript support
+- **Modular Architecture**: Import only what you need
+- **Responsive Design**: Adapts to different screen sizes and orientations
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
-design-system/
-├── data/                    # 内置数据层
-│   ├── types.ts            # 数据类型定义
-│   ├── utils.ts            # 工具函数
-│   ├── hooks.ts            # React Hooks
-│   └── index.ts            # 数据层入口
-├── ui/                     # 基础UI组件
-│   ├── Button/             # 按钮组件
-│   ├── Switch/             # 开关组件
-│   ├── CircularProgress/   # 进度条组件
-│   ├── Boxes/              # 容器组件
-│   ├── Icon/               # 图标组件
-
-├── interactive/            # 交互组件
-│   └── Timeline/           # 时间线组件
-│       ├── Timeline.tsx    # 主组件
-│       ├── OnLayout/       # 布局相关组件
-│       ├── OnTimeline/     # 时间线项目组件
-│       ├── Sidebar/        # 侧边栏组件
-│       └── Shared/         # 共享组件
-├── assets/                 # 静态资源
-│   ├── global-style/       # 全局样式
-│   │   ├── css-variables.ts # CSS变量
-│   │   └── *.scss          # SCSS样式文件
-│   └── Img/               # 图片资源
-└── index.ts               # 设计系统主入口
+timeline/
+├── data/                          # Data layer and utilities
+│   ├── types.ts                   # TypeScript type definitions
+│   ├── utils.ts                   # Utility functions for data processing
+│   ├── hooks.ts                   # React hooks for timeline functionality
+│   └── index.ts                   # Data layer exports
+├── ui/                            # UI components
+│   ├── Timeline.tsx               # Main timeline component
+│   ├── Timeline.module.scss       # Main timeline styles
+│   ├── _constants.ts              # Component constants
+│   ├── OnLayout/                  # Layout-related components
+│   │   ├── TimelineItems.tsx      # Timeline item layout
+│   │   ├── TimelineRuler.tsx      # Timeline ruler/scale
+│   │   └── *.module.scss          # Layout styles
+│   ├── OnTimeline/                # Timeline item components
+│   │   ├── Item.tsx               # Individual timeline item
+│   │   ├── Group.tsx              # Timeline group container
+│   │   └── *.module.scss          # Item styles
+│   ├── Sidebar/                   # Sidebar components
+│   │   ├── TimelineSidebar.tsx    # Main sidebar
+│   │   ├── GroupProgressBar.tsx   # Progress visualization
+│   │   ├── sidebarFunctions.ts    # Sidebar utilities
+│   │   └── *.module.scss          # Sidebar styles
+│   ├── Shared/                    # Shared components
+│   │   ├── Column.tsx             # Column layout component
+│   │   └── *.module.scss          # Shared styles
+│   ├── README.md                  # UI components documentation
+│   └── GENERIC_TIMELINE_USAGE.md  # Usage guide
+└── index.ts                       # Main exports
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 安装使用
+### Installation
 
-直接复制 `design-system` 文件夹到你的项目中：
+Copy the timeline directory to your project:
 
 ```bash
-# 复制整个design-system文件夹到你的src目录
-cp -r /path/to/design-system ./src/
+# Copy the entire timeline folder to your design system
+cp -r /path/to/timeline ./src/design-system/ui-demos/
 ```
 
-### 基本使用
+### Basic Usage
 
 ```tsx
-import { Timeline, Button, Switch } from './design-system';
-import type { SortedTimelineData } from './design-system';
+import { Timeline } from './design-system/ui-demos/timeline';
+import type { SortedTimelineData } from './design-system/ui-demos/timeline';
 
-// 使用Timeline组件
+// Define your timeline data
 const timelineData: SortedTimelineData = {
   meta: { sortBy: 'name' },
   data: [
     {
-      groupTitle: "开发团队",
+      groupTitle: "Development Team",
       groupItems: [
         {
           id: "1",
-          name: "项目A",
+          name: "Project Alpha",
           startDate: new Date("2024-01-01"),
           endDate: new Date("2024-02-01")
         }
@@ -80,119 +83,156 @@ function App() {
   return (
     <div>
       <Timeline inputData={timelineData} />
-      <Button variant="primary">点击按钮</Button>
-      <Switch checked={true} onChange={() => {}} />
     </div>
   );
 }
 ```
 
-## 📊 Timeline组件
+## 📊 Timeline Component API
 
-### 基本用法
+### Props
 
 ```tsx
-import { Timeline } from './design-system';
-import type { SortedTimelineData, TimelineItem } from './design-system';
-
-// 定义你的数据类型
-interface ProjectData {
-  priority: 'High' | 'Medium' | 'Low';
-  team: string;
-  status: string;
+interface TimelineProps<T = {}> {
+  inputData: SortedTimelineData<T>;
+  onItemClick?: (item: TimelineItem<T>) => void;
+  onGroupClick?: (group: TimelineGroup<T>) => void;
+  // Additional configuration options...
 }
-
-// 创建Timeline数据
-const data: SortedTimelineData<ProjectData> = {
-  meta: { sortBy: 'team' },
-  data: [
-    {
-      groupTitle: "技术团队",
-      groupItems: [
-        {
-          id: "proj-1",
-          name: "网站重构",
-          startDate: new Date("2024-01-15"),
-          endDate: new Date("2024-03-15"),
-          priority: "High",
-          team: "前端团队",
-          status: "进行中"
-        }
-      ]
-    }
-  ]
-};
-
-<Timeline<ProjectData> inputData={data} />
 ```
 
-### 数据格式
+### Data Structure
 
-Timeline组件要求数据包含以下必需字段：
+The timeline requires data in the following format:
 
 ```tsx
 interface BaseTimelineItem {
-  id: string;        // 唯一标识符
-  name: string;      // 显示名称
-  startDate: Date;   // 开始日期
-  endDate: Date;     // 结束日期
+  id: string;        // Unique identifier
+  name: string;      // Display name
+  startDate: Date;   // Start date
+  endDate: Date;     // End date
+}
+
+interface TimelineGroup<T = {}> {
+  groupTitle: string;
+  groupItems: Array<TimelineItem<T>>;
+}
+
+interface SortedTimelineData<T = {}> {
+  meta: { sortBy: string };
+  data: Array<TimelineGroup<T>>;
 }
 ```
 
-你可以添加任意自定义字段：
+### Custom Data Types
+
+You can extend the base timeline item with custom fields:
 
 ```tsx
-interface MyCustomItem extends BaseTimelineItem {
+interface ProjectData {
   priority: 'High' | 'Medium' | 'Low';
-  assignee: string;
-  budget: number;
-  // ... 其他字段
+  team: string;
+  status: 'Not Started' | 'In Progress' | 'Completed';
+  budget?: number;
 }
+
+// Use with Timeline
+<Timeline<ProjectData> inputData={customData} />
 ```
 
-## 🎨 样式定制
+## 🎨 Styling and Theming
 
-设计系统使用CSS变量进行主题定制：
+The timeline uses CSS modules for styling. You can customize the appearance by:
+
+1. **CSS Variables**: Override CSS custom properties
+2. **SCSS Modules**: Modify the `.module.scss` files
+3. **Component Props**: Use built-in styling props
 
 ```scss
+/* Custom styling example */
 :root {
-  --color-primary: #007bff;
-  --color-secondary: #6c757d;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-error: #dc3545;
+  --timeline-primary-color: #007bff;
+  --timeline-background: #ffffff;
+  --timeline-border-color: #e0e0e0;
+  --timeline-text-color: #333333;
 }
 ```
 
-## 🔧 开发依赖
+## 📋 Component Architecture
+
+### Core Components
+
+- **`Timeline`** - Main container component that orchestrates all other components
+- **`TimelineItems`** - Handles the layout and positioning of timeline items
+- **`TimelineRuler`** - Displays the time scale and navigation controls
+- **`TimelineSidebar`** - Shows group information and progress indicators
+
+### Sub-components
+
+- **`Item`** - Individual timeline item representation
+- **`Group`** - Groups related timeline items together
+- **`GroupProgressBar`** - Visual progress indicator for groups
+- **`Column`** - Shared layout component for consistent spacing
+
+## 🔧 Data Utilities
+
+### Available Hooks
+
+```tsx
+import { useCenterBasedZoom, useTimelineData } from './timeline';
+
+// Zoom functionality
+const { zoomLevel, zoomIn, zoomOut, resetZoom } = useCenterBasedZoom();
+
+// Data processing
+const processedData = useTimelineData(rawData);
+```
+
+### Utility Functions
+
+```tsx
+import { 
+  sortTimelineItemsByStartDate,
+  findPlacement,
+  TimelineItemInterval 
+} from './timeline';
+
+// Sort items by date
+const sortedItems = sortTimelineItemsByStartDate(items);
+
+// Calculate time intervals
+const interval = new TimelineItemInterval(startDate, endDate);
+
+// Find optimal placement
+const placement = findPlacement(items, constraints);
+```
+
+## 📚 Documentation
+
+- **`ui/README.md`** - Detailed UI component documentation
+- **`ui/GENERIC_TIMELINE_USAGE.md`** - Comprehensive usage guide with examples
+
+## 🛠 Development Requirements
 
 - React 18+
 - TypeScript 4.5+
-- SCSS支持
+- SCSS support
+- CSS Modules support
 
-## 📦 组件列表
+## 🎯 Use Cases
 
-### UI组件
-- `Button` - 按钮组件，支持多种变体
-- `Switch` - 开关组件
-- `CircularProgress` - 圆形进度条
-- `HoverBox`, `MenuBox`, `TransBgBox` - 容器组件
-- `Icon` - 图标组件
+Perfect for:
+- Project timeline visualization
+- Gantt chart-style displays
+- Event chronology
+- Resource scheduling
+- Progress tracking
+- Timeline-based data visualization
 
+## 🤝 Contributing
 
-### 交互组件
-- `Timeline` - 时间线组件，支持分组、缩放、响应式
+This timeline system is designed to be self-contained and easily customizable. Feel free to modify and extend it according to your project needs.
 
-### 数据工具
-- `TimelineItemInterval` - 时间间隔计算
-- `sortTimelineItemsByStartDate` - 按日期排序
-- `findPlacement` - 布局算法
-- `useCenterBasedZoom` - 缩放Hook
+## 📄 License
 
-## 🤝 贡献
-
-这是一个独立的设计系统，可以自由复制和修改以适应你的项目需求。
-
-## 📄 许可证
-
-根据项目许可证使用。 
+Use according to your project's license requirements. 

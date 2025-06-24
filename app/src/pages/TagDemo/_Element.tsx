@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag } from '../../design-system/ui-components/General';
+import { Tag } from '../../design-system/ui-components/general';
 import { rainbowColorNames } from '../../styles/color';
 
 const TagDemo: React.FC = () => {

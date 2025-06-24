@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon } from '../../design-system/ui-components/General/Icon';
+import { Icon } from '../../design-system/ui-components/general/Icon';
 
 export const Element: React.FC = () => {
   const [selectedIcon, setSelectedIcon] = useState('home');

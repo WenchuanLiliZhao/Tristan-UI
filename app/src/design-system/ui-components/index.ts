@@ -6,5 +6,6 @@ export type {
   Theme
 } from './types';
 
-export * from './General';
-export * from './Navigation';
+export * from './general';
+export * from './navigation';
+export * from './data-display';
