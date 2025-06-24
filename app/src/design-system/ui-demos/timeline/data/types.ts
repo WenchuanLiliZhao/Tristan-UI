@@ -44,10 +44,44 @@ export const BaseTimelineItemKeys = {
 // 通用时间线项目类型 - 支持泛型扩展
 export type TimelineItemType<T = Record<string, unknown>> = BaseTimelineItemType & T;
 
+// 字段显示类型枚举
+export type FieldDisplayType = 'icon' | 'progress' | 'tag';
+
+// 字段显示配置接口
+export interface FieldDisplayConfig<T = Record<string, unknown>> {
+  /** 数据字段名 */
+  field: keyof T;
+  /** 显示类型 */
+  displayType: FieldDisplayType;
+  /** 
+   * 字段值到显示属性的映射函数或对象
+   * - 对于 icon: 返回 { iconName: string, color?: string }
+   * - 对于 progress: 返回 { value: number, color?: string }
+   * - 对于 tag: 返回 { text: string, color?: string, variant?: 'contained' | 'outlined' }
+   */
+  mapping?: 
+    | ((value: unknown) => Record<string, unknown>)
+    | Record<string, Record<string, unknown>>;
+  /** 自定义样式 */
+  style?: React.CSSProperties;
+  /** 是否显示（可以是函数动态判断） */
+  visible?: boolean | ((item: TimelineItemType<T>) => boolean);
+}
+
+// Timeline 项目显示配置
+export interface TimelineItemDisplayConfig<T = Record<string, unknown>> {
+  /** 图形信息区域的字段配置 */
+  graphicFields?: FieldDisplayConfig<T>[];
+  /** 标签区域的字段配置 */
+  tagFields?: FieldDisplayConfig<T>[];
+}
+
 // Timeline 配置接口
 export interface TimelineConfigType<TExtended = Record<string, unknown>> {
   dataType?: TExtended;
   groupBy?: keyof (BaseTimelineItemType & TExtended);
+  /** 项目显示配置 */
+  itemDisplayConfig?: TimelineItemDisplayConfig<TExtended>;
 }
 
 // 分组数据结构 - 通用化
@@ -69,6 +103,26 @@ export interface TimelineProps<T = Record<string, unknown>> {
   init?: TimelineConfigType<T>;
   inputData: SortedTimelineDataType<T>;
   onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
+  onItemClick?: (item: TimelineItemType<T>) => void;
 }
+
+// 预定义的常用映射函数
+export const CommonFieldMappings = {
+  /** 进度值映射 (0-100) */
+  progress: (value: number) => ({
+    value: Math.max(0, Math.min(100, value)),
+    showText: true,
+  }),
+  
+  /** 状态到颜色的映射 */
+  statusColor: (colorMap: Record<string, { name: string; color: string; icon?: string }>) => 
+    (value: string) => colorMap[value] || { name: value, color: 'gray' },
+    
+  /** 简单的文本标签映射 */
+  textTag: (value: unknown) => ({
+    text: String(value),
+    variant: 'contained' as const,
+  }),
+};
 
  

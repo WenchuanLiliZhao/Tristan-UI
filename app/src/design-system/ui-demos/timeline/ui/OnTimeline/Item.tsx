@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Item.module.scss";
-import { type TimelineItemType as TimelineItemType } from "../../data/types";
+import { type TimelineItemType, type TimelineItemDisplayConfig, type FieldDisplayConfig } from "../../data/types";
 import { TimelineConst } from "../_constants";
+import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
+import type { Color } from "../../../../ui-components/types";
 
 interface TimelineItemProps {
   item: TimelineItemType;
@@ -10,8 +12,84 @@ interface TimelineItemProps {
   cellHeight: number;
   column: number;
   onIssueClick?: (issue: TimelineItemType) => void;
+  displayConfig?: TimelineItemDisplayConfig;
 }
 
+// 渲染图形信息区域的字段
+const renderGraphicField = (item: TimelineItemType, config: FieldDisplayConfig, index: number) => {
+  if (config.visible === false || (typeof config.visible === 'function' && !config.visible(item))) {
+    return null;
+  }
+
+  const fieldValue = item[config.field as keyof typeof item];
+  let displayProps: Record<string, unknown> = {};
+  
+  if (config.mapping) {
+    if (typeof config.mapping === 'function') {
+      displayProps = config.mapping(fieldValue);
+    } else if (typeof fieldValue === 'string' && config.mapping[fieldValue]) {
+      displayProps = config.mapping[fieldValue];
+    }
+  }
+
+  const key = `${item.id}-${String(config.field)}-${index}`;
+
+  switch (config.displayType) {
+    case 'icon':
+      return (
+        <Icon
+          key={key}
+          name={displayProps.iconName as string || displayProps.icon as string || 'help'}
+          size="small"
+          color={displayProps.color as string}
+        />
+      );
+    case 'progress':
+      return (
+        <ProgressCircle
+          key={key}
+          progress={displayProps.value as number || fieldValue as number || 0}
+          size="small"
+          color={displayProps.color as Color}
+          showText={displayProps.showText as boolean}
+        />
+      );
+    default:
+      return null;
+  }
+};
+
+// 渲染标签区域的字段
+const renderTagField = (item: TimelineItemType, config: FieldDisplayConfig, index: number) => {
+  if (config.visible === false || (typeof config.visible === 'function' && !config.visible(item))) {
+    return null;
+  }
+
+  const fieldValue = item[config.field as keyof typeof item];
+  let displayProps: Record<string, unknown> = {};
+  
+  if (config.mapping) {
+    if (typeof config.mapping === 'function') {
+      displayProps = config.mapping(fieldValue);
+    } else if (typeof fieldValue === 'string' && config.mapping[fieldValue]) {
+      displayProps = config.mapping[fieldValue];
+    }
+  }
+
+  const tagText = displayProps.text as string || displayProps.name as string || String(fieldValue);
+  const key = `${item.id}-${String(config.field)}-${index}`;
+  
+  return (
+    <Tag
+      key={key}
+      variant={displayProps.variant as 'contained' | 'outlined' || 'contained'}
+      size="small"
+      color={displayProps.color as Color}
+    >
+      {tagText}
+    </Tag>
+  );
+};
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({
   item,
@@ -20,6 +98,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   cellHeight,
   column,
   onIssueClick,
+  displayConfig,
 }) => {
 
   return (
@@ -41,12 +120,12 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
         onClick={() => onIssueClick?.(item)}
       >
         <div className={styles["timeline-item-graphic-info"]}>
-          {/* 映射所有显示为 icon 或 progress bar 的属性 */}
+          {displayConfig?.graphicFields?.map((config, index) => renderGraphicField(item, config, index))}
         </div>
         <div className={styles["timeline-item-text-info"]}>
           <div className={styles["timeline-item-name"]}>{item.name}</div>
           <div className={styles["timeline-item-tags"]}>
-            {/* 映射出所有显示为 tag 的属性 */}
+            {displayConfig?.tagFields?.map((config, index) => renderTagField(item, config, index))}
           </div>
         </div>
       </div>

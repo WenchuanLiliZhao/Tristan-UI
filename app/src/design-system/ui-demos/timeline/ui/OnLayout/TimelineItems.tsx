@@ -3,7 +3,7 @@ import {
   getDaysInMonth,
   type PlacementResult,
 } from "../../data/utils";
-import { type TimelineItemType } from "../../data/types";
+import { type TimelineItemType, type TimelineItemDisplayConfig } from "../../data/types";
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 // import styles from "../../Timeline.module.scss";
@@ -21,6 +21,7 @@ interface TimelineItemsProps {
     groupItems: TimelineItemType[];
     placements: PlacementResult[];
   }>;
+  displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }
 
@@ -34,6 +35,7 @@ export const TimelineItems: React.FC<TimelineItemsProps> = ({
   cellHeight,
   groupGap,
   groupPlacements,
+  displayConfig,
   onIssueClick,
 }) => {
   return (
@@ -75,6 +77,7 @@ export const TimelineItems: React.FC<TimelineItemsProps> = ({
                               dayWidth={dayWidth}
                               cellHeight={cellHeight}
                               groupGap={groupGap}
+                              displayConfig={displayConfig}
                               onIssueClick={onIssueClick}
                             />
                           ))}

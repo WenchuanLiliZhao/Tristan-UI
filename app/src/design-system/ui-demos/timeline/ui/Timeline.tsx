@@ -34,6 +34,7 @@ import {
   sortTimelineItemsByStartDate,
   type TimelineProps,
   type TimelineItemType,
+  type TimelineItemDisplayConfig,
   BaseTimelineItemKeys,
   findPlacement,
   type PlacementResult
@@ -58,6 +59,7 @@ type TimeViewType = keyof typeof TIME_VIEW_CONFIG;
 export function Timeline<T = Record<string, unknown>>({
   // init 参数为未来扩展保留，暂时不使用
   inputData,
+  init,
 }: TimelineProps<T>) {
   // Constants for layout calculations
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
@@ -230,6 +232,7 @@ export function Timeline<T = Record<string, unknown>>({
                 cellHeight={cellHeight}
                 groupGap={groupGapForTesting}
                 groupPlacements={groupPlacements}
+                displayConfig={init?.itemDisplayConfig as TimelineItemDisplayConfig}
                 onIssueClick={() => {
                   // Issue 点击事件，不再同步到URL
                 }}

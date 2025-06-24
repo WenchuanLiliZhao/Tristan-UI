@@ -1,6 +1,6 @@
 import React from "react";
 import { calculateDurationInDays, calculateMaxOverlapCardinality, type PlacementResult } from "../../data/utils";
-import { type TimelineItemType as TimelineItemType } from "../../data/types";
+import { type TimelineItemType as TimelineItemType, type TimelineItemDisplayConfig } from "../../data/types";
 import { TimelineItem } from "./Item";
 import styles from "./Group.module.scss";
 import { TimelineConstCalc } from "../_constants";
@@ -17,6 +17,7 @@ interface TimelineGroupProps {
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
+  displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }
 
@@ -28,6 +29,7 @@ export const TimelineGroup: React.FC<TimelineGroupProps> = ({
   dayWidth,
   cellHeight,
   groupGap,
+  displayConfig,
   onIssueClick,
 }) => {
   return (
@@ -66,6 +68,7 @@ export const TimelineGroup: React.FC<TimelineGroupProps> = ({
               dayWidth={dayWidth}
               cellHeight={cellHeight}
               column={placement.column}
+              displayConfig={displayConfig}
               onIssueClick={onIssueClick}
             />
           );
