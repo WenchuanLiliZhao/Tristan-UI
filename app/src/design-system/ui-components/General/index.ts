@@ -1,2 +1,3 @@
 export * from './Icon';
-export * from './Button'
+export * from './Button';
+export * from './ProgressCircle';
