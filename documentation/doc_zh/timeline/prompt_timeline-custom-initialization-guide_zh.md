@@ -124,12 +124,88 @@ interface ComplexProjectData {
 
 ## 如何自定义：详细步骤指南
 
+### 颜色定义最佳实践
+
+在定义数据结构之前，了解如何正确定义颜色是很重要的：
+
+```typescript
+// 🎨 推荐的颜色定义方式
+import { rainbowColorNames } from "tristan-ui/colors";
+
+// ✅ 使用设计系统的预设颜色
+export const projectStatus = {
+  planning: {
+    name: "规划中",
+    color: rainbowColorNames.amber,    // 通过CSS类实现，性能更好
+    icon: "schedule"
+  },
+  development: {
+    name: "开发中", 
+    color: rainbowColorNames.blue,     // 自动适配主题
+    icon: "code"
+  },
+  testing: {
+    name: "测试中",
+    color: rainbowColorNames.orange,   // 与设计系统保持一致
+    icon: "bug_report"
+  },
+  completed: {
+    name: "已完成",
+    color: rainbowColorNames.emerald,  // 语义化颜色选择
+    icon: "check_circle"
+  }
+};
+
+// ❌ 避免使用硬编码颜色
+export const badColorExample = {
+  high: { name: "High", color: "#ff0000" },    // 硬编码hex值
+  medium: { name: "Medium", color: "yellow" }, // 基础CSS颜色
+  low: { name: "Low", color: "rgb(0,255,0)" }  // RGB值
+};
+```
+
 ### 步骤 1：定义您的数据结构
 
 首先，定义包含基础字段 + 您的自定义字段的接口：
 
 ```typescript
-// 第一步：定义您的数据接口
+// 第一步：定义您的数据接口和颜色映射
+import { rainbowColorNames } from "tristan-ui/colors";
+
+// 定义颜色映射对象
+export const priorityMap = {
+  High: {
+    name: "高优先级",
+    color: rainbowColorNames.rose,
+    icon: "priority_high"
+  },
+  Medium: {
+    name: "中等优先级", 
+    color: rainbowColorNames.amber,
+    icon: "low_priority"
+  },
+  Low: {
+    name: "低优先级",
+    color: rainbowColorNames.emerald,
+    icon: "flag"
+  }
+};
+
+export const statusMap = {
+  Active: {
+    name: "进行中",
+    color: rainbowColorNames.blue
+  },
+  Paused: {
+    name: "暂停",
+    color: rainbowColorNames.orange
+  },
+  Completed: {
+    name: "已完成", 
+    color: rainbowColorNames.emerald
+  }
+};
+
 interface MyProjectData {
   // 🔴 必需：基础字段（不能省略）
   id: string;
@@ -138,10 +214,10 @@ interface MyProjectData {
   endDate: Date;
   
   // 🟢 自定义：添加您需要的业务字段
-  priority: 'High' | 'Medium' | 'Low';
+  priority: keyof typeof priorityMap;  // 确保类型安全
   team: string;
   budget: number;
-  status: 'Active' | 'Paused' | 'Completed';
+  status: keyof typeof statusMap;      // 确保类型安全
 }
 ```
 
@@ -159,23 +235,38 @@ const myProjects: MyProjectData[] = [
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-03-31"),
     
-    // 您的自定义字段
-    priority: 'High',
+    // 您的自定义字段 - 现在使用映射对象的键
+    priority: 'High',     // 对应 priorityMap.High
     team: '前端团队',
     budget: 50000,
-    status: 'Active'
+    status: 'Active'      // 对应 statusMap.Active
   },
   {
     id: "proj-002", 
     name: "移动应用开发",
     startDate: new Date("2024-02-01"),
     endDate: new Date("2024-06-30"),
-    priority: 'Medium',
+    priority: 'Medium',   // 对应 priorityMap.Medium 
     team: '移动团队',
     budget: 80000,
-    status: 'Active'
+    status: 'Active'      // 对应 statusMap.Active
   }
 ];
+
+// 第二步b：在组件中使用颜色映射
+import { createFieldConfig } from "tristan-ui";
+
+const itemDisplayConfig = {
+  tagFields: [
+    // 使用映射对象自动获得正确的颜色和名称
+    createFieldConfig.tagFromMap<MyProjectData>("priority", priorityMap),
+    createFieldConfig.tagFromMap<MyProjectData>("status", statusMap),
+  ],
+  graphicFields: [
+    // 图标也可以使用映射对象
+    createFieldConfig.iconFromMap<MyProjectData>("priority", priorityMap),
+  ]
+};
 ```
 
 ### 步骤 3：分组处理

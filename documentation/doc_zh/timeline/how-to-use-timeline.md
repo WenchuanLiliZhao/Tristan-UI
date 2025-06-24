@@ -45,20 +45,21 @@ interface BaseTimelineItemType {
 
 ```typescript
 import type { BaseTimelineItemType } from "tristan-ui";
+import { rainbowColorNames } from "tristan-ui/colors";
 
 // 定义状态选项（可选 - 用于更好的类型安全）
 export const status = {
   high: {
     name: "High",
-    color: "red"
+    color: rainbowColorNames.rose  // 使用设计系统的rainbow颜色
   },
   medium: {
     name: "Medium",
-    color: "yellow"
+    color: rainbowColorNames.amber
   },
   low: {
     name: "Low",
-    color: "green"
+    color: rainbowColorNames.emerald
   }
 }
 
@@ -66,27 +67,27 @@ export const status = {
 export const team = {
   sales: {
     name: "Sales",
-    color: "blue"
+    color: rainbowColorNames.blue
   },
   marketing: {
     name: "Marketing",
-    color: "green"
+    color: rainbowColorNames.emerald
   },
   engineering: {
     name: "Engineering",
-    color: "purple"
+    color: rainbowColorNames.purple
   },
   design: {
     name: "Design",
-    color: "orange"
+    color: rainbowColorNames.orange
   },
   product: {
     name: "Product",
-    color: "pink"
+    color: rainbowColorNames.pink
   },
   other: {
     name: "Other",
-    color: "gray"
+    color: rainbowColorNames.cyan
   }
 }
 
@@ -94,17 +95,17 @@ export const team = {
 export const priority = {
   high: {
     name: "High",
-    color: "red",
+    color: rainbowColorNames.rose,
     icon: "priority_high"
   },
   medium: {
     name: "Medium",
-    color: "yellow",
+    color: rainbowColorNames.amber,
     icon: "low_priority"
   },
   low: {
     name: "Low",
-    color: "green",
+    color: rainbowColorNames.emerald,
     icon: "flag"
   }
 }
@@ -113,17 +114,17 @@ export const priority = {
 export const riskLevel = {
   high: {
     name: "High Risks",
-    color: "red",
+    color: rainbowColorNames.rose,
     icon: "warning"
   },
   medium: {
     name: "Medium Risks",
-    color: "yellow",
+    color: rainbowColorNames.amber,
     icon: "info"
   },
   low: {
     name: "Low Risks",
-    color: "green",
+    color: rainbowColorNames.emerald,
     icon: "check_circle"
   }
 }
@@ -188,6 +189,103 @@ export const ExampleData: ProjectDataType[] = [
   }
   // 可以添加更多数据...
 ]
+```
+
+## 🎨 颜色定义最佳实践
+
+### Rainbow 颜色系统
+
+Timeline 组件使用统一的设计系统颜色，推荐使用 `rainbowColorNames` 而不是硬编码的颜色字符串：
+
+```typescript
+import { rainbowColorNames } from "tristan-ui/colors";
+
+// ✅ 推荐：使用设计系统颜色
+export const status = {
+  high: {
+    name: "High Priority",
+    color: rainbowColorNames.rose    // 自动适配深色/浅色主题
+  },
+  medium: {
+    name: "Medium Priority", 
+    color: rainbowColorNames.amber
+  },
+  low: {
+    name: "Low Priority",
+    color: rainbowColorNames.emerald
+  }
+}
+
+// ❌ 不推荐：硬编码颜色
+export const statusOld = {
+  high: { name: "High", color: "red" },      // 主题切换时可能不匹配
+  medium: { name: "Medium", color: "yellow" }, // 可能与其他组件不一致
+  low: { name: "Low", color: "green" }
+}
+```
+
+### 可用的 Rainbow 颜色
+
+```typescript
+import { rainbowColorNames } from "tristan-ui/colors";
+
+// 8种预设的rainbow颜色，每种都有4个变体（default, dark, half, pale）
+const colors = {
+  rose: rainbowColorNames.rose,       // 玫瑰红：适合高优先级、错误状态
+  amber: rainbowColorNames.amber,     // 琥珀色：适合警告、中等优先级
+  emerald: rainbowColorNames.emerald, // 翡翠绿：适合成功、低风险
+  blue: rainbowColorNames.blue,       // 蓝色：适合信息、主要操作
+  purple: rainbowColorNames.purple,   // 紫色：适合特殊类别
+  orange: rainbowColorNames.orange,   // 橙色：适合次要警告
+  pink: rainbowColorNames.pink,       // 粉色：适合标记、突出显示
+  cyan: rainbowColorNames.cyan,       // 青色：适合辅助信息
+};
+```
+
+### 颜色实现原理
+
+颜色值通过CSS类而非内嵌样式实现，这样可以：
+
+1. **更好的性能**：避免运行时样式计算
+2. **主题支持**：自动适配深色/浅色主题
+3. **一致性**：与整个设计系统保持统一
+4. **可维护性**：集中管理所有颜色定义
+
+```typescript
+// 组件会自动生成对应的CSS类名
+// color: rainbowColorNames.rose → CSS类: .lili-tag--rose
+// 支持contained和outlined两种变体
+```
+
+### 颜色选择建议
+
+```typescript
+// 语义化颜色选择
+export const semanticColors = {
+  // 状态相关
+  success: rainbowColorNames.emerald,  // 成功、完成
+  warning: rainbowColorNames.amber,    // 警告、需要注意
+  error: rainbowColorNames.rose,       // 错误、失败
+  info: rainbowColorNames.blue,        // 信息、提示
+  
+  // 优先级相关
+  urgent: rainbowColorNames.rose,      // 紧急
+  high: rainbowColorNames.orange,      // 高
+  medium: rainbowColorNames.amber,     // 中
+  low: rainbowColorNames.emerald,      // 低
+  
+  // 团队/部门相关
+  engineering: rainbowColorNames.purple,
+  design: rainbowColorNames.pink,
+  product: rainbowColorNames.blue,
+  marketing: rainbowColorNames.emerald,
+  sales: rainbowColorNames.cyan,
+  
+  // 特殊用途
+  feature: rainbowColorNames.blue,     // 新功能
+  bugfix: rainbowColorNames.orange,    // 修复
+  maintenance: rainbowColorNames.cyan,  // 维护
+};
 ```
 
 ## 🆕 字段显示配置系统
