@@ -8,7 +8,11 @@
 npm install tristan-ui
 ```
 
+安装样式依赖：
 
+```bash
+npm install sass
+```
 
 引入样式：
 
