@@ -2,34 +2,22 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 import type { BaseComponentProps, Size } from "../../types";
-
-// Updated semantic color types to match Figma
-export type ButtonSemantic = "default" | "success" | "active" | "warning" | "error";
-
-// Updated variant to match Figma "mode" property
-export type ButtonVariant = "filled" | "outlined" | "text";
+import { Icon } from "../Icon";
+import { HoverBox } from "../HoverBox";
 
 export interface ButtonProps extends BaseComponentProps {
   /** Button mode/variant - matches Figma "mode" property */
-  variant?: ButtonVariant;
+  variant?: "filled" | "outlined" | "ghost";
   /** Button size */
   size?: Size;
   /** Semantic color variant - matches Figma "semantic" property */
-  semantic?: ButtonSemantic;
+  semantic?: "default" | "success" | "active" | "warning" | "error";
   /** Whether the button is disabled */
   disabled?: boolean;
-  /** Whether the button is in loading state */
-  loading?: boolean;
-  /** Whether to show an icon - matches Figma "show icon" property */
-  showIcon?: boolean;
-  /** Whether to show text content - matches Figma "show text" property */
-  showText?: boolean;
-  /** Whether to show decorative icon - matches Figma "show deco icon" property */
-  showDecoIcon?: boolean;
   /** Icon to display (when showIcon is true) */
-  icon?: React.ReactNode;
+  icon?: string;
   /** Decorative icon to display (when showDecoIcon is true) */
-  decoIcon?: React.ReactNode;
+  decoIcon?: string;
   /** Click handler */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Button type */
@@ -38,14 +26,10 @@ export interface ButtonProps extends BaseComponentProps {
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  variant = "filled",
+  variant = "outlined",
   size = "medium",
   semantic = "default",
   disabled = false,
-  loading = false,
-  showIcon = true,
-  showText = true,
-  showDecoIcon = true,
   icon,
   decoIcon,
   onClick,
@@ -54,38 +38,34 @@ export const Button: React.FC<ButtonProps> = ({
   "data-testid": dataTestId,
   ...rest
 }) => {
-  const baseClass = "lili-button";
+  const baseClass = "tristan-button";
   const classes = [
     styles[baseClass],
     styles[`${baseClass}--${variant}`],
     styles[`${baseClass}--${size}`],
     styles[`${baseClass}--${semantic}`],
     disabled && styles[`${baseClass}--disabled`],
-    loading && styles[`${baseClass}--loading`],
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!disabled && !loading && onClick) {
-      onClick(event);
-    }
-  };
 
   return (
     <button
       type={type}
       className={classes}
-      disabled={disabled || loading}
-      onClick={handleClick}
+      disabled={disabled}
+      onClick={onClick}
       data-testid={dataTestId}
       {...rest}
     >
-      {loading && <span className={styles[`${baseClass}__spinner`]}>⟳</span>}
-      {showIcon && icon && <span className={styles[`${baseClass}__icon`]}>{icon}</span>}
-      {showText && <span className={styles[`${baseClass}__content`]}>{children}</span>}
-      {showDecoIcon && decoIcon && <span className={styles[`${baseClass}__deco-icon`]}>{decoIcon}</span>}
+      {icon && <span className={styles[`${baseClass}__icon`]}><Icon name={icon} /></span>}
+      <span className={styles[`${baseClass}__content`]}>
+        {children}
+      </span>
+      {decoIcon && <span className={styles[`${baseClass}__icon`]}><Icon name={decoIcon} /></span>}
+      <HoverBox className={styles["hover-box"]}/>
     </button>
   );
 }; 

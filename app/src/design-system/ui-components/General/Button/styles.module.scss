@@ -1,33 +1,36 @@
 // Button Base Styles
-.lili-button {
+.tristan-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: 6px;
+  border: 1px solid transparent;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
   text-decoration: none;
   outline: none;
+  overflow: hidden;
   
-  &:focus-visible {
-    box-shadow: 0 0 0 2px var(--color--semantic-active-half);
-  }
 
-  // Size variants
   &--small {
     padding: 6px 12px;
-    font-size: 14px;
-    min-height: 32px;
   }
 
   &--medium {
-    padding: 8px 16px;
-    font-size: 16px;
-    min-height: 40px;
+    padding: 0 7px;
+    height: 32px;
+    border-radius: 4px;
+    gap: 1px;
+
+    .tristan-button__icon {
+      font-size: 18px;
+      padding: 2px 0;
+    }
+
+    .tristan-button__content {
+      font-size: 14px;
+      line-height: 22px;
+      padding: 0 3px;
+    }
   }
 
   &--large {
@@ -36,146 +39,179 @@
     min-height: 48px;
   }
 
-  // Variant styles - Filled (previously Contained)
-  &--filled {
-    &.lili-button--default {
-      background-color: var(--color-chart--neutron-6);
-      color: var(--color-chart--base-white);
-      
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color-chart--neutron-5);
+  &--outlined {
+    background-color: transparent;
+
+    &.tristan-button--default {
+      border-color: var(--color--border-prime);
+      color: var(--color--text-secondary);
+
+      &:hover:not(.tristan-button--disabled) {
+        border-color: var(--color--border-darken);
+
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
 
-    &.lili-button--success {
+    &.tristan-button--success {
+      border-color: var(--color--semantic-success-pale);
+      background-color: var(--color--semantic-success-pale);
+      color: var(--color--semantic-success);
+
+      &:hover:not(.tristan-button--disabled) {
+        border-color: var(--color--semantic-success-half);
+
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.tristan-button--active {
+      border-color: var(--color--semantic-active-pale);
+      background-color: var(--color--semantic-active-pale);
+      color: var(--color--semantic-active);
+
+      &:hover:not(.tristan-button--disabled) {
+        border-color: var(--color--semantic-active-half);
+
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.tristan-button--warning {
+      border-color: var(--color--semantic-warning-pale);
+      background-color: var(--color--semantic-warning-pale);
+      color: var(--color--semantic-warning);
+
+      &:hover:not(.tristan-button--disabled) {
+        border-color: var(--color--semantic-warning-half);
+
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.tristan-button--error {
+      border-color: var(--color--semantic-error-pale);
+      background-color: var(--color--semantic-error-pale);
+      color: var(--color--semantic-error);
+      
+      &:hover:not(.tristan-button--disabled) {
+        border-color: var(--color--semantic-error-half);
+
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &--filled {
+    
+    &.tristan-button--default {
+      background-color: var(--color--bg-secondary);
+      color: var(--color--text-secondary);
+      
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.tristan-button--success {
       background-color: var(--color--semantic-success);
       color: var(--color-chart--base-white);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-success-dark);
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
 
-    &.lili-button--active {
+    &.tristan-button--active {
       background-color: var(--color--semantic-active);
       color: var(--color-chart--base-white);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-active-dark);
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
 
-    &.lili-button--warning {
+    &.tristan-button--warning {
       background-color: var(--color--semantic-warning);
       color: var(--color-chart--base-white);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-warning-dark);
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
 
-    &.lili-button--error {
+    &.tristan-button--error {
       background-color: var(--color--semantic-error);
       color: var(--color-chart--base-white);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-error-dark);
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
   }
 
-  // Variant styles - Outlined
-  &--outlined {
-    background-color: transparent;
-    border: 1px solid;
 
-    &.lili-button--default {
-      border-color: var(--color-chart--neutron-6);
-      color: var(--color-chart--neutron-6);
+  &--ghost {
+    background-color: transparent;
+
+    &.tristan-button--default {
+      color: var(--color--text-secondary);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--bg-darken-trans);
+      &:hover:not(.tristan-button--disabled) {
+        .hover-box {
+          opacity: 1;
+        }
       }
     }
 
-    &.lili-button--success {
-      border-color: var(--color--semantic-success);
+    &.tristan-button--success {
       color: var(--color--semantic-success);
       
-      &:hover:not(.lili-button--disabled) {
+      &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-success-pale);
       }
     }
 
-    &.lili-button--active {
-      border-color: var(--color--semantic-active);
+    &.tristan-button--active {
       color: var(--color--semantic-active);
       
-      &:hover:not(.lili-button--disabled) {
+      &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-active-pale);
       }
     }
 
-    &.lili-button--warning {
-      border-color: var(--color--semantic-warning);
+    &.tristan-button--warning {
       color: var(--color--semantic-warning);
       
-      &:hover:not(.lili-button--disabled) {
+      &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-warning-pale);
       }
     }
 
-    &.lili-button--error {
-      border-color: var(--color--semantic-error);
+    &.tristan-button--error {
       color: var(--color--semantic-error);
       
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-error-pale);
-      }
-    }
-  }
-
-  // Variant styles - Text
-  &--text {
-    background-color: transparent;
-    border: none;
-
-    &.lili-button--default {
-      color: var(--color-chart--neutron-6);
-      
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--bg-darken-trans);
-      }
-    }
-
-    &.lili-button--success {
-      color: var(--color--semantic-success);
-      
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-success-pale);
-      }
-    }
-
-    &.lili-button--active {
-      color: var(--color--semantic-active);
-      
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-active-pale);
-      }
-    }
-
-    &.lili-button--warning {
-      color: var(--color--semantic-warning);
-      
-      &:hover:not(.lili-button--disabled) {
-        background-color: var(--color--semantic-warning-pale);
-      }
-    }
-
-    &.lili-button--error {
-      color: var(--color--semantic-error);
-      
-      &:hover:not(.lili-button--disabled) {
+      &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-error-pale);
       }
     }

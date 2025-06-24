@@ -114,15 +114,18 @@
   // Background colors for light theme
   --color--bg-prime: var(--color-chart--base-white);
   --color--bg-secondary: var(--color-chart--neutron-12);
-  --color--bg-prime-trans: var(--color-chart--trans-11);
-  --color--bg-pale: var(--color-chart--neutron-12);
-  --color--bg-pale-trans: var(--color-chart--trans-12);
-  --color--bg-darken: var(--color-chart--neutron-10);
-  --color--bg-darken-trans: var(--color-chart--trans-10);
+  --color--bg-secondary-trans: var(--color-chart--trans-12);
+  --color--bg-hover: var(--color-chart--trans-12);
 
   // Border colors for light theme
+  --color--border-prime: var(--color-chart--neutron-11);
+  --color--border-prime-trans: var(--color-chart--trans-11);
+  --color--border-pale: var(--color-chart--neutron-12);
+  --color--border-pale-trans: var(--color-chart--trans-12);
+  --color--border-darken: var(--color-chart--neutron-10);
+  --color--border-darken-trans: var(--color-chart--trans-10);
   --color--border-secondary-trans: var(--color-chart--trans-12);
-  --color--border-hover: var(--color-chart--trans-12);
+  
 
   // Semantic colors for light theme
   --color--semantic-active: var(--color-chart--rainbow-blue);
@@ -156,15 +159,18 @@
   // Background colors for dark theme
   --color--bg-prime: var(--color-chart--base-black);
   --color--bg-secondary: var(--color-chart--neutron-1);
-  --color--bg-prime-trans: var(--color-chart--trans-inverse-11);
-  --color--bg-pale: var(--color-chart--neutron-1);
-  --color--bg-pale-trans: var(--color-chart--trans-inverse-12);
-  --color--bg-darken: var(--color-chart--neutron-3);
-  --color--bg-darken-trans: var(--color-chart--trans-inverse-10);
+  --color--bg-secondary-trans: var(--color-chart--trans-inverse-11);
+  --color--bg-hover: var(--color-chart--trans-inverse-12);
 
   // Border colors for dark theme
+  --color--border-prime: var(--color-chart--neutron-2);
+  --color--border-prime-trans: var(--color-chart--trans-inverse-11);
+  --color--border-pale: var(--color-chart--neutron-1);
+  --color--border-pale-trans: var(--color-chart--trans-inverse-12);
+  --color--border-darken: var(--color-chart--neutron-3);
+  --color--border-darken-trans: var(--color-chart--trans-inverse-10);
   --color--border-secondary-trans: var(--color-chart--trans-inverse-11);
-  --color--border-hover: var(--color-chart--trans-inverse-12);
+  
 
   // Semantic colors for dark theme (same as light theme for rainbow colors)
   --color--semantic-active: var(--color-chart--rainbow-blue);

@@ -41,8 +41,6 @@ const renderGraphicField = (item: TimelineItemType, config: FieldDisplayConfig, 
         <Icon
           key={key}
           name={displayProps.iconName as string || displayProps.icon as string || 'help'}
-          size="small"
-          color={displayProps.color as string}
         />
       );
     case 'progress':

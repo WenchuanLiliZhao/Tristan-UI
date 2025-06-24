@@ -189,17 +189,19 @@ export const textColors = {
 export const backgroundColors = {
   prime: '--color--bg-prime',
   secondary: '--color--bg-secondary',
-  primeTrans: '--color--bg-prime-trans',
-  pale: '--color--bg-pale',
-  paleTrans: '--color--bg-pale-trans',
-  darken: '--color--bg-darken',
-  darkenTrans: '--color--bg-darken-trans',
+  secondaryTrans: '--color--bg-secondary-trans',
+  hover: '--color--bg-hover',
 } as const;
 
 // Border Colors
 export const borderColors = {
+  prime: '--color--border-prime',
+  primeTrans: '--color--border-prime-trans',
+  pale: '--color--border-pale',
+  paleTrans: '--color--border-pale-trans',
+  darken: '--color--border-darken',
+  darkenTrans: '--color--border-darken-trans',
   secondaryTrans: '--color--border-secondary-trans',
-  hover: '--color--border-hover',
 } as const;
 
 // Semantic Colors - Active
