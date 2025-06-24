@@ -40,7 +40,15 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
         }}
         onClick={() => onIssueClick?.(item)}
       >
-        {item.name}
+        <div className={styles["timeline-item-graphic-info"]}>
+          {/* 映射所有显示为 icon 或 progress bar 的属性 */}
+        </div>
+        <div className={styles["timeline-item-text-info"]}>
+          <div className={styles["timeline-item-name"]}>{item.name}</div>
+          <div className={styles["timeline-item-tags"]}>
+            {/* 映射出所有显示为 tag 的属性 */}
+          </div>
+        </div>
       </div>
     </div>
   );

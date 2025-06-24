@@ -1,0 +1,164 @@
+// Tag Base Styles
+.lili-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 16px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  max-width: 100%;
+  white-space: nowrap;
+  
+  // Size variants
+  &--small {
+    padding: 2px 8px;
+    font-size: 12px;
+    min-height: 20px;
+  }
+
+  &--medium {
+    padding: 4px 12px;
+    font-size: 14px;
+    min-height: 24px;
+  }
+
+  &--large {
+    padding: 6px 16px;
+    font-size: 16px;
+    min-height: 28px;
+  }
+
+  // Variant styles - Contained
+  &--contained {
+    &.lili-tag--primary {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    &.lili-tag--secondary {
+      background-color: rgba(107, 114, 128, 0.1);
+      color: #374151;
+      border: 1px solid rgba(107, 114, 128, 0.2);
+    }
+
+    &.lili-tag--success {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: #065f46;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    &.lili-tag--warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: #92400e;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    &.lili-tag--error {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: #991b1b;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    &.lili-tag--info {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: #1e40af;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+  }
+
+  // Variant styles - Outlined
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid;
+
+    &.lili-tag--primary {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    &.lili-tag--secondary {
+      border-color: #6b7280;
+      color: #6b7280;
+    }
+
+    &.lili-tag--success {
+      border-color: #10b981;
+      color: #059669;
+    }
+
+    &.lili-tag--warning {
+      border-color: #f59e0b;
+      color: #d97706;
+    }
+
+    &.lili-tag--error {
+      border-color: #ef4444;
+      color: #dc2626;
+    }
+
+    &.lili-tag--info {
+      border-color: #3b82f6;
+      color: #1e40af;
+    }
+  }
+
+  // States
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.7;
+    transition: all 0.2s ease-in-out;
+
+    &:hover:not(:disabled) {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
+  }
+
+  // Small size close button adjustment
+  &--small &__close {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    margin-left: 2px;
+  }
+
+  // Large size close button adjustment
+  &--large &__close {
+    width: 18px;
+    height: 18px;
+    font-size: 16px;
+    margin-left: 6px;
+  }
+} 
