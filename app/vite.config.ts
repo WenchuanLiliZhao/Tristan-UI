@@ -27,6 +27,17 @@ export default defineConfig(({ mode }) => {
               react: 'React',
               'react-dom': 'ReactDOM',
             },
+            assetFileNames: (assetInfo) => {
+              const extType = assetInfo.name?.split('.').at(1);
+              if (/woff2?|ttf|eot/.test(extType ?? '')) {
+                return `fonts/[name].[ext]`;
+              }
+              // CSS 文件输出到根目录
+              if (/css/.test(extType ?? '')) {
+                return `tristan-ui.[ext]`;
+              }
+              return `assets/[name].[ext]`;
+            },
           },
         },
         sourcemap: true,
@@ -34,6 +45,7 @@ export default defineConfig(({ mode }) => {
         cssCodeSplit: false,
         outDir: 'dist',
         emptyOutDir: true,
+        assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf', '**/*.eot']
       }
     }
   }

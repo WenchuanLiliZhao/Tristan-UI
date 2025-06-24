@@ -1,16 +1,14 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { iconRegistry } from './_iconRegistry';
+import './fonts/material-icons.scss';
 
 export interface IconProps {
-  /** 图标名称 */
+  /** 图标名称 - 使用 Material Icons 的官方名称 */
   name: string;
   /** 图标大小 */
   size?: number | 'small' | 'medium' | 'large';
   /** 图标颜色 */
   color?: string;
-  /** 描边粗细 */
-  strokeWidth?: number;
   /** 自定义类名 */
   className?: string;
   /** 点击事件 */
@@ -32,73 +30,68 @@ const getSizeValue = (size: IconProps['size']): number => {
 };
 
 /**
- * Icon 组件 - 统一的图标系统
+ * Icon 组件 - 基于 Material Icons 字体的图标系统
  * 
  * @example
  * ```tsx
- * <Icon name="circle" size="large" color="#007bff" />
- * <Icon name="arrow" size={32} onClick={handleClick} />
- * <Icon name="ellipsis-vertical" strokeWidth={1.5} color="#666" />
+ * <Icon name="home" size="large" color="#007bff" />
+ * <Icon name="person" onClick={() => console.log('clicked')} />
+ * <Icon name="chevron_left" rotate={90} />
  * ```
  */
-export const Icon: React.FC<IconProps> = ({ 
-  name, 
-  size = 'medium', 
-  color = 'currentColor',
-  strokeWidth = 1,
+export const Icon: React.FC<IconProps> = ({
+  name,
+  size = 'medium',
+  color = 'inherit',
   className = '',
   onClick,
   disabled = false,
-  rotate = 0
+  rotate = 0,
+  ...props
 }) => {
   const sizeValue = getSizeValue(size);
-  const sizeClass = typeof size === 'string' ? styles[`icon--${size}`] : '';
+  const isClickable = !!onClick && !disabled;
   
+  const iconClasses = [
+    'material-icons',
+    styles.icon,
+    styles.icon__font,
+    className,
+    isClickable ? styles['icon--clickable'] : '',
+    disabled ? styles['icon--disabled'] : '',
+  ].filter(Boolean).join(' ');
+
+  const iconStyle: React.CSSProperties = {
+    fontSize: `${sizeValue}px`,
+    width: `${sizeValue}px`,
+    height: `${sizeValue}px`,
+    color,
+    transform: rotate ? `rotate(${rotate}deg)` : undefined,
+  };
+
   const handleClick = () => {
-    if (!disabled && onClick) {
+    if (onClick && !disabled) {
       onClick();
     }
   };
 
-  // 检查图标是否存在
-  if (!iconRegistry[name]) {
-    console.warn(`Icon "${name}" not found in registry. Available icons:`, Object.keys(iconRegistry));
-    return null;
-  }
-
   return (
-    <span 
-      className={`
-        ${styles["icon"]} 
-        ${sizeClass} 
-        ${onClick ? styles["icon--clickable"] : ''} 
-        ${disabled ? styles["icon--disabled"] : ''} 
-        ${className}
-      `.trim()}
-      style={{ 
-        color,
-        width: sizeValue,
-        height: sizeValue,
-        fontSize: sizeValue,
-        transform: rotate ? `rotate(${rotate}deg)` : undefined,
-        cursor: onClick && !disabled ? 'pointer' : undefined
-      }}
-      onClick={handleClick}
-      role={onClick ? 'button' : undefined}
-      aria-label={onClick ? `${name} button` : name}
-      tabIndex={onClick && !disabled ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (onClick && !disabled && (e.key === 'Enter' || e.key === ' ')) {
+    <span
+      className={iconClasses}
+      style={iconStyle}
+      onClick={isClickable ? handleClick : undefined}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={isClickable ? `${name} button` : undefined}
+      onKeyDown={isClickable ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onClick();
+          handleClick();
         }
-      }}
+      } : undefined}
+      {...props}
     >
-      {iconRegistry[name](strokeWidth)}
+      {name}
     </span>
   );
-};
-
-// 导出可用的图标名称
-// eslint-disable-next-line react-refresh/only-export-components
-export const availableIcons = Object.keys(iconRegistry); 
+}; 
