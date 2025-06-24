@@ -326,4 +326,22 @@ export const getRainbowColorVar = (
   suffix: 'default' | 'dark' | 'half' | 'pale' = 'default'
 ): string => {
   return `--color-chart--rainbow-${colorName}${suffix === 'default' ? '' : `-${suffix}`}`;
+};
+
+/**
+ * Utility function to generate rainbow color CSS variable name with prefix
+ * @param colorName - Rainbow color name (e.g., 'rose', 'blue')
+ * @returns The CSS variable name with rainbow prefix (e.g., '--color-chart--rainbow-rose')
+ */
+export const useRainbowColor = (colorName: RainbowColorName): string => {
+  return `--color-chart--rainbow-${colorName}`;
+};
+
+/**
+ * Utility function to generate rainbow color CSS variable name with prefix (non-hook version)
+ * @param colorName - Rainbow color name (e.g., 'rose', 'blue')
+ * @returns The CSS variable name with rainbow prefix (e.g., '--color-chart--rainbow-rose')
+ */
+export const getRainbowColor = (colorName: RainbowColorName): string => {
+  return `--color-chart--rainbow-${colorName}`;
 }; 

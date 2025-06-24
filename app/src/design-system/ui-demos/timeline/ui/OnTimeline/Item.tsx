@@ -4,6 +4,7 @@ import { type TimelineItemType, type TimelineItemDisplayConfig, type FieldDispla
 import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
 import type { Color } from "../../../../ui-components/types";
+import type { RainbowColorName } from "../../../../../styles/color";
 
 interface TimelineItemProps {
   item: TimelineItemType;
@@ -84,7 +85,7 @@ const renderTagField = (item: TimelineItemType, config: FieldDisplayConfig, inde
       key={key}
       variant={displayProps.variant as 'contained' | 'outlined' || 'contained'}
       size="small"
-      color={displayProps.color as Color}
+      color={displayProps.color as Color | RainbowColorName}
     >
       {tagText}
     </Tag>

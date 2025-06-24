@@ -1,5 +1,6 @@
 
 import type { BaseTimelineItemType } from "../../../design-system/ui-demos";
+import { rainbowColorNames } from "../../../styles/color";
 import { Example_Issues_1 } from "./_example1";
 import { Example_Issues_2 } from "./_example2";
 import { Example_Issues_3 } from "./_example3";
@@ -8,59 +9,59 @@ import { Example_Issues_3 } from "./_example3";
 export const status = {
   high: {
     name: "High",
-    color: "red"
+    color: rainbowColorNames.rose
   },
   medium: {
     name: "Medium",
-    color: "yellow"
+    color: rainbowColorNames.amber
   },
   low: {
     name: "Low",
-    color: "green"
+    color: rainbowColorNames.emerald
   }
 }
 
 export const team = {
   sales: {
     name: "Sales",
-    color: "blue"
+    color: rainbowColorNames.blue
   },
   marketing: {
     name: "Marketing",
-    color: "green"
+    color: rainbowColorNames.emerald
   },
   engineering: {
     name: "Engineering",
-    color: "purple"
+    color: rainbowColorNames.purple
   },
   design: {
     name: "Design",
-    color: "orange"
+    color: rainbowColorNames.orange
   },
   product: {
     name: "Product",
-    color: "pink"
+    color: rainbowColorNames.pink
   },
   other: {
     name: "Other",
-    color: "gray"
+    color: rainbowColorNames.cyan
   }
 }
 
 export const priority = {
   high: {
     name: "High",
-    color: "red",
+    color: rainbowColorNames.rose,
     icon: "icon-a"
   },
   medium: {
     name: "Medium",
-    color: "yellow",
+    color: rainbowColorNames.amber,
     icon: "icon-b"
   },
   low: {
     name: "Low",
-    color: "green",
+    color: rainbowColorNames.emerald,
     icon: "icon-c"
   }
 }
@@ -68,17 +69,17 @@ export const priority = {
 export const riskLevel = {
   high: {
     name: "High Risks",
-    color: "red",
+    color: rainbowColorNames.rose,
     icon: "icon-a"
   },
   medium: {
     name: "Medium Risks",
-    color: "yellow",
+    color: rainbowColorNames.amber,
     icon: "icon-b"
   },
   low: {
     name: "Low Risks",
-    color: "green",
+    color: rainbowColorNames.emerald,
     icon: "icon-c"
   }
 }

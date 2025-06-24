@@ -25,6 +25,9 @@
  * };
  */
 
+import React from "react";
+import type { RainbowColorName } from "../../../../styles/color";
+
 // 基础时间线项目接口 - 只包含四个必需字段
 export interface BaseTimelineItemType {
   id: string;
@@ -115,7 +118,7 @@ export const CommonFieldMappings = {
   }),
   
   /** 状态到颜色的映射 */
-  statusColor: (colorMap: Record<string, { name: string; color: string; icon?: string }>) => 
+  statusColor: (colorMap: Record<string, { name: string; color: RainbowColorName; icon?: string }>) => 
     (value: string) => colorMap[value] || { name: value, color: 'gray' },
     
   /** 简单的文本标签映射 */
@@ -128,14 +131,14 @@ export const CommonFieldMappings = {
 // 🚀 新的改进版映射函数库
 export const FieldMappers = {
   /** 从对象映射生成标签 */
-  fromMap: (map: Record<string, { name: string; color: string; icon?: string }>) => 
+  fromMap: (map: Record<string, { name: string; color: RainbowColorName; icon?: string }>) => 
     (value: unknown) => ({
       text: map[String(value)]?.name || String(value),
       color: map[String(value)]?.color || 'gray',
     }),
   
   /** 进度条映射 */
-  progress: (options?: { showText?: boolean; color?: string }) => 
+  progress: (options?: { showText?: boolean; color?: RainbowColorName }) => 
     (value: unknown) => ({
       value: Math.max(0, Math.min(100, Number(value) || 0)),
       showText: options?.showText ?? true,
@@ -143,7 +146,7 @@ export const FieldMappers = {
     }),
   
   /** 图标映射 */
-  iconFromMap: (map: Record<string, { icon?: string; color: string; name?: string }>) => 
+  iconFromMap: (map: Record<string, { icon?: string; color: RainbowColorName; name?: string }>) => 
     (value: unknown) => {
       const mapValue = map[String(value)];
       return {
@@ -153,7 +156,7 @@ export const FieldMappers = {
     },
   
   /** 简单文本映射 */
-  text: (options?: { color?: string; variant?: 'contained' | 'outlined' }) => 
+  text: (options?: { color?: RainbowColorName; variant?: 'contained' | 'outlined' }) => 
     (value: unknown) => ({
       text: String(value),
       ...(options?.color && { color: options.color }),
@@ -164,7 +167,7 @@ export const FieldMappers = {
 // 🎯 简化配置对象创建函数
 export const createFieldConfig = {
   /** 创建进度条字段配置 */
-  progress: <T>(field: keyof T, options?: { showText?: boolean; color?: string }) => ({
+  progress: <T>(field: keyof T, options?: { showText?: boolean; color?: RainbowColorName }) => ({
     field,
     displayType: 'progress' as const,
     mapping: FieldMappers.progress(options),
@@ -172,7 +175,7 @@ export const createFieldConfig = {
   }),
   
   /** 创建图标字段配置 */
-  iconFromMap: <T>(field: keyof T, map: Record<string, { icon?: string; color: string }>) => ({
+  iconFromMap: <T>(field: keyof T, map: Record<string, { icon?: string; color: RainbowColorName }>) => ({
     field,
     displayType: 'icon' as const, 
     mapping: FieldMappers.iconFromMap(map),
@@ -182,11 +185,11 @@ export const createFieldConfig = {
   /** 创建标签字段配置 */
   tagFromMap: <T>(
     field: keyof T, 
-    map: Record<string, { name: string; color: string }>, 
+    map: Record<string, { name: string; color: RainbowColorName }>, 
     options?: {
       variant?: 'contained' | 'outlined';
       hideValue?: unknown;
-      color?: string;
+      color?: RainbowColorName;
     }
   ) => ({
     field,
@@ -202,7 +205,7 @@ export const createFieldConfig = {
   
   /** 创建简单文本标签配置 */
   tag: <T>(field: keyof T, options?: { 
-    color?: string; 
+    color?: RainbowColorName; 
     variant?: 'contained' | 'outlined';
     hideValue?: unknown;
   }) => ({
@@ -218,9 +221,9 @@ export const createFieldConfig = {
 export const TimelineTemplates = {
   /** 项目管理模板 */
   projectManagement: <T>(dataMaps: {
-    status?: Record<string, { name: string; color: string }>;
-    team?: Record<string, { name: string; color: string }>;
-    priority?: Record<string, { icon?: string; color: string; name?: string }>;
+    status?: Record<string, { name: string; color: RainbowColorName }>;
+    team?: Record<string, { name: string; color: RainbowColorName }>;
+    priority?: Record<string, { icon?: string; color: RainbowColorName; name?: string }>;
   }) => ({
     graphicFields: [
       createFieldConfig.progress<T>('progress' as keyof T),
@@ -234,9 +237,9 @@ export const TimelineTemplates = {
   
   /** 任务管理模板 */
   taskManagement: <T>(dataMaps: {
-    assignee?: Record<string, { name: string; color: string }>;
-    priority?: Record<string, { name: string; color: string }>;
-    status?: Record<string, { name: string; color: string }>;
+    assignee?: Record<string, { name: string; color: RainbowColorName }>;
+    priority?: Record<string, { name: string; color: RainbowColorName }>;
+    status?: Record<string, { name: string; color: RainbowColorName }>;
   }) => ({
     graphicFields: [
       createFieldConfig.progress<T>('progress' as keyof T, { showText: true }),
@@ -257,13 +260,13 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
   };
   
   /** 添加进度条字段 */
-  addProgress(field: keyof T, options?: { showText?: boolean; color?: string }) {
+  addProgress(field: keyof T, options?: { showText?: boolean; color?: RainbowColorName }) {
     this.config.graphicFields?.push(createFieldConfig.progress<T>(field, options));
     return this;
   }
   
   /** 添加图标字段 */
-  addIcon(field: keyof T, map: Record<string, { icon?: string; color: string }>) {
+  addIcon(field: keyof T, map: Record<string, { icon?: string; color: RainbowColorName }>) {
     this.config.graphicFields?.push(createFieldConfig.iconFromMap<T>(field, map));
     return this;
   }
@@ -271,7 +274,7 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
   /** 添加标签字段 */
   addTag(
     field: keyof T, 
-    map: Record<string, { name: string; color: string }>, 
+    map: Record<string, { name: string; color: RainbowColorName }>, 
     options?: {
       variant?: 'contained' | 'outlined';
       hideValue?: unknown;
@@ -283,7 +286,7 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
   
   /** 添加简单文本标签 */
   addSimpleTag(field: keyof T, options?: { 
-    color?: string; 
+    color?: RainbowColorName; 
     variant?: 'contained' | 'outlined';
     hideValue?: unknown;
   }) {

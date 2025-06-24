@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tag } from '../../design-system/ui-components/General';
+import { rainbowColorNames } from '../../styles/color';
 
 const TagDemo: React.FC = () => {
   const [tags, setTags] = useState(['React', 'TypeScript', 'CSS', 'JavaScript']);
@@ -75,6 +76,56 @@ const TagDemo: React.FC = () => {
           <Tag size="small" variant="outlined" color="info">小信息</Tag>
           <Tag closable color="success">可关闭成功</Tag>
           <Tag size="large" variant="outlined" color="warning" closable>大警告可关闭</Tag>
+        </div>
+      </section>
+
+      <section style={{ marginBottom: '30px' }}>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>彩虹颜色</h2>
+        <div style={{ marginBottom: '20px' }}>
+          <h3>Contained Rainbow Tags</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+            {Object.entries(rainbowColorNames).map(([key, colorName]) => (
+              <Tag key={key} variant="contained" color={colorName}>
+                {key} (contained)
+              </Tag>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <h3>Outlined Rainbow Tags</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+            {Object.entries(rainbowColorNames).map(([key, colorName]) => (
+              <Tag key={key} variant="outlined" color={colorName}>
+                {key} (outlined)
+              </Tag>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <h3>Different Sizes</h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <Tag size="small" color="rose" variant="contained">Small Rose</Tag>
+            <Tag size="medium" color="blue" variant="contained">Medium Blue</Tag>
+            <Tag size="large" color="emerald" variant="contained">Large Emerald</Tag>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Tag size="small" color="amber" variant="outlined">Small Amber</Tag>
+            <Tag size="medium" color="purple" variant="outlined">Medium Purple</Tag>
+            <Tag size="large" color="cyan" variant="outlined">Large Cyan</Tag>
+          </div>
+        </div>
+
+        <div>
+          <h3>Legacy Color Support</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            <Tag color="primary">Primary</Tag>
+            <Tag color="secondary">Secondary</Tag>
+            <Tag color="success">Success</Tag>
+            <Tag color="warning">Warning</Tag>
+            <Tag color="error">Error</Tag>
+          </div>
         </div>
       </section>
     </div>
