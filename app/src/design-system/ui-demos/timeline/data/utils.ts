@@ -46,11 +46,11 @@ export const getDaysInMonth = (year: number, month: number): number => {
 };
 
 /**
- * Calculate duration in days between two dates
+ * Calculate duration in days between two dates (inclusive of both start and end dates)
  */
 export const calculateDurationInDays = (startDate: Date, endDate: Date): number => {
   const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 };
 
 /**
