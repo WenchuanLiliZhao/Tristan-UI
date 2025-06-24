@@ -66,6 +66,55 @@
       color: #1e40af;
       border: 1px solid rgba(59, 130, 246, 0.2);
     }
+
+    // Rainbow colors for contained variant
+    &.lili-tag--amber {
+      background-color: var(--color-chart--rainbow-amber-pale);
+      color: var(--color-chart--rainbow-amber);
+      border: 1px solid var(--color-chart--rainbow-amber-half);
+    }
+
+    &.lili-tag--orange {
+      background-color: var(--color-chart--rainbow-orange-pale);
+      color: var(--color-chart--rainbow-orange);
+      border: 1px solid var(--color-chart--rainbow-orange-half);
+    }
+
+    &.lili-tag--rose {
+      background-color: var(--color-chart--rainbow-rose-pale);
+      color: var(--color-chart--rainbow-rose);
+      border: 1px solid var(--color-chart--rainbow-rose-half);
+    }
+
+    &.lili-tag--pink {
+      background-color: var(--color-chart--rainbow-pink-pale);
+      color: var(--color-chart--rainbow-pink);
+      border: 1px solid var(--color-chart--rainbow-pink-half);
+    }
+
+    &.lili-tag--purple {
+      background-color: var(--color-chart--rainbow-purple-pale);
+      color: var(--color-chart--rainbow-purple);
+      border: 1px solid var(--color-chart--rainbow-purple-half);
+    }
+
+    &.lili-tag--blue {
+      background-color: var(--color-chart--rainbow-blue-pale);
+      color: var(--color-chart--rainbow-blue);
+      border: 1px solid var(--color-chart--rainbow-blue-half);
+    }
+
+    &.lili-tag--cyan {
+      background-color: var(--color-chart--rainbow-cyan-pale);
+      color: var(--color-chart--rainbow-cyan);
+      border: 1px solid var(--color-chart--rainbow-cyan-half);
+    }
+
+    &.lili-tag--emerald {
+      background-color: var(--color-chart--rainbow-emerald-pale);
+      color: var(--color-chart--rainbow-emerald);
+      border: 1px solid var(--color-chart--rainbow-emerald-half);
+    }
   }
 
   // Variant styles - Outlined
@@ -101,6 +150,47 @@
     &.lili-tag--info {
       border-color: #3b82f6;
       color: #1e40af;
+    }
+
+    // Rainbow colors for outlined variant
+    &.lili-tag--amber {
+      border-color: var(--color-chart--rainbow-amber);
+      color: var(--color-chart--rainbow-amber);
+    }
+
+    &.lili-tag--orange {
+      border-color: var(--color-chart--rainbow-orange);
+      color: var(--color-chart--rainbow-orange);
+    }
+
+    &.lili-tag--rose {
+      border-color: var(--color-chart--rainbow-rose);
+      color: var(--color-chart--rainbow-rose);
+    }
+
+    &.lili-tag--pink {
+      border-color: var(--color-chart--rainbow-pink);
+      color: var(--color-chart--rainbow-pink);
+    }
+
+    &.lili-tag--purple {
+      border-color: var(--color-chart--rainbow-purple);
+      color: var(--color-chart--rainbow-purple);
+    }
+
+    &.lili-tag--blue {
+      border-color: var(--color-chart--rainbow-blue);
+      color: var(--color-chart--rainbow-blue);
+    }
+
+    &.lili-tag--cyan {
+      border-color: var(--color-chart--rainbow-cyan);
+      color: var(--color-chart--rainbow-cyan);
+    }
+
+    &.lili-tag--emerald {
+      border-color: var(--color-chart--rainbow-emerald);
+      color: var(--color-chart--rainbow-emerald);
     }
   }
 

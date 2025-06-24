@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 import type { BaseComponentProps, Color, Size } from "../../types";
-import { getRainbowColor, type RainbowColorName } from "../../../../styles/color";
+import { type RainbowColorName } from "../../../../styles/color";
 
 export interface TagProps extends BaseComponentProps {
   variant?: "contained" | "outlined";
@@ -27,26 +27,16 @@ export const Tag: React.FC<TagProps> = ({
 }) => {
   const baseClass = "lili-tag";
   
-  // 检查是否是 rainbow 颜色
-  const isRainbowColor = color && ['amber', 'orange', 'rose', 'pink', 'purple', 'blue', 'cyan', 'emerald'].includes(color);
-  
   const classes = [
     styles[baseClass],
     styles[`${baseClass}--${variant}`],
     styles[`${baseClass}--${size}`],
-    !isRainbowColor && styles[`${baseClass}--${color}`],
+    styles[`${baseClass}--${color}`],
     disabled && styles[`${baseClass}--disabled`],
     className,
   ]
     .filter(Boolean)
     .join(" ");
-
-  // 为 rainbow 颜色生成自定义样式
-  const rainbowStyle = isRainbowColor ? {
-    backgroundColor: variant === "contained" ? `var(${getRainbowColor(color as RainbowColorName)}-pale)` : "transparent",
-    color: `var(${getRainbowColor(color as RainbowColorName)})`,
-    border: `1px solid var(${getRainbowColor(color as RainbowColorName)}-half)`,
-  } : {};
 
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -59,7 +49,6 @@ export const Tag: React.FC<TagProps> = ({
   return (
     <span
       className={classes}
-      style={isRainbowColor ? rainbowStyle : undefined}
       data-testid={dataTestId}
       {...rest}
     >
