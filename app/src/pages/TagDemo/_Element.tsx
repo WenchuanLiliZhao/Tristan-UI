@@ -9,11 +9,11 @@ const TagDemo: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px' }}>
-      <h1>Tag 组件演示</h1>
+    <div style={{ padding: '20px', maxWidth: '800px', color: 'var(--color--text-prime)' }}>
+      <h1 style={{ color: 'var(--color--text-prime)' }}>Tag 组件演示</h1>
       
       <section style={{ marginBottom: '30px' }}>
-        <h2>基础用法</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>基础用法</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag>默认标签</Tag>
           <Tag color="secondary">次要标签</Tag>
@@ -25,7 +25,7 @@ const TagDemo: React.FC = () => {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2>不同变体</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>不同变体</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag variant="contained" color="primary">实心标签</Tag>
           <Tag variant="outlined" color="primary">边框标签</Tag>
@@ -33,7 +33,7 @@ const TagDemo: React.FC = () => {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2>不同尺寸</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>不同尺寸</h2>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag size="small">小尺寸</Tag>
           <Tag size="medium">中等尺寸</Tag>
@@ -42,7 +42,7 @@ const TagDemo: React.FC = () => {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2>可关闭的标签</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>可关闭的标签</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           {tags.map((tag, index) => (
             <Tag
@@ -55,13 +55,13 @@ const TagDemo: React.FC = () => {
             </Tag>
           ))}
         </div>
-        <p style={{ color: '#666', fontSize: '14px' }}>
+        <p style={{ color: 'var(--color--text-secondary)', fontSize: '14px' }}>
           点击 × 按钮可以删除标签
         </p>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2>禁用状态</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>禁用状态</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag disabled>禁用标签</Tag>
           <Tag disabled closable>禁用的可关闭标签</Tag>
@@ -70,7 +70,7 @@ const TagDemo: React.FC = () => {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2>组合示例</h2>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>组合示例</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag size="small" variant="outlined" color="info">小信息</Tag>
           <Tag closable color="success">可关闭成功</Tag>

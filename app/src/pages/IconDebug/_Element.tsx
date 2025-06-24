@@ -41,9 +41,9 @@ export const Element: React.FC = () => {
   ];
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1>Material Icons Debug 工具</h1>
-      <p>用于调试和测试 Material Icons 组件的各种参数和样式效果。</p>
+    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto', color: 'var(--color--text-prime)' }}>
+      <h1 style={{ color: 'var(--color--text-prime)' }}>Material Icons Debug 工具</h1>
+      <p style={{ color: 'var(--color--text-secondary)' }}>用于调试和测试 Material Icons 组件的各种参数和样式效果。</p>
 
       <div style={{ 
         display: 'grid', 
@@ -54,15 +54,15 @@ export const Element: React.FC = () => {
         {/* 控制面板 */}
         <div style={{ 
           padding: '1.5rem', 
-          border: '1px solid #ddd', 
+          border: '1px solid var(--color--border-secondary-trans)', 
           borderRadius: '8px',
-          backgroundColor: '#f8f9fa'
+          backgroundColor: 'var(--color--bg-pale)'
         }}>
-          <h3>参数控制面板</h3>
+          <h3 style={{ color: 'var(--color--text-prime)' }}>参数控制面板</h3>
           
           {/* 图标选择 */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: 'var(--color--text-prime)' }}>
               图标名称
             </label>
             <input
@@ -72,8 +72,10 @@ export const Element: React.FC = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem',
-                border: '1px solid #ccc',
-                borderRadius: '4px'
+                border: '1px solid var(--color--border-secondary-trans)',
+                borderRadius: '4px',
+                backgroundColor: 'var(--color--bg-prime)',
+                color: 'var(--color--text-prime)'
               }}
               placeholder="输入 Material Icons 名称"
             />
@@ -81,7 +83,7 @@ export const Element: React.FC = () => {
 
           {/* 尺寸选择 */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: 'var(--color--text-prime)' }}>
               尺寸
             </label>
             <select
@@ -93,8 +95,10 @@ export const Element: React.FC = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem',
-                border: '1px solid #ccc',
-                borderRadius: '4px'
+                border: '1px solid var(--color--border-secondary-trans)',
+                borderRadius: '4px',
+                backgroundColor: 'var(--color--bg-prime)',
+                color: 'var(--color--text-prime)'
               }}
               title="选择图标尺寸"
             >
@@ -108,7 +112,7 @@ export const Element: React.FC = () => {
 
           {/* 颜色选择 */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: 'var(--color--text-prime)' }}>
               颜色
             </label>
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -126,10 +130,12 @@ export const Element: React.FC = () => {
                 style={{
                   flex: 1,
                   padding: '0.5rem',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px'
+                  border: '1px solid var(--color--border-secondary-trans)',
+                  borderRadius: '4px',
+                  backgroundColor: 'var(--color--bg-prime)',
+                  color: 'var(--color--text-prime)'
                 }}
-                placeholder="输入颜色值 (如: #007bff)"
+                placeholder="输入颜色值 (如: var(--color--semantic-active))"
                 title="颜色值"
               />
             </div>
@@ -141,10 +147,10 @@ export const Element: React.FC = () => {
                   style={{
                     padding: '0.25rem 0.5rem',
                     fontSize: '0.8rem',
-                    border: '1px solid #ccc',
+                    border: '1px solid var(--color--border-secondary-trans)',
                     borderRadius: '4px',
-                    backgroundColor: iconColor === preset.value ? preset.value : '#fff',
-                    color: iconColor === preset.value ? '#fff' : '#000',
+                    backgroundColor: iconColor === preset.value ? preset.value : 'var(--color--bg-prime)',
+                    color: iconColor === preset.value ? '#fff' : 'var(--color--text-prime)',
                     cursor: 'pointer'
                   }}
                 >
@@ -156,7 +162,7 @@ export const Element: React.FC = () => {
 
           {/* 旋转角度 */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: 'var(--color--text-prime)' }}>
               旋转角度: {iconRotate}°
             </label>
             <input
@@ -180,20 +186,20 @@ export const Element: React.FC = () => {
                 onChange={(e) => setIsDisabled(e.target.checked)}
                 title="切换禁用状态"
               />
-              <span style={{ fontWeight: 'bold' }}>禁用状态</span>
+              <span style={{ fontWeight: 'bold', color: 'var(--color--text-prime)' }}>禁用状态</span>
             </label>
           </div>
 
           {/* 当前参数显示 */}
           <div style={{ 
             padding: '1rem', 
-            backgroundColor: '#fff', 
-            border: '1px solid #ddd',
+            backgroundColor: 'var(--color--bg-prime)', 
+            border: '1px solid var(--color--border-secondary-trans)',
             borderRadius: '4px',
             fontSize: '0.9rem'
           }}>
-            <h4 style={{ margin: '0 0 0.5rem 0' }}>当前参数:</h4>
-            <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-prime)' }}>当前参数:</h4>
+            <pre style={{ margin: 0, whiteSpace: 'pre-wrap', color: 'var(--color--text-prime)' }}>
 {`<Icon
   name="${selectedIcon}"
   size={${typeof iconSize === 'string' ? `"${iconSize}"` : iconSize}}
@@ -210,16 +216,16 @@ export const Element: React.FC = () => {
           {/* 大型预览 */}
           <div style={{ 
             padding: '2rem', 
-            border: '1px solid #ddd', 
+            border: '1px solid var(--color--border-secondary-trans)', 
             borderRadius: '8px',
-            backgroundColor: '#fff',
+            backgroundColor: 'var(--color--bg-prime)',
             textAlign: 'center',
             marginBottom: '2rem'
           }}>
-            <h3>当前效果预览</h3>
+            <h3 style={{ color: 'var(--color--text-prime)' }}>当前效果预览</h3>
             <div style={{ 
               padding: '2rem',
-              backgroundColor: '#f8f9fa',
+              backgroundColor: 'var(--color--bg-pale)',
               borderRadius: '8px',
               margin: '1rem 0'
             }}>
@@ -232,7 +238,7 @@ export const Element: React.FC = () => {
                 onClick={() => alert(`Clicked ${selectedIcon} icon!`)}
               />
             </div>
-            <p style={{ color: '#6c757d', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--color--text-secondary)', fontSize: '0.9rem' }}>
               点击图标测试交互效果 (除非禁用)
             </p>
           </div>
@@ -240,12 +246,12 @@ export const Element: React.FC = () => {
           {/* 常用图标展示 */}
           <div style={{ 
             padding: '1.5rem', 
-            border: '1px solid #ddd', 
+            border: '1px solid var(--color--border-secondary-trans)', 
             borderRadius: '8px',
-            backgroundColor: '#fff'
+            backgroundColor: 'var(--color--bg-prime)'
           }}>
-            <h3>常用图标参考</h3>
-            <p style={{ color: '#6c757d', fontSize: '0.9rem', marginBottom: '1rem' }}>
+            <h3 style={{ color: 'var(--color--text-prime)' }}>常用图标参考</h3>
+            <p style={{ color: 'var(--color--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
               点击图标名称可快速应用到预览区域
             </p>
             <div style={{ 
@@ -262,18 +268,18 @@ export const Element: React.FC = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     padding: '0.75rem',
-                    border: '1px solid #ddd',
+                    border: '1px solid var(--color--border-secondary-trans)',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    backgroundColor: selectedIcon === iconName ? '#e3f2fd' : '#f8f9fa'
+                    backgroundColor: selectedIcon === iconName ? 'var(--color--semantic-active-pale)' : 'var(--color--bg-pale)'
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = '#e9ecef';
+                    e.currentTarget.style.backgroundColor = 'var(--color--bg-darken)';
                     e.currentTarget.style.transform = 'translateY(-2px)';
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = selectedIcon === iconName ? '#e3f2fd' : '#f8f9fa';
+                    e.currentTarget.style.backgroundColor = selectedIcon === iconName ? 'var(--color--semantic-active-pale)' : 'var(--color--bg-pale)';
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
@@ -282,7 +288,8 @@ export const Element: React.FC = () => {
                     fontSize: '0.8rem', 
                     marginTop: '0.5rem', 
                     textAlign: 'center',
-                    wordBreak: 'break-word'
+                    wordBreak: 'break-word',
+                    color: 'var(--color--text-prime)'
                   }}>
                     {iconName}
                   </span>
@@ -297,14 +304,14 @@ export const Element: React.FC = () => {
       <div style={{ 
         marginTop: '2rem', 
         padding: '1.5rem', 
-        backgroundColor: '#f0f8ff', 
+        backgroundColor: 'var(--color--semantic-active-pale)', 
         borderRadius: '8px',
-        border: '1px solid #007bff'
+        border: '1px solid var(--color--semantic-active)'
       }}>
-        <h3 style={{ margin: '0 0 1rem 0', color: '#007bff' }}>
+        <h3 style={{ margin: '0 0 1rem 0', color: 'var(--color--semantic-active)' }}>
           💡 使用说明
         </h3>
-        <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+        <ul style={{ margin: 0, paddingLeft: '1.5rem', color: 'var(--color--text-prime)' }}>
           <li>在左侧控制面板调整图标参数，右侧实时预览效果</li>
           <li>可以手动输入任何 Material Icons 图标名称</li>
           <li>点击常用图标可快速切换到该图标</li>
