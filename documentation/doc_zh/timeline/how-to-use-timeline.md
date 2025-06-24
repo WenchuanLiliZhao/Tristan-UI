@@ -8,6 +8,7 @@ Timeline 是一个通用化的时间线组件，支持展示任意数据类型�
 - **只要求 4 个基础字段** - Timeline 能正常工作的最少要求
 - **其他字段完全自定义** - 您可以添加任意数据结构，组件会智能适配
 - **类型安全保障** - 完整的 TypeScript 支持，确保编译时安全
+- **🆕 字段显示配置** - 灵活配置数据字段的显示方式（图标、进度条、标签等）
 
 ## 快速开始
 
@@ -94,17 +95,17 @@ export const priority = {
   high: {
     name: "High",
     color: "red",
-    icon: "icon-a"
+    icon: "priority_high"
   },
   medium: {
     name: "Medium",
     color: "yellow",
-    icon: "icon-b"
+    icon: "low_priority"
   },
   low: {
     name: "Low",
     color: "green",
-    icon: "icon-c"
+    icon: "flag"
   }
 }
 
@@ -113,17 +114,17 @@ export const riskLevel = {
   high: {
     name: "High Risks",
     color: "red",
-    icon: "icon-a"
+    icon: "warning"
   },
   medium: {
     name: "Medium Risks",
     color: "yellow",
-    icon: "icon-b"
+    icon: "info"
   },
   low: {
     name: "Low Risks",
     color: "green",
-    icon: "icon-c"
+    icon: "check_circle"
   }
 }
 
@@ -189,6 +190,165 @@ export const ExampleData: ProjectDataType[] = [
 ]
 ```
 
+## 🆕 字段显示配置系统
+
+### 概述
+
+Timeline 组件支持灵活配置数据字段的显示方式，支持两个显示区域：
+
+1. **图形信息区域** (`graphicFields`) - 显示图标或进度条
+2. **标签区域** (`tagFields`) - 显示各种标签
+
+### 简化配置方式
+
+#### 方式 1：使用 `createFieldConfig` 简化配置（推荐）
+
+```typescript
+import React from "react";
+import { 
+  Timeline, 
+  groupTimelineItemsByField,
+  createFieldConfig,
+  type TimelineConfigType 
+} from "tristan-ui";
+import { ExampleData, type ProjectDataType, status, team, priority, riskLevel } from "./example-data";
+
+function TimelineExample() {
+  // 🎯 简化的字段显示配置
+  const itemDisplayConfig = {
+    // 图形信息区域 - 显示进度条和优先级图标
+    graphicFields: [
+      createFieldConfig.progress<ProjectDataType>("progress"),
+      createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),
+    ],
+    // 标签区域 - 显示状态、团队和风险等级标签
+    tagFields: [
+      createFieldConfig.tagFromMap<ProjectDataType>("status", status),
+      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
+      createFieldConfig.tagFromMap<ProjectDataType>("riskLevel", riskLevel, {
+        variant: "outlined",
+        hideValue: "low", // 自动隐藏低风险项目
+      }),
+    ],
+  };
+
+  const timelineConfig: TimelineConfigType<ProjectDataType> = {
+    groupBy: "category",
+    itemDisplayConfig,
+  };
+
+  const sortedData = groupTimelineItemsByField(ExampleData, "category");
+
+  return (
+    <Timeline<ProjectDataType> 
+      init={timelineConfig} 
+      inputData={sortedData} 
+    />
+  );
+}
+```
+
+#### 方式 2：使用预设模板
+
+```typescript
+import { TimelineTemplates } from "tristan-ui";
+
+function TemplateExample() {
+  // 🎯 使用预设模板，一行代码搞定配置
+  const itemDisplayConfig = TimelineTemplates.projectManagement<ProjectDataType>({
+    status,
+    team,
+    priority,
+  });
+
+  const timelineConfig: TimelineConfigType<ProjectDataType> = {
+    groupBy: "category",
+    itemDisplayConfig,
+  };
+
+  // ... 其余代码相同
+}
+```
+
+#### 方式 3：使用构建器模式
+
+```typescript
+import { TimelineConfigBuilder } from "tristan-ui";
+
+function BuilderExample() {
+  // 🎯 链式调用构建配置
+  const itemDisplayConfig = new TimelineConfigBuilder<ProjectDataType>()
+    .addProgress("progress", { showText: true })
+    .addIcon("priority", priority)
+    .addTag("status", status)
+    .addTag("team", team)
+    .addTag("riskLevel", riskLevel, { 
+      variant: "outlined", 
+      hideValue: "low" 
+    })
+    .build();
+
+  // ... 其余代码相同
+}
+```
+
+### 详细配置选项
+
+#### 可用的字段配置函数
+
+```typescript
+// 进度条配置
+createFieldConfig.progress<T>(
+  field: keyof T, 
+  options?: { showText?: boolean; color?: string }
+)
+
+// 图标配置（从映射对象）
+createFieldConfig.iconFromMap<T>(
+  field: keyof T, 
+  map: Record<string, { icon?: string; color: string }>
+)
+
+// 标签配置（从映射对象）
+createFieldConfig.tagFromMap<T>(
+  field: keyof T, 
+  map: Record<string, { name: string; color: string }>, 
+  options?: {
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+    color?: string;
+  }
+)
+
+// 简单文本标签配置
+createFieldConfig.tag<T>(
+  field: keyof T, 
+  options?: { 
+    color?: string; 
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+  }
+)
+```
+
+#### 可用的预设模板
+
+```typescript
+// 项目管理模板
+TimelineTemplates.projectManagement<T>(dataMaps: {
+  status?: Record<string, { name: string; color: string }>;
+  team?: Record<string, { name: string; color: string }>;
+  priority?: Record<string, { icon?: string; color: string; name?: string }>;
+})
+
+// 任务管理模板
+TimelineTemplates.taskManagement<T>(dataMaps: {
+  assignee?: Record<string, { name: string; color: string }>;
+  priority?: Record<string, { name: string; color: string }>;
+  status?: Record<string, { name: string; color: string }>;
+})
+```
+
 ### 步骤 4：在 React 组件中使用 Timeline
 
 ```typescript
@@ -196,20 +356,43 @@ import React from "react";
 // 导入样式文件（重要！）
 import "tristan-ui/dist/tristan-ui.css";
 
-// 导入 Timeline 组件和工具函数
-import { Timeline } from "../../../app/src/design-system/ui-demos/timeline/ui/Timeline";
-import { groupTimelineItemsByField } from "../../../app/src/design-system/ui-demos/timeline/data/utils";
+// 导入 Timeline 组件和配置工具
+import { 
+  Timeline, 
+  groupTimelineItemsByField,
+  createFieldConfig,
+  type TimelineConfigType 
+} from "tristan-ui";
 
 // 导入您的数据和类型
-import { ExampleData, type ProjectDataType } from "./example-data";
+import { ExampleData, type ProjectDataType, status, team, priority } from "./example-data";
 
 function App() {
+  // 配置字段显示方式
+  const itemDisplayConfig = {
+    graphicFields: [
+      createFieldConfig.progress<ProjectDataType>("progress"),
+      createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),
+    ],
+    tagFields: [
+      createFieldConfig.tagFromMap<ProjectDataType>("status", status),
+      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
+    ],
+  };
+
+  // Timeline 配置
+  const timelineConfig: TimelineConfigType<ProjectDataType> = {
+    groupBy: "category",
+    itemDisplayConfig,
+  };
+
   // 使用工具函数按指定字段分组数据
   const groupedData = groupTimelineItemsByField(ExampleData, "category");
 
   return (
     <div>
       <Timeline<ProjectDataType>
+        init={timelineConfig}
         inputData={groupedData}
       />
     </div>
@@ -249,6 +432,23 @@ function AdvancedTimeline() {
   
   const groupedData = groupTimelineItemsByField(ExampleData, groupBy);
 
+  // 字段显示配置
+  const itemDisplayConfig = {
+    graphicFields: [
+      createFieldConfig.progress<ProjectDataType>("progress"),
+      createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),
+    ],
+    tagFields: [
+      createFieldConfig.tagFromMap<ProjectDataType>("status", status),
+      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
+    ],
+  };
+
+  const timelineConfig: TimelineConfigType<ProjectDataType> = {
+    groupBy,
+    itemDisplayConfig,
+  };
+
   return (
     <div>
       {/* 分组选择器 */}
@@ -264,11 +464,46 @@ function AdvancedTimeline() {
       
       {/* Timeline 组件 */}
       <Timeline<ProjectDataType>
+        init={timelineConfig}
         inputData={groupedData}
       />
     </div>
   );
 }
+```
+
+### 自定义字段映射
+
+如果预设的配置函数不满足需求，您也可以使用底层的 `FieldMappers`：
+
+```typescript
+import { FieldMappers } from "tristan-ui";
+
+// 自定义配置
+const customConfig = {
+  graphicFields: [
+    {
+      field: "progress",
+      displayType: "progress" as const,
+      mapping: FieldMappers.progress({ showText: true, color: "blue" }),
+      visible: true,
+    },
+    {
+      field: "priority",
+      displayType: "icon" as const,
+      mapping: FieldMappers.iconFromMap(priority),
+      visible: (item) => item.priority !== "low", // 条件显示
+    },
+  ],
+  tagFields: [
+    {
+      field: "status",
+      displayType: "tag" as const,
+      mapping: FieldMappers.fromMap(status),
+      visible: true,
+    },
+  ],
+};
 ```
 
 ## 最佳实践
@@ -283,12 +518,17 @@ function AdvancedTimeline() {
 - **唯一ID**：确保每个项目的 `id` 字段唯一
 - **分组字段**：确保用于分组的字段在所有数据项中都存在
 
-### 3. 性能优化
+### 3. 字段显示配置
+- **优先使用简化配置**：`createFieldConfig` 比手写配置更简洁安全
+- **合理使用预设模板**：对于常见场景，模板可以大幅减少配置代码
+- **条件显示**：使用 `hideValue` 或 `visible` 函数实现动态显示逻辑
+
+### 4. 性能优化
 - 对于大量数据（>1000项），考虑分页加载
 - 使用 React.memo 包装 Timeline 组件避免不必要的重渲染
 - 预先计算和缓存分组数据
 
-### 4. 样式定制
+### 5. 样式定制
 ```typescript
 // 记得导入样式文件
 import "tristan-ui/dist/tristan-ui.css";
@@ -324,6 +564,37 @@ interface MyProjectType extends BaseTimelineItemType {
 }
 ```
 
+### Q: 如何自定义字段的显示方式？
+A: 使用新的字段显示配置系统：
+
+```typescript
+// 方法 1：使用简化配置
+const config = {
+  graphicFields: [
+    createFieldConfig.progress("budget"),
+    createFieldConfig.iconFromMap("department", departmentMap),
+  ],
+  tagFields: [
+    createFieldConfig.tagFromMap("tags", tagMap),
+  ],
+};
+
+// 方法 2：使用预设模板
+const config = TimelineTemplates.projectManagement({ 
+  status: myStatusMap 
+});
+
+// 方法 3：完全自定义
+const config = {
+  graphicFields: [{
+    field: "myField",
+    displayType: "icon",
+    mapping: (value) => ({ iconName: "custom", color: "red" }),
+    visible: (item) => someCondition(item),
+  }],
+};
+```
+
 ### Q: 时间线项目重叠怎么办？
 A: Timeline 组件内置智能布局算法，会自动检测并避免重叠，将重叠的项目分层显示。
 
@@ -338,8 +609,38 @@ startDate: new Date("2024-01-01")
 startDate: "2024-01-01"
 ```
 
-### Q: 如何自定义时间线的外观？
-A: Timeline 组件支持通过 CSS 变量进行主题定制。您可以覆盖预定义的 CSS 变量来改变颜色、字体等。
+### Q: 配置代码太长怎么办？
+A: 使用新的简化配置方式可以大幅减少代码量：
+
+```typescript
+// 原来需要 90+ 行的配置
+const oldConfig = {
+  graphicFields: [
+    {
+      field: "progress",
+      displayType: "progress",
+      mapping: (value: unknown) => ({
+        value: Math.max(0, Math.min(100, Number(value) || 0)),
+        showText: true,
+      }),
+      visible: true,
+    },
+    // ... 更多重复代码
+  ],
+};
+
+// 现在只需要 15 行
+const newConfig = {
+  graphicFields: [
+    createFieldConfig.progress("progress"),
+    createFieldConfig.iconFromMap("priority", priority),
+  ],
+  tagFields: [
+    createFieldConfig.tagFromMap("status", status),
+    createFieldConfig.tagFromMap("team", team),
+  ],
+};
+```
 
 ### Q: 数据更新后 Timeline 不刷新？
 A: 确保传入新的数据引用。React 需要检测到引用变化才会重新渲染：
@@ -359,7 +660,51 @@ oldData.push(newItem);
 | 属性 | 类型 | 必需 | 描述 |
 |------|------|------|------|
 | `inputData` | `SortedTimelineDataType<T>` | ✅ | 已分组的时间线数据 |
-| `init` | `TimelineConfigType<T>` | ❌ | 初始化配置（为未来扩展保留） |
+| `init` | `TimelineConfigType<T>` | ❌ | 配置对象，包含 groupBy 和 itemDisplayConfig |
+
+### TimelineConfigType
+
+```typescript
+interface TimelineConfigType<T> {
+  groupBy?: keyof (BaseTimelineItemType & T);
+  itemDisplayConfig?: TimelineItemDisplayConfig<T>;
+}
+```
+
+### TimelineItemDisplayConfig
+
+```typescript
+interface TimelineItemDisplayConfig<T> {
+  graphicFields?: FieldDisplayConfig<T>[];  // 图形信息区域配置
+  tagFields?: FieldDisplayConfig<T>[];      // 标签区域配置
+}
+```
+
+### createFieldConfig API
+
+```typescript
+const createFieldConfig = {
+  // 进度条配置
+  progress<T>(field: keyof T, options?: { showText?: boolean; color?: string }),
+  
+  // 图标配置
+  iconFromMap<T>(field: keyof T, map: Record<string, { icon?: string; color: string }>),
+  
+  // 标签配置（从映射）
+  tagFromMap<T>(field: keyof T, map: Record<string, { name: string; color: string }>, options?: {
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+    color?: string;
+  }),
+  
+  // 简单标签配置
+  tag<T>(field: keyof T, options?: { 
+    color?: string; 
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+  }),
+};
+```
 
 ### groupTimelineItemsByField 函数
 
@@ -378,19 +723,12 @@ function groupTimelineItemsByField<T>(
 
 ## 完整示例项目
 
-您可以在 `tests/React18` 目录中找到完整的使用示例，包括：
+您可以在项目的示例目录中找到完整的使用示例，包括：
 - 完整的 TypeScript 配置
 - 项目依赖设置
 - 数据结构定义
 - Timeline 组件使用
-
-要运行示例：
-
-```bash
-cd tests/React18
-npm install
-npm run dev
-```
+- 字段显示配置示例
 
 ## 总结
 
@@ -399,9 +737,19 @@ Timeline 组件的使用可以总结为以下几个要点：
 1. **安装依赖**：`npm install tristan-ui`
 2. **定义数据接口**：继承 `BaseTimelineItemType`，添加自定义字段
 3. **准备数据**：创建符合接口的数据数组
-4. **分组数据**：使用 `groupTimelineItemsByField` 函数
-5. **渲染组件**：传入分组数据给 `Timeline` 组件
-6. **导入样式**：别忘了导入 `"tristan-ui/dist/tristan-ui.css"`
+4. **🆕 配置字段显示**：使用 `createFieldConfig` 或预设模板配置字段显示方式
+5. **分组数据**：使用 `groupTimelineItemsByField` 函数
+6. **渲染组件**：传入配置和分组数据给 `Timeline` 组件
+7. **导入样式**：别忘了导入 `"tristan-ui/dist/tristan-ui.css"`
 
-遵循这个流程，您就可以快速创建出功能强大、美观的时间线组件了！
+### 新功能特性
+
+- ✅ **简化配置**: 代码量减少 85%，从 90+ 行到 15 行
+- ✅ **预设模板**: 常见场景一行代码搞定
+- ✅ **构建器模式**: 链式调用，流畅配置
+- ✅ **字段显示**: 支持图标、进度条、标签三种显示类型
+- ✅ **条件显示**: 支持基于数据的动态显示逻辑
+- ✅ **类型安全**: 完整的 TypeScript 支持
+
+遵循这个流程，您就可以快速创建出功能强大、美观且高度可配置的时间线组件了！
 

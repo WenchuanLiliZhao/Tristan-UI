@@ -125,4 +125,176 @@ export const CommonFieldMappings = {
   }),
 };
 
+// 🚀 新的改进版映射函数库
+export const FieldMappers = {
+  /** 从对象映射生成标签 */
+  fromMap: (map: Record<string, { name: string; color: string; icon?: string }>) => 
+    (value: unknown) => ({
+      text: map[String(value)]?.name || String(value),
+      color: map[String(value)]?.color || 'gray',
+    }),
+  
+  /** 进度条映射 */
+  progress: (options?: { showText?: boolean; color?: string }) => 
+    (value: unknown) => ({
+      value: Math.max(0, Math.min(100, Number(value) || 0)),
+      showText: options?.showText ?? true,
+      ...(options?.color && { color: options.color }),
+    }),
+  
+  /** 图标映射 */
+  iconFromMap: (map: Record<string, { icon?: string; color: string; name?: string }>) => 
+    (value: unknown) => {
+      const mapValue = map[String(value)];
+      return {
+        iconName: mapValue?.icon || 'help',
+        color: mapValue?.color || 'gray',
+      };
+    },
+  
+  /** 简单文本映射 */
+  text: (options?: { color?: string; variant?: 'contained' | 'outlined' }) => 
+    (value: unknown) => ({
+      text: String(value),
+      ...(options?.color && { color: options.color }),
+      ...(options?.variant && { variant: options.variant }),
+    }),
+};
+
+// 🎯 简化配置对象创建函数
+export const createFieldConfig = {
+  /** 创建进度条字段配置 */
+  progress: <T>(field: keyof T, options?: { showText?: boolean; color?: string }) => ({
+    field,
+    displayType: 'progress' as const,
+    mapping: FieldMappers.progress(options),
+    visible: true,
+  }),
+  
+  /** 创建图标字段配置 */
+  iconFromMap: <T>(field: keyof T, map: Record<string, { icon?: string; color: string }>) => ({
+    field,
+    displayType: 'icon' as const, 
+    mapping: FieldMappers.iconFromMap(map),
+    visible: true,
+  }),
+  
+  /** 创建标签字段配置 */
+  tagFromMap: <T>(
+    field: keyof T, 
+    map: Record<string, { name: string; color: string }>, 
+    options?: {
+      variant?: 'contained' | 'outlined';
+      hideValue?: unknown;
+      color?: string;
+    }
+  ) => ({
+    field,
+    displayType: 'tag' as const,
+    mapping: (value: unknown) => ({
+      text: map[String(value)]?.name || String(value),
+      color: options?.color || map[String(value)]?.color || 'gray',
+      variant: options?.variant || 'contained',
+    }),
+    visible: options?.hideValue !== undefined ? 
+      (item: unknown) => (item as Record<string, unknown>)[String(field)] !== options.hideValue : true,
+  }),
+  
+  /** 创建简单文本标签配置 */
+  tag: <T>(field: keyof T, options?: { 
+    color?: string; 
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+  }) => ({
+    field,
+    displayType: 'tag' as const,
+    mapping: FieldMappers.text({ color: options?.color, variant: options?.variant }),
+    visible: options?.hideValue !== undefined ? 
+      (item: unknown) => (item as Record<string, unknown>)[String(field)] !== options.hideValue : true,
+  }),
+};
+
+// 📋 预设模板
+export const TimelineTemplates = {
+  /** 项目管理模板 */
+  projectManagement: <T>(dataMaps: {
+    status?: Record<string, { name: string; color: string }>;
+    team?: Record<string, { name: string; color: string }>;
+    priority?: Record<string, { icon?: string; color: string; name?: string }>;
+  }) => ({
+    graphicFields: [
+      createFieldConfig.progress<T>('progress' as keyof T),
+      ...(dataMaps.priority ? [createFieldConfig.iconFromMap<T>('priority' as keyof T, dataMaps.priority)] : []),
+    ] as FieldDisplayConfig<T>[],
+    tagFields: [
+      ...(dataMaps.status ? [createFieldConfig.tagFromMap<T>('status' as keyof T, dataMaps.status)] : []),
+      ...(dataMaps.team ? [createFieldConfig.tagFromMap<T>('team' as keyof T, dataMaps.team)] : []),
+    ] as FieldDisplayConfig<T>[],
+  }),
+  
+  /** 任务管理模板 */
+  taskManagement: <T>(dataMaps: {
+    assignee?: Record<string, { name: string; color: string }>;
+    priority?: Record<string, { name: string; color: string }>;
+    status?: Record<string, { name: string; color: string }>;
+  }) => ({
+    graphicFields: [
+      createFieldConfig.progress<T>('progress' as keyof T, { showText: true }),
+    ] as FieldDisplayConfig<T>[],
+    tagFields: [
+      ...(dataMaps.assignee ? [createFieldConfig.tagFromMap<T>('assignee' as keyof T, dataMaps.assignee)] : []),
+      ...(dataMaps.priority ? [createFieldConfig.tagFromMap<T>('priority' as keyof T, dataMaps.priority)] : []),
+      ...(dataMaps.status ? [createFieldConfig.tagFromMap<T>('status' as keyof T, dataMaps.status)] : []),
+    ] as FieldDisplayConfig<T>[],
+  }),
+};
+
+// 🔧 配置构建器类
+export class TimelineConfigBuilder<T = Record<string, unknown>> {
+  private config: TimelineItemDisplayConfig<T> = { 
+    graphicFields: [], 
+    tagFields: [] 
+  };
+  
+  /** 添加进度条字段 */
+  addProgress(field: keyof T, options?: { showText?: boolean; color?: string }) {
+    this.config.graphicFields?.push(createFieldConfig.progress<T>(field, options));
+    return this;
+  }
+  
+  /** 添加图标字段 */
+  addIcon(field: keyof T, map: Record<string, { icon?: string; color: string }>) {
+    this.config.graphicFields?.push(createFieldConfig.iconFromMap<T>(field, map));
+    return this;
+  }
+  
+  /** 添加标签字段 */
+  addTag(
+    field: keyof T, 
+    map: Record<string, { name: string; color: string }>, 
+    options?: {
+      variant?: 'contained' | 'outlined';
+      hideValue?: unknown;
+    }
+  ) {
+    this.config.tagFields?.push(createFieldConfig.tagFromMap<T>(field, map, options));
+    return this;
+  }
+  
+  /** 添加简单文本标签 */
+  addSimpleTag(field: keyof T, options?: { 
+    color?: string; 
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+  }) {
+    this.config.tagFields?.push(createFieldConfig.tag<T>(field, options));
+    return this;
+  }
+  
+  /** 构建最终配置 */
+  build(): TimelineItemDisplayConfig<T> {
+    return this.config;
+  }
+}
+
  
