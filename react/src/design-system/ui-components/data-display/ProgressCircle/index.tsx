@@ -24,21 +24,6 @@ export interface ProgressCircleProps extends BaseComponentProps {
   animationDuration?: number;
 }
 
-const PREDEFINED_SIZES = {
-  small: 16,
-  medium: 24,
-  large: 32,
-};
-
-const PREDEFINED_COLORS = {
-  primary: "#6592F2",
-  secondary: "#6C757D",
-  success: "#28A745",
-  warning: "#FFC107",
-  error: "#DC3545",
-  info: "#17A2B8",
-};
-
 export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   progress = 0,
   size = "medium",
@@ -53,27 +38,14 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   "data-testid": dataTestId,
   ...rest
 }) => {
-  // 确定实际尺寸
-  const actualSize = typeof size === "number" ? size : PREDEFINED_SIZES[size];
-  
-  // 确定实际颜色
-  const actualColor = PREDEFINED_COLORS[color as Color] || color;
-  
-  // 计算圆圈参数
-  const center = actualSize / 2;
-  const radius = center - strokeWidth / 2;
-  const circumference = 2 * Math.PI * radius;
-  
   // 限制进度值在 0-100 之间
   const clampedProgress = Math.max(0, Math.min(100, progress));
-  
-  // 计算进度弧的长度
-  const strokeDasharray = circumference;
-  const strokeDashoffset = circumference - (clampedProgress / 100) * circumference;
   
   const baseClass = "lili-progress-circle";
   const classes = [
     styles[baseClass],
+    styles[`${baseClass}--${size}`],
+    styles[`${baseClass}--${color}`],
     className,
   ]
     .filter(Boolean)
@@ -84,52 +56,22 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   return (
     <div 
       className={classes}
-      style={{ width: actualSize, height: actualSize }}
       data-testid={dataTestId}
+      style={{
+        '--progress': clampedProgress,
+        '--background-color': backgroundColor,
+        '--background-opacity': backgroundOpacity,
+        '--stroke-width': `${strokeWidth}px`,
+        '--animation-duration': `${animationDuration}ms`,
+      } as React.CSSProperties}
       {...rest}
     >
-      <svg
-        width={actualSize}
-        height={actualSize}
-        viewBox={`0 0 ${actualSize} ${actualSize}`}
-        className={styles[`${baseClass}__svg`]}
-      >
-        <defs>
-          <clipPath id={`clip-${Math.random().toString(36).substr(2, 9)}`}>
-            <rect width={actualSize} height={actualSize} />
-          </clipPath>
-        </defs>
-        
+      <svg className={styles[`${baseClass}__svg`]}>
         {/* 背景圆圈 */}
-        <circle
-          cx={center}
-          cy={center}
-          r={radius}
-          stroke={backgroundColor}
-          strokeOpacity={backgroundOpacity}
-          strokeWidth={strokeWidth}
-          fill="none"
-          className={styles[`${baseClass}__background`]}
-        />
+        <circle className={styles[`${baseClass}__background`]} />
         
         {/* 进度圆弧 */}
-        <circle
-          cx={center}
-          cy={center}
-          r={radius}
-          stroke={actualColor}
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={strokeDasharray}
-          strokeDashoffset={strokeDashoffset}
-          className={styles[`${baseClass}__progress`]}
-          style={{
-            transform: 'rotate(-90deg)',
-            transformOrigin: 'center',
-            transition: `stroke-dashoffset ${animationDuration}ms ease-in-out`,
-          }}
-        />
+        <circle className={styles[`${baseClass}__progress`]} />
       </svg>
       
       {/* 进度文字 */}

@@ -10,15 +10,23 @@
   }
 
   &__background {
-    // 背景圆圈样式
+    fill: none;
+    stroke: var(--background-color, white);
+    stroke-opacity: var(--background-opacity, 0.03);
+    stroke-width: var(--stroke-width, 2px);
+    cx: 50%;
+    cy: 50%;
   }
 
   &__progress {
-    // 进度圆弧的变换原点在SVG中心
+    fill: none;
+    stroke-width: var(--stroke-width, 2px);
+    stroke-linecap: round;
+    transform: rotate(-90deg);
     transform-origin: center;
-    
-    // 平滑动画
-    transition: stroke-dashoffset 300ms ease-in-out;
+    transition: stroke-dashoffset var(--animation-duration, 300ms) ease-in-out;
+    cx: 50%;
+    cy: 50%;
   }
 
   &__text {
@@ -26,38 +34,132 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 0.6em;
     font-weight: 500;
-    color: var(--text-color, #333);
+    color: var(--color--text-prime);
     white-space: nowrap;
     pointer-events: none;
     -webkit-user-select: none;
     user-select: none;
-    
-    // 确保文字不会影响布局
     display: flex;
     align-items: center;
     justify-content: center;
   }
-}
 
-// 不同尺寸的文字大小调整
-.lili-progress-circle {
-  &[style*="width: 16px"] {
+  // 尺寸变体
+  &--tiny {
+    width: 12px;
+    height: 12px;
+    
+    .lili-progress-circle__svg {
+      viewBox: 0 0 12 12;
+    }
+    
+    .lili-progress-circle__background,
+    .lili-progress-circle__progress {
+      r: 5px; // (12 - 2) / 2 = 5px radius
+      stroke-dasharray: 31.416; // 2 * π * 5
+      stroke-dashoffset: calc(31.416 - (31.416 * var(--progress, 0) / 100));
+    }
+    
+    .lili-progress-circle__text {
+      font-size: 6px;
+    }
+  }
+
+  &--small {
+    width: 16px;
+    height: 16px;
+    
+    .lili-progress-circle__svg {
+      viewBox: 0 0 16 16;
+    }
+    
+    .lili-progress-circle__background,
+    .lili-progress-circle__progress {
+      r: 7px; // (16 - 2) / 2 = 7px radius
+      stroke-dasharray: 43.982; // 2 * π * 7
+      stroke-dashoffset: calc(43.982 - (43.982 * var(--progress, 0) / 100));
+    }
+    
     .lili-progress-circle__text {
       font-size: 8px;
     }
   }
-  
-  &[style*="width: 24px"] {
+
+  &--medium {
+    width: 24px;
+    height: 24px;
+    
+    .lili-progress-circle__svg {
+      viewBox: 0 0 24 24;
+    }
+    
+    .lili-progress-circle__background,
+    .lili-progress-circle__progress {
+      r: 11px; // (24 - 2) / 2 = 11px radius
+      stroke-dasharray: 69.115; // 2 * π * 11
+      stroke-dashoffset: calc(69.115 - (69.115 * var(--progress, 0) / 100));
+    }
+    
     .lili-progress-circle__text {
       font-size: 10px;
     }
   }
-  
-  &[style*="width: 32px"] {
+
+  &--large {
+    width: 32px;
+    height: 32px;
+    
+    .lili-progress-circle__svg {
+      viewBox: 0 0 32 32;
+    }
+    
+    .lili-progress-circle__background,
+    .lili-progress-circle__progress {
+      r: 15px; // (32 - 2) / 2 = 15px radius
+      stroke-dasharray: 94.248; // 2 * π * 15
+      stroke-dashoffset: calc(94.248 - (94.248 * var(--progress, 0) / 100));
+    }
+    
     .lili-progress-circle__text {
       font-size: 12px;
+    }
+  }
+
+  // 颜色变体
+  &--primary {
+    .lili-progress-circle__progress {
+      stroke: var(--color--semantic-active);
+    }
+  }
+
+  &--secondary {
+    .lili-progress-circle__progress {
+      stroke: var(--color-chart--neutron-6);
+    }
+  }
+
+  &--success {
+    .lili-progress-circle__progress {
+      stroke: var(--color--semantic-success);
+    }
+  }
+
+  &--warning {
+    .lili-progress-circle__progress {
+      stroke: var(--color--semantic-warning);
+    }
+  }
+
+  &--error {
+    .lili-progress-circle__progress {
+      stroke: var(--color--semantic-error);
+    }
+  }
+
+  &--info {
+    .lili-progress-circle__progress {
+      stroke: var(--color--semantic-active);
     }
   }
 } 
