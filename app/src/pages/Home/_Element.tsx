@@ -17,6 +17,7 @@ export const Element: React.FC = () => {
     { name: 'Timeline Demo', path: '/timeline', description: 'Timeline component demonstration - Explore various usage patterns and configuration options for the timeline component' },
     { name: 'Material Icons Debug', path: '/icon-debug', description: 'Material Icons testing page - Test and preview all available Material Icons' },
     { name: 'Tag Demo', path: '/tag-demo', description: 'Tag component demonstration - View different styles and usage patterns of the tag component' },
+    { name: 'Layout Demo', path: '/layout-demo', description: 'Layout component demonstration - View different styles and usage patterns of the layout component' },
   ];
 
   return (
