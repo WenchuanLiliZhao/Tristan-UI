@@ -52,17 +52,17 @@ export const priority = {
   high: {
     name: "High",
     color: rainbowColorNames.rose,
-    icon: "icon-a"
+    icon: "stat_2"
   },
   medium: {
     name: "Medium",
     color: rainbowColorNames.amber,
-    icon: "icon-b"
+    icon: "stat_1"
   },
   low: {
     name: "Low",
     color: rainbowColorNames.emerald,
-    icon: "icon-c"
+    icon: "stat_minus_1"
   }
 }
 
@@ -70,17 +70,14 @@ export const riskLevel = {
   high: {
     name: "High Risks",
     color: rainbowColorNames.rose,
-    icon: "icon-a"
   },
   medium: {
     name: "Medium Risks",
     color: rainbowColorNames.amber,
-    icon: "icon-b"
   },
   low: {
     name: "Low Risks",
     color: rainbowColorNames.emerald,
-    icon: "icon-c"
   }
 }
 

@@ -7,7 +7,7 @@ import {
   type TimelineConfigType,
   createFieldConfig,
 } from "../../../design-system/ui-demos/timeline/data/types";
-import { ExampleData, priority, riskLevel, status, team, type ProjectDataType } from "./example-data";
+import { ExampleData, priority, status, type ProjectDataType } from "./example-data";
 
 
 export function Element(): React.ReactElement {
@@ -19,11 +19,6 @@ export function Element(): React.ReactElement {
     ],
     tagFields: [
       createFieldConfig.tagFromMap<ProjectDataType>("status", status),
-      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
-      createFieldConfig.tagFromMap<ProjectDataType>("riskLevel", riskLevel, {
-        // variant: "outlined",
-        hideValue: "low", // Automatically hide low-risk items
-      }),
     ],
   };
 
