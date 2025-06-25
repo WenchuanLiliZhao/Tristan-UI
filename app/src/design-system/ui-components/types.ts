@@ -1,7 +1,6 @@
 // Design System Base Types
 export interface BaseComponentProps {
   className?: string;
-  children?: React.ReactNode;
   'data-testid'?: string;
 }
 

@@ -1,3 +1,4 @@
+import { TopNav } from "../../../design-system/ui-components";
 import { TristanLayout } from "../../../design-system/ui-components/layout";
 import { colors } from "../../../styles";
 
@@ -56,17 +57,10 @@ export const Element: React.FC = () => {
   return (
     <TristanLayout
       top={
-        <div
-          style={{
-            height: "56px",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          Top
-        </div>
+        <TopNav
+          left={[<div>Left nav items</div>]}
+          right={[<div>Right nav items</div>]}
+        />
       }
       left={
         <div

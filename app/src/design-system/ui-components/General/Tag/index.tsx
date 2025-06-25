@@ -5,6 +5,7 @@ import type { BaseComponentProps, Color, Size } from "../../types";
 import { type RainbowColorName } from "../../../../styles/color";
 
 export interface TagProps extends BaseComponentProps {
+  children?: React.ReactNode;
   variant?: "contained" | "outlined";
   size?: Size;
   color?: Color | RainbowColorName;

@@ -1,11 +1,10 @@
 import React from 'react';
 import './fonts/material-icons.scss';
+import type { BaseComponentProps } from '../../types';
 
-export interface IconProps {
+export interface IconProps extends BaseComponentProps {
   /** 图标名称 - 使用 Material Symbols 的官方名称 */
   name: string;
-  /** 自定义类名 */
-  className?: string;
   /** 自定义样式 */
   style?: React.CSSProperties;
 }
@@ -22,11 +21,15 @@ export const Icon: React.FC<IconProps> = ({
   name,
   className = '',
   style,
+  'data-testid': dataTestId,
+  ...rest
 }) => {
   return (
     <span
       className={`${className} material-icons`}
       style={style}
+      data-testid={dataTestId}
+      {...rest}
     >
       {name}
     </span>

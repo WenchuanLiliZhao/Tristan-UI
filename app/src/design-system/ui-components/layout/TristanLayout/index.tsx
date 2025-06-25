@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import styles from "./styles.module.scss";
+import type { BaseComponentProps } from "../../types";
 
-interface PageLayoutProps {
+interface PageLayoutProps extends BaseComponentProps {
   top?: ReactNode;
   left?: ReactNode;
   right?: ReactNode;
@@ -14,6 +15,9 @@ export const TristanLayout: React.FC<PageLayoutProps> = ({
   left,
   right,
   main,
+  className = "",
+  'data-testid': dataTestId,
+  ...rest
 }) => {
   useEffect(() => {
     // 保存原始的 overflow 值
@@ -29,7 +33,11 @@ export const TristanLayout: React.FC<PageLayoutProps> = ({
   }, []);
 
   return (
-    <div className={styles["tristan-layout"]}>
+    <div 
+      className={`${styles["tristan-layout"]} ${className}`}
+      data-testid={dataTestId}
+      {...rest}
+    >
       {top && <div className={styles["tristan-layout__top"]}>{top}</div>}
       <div className={styles["tristan-layout__content"]}>
         {left && (

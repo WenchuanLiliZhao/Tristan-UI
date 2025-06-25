@@ -6,6 +6,7 @@ import { Icon } from "../Icon";
 import { HoverBox } from "../../shared/HoverBox";
 
 export interface ButtonProps extends BaseComponentProps {
+  children?: React.ReactNode;
   /** Button mode/variant - matches Figma "mode" property */
   variant?: "filled" | "outlined" | "ghost";
   /** Button size */
