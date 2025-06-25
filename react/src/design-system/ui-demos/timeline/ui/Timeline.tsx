@@ -89,14 +89,8 @@ export function Timeline<T = Record<string, unknown>>({
   const timelineIntervalData = sortedItems.map(item => ({
     id: item.id || '',
     name: item.name || '',
-    status: 'On Track' as const,
-    description: '',
     startDate: item.startDate || item[BaseTimelineItemKeys.START_DATE as keyof typeof item],
     endDate: item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item],
-    progress: 0,
-    category: '',
-    team: 'Tech' as const,
-    priority: 'Medium' as const,
   }));
 
   // Get list of years and start month that need to be displayed
@@ -174,7 +168,6 @@ export function Timeline<T = Record<string, unknown>>({
 
   return (
     <div 
-      ref={gestureDisableRef}
       className={styles["timeline-container"]}
     >
       <div className={styles["timeline-body"]}>
@@ -183,6 +176,7 @@ export function Timeline<T = Record<string, unknown>>({
           ref={(el) => {
             mainScrollRef.current = el;
             zoomContainerRef.current = el;
+            gestureDisableRef.current = el;
           }}
           className={styles["timeline-main-scroll"]}
         >
