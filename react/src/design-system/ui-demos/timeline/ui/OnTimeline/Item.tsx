@@ -9,7 +9,10 @@ import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
 import type { Color } from "../../../../ui-components/types";
 import type { RainbowColorName } from "../../../../../styles/color";
-import { getRainbowColor, rainbowColorNames } from "../../../../../styles/color";
+import {
+  getRainbowColor,
+  rainbowColorNames,
+} from "../../../../../styles/color";
 
 interface TimelineItemProps {
   item: TimelineItemType;
@@ -52,19 +55,25 @@ const renderGraphicField = (
       // 处理颜色：如果是RainbowColorName，转换为CSS变量
       const iconColor = displayProps.color;
       const iconStyle: React.CSSProperties = {};
-      
+
       if (iconColor) {
-        if (typeof iconColor === 'string') {
+        if (typeof iconColor === "string") {
           // 如果是rainbowColorName，转换为CSS变量
-          if (Object.values(rainbowColorNames).includes(iconColor as RainbowColorName)) {
-            iconStyle.color = `var(${getRainbowColor(iconColor as RainbowColorName)})`;
+          if (
+            Object.values(rainbowColorNames).includes(
+              iconColor as RainbowColorName
+            )
+          ) {
+            iconStyle.color = `var(${getRainbowColor(
+              iconColor as RainbowColorName
+            )})`;
           } else {
             // 其他颜色直接使用
             iconStyle.color = iconColor;
           }
         }
       }
-      
+
       return (
         <div key={key} className={styles["timeline-item-icon"]}>
           <Icon
@@ -80,15 +89,16 @@ const renderGraphicField = (
     }
     case "progress":
       return (
-        <ProgressCircle
-          key={key}
-          progress={
-            (displayProps.value as number) || (fieldValue as number) || 0
-          }
-          size={"small"}
-          color={displayProps.color as Color}
-          // showText={displayProps.showText as boolean}
-        />
+        <div className={styles["timeline-item-progress-container"]} key={key}>
+          <ProgressCircle
+            progress={
+              (displayProps.value as number) || (fieldValue as number) || 0
+            }
+            size={12}
+            color={displayProps.color as Color}
+            // showText={displayProps.showText as boolean}
+          />
+        </div>
       );
     default:
       return null;
@@ -154,19 +164,22 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
     const startMonth = startDate.getMonth();
     const endYear = endDate.getFullYear();
     const endMonth = endDate.getMonth();
-    
+
     return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
   };
 
   const spannedMonths = calculateSpannedMonths(item.startDate, item.endDate);
-  
+
   return (
     <div className={styles["timeline-item"]}>
       <div
         className={styles["timeline-item-container"]}
         style={{
           height: cellHeight - TimelineConst.itemVPadding * 2,
-          width: durationInDays * dayWidth - TimelineConst.itemHPadding * 2 + (spannedMonths - 1),
+          width:
+            durationInDays * dayWidth -
+            TimelineConst.itemHPadding * 2 +
+            (spannedMonths - 1),
           position: "absolute",
           top: `${
             column * cellHeight +

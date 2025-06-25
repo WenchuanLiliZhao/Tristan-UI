@@ -5,7 +5,7 @@ export interface BaseComponentProps {
 }
 
 // Size variants
-export type Size = 'small' | 'medium' | 'large';
+export type Size = 'tiny' | 'small' | 'medium' | 'large';
 
 // Color variants
 export type Color = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';

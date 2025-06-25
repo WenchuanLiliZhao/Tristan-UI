@@ -3,8 +3,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 20px;
+  font-size: 16px;
+}
+
+.timeline-item-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 20px;
 }
 
 // 主组件 TimelineItem 的样式结构
@@ -46,14 +55,24 @@
       min-width: 0;
       
       .timeline-item-name {
-        font-size: 12px;
-        line-height: 18px;
+        font-size: 14px;
+        line-height: 20px;
         overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
+        white-space: nowrap;
+        position: relative;
+        
+        // 使用渐变遮罩创建淡出效果
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 20px; // 固定宽度的渐变区域
+          height: 100%;
+          background: linear-gradient(90deg, transparent 0%, var(--color--bg-secondary) 100%);
+          pointer-events: none;
+          z-index: 1;
+        }
       }
       
       .timeline-item-tags {
