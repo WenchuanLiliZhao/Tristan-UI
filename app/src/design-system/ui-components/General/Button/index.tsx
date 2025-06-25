@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import type { BaseComponentProps, Size } from "../../types";
 import { Icon } from "../Icon";
-import { HoverBox } from "../HoverBox";
+import { HoverBox } from "../../shared/HoverBox";
 
 export interface ButtonProps extends BaseComponentProps {
   /** Button mode/variant - matches Figma "mode" property */

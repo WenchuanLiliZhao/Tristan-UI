@@ -10,6 +10,11 @@
   outline: none;
   overflow: hidden;
   
+  // // Focus state
+  // &:focus-visible, &:focus {
+  //   outline: 2px solid var(--color--border-prime) !important;
+  //   outline-offset: 2px;
+  // }
 
   &--small {
     padding: 6px 12px;
