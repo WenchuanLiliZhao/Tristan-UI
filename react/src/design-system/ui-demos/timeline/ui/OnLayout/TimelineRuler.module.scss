@@ -1,14 +1,12 @@
 .timeline-ruler-year {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: var(--color--bg-prime);
 
   .timeline-ruler-year-label {
     font-size: 14px;
     font-weight: bold;
     padding: 0 8px;
-    
-    box-shadow: inset -1px 0 0 0 #e1e5e9;
     text-align: center;
     display: flex;
     align-items: center;
@@ -16,22 +14,25 @@
   }
 
   .timeline-ruler-month {
-    box-shadow: inset -1px 0 0 0 #e1e5e9;
+    border-right: 1px solid var(--color--border-prime);
 
     .timeline-ruler-month-label {
       font-size: 14px;
       font-weight: bold;
       padding: 0 8px;
-      background-color: rgba(0, 0, 0, 0.02);
-      // box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.08);
+      background-color: var(--color--bg-prime);
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
+
+      
+      border-top: 1px solid var(--color--border-prime);
+      border-bottom: 1px solid var(--color--border-prime);
       
 
       .year-for-month {
-        color: #ADADAD;
+        color: var(--color--text-secondary);
         margin-left: 4px;
       }
     }
@@ -46,7 +47,8 @@
       position: relative;
 
       &.zoomed {
-        box-shadow: inset -1px 0 0 0 #e1e5e9;
+        // border-right: 1px solid var(--color--border-prime);
+        display: block;
       }
 
       .timeline-ruler-day-label {

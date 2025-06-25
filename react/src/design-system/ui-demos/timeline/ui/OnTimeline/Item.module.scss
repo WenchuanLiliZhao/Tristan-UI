@@ -17,19 +17,19 @@
     align-items: center;
     gap: 8px;
 
-    background-color: #ffffff;
-    border: 1px solid #e1e5e9;
-    box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--color--bg-secondary);
+    border: 1px solid var(--color--border-prime);
+    box-shadow: 2px 2px 4px 0 var(--shaodw-pop-up);
     border-radius: 4px;
     overflow: hidden;
     position: absolute;
     z-index: 1;
     padding: 8px;
 
-    color: black;
+    color: var(--color--text-prime);
 
     &:hover {
-      border-color: #007bff;
+      border-color: var(--color--semantic-active);
     }
 
     .timeline-item-graphic-info {
