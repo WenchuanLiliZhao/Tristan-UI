@@ -42,7 +42,7 @@ import {
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar, SIDEBAR_WIDTH } from "./Sidebar/TimelineSidebar";
-import { useCenterBasedZoom } from "../data/hooks";
+import { useCenterBasedZoom, useDisableBrowserGestures } from "../data/hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 
@@ -75,6 +75,9 @@ export function Timeline<T = Record<string, unknown>>({
 
   // 使用自定义hook实现中心缩放功能，针对主内容容器
   const { containerRef: zoomContainerRef } = useCenterBasedZoom(dayWidth);
+  
+  // 使用自定义hook禁用浏览器左右滑动手势
+  const gestureDisableRef = useDisableBrowserGestures();
 
   // Flatten all items from all groups for timeline calculations
   const allItems = inputData.data.flatMap((group) => group.groupItems);
@@ -170,9 +173,10 @@ export function Timeline<T = Record<string, unknown>>({
   });
 
   return (
-    <div className={styles["timeline-container"]}>
-
-
+    <div 
+      ref={gestureDisableRef}
+      className={styles["timeline-container"]}
+    >
       <div className={styles["timeline-body"]}>
         {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
         <div

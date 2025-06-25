@@ -7,6 +7,10 @@
   flex-direction: column;
   height: 100vh;
   background-color: var(--color--bg-prime);
+  
+  // 禁用浏览器滑动手势导航
+  overscroll-behavior: none;
+  overscroll-behavior-x: none;
 
   .timeline-body {
     flex: 1;
@@ -20,6 +24,10 @@
     overflow: auto;
     position: relative;
     scroll-behavior: smooth;
+    
+    // 确保滚动容器也禁用overscroll行为
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
   }
 
   .timeline-right-sidebar {

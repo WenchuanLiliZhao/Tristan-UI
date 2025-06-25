@@ -235,4 +235,45 @@ This timeline system is designed to be self-contained and easily customizable. F
 
 ## 📄 License
 
-Use according to your project's license requirements. 
+Use according to your project's license requirements.
+
+## 🔧 核心功能特性
+
+### 禁用浏览器滑动手势 🚫👆
+Timeline 组件现在自动禁用浏览器的左右滑动导航手势，避免在横向滚动时意外触发：
+- 右滑返回上一页
+- 左滑前进到下一页
+- 触摸板横向滑动导航
+- 鼠标滚轮横向滚动导航
+
+这个功能通过多重防护机制实现：
+- **CSS 防护**：使用 `overscroll-behavior: none` 禁用浏览器原生滑动行为
+- **JavaScript 防护**：`useDisableBrowserGestures` hook 拦截各种滑动事件
+- **智能检测**：只在鼠标进入 Timeline 区域时激活，避免影响其他页面元素
+
+```typescript
+// Hook 自动集成在 Timeline 组件中，无需额外配置
+import { Timeline } from '@/design-system/ui-demos/timeline';
+
+// 使用时会自动禁用浏览器手势
+<Timeline inputData={data} />
+```
+
+如果需要在其他组件中使用这个功能：
+
+```typescript
+import { useDisableBrowserGestures } from '@/design-system/ui-demos/timeline/data';
+
+function MyComponent() {
+  const containerRef = useDisableBrowserGestures();
+  
+  return (
+    <div ref={containerRef}>
+      {/* 当鼠标进入此区域时，浏览器滑动手势被禁用 */}
+      <div style={{ overflowX: 'scroll' }}>
+        横向滚动内容...
+      </div>
+    </div>
+  );
+}
+``` 

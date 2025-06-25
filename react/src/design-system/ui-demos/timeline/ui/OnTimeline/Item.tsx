@@ -148,13 +148,25 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   onIssueClick,
   displayConfig,
 }) => {
+  // 计算issue跨越的月数
+  const calculateSpannedMonths = (startDate: Date, endDate: Date): number => {
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth();
+    const endYear = endDate.getFullYear();
+    const endMonth = endDate.getMonth();
+    
+    return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+  };
+
+  const spannedMonths = calculateSpannedMonths(item.startDate, item.endDate);
+  
   return (
     <div className={styles["timeline-item"]}>
       <div
         className={styles["timeline-item-container"]}
         style={{
           height: cellHeight - TimelineConst.itemVPadding * 2,
-          width: durationInDays * dayWidth - TimelineConst.itemHPadding * 2 - 1,
+          width: durationInDays * dayWidth - TimelineConst.itemHPadding * 2 + (spannedMonths - 1),
           position: "absolute",
           top: `${
             column * cellHeight +
