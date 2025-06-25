@@ -3,6 +3,7 @@ import TagDemo from "./TagDemo";
 import Timeline from "./Timeline";
 import SwitchDemo from "./SwitchDemo";
 import LayoutDemo from "./LayoutDemo";
+import IconDemo from "./IconDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -10,4 +11,5 @@ export const DebugPages = {
   Timeline,
   SwitchDemo,
   LayoutDemo,
+  IconDemo,
 }

@@ -8,6 +8,7 @@ export interface IconProps extends BaseComponentProps {
   /** 自定义样式 */
   style?: React.CSSProperties;
 }
+
 /**
  * Icon 组件 - 基于 Material Symbols 字体的图标系统（200字重）
  * 
@@ -15,6 +16,7 @@ export interface IconProps extends BaseComponentProps {
  * ```tsx
  * <Icon name="home" />
  * <Icon name="person" />
+ * <Icon name="settings" />
  * ```
  */
 export const Icon: React.FC<IconProps> = ({
