@@ -1,4 +1,5 @@
 import { TristanLayout } from "../../../design-system/ui-components/layout";
+import { colors } from "../../../styles";
 
 const Main = () => {
   return (
@@ -16,7 +17,7 @@ const Main = () => {
 
       {/* 生成足够多的内容来填充高度 */}
       {Array.from({ length: 100 }, (_, i) => (
-        <div key={i} style={{ marginBottom: "16px", padding: "12px" }}>
+        <div key={i} style={{ marginBottom: "16px"}}>
           <h3>Section {i + 1}</h3>
           <p>
             This is section {i + 1} of the main content. This content is
@@ -37,7 +38,7 @@ const Main = () => {
         style={{
           marginTop: "40px",
           padding: "20px",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: `var(${colors.background.secondary})`,
           borderRadius: "8px",
         }}
       >
