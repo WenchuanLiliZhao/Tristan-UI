@@ -9,10 +9,7 @@ import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
 import type { Color } from "../../../../ui-components/types";
 import type { RainbowColorName } from "../../../../../styles/color";
-import {
-  getRainbowColor,
-  rainbowColorNames,
-} from "../../../../../styles/color";
+import { extractColorName } from "../../../../../styles/color";
 
 interface TimelineItemProps {
   item: TimelineItemType;
@@ -52,25 +49,17 @@ const renderGraphicField = (
 
   switch (config.displayType) {
     case "icon": {
-      // 处理颜色：如果是RainbowColorName，转换为CSS变量
+      // 处理颜色：现在直接使用 CSS 变量
       const iconColor = displayProps.color;
       const iconStyle: React.CSSProperties = {};
 
-      if (iconColor) {
-        if (typeof iconColor === "string") {
-          // 如果是rainbowColorName，转换为CSS变量
-          if (
-            Object.values(rainbowColorNames).includes(
-              iconColor as RainbowColorName
-            )
-          ) {
-            iconStyle.color = `var(${getRainbowColor(
-              iconColor as RainbowColorName
-            )})`;
-          } else {
-            // 其他颜色直接使用
-            iconStyle.color = iconColor;
-          }
+      if (iconColor && typeof iconColor === "string") {
+        // 如果是 CSS 变量名，包装在 var() 中
+        if (iconColor.startsWith('--')) {
+          iconStyle.color = `var(${iconColor})`;
+        } else {
+          // 其他颜色直接使用
+          iconStyle.color = iconColor;
         }
       }
 
@@ -135,6 +124,10 @@ const renderTagField = (
     String(fieldValue);
   const key = `${item.id}-${String(config.field)}-${index}`;
 
+  // 提取颜色名称用于 CSS 类
+  const colorValue = displayProps.color as string;
+  const colorName = colorValue ? extractColorName(colorValue) : 'primary';
+
   return (
     <Tag
       key={key}
@@ -142,7 +135,7 @@ const renderTagField = (
         (displayProps.variant as "contained" | "outlined") || "contained"
       }
       size="small"
-      color={displayProps.color as Color | RainbowColorName}
+      color={colorName as Color | RainbowColorName}
     >
       {tagText}
     </Tag>

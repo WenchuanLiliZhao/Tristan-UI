@@ -276,4 +276,111 @@ function MyComponent() {
     </div>
   );
 }
-``` 
+```
+
+## 🎨 新的颜色系统用法
+
+从版本 X.X.X 开始，我们引入了新的颜色函数，提供更灵活和一致的颜色管理：
+
+### 彩虹颜色 (Rainbow Colors)
+
+使用 `getRainbowColor()` 函数获取完整的 CSS 变量名：
+
+```typescript
+import { getRainbowColor } from "tristan-ui/colors";
+
+// ✅ 新方式：使用函数
+export const status = {
+  high: {
+    name: "High",
+    color: getRainbowColor('rose')  // 输出: --color-chart--rainbow-rose
+  },
+  medium: {
+    name: "Medium", 
+    color: getRainbowColor('amber') // 输出: --color-chart--rainbow-amber
+  },
+  low: {
+    name: "Low",
+    color: getRainbowColor('emerald') // 输出: --color-chart--rainbow-emerald
+  }
+}
+
+// ❌ 旧方式：直接使用颜色名称
+export const statusOld = {
+  high: {
+    name: "High",
+    color: rainbowColorNames.rose    // 输出: rose
+  }
+}
+```
+
+### 语义颜色 (Semantic Colors)
+
+使用 `getSemanticColor()` 函数获取语义颜色的 CSS 变量名：
+
+```typescript
+import { getSemanticColor } from "tristan-ui/colors";
+
+// 基础语义颜色
+const activeColor = getSemanticColor('active');        // --color--semantic-active
+const successColor = getSemanticColor('success');     // --color--semantic-success
+const warningColor = getSemanticColor('warning');     // --color--semantic-warning
+const errorColor = getSemanticColor('error');         // --color--semantic-error
+
+// 带变体的语义颜色
+const activeDark = getSemanticColor('active', 'dark'); // --color--semantic-active-dark
+const successHalf = getSemanticColor('success', 'half'); // --color--semantic-success-half
+const warningPale = getSemanticColor('warning', 'pale'); // --color--semantic-warning-pale
+```
+
+### 实际使用示例
+
+在 Timeline 数据配置中：
+
+```typescript
+import { getRainbowColor, getSemanticColor } from "tristan-ui/colors";
+
+export const priority = {
+  urgent: {
+    name: "Urgent",
+    color: getSemanticColor('error'),     // 紧急使用错误色
+    icon: "priority_high"
+  },
+  high: {
+    name: "High",
+    color: getRainbowColor('rose'),       // 高优先级使用玫瑰色
+    icon: "stat_2"
+  },
+  medium: {
+    name: "Medium",
+    color: getRainbowColor('amber'),      // 中等优先级使用琥珀色
+    icon: "stat_1"
+  },
+  low: {
+    name: "Low",
+    color: getRainbowColor('emerald'),    // 低优先级使用翡翠色
+    icon: "stat_minus_1"
+  }
+}
+```
+
+### 优势
+
+1. **类型安全**：函数提供更好的 TypeScript 支持
+2. **一致性**：输出标准的 CSS 变量名，确保样式一致
+3. **可维护性**：集中管理颜色变量，便于修改和维护
+4. **智能处理**：组件会自动处理 CSS 变量名和颜色名称的转换
+
+### 迁移指南
+
+替换现有代码：
+
+```typescript
+// 将这个：
+color: rainbowColorNames.rose
+
+// 改为：
+color: getRainbowColor('rose')
+```
+
+系统会自动处理新旧格式的兼容性，确保平滑过渡。 

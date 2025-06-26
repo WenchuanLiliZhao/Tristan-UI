@@ -346,4 +346,39 @@ export const useRainbowColor = (colorName: RainbowColorName): string => {
  */
 export const getRainbowColor = (colorName: RainbowColorName): string => {
   return `--color-chart--rainbow-${colorName}`;
+};
+
+/**
+ * Generate semantic color CSS variable name
+ * @param colorName - Semantic color name ('active', 'success', 'warning', 'error')
+ * @param suffix - Color suffix ('default', 'dark', 'half', 'pale')
+ * @returns The CSS variable name for the semantic color
+ */
+export const getSemanticColor = (
+  colorName: 'active' | 'success' | 'warning' | 'error',
+  suffix: 'default' | 'dark' | 'half' | 'pale' = 'default'
+): string => {
+  return `--color--semantic-${colorName}${suffix === 'default' ? '' : `-${suffix}`}`;
+};
+
+/**
+ * Extract color name from CSS variable name for use with components that use CSS classes
+ * @param cssVar - CSS variable name (e.g., '--color-chart--rainbow-rose')
+ * @returns The color name (e.g., 'rose') or the original value if not a recognized CSS variable
+ */
+export const extractColorName = (cssVar: string): string => {
+  // Handle rainbow colors
+  const rainbowMatch = cssVar.match(/^--color-chart--rainbow-(.+)$/);
+  if (rainbowMatch) {
+    return rainbowMatch[1];
+  }
+  
+  // Handle semantic colors - extract the base semantic color name
+  const semanticMatch = cssVar.match(/^--color--semantic-(.+?)(?:-|$)/);
+  if (semanticMatch) {
+    return semanticMatch[1];
+  }
+  
+  // Return the original value if it's not a CSS variable
+  return cssVar;
 }; 

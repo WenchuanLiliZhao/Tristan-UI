@@ -1,6 +1,5 @@
-
 import type { BaseTimelineItemType } from "../../../../design-system/ui-demos";
-import { rainbowColorNames } from "../../../../styles";
+import { getRainbowColor } from "../../../../styles";
 import { Example_Issues_1 } from "./_example1";
 import { Example_Issues_2 } from "./_example2";
 import { Example_Issues_3 } from "./_example3";
@@ -9,59 +8,59 @@ import { Example_Issues_3 } from "./_example3";
 export const status = {
   high: {
     name: "High",
-    color: rainbowColorNames.rose
+    color: getRainbowColor('rose')
   },
   medium: {
     name: "Medium",
-    color: rainbowColorNames.amber
+    color: getRainbowColor('amber')
   },
   low: {
     name: "Low",
-    color: rainbowColorNames.emerald
+    color: getRainbowColor('emerald')
   }
 }
 
 export const team = {
   sales: {
     name: "Sales",
-    color: rainbowColorNames.blue
+    color: getRainbowColor('blue')
   },
   marketing: {
     name: "Marketing",
-    color: rainbowColorNames.emerald
+    color: getRainbowColor('emerald')
   },
   engineering: {
     name: "Engineering",
-    color: rainbowColorNames.purple
+    color: getRainbowColor('purple')
   },
   design: {
     name: "Design",
-    color: rainbowColorNames.orange
+    color: getRainbowColor('orange')
   },
   product: {
     name: "Product",
-    color: rainbowColorNames.pink
+    color: getRainbowColor('pink')
   },
   other: {
     name: "Other",
-    color: rainbowColorNames.cyan
+    color: getRainbowColor('cyan')
   }
 }
 
 export const priority = {
   high: {
     name: "High",
-    color: rainbowColorNames.rose,
+    color: getRainbowColor('rose'),
     icon: "stat_2"
   },
   medium: {
     name: "Medium",
-    color: rainbowColorNames.amber,
+    color: getRainbowColor('amber'),
     icon: "stat_1"
   },
   low: {
     name: "Low",
-    color: rainbowColorNames.emerald,
+    color: getRainbowColor('emerald'),
     icon: "stat_minus_1"
   }
 }
@@ -69,15 +68,15 @@ export const priority = {
 export const riskLevel = {
   high: {
     name: "High Risks",
-    color: rainbowColorNames.rose,
+    color: getRainbowColor('rose'),
   },
   medium: {
     name: "Medium Risks",
-    color: rainbowColorNames.amber,
+    color: getRainbowColor('amber'),
   },
   low: {
     name: "Low Risks",
-    color: rainbowColorNames.emerald,
+    color: getRainbowColor('emerald'),
   }
 }
 

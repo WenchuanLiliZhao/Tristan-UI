@@ -41,11 +41,15 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   // 限制进度值在 0-100 之间
   const clampedProgress = Math.max(0, Math.min(100, progress));
   
+  // 判断是否为预定义颜色
+  const predefinedColors = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
+  const isPreDefinedColor = predefinedColors.includes(color as string);
+  
   const baseClass = "lili-progress-circle";
   const classes = [
     styles[baseClass],
     styles[`${baseClass}--${size}`],
-    styles[`${baseClass}--${color}`],
+    isPreDefinedColor && styles[`${baseClass}--${color}`],
     className,
   ]
     .filter(Boolean)
@@ -53,17 +57,21 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
 
   const progressText = text !== undefined ? text : `${Math.round(clampedProgress)}%`;
 
+  // 构建样式对象
+  const componentStyle = {
+    '--progress': clampedProgress,
+    '--background-color': backgroundColor,
+    '--background-opacity': backgroundOpacity,
+    '--stroke-width': `${strokeWidth}px`,
+    '--animation-duration': `${animationDuration}ms`,
+    ...((!isPreDefinedColor && color) && { '--custom-progress-color': color }),
+  } as React.CSSProperties & Record<string, string | number>;
+
   return (
     <div 
       className={classes}
       data-testid={dataTestId}
-      style={{
-        '--progress': clampedProgress,
-        '--background-color': backgroundColor,
-        '--background-opacity': backgroundOpacity,
-        '--stroke-width': `${strokeWidth}px`,
-        '--animation-duration': `${animationDuration}ms`,
-      } as React.CSSProperties}
+      style={componentStyle}
       {...rest}
     >
       <svg className={styles[`${baseClass}__svg`]}>
