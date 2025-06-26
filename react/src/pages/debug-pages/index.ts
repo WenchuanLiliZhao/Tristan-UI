@@ -4,6 +4,7 @@ import Timeline from "./Timeline";
 import SwitchDemo from "./SwitchDemo";
 import LayoutDemo from "./LayoutDemo";
 import IconDemo from "./IconDemo";
+import RichTooltipDemo from "./RichTooltipDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -12,4 +13,5 @@ export const DebugPages = {
   SwitchDemo,
   LayoutDemo,
   IconDemo,
+  RichTooltipDemo,
 }
