@@ -80,8 +80,8 @@ const renderGraphicField = (
               (displayProps.value as number) || (fieldValue as number) || 0
             }
             size={"tiny"}
-            // 直接使用颜色名称，从颜色值中提取
-            color={displayProps.color ? extractColorName(displayProps.color as string) as Color : "primary"}
+            // 如果提供了颜色，直接传递，否则让 ProgressCircle 使用其默认颜色
+            color={displayProps.color as Color | string}
           />
         </div>
       );

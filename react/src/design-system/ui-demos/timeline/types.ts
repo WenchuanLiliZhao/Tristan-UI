@@ -27,6 +27,7 @@
 
 import React from "react";
 import type { RainbowColorVar, SemanticColorVar } from "../../../styles/color";
+import { getSemanticColor } from "../../../styles/color";
 
 /**
  * Timeline 颜色类型 - 支持以下三种颜色使用方式：
@@ -49,6 +50,16 @@ import type { RainbowColorVar, SemanticColorVar } from "../../../styles/color";
  * ```
  */
 export type TimelineColorType = RainbowColorVar | SemanticColorVar | string;
+
+/**
+ * 进度条颜色配置
+ * @property {number} upto - 进度上限 (0-100]
+ * @property {TimelineColorType} color - 颜色
+ */
+export interface ProgressColorStop {
+  upto: number;
+  color: TimelineColorType;
+}
 
 // 基础时间线项目接口 - 只包含四个必需字段
 export interface BaseTimelineItemType {
@@ -167,12 +178,38 @@ export const FieldMappers = {
     }),
   
   /** 进度条映射 */
-  progress: (options?: { showText?: boolean; color?: TimelineColorType }) => 
-    (value: unknown) => ({
-      value: Math.max(0, Math.min(100, Number(value) || 0)),
-      showText: options?.showText ?? true,
-      ...(options?.color && { color: options.color }),
-    }),
+  progress: (options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) => 
+    (value: unknown) => {
+      const progressValue = Math.max(0, Math.min(100, Number(value) || 0));
+      let progressColor: TimelineColorType | undefined = undefined;
+
+      if (options?.progressColors && options.progressColors.length > 0) {
+        // 从小到大排序，确保先匹配到最小的 upto
+        const sortedColors = [...options.progressColors].sort((a, b) => a.upto - b.upto);
+        const matchedColor = sortedColors.find(stop => progressValue <= stop.upto);
+        if (matchedColor) {
+          // 如果颜色值是 CSS 变量名（以 '--' 开头），则用 var() 包裹
+          progressColor = matchedColor.color.startsWith('--') 
+            ? `var(${matchedColor.color})` 
+            : matchedColor.color;
+        }
+      }
+
+      // 如果没有匹配到自定义颜色，使用默认逻辑
+      if (!progressColor) {
+        if (progressValue < 100) {
+          progressColor = `var(${getSemanticColor('active')})`;
+        } else {
+          progressColor = `var(${getSemanticColor('success')})`;
+        }
+      }
+
+      return {
+        value: progressValue,
+        showText: options?.showText ?? true,
+        color: progressColor,
+      };
+    },
   
   /** 图标映射 */
   iconFromMap: (map: Record<string, { icon?: string; color: TimelineColorType; name?: string }>) => 
@@ -196,7 +233,7 @@ export const FieldMappers = {
 // 🎯 简化配置对象创建函数
 export const createFieldConfig = {
   /** 创建进度条字段配置 */
-  progress: <T>(field: keyof T, options?: { showText?: boolean; color?: TimelineColorType }) => ({
+  progress: <T>(field: keyof T, options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) => ({
     field,
     displayType: 'progress' as const,
     mapping: FieldMappers.progress(options),
@@ -247,7 +284,7 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
     tagFields: [] 
   };
 
-  addProgress(field: keyof T, options?: { showText?: boolean; color?: TimelineColorType }) {
+  addProgress(field: keyof T, options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) {
     this.config.graphicFields?.push(createFieldConfig.progress(field, options));
     return this;
   }

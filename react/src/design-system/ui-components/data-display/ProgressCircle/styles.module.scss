@@ -21,6 +21,7 @@
 
   &__progress {
     fill: none;
+    stroke: var(--custom-progress-color, var(--color--semantic-active));
     stroke-width: var(--stroke-width, 2px);
     stroke-linecap: round;
     transform: rotate(-90deg);
