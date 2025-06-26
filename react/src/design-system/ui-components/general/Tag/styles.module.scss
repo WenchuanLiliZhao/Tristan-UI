@@ -1,6 +1,7 @@
 // Tag Base Styles
 .lili-tag {
   --element-color: var(--color--semantic-active);
+  --element-color-pale: var(--color--semantic-active-pale);
   
   display: inline-flex;
   align-items: center;
@@ -34,32 +35,40 @@
   // Variant styles - Contained
   &--contained {
     color: var(--element-color);
-    background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
-    border: 1px solid color-mix(in srgb, var(--element-color) 15%, transparent);
+    // Fallback for older browsers (Chrome < 111)
+    background-color: var(--element-color-pale);
+    border: 1px solid var(--element-color-pale);
+    // Modern browsers with color-mix support
 
     // 预定义语义颜色
     &.lili-tag--primary {
-      --element-color: var(--color--semantic-primary);
+      --element-color: var(--color--semantic-active);
+      --element-color-pale: var(--color--semantic-active-pale);
     }
 
     &.lili-tag--secondary {
-      --element-color: var(--color--semantic-secondary);
+      --element-color: var(--color-chart--neutron-6);
+      --element-color-pale: var(--color-chart--neutron-11);
     }
 
     &.lili-tag--success {
       --element-color: var(--color--semantic-success);
+      --element-color-pale: var(--color--semantic-success-pale);
     }
 
     &.lili-tag--warning {
       --element-color: var(--color--semantic-warning);
+      --element-color-pale: var(--color--semantic-warning-pale);
     }
 
     &.lili-tag--error {
       --element-color: var(--color--semantic-error);
+      --element-color-pale: var(--color--semantic-error-pale);
     }
 
     &.lili-tag--info {
-      --element-color: var(--color--semantic-info);
+      --element-color: var(--color--semantic-active);
+      --element-color-pale: var(--color--semantic-active-pale);
     }
   }
 
@@ -71,11 +80,11 @@
 
     // 预定义语义颜色
     &.lili-tag--primary {
-      --element-color: var(--color--semantic-primary);
+      --element-color: var(--color--semantic-active);
     }
 
     &.lili-tag--secondary {
-      --element-color: var(--color--semantic-secondary);
+      --element-color: var(--color-chart--neutron-6);
     }
 
     &.lili-tag--success {
@@ -91,7 +100,7 @@
     }
 
     &.lili-tag--info {
-      --element-color: var(--color--semantic-info);
+      --element-color: var(--color--semantic-active);
     }
   }
 
@@ -128,7 +137,9 @@
 
     &:hover:not(:disabled) {
       opacity: 1;
-      background-color: color-mix(in srgb, currentColor 10%, transparent);
+      // Fallback for older browsers (Chrome < 111)
+      background-color: rgba(0, 0, 0, 0.1);
+      // Modern browsers with color-mix support
     }
 
     &:disabled {

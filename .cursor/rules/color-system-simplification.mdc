@@ -1,6 +1,6 @@
 ---
 description: 
-globs: 
+globs: .src/**/ui-components/data-display,.src/**/ui-components/general
 alwaysApply: false
 ---
 ---
@@ -8,14 +8,14 @@ rule_type: "component_patterns"
 applies_to: ["*.tsx", "*.ts", "*.scss", "*.module.scss"]
 priority: "high"
 category: "design_system"
-tags: ["colors", "components", "css-variables", "optimization"]
+tags: ["colors", "components", "css-variables", "browser-compatibility", "rgba", "pale-variants"]
 ---
 
 # Component Color System Standardization Guide
 
 ## Overview
 
-This document establishes a standardized approach for implementing color systems in React components, ensuring consistency, maintainability, and optimal performance across the design system.
+This document establishes a standardized approach for implementing color systems in React components, ensuring consistency, maintainability, and **maximum browser compatibility** across the design system.
 
 ## Core Principles
 
@@ -31,20 +31,25 @@ const predefinedColors = ['primary', 'secondary', 'success', 'warning', 'error',
 const isPredefinedColor = predefinedColors.includes(color as string);
 ```
 
-### 3. CSS Variable Interface
-Use `--element-color` as the unified color transmission mechanism:
+### 3. CSS Variable Interface with Pale Variants
+Use `--element-color` and `--element-color-pale` as the unified color transmission mechanism:
 
 ```typescript
 const componentStyle = !isPredefinedColor && color ? {
   '--element-color': (color as string).startsWith('--') ? `var(${color})` : color,
+  '--element-color-pale': generatePaleColor(color as string),
 } as React.CSSProperties : {};
 ```
 
-### 4. Modern CSS Functions
-Leverage `color-mix()` for automatic color variations:
+### 4. Browser-Compatible Color Variations
+Use pre-defined pale variants and rgba() for maximum compatibility:
 
 ```scss
-background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
+// Use pre-defined pale variants for semantic colors
+background-color: var(--element-color-pale);
+
+// Use rgba() for hover states
+background-color: rgba(0, 0, 0, 0.1);
 ```
 
 ## Standard Implementation Pattern
@@ -75,10 +80,57 @@ export const Component: React.FC<ComponentProps> = ({
     className,
   ].filter(Boolean).join(" ");
 
-  // Handle custom colors with smart CSS variable detection
+  // Handle custom colors with smart CSS variable detection and pale generation
   const componentStyle = !isPredefinedColor && color ? {
     '--element-color': (color as string).startsWith('--') ? `var(${color})` : color,
+    '--element-color-pale': generatePaleColor(color as string),
   } as React.CSSProperties : {};
+
+  // Generate pale color variants for maximum browser compatibility
+  function generatePaleColor(color: string): string {
+    // CSS variables: try to use -pale suffix
+    if (color.startsWith('--')) {
+      return `var(${color}-pale)`;
+    }
+    
+    // Already wrapped CSS variables
+    const varMatch = color.match(/^var\((--[^)]+)\)$/);
+    if (varMatch) {
+      return `var(${varMatch[1]}-pale)`;
+    }
+    
+    // Hex colors: add 15% transparency
+    if (color.match(/^#[0-9a-fA-F]{6}$/)) {
+      return color + '26'; // 15% opacity in hex
+    }
+    
+    // Short hex format
+    if (color.match(/^#[0-9a-fA-F]{3}$/)) {
+      const expanded = color.replace(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/, '#$1$1$2$2$3$3');
+      return expanded + '26';
+    }
+    
+    // RGB/RGBA colors
+    if (color.startsWith('rgb')) {
+      if (color.includes('rgba')) {
+        return color.replace(/,\s*[\d.]+\)$/, ', 0.15)');
+      } else {
+        return color.replace('rgb(', 'rgba(').replace(')', ', 0.15)');
+      }
+    }
+    
+    // HSL/HSLA colors
+    if (color.startsWith('hsl')) {
+      if (color.includes('hsla')) {
+        return color.replace(/,\s*[\d.]+\)$/, ', 0.15)');
+      } else {
+        return color.replace('hsl(', 'hsla(').replace(')', ', 0.15)');
+      }
+    }
+    
+    // Fallback for unknown formats
+    return `rgba(128, 128, 128, 0.15)`;
+  }
 
   return (
     <div 
@@ -94,38 +146,52 @@ export const Component: React.FC<ComponentProps> = ({
 
 ```scss
 .component {
-  --element-color: var(--color--semantic-primary); // Default fallback
-
+  --element-color: var(--color--semantic-active); // Default color
+  --element-color-pale: var(--color--semantic-active-pale); // Default pale variant
+  
   // Base styles using CSS variables
   color: var(--element-color);
   border: 1px solid var(--element-color);
   
-  // Automatic color variations using modern CSS
-  background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
+  // Compatible background using pale variants
+  background-color: var(--element-color-pale);
 
-  // Predefined semantic color classes
+  // Predefined semantic color classes with pale variants
   &--primary {
-    --element-color: var(--color--semantic-primary);
+    --element-color: var(--color--semantic-active);
+    --element-color-pale: var(--color--semantic-active-pale);
   }
 
   &--secondary {
-    --element-color: var(--color--semantic-secondary);
+    --element-color: var(--color-chart--neutron-6);
+    --element-color-pale: var(--color-chart--neutron-11);
   }
 
   &--success {
     --element-color: var(--color--semantic-success);
+    --element-color-pale: var(--color--semantic-success-pale);
   }
 
   &--warning {
     --element-color: var(--color--semantic-warning);
+    --element-color-pale: var(--color--semantic-warning-pale);
   }
 
   &--error {
     --element-color: var(--color--semantic-error);
+    --element-color-pale: var(--color--semantic-error-pale);
   }
 
   &--info {
-    --element-color: var(--color--semantic-info);
+    --element-color: var(--color--semantic-active);
+    --element-color-pale: var(--color--semantic-active-pale);
+  }
+
+  // Hover states using compatible rgba()
+  &__interactive-element {
+    &:hover:not(:disabled) {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 }
 ```
@@ -157,8 +223,8 @@ Perfect compatibility with design system color functions:
 
 ### 1. Predefined Semantic Colors
 ```typescript
-<Component color="success" />    // Maps to CSS class
-<Component color="error" />      // Maps to CSS class
+<Component color="success" />    // Maps to CSS class with pale variant
+<Component color="error" />      // Maps to CSS class with pale variant
 ```
 
 ### 2. Design System Colors
@@ -169,9 +235,9 @@ Perfect compatibility with design system color functions:
 
 ### 3. Direct Color Values
 ```typescript
-<Component color="#ff6b6b" />                  // Hex
-<Component color="rgb(255, 107, 107)" />       // RGB
-<Component color="hsl(0, 100%, 70%)" />        // HSL
+<Component color="#ff6b6b" />                  // Hex (generates #ff6b6b26 for pale)
+<Component color="rgb(255, 107, 107)" />       // RGB (generates rgba(255,107,107,0.15))
+<Component color="hsl(0, 100%, 70%)" />        // HSL (generates hsla(0,100%,70%,0.15))
 <Component color="tomato" />                   // Named colors
 ```
 
@@ -181,21 +247,36 @@ Perfect compatibility with design system color functions:
 <Component color="--my-brand-color" />         // Auto-wrapped to var(--my-brand-color)
 ```
 
+## Browser Compatibility
+
+### Universal Support
+- **All modern browsers**: Full support for CSS variables and rgba()
+- **Legacy browsers**: Compatible with IE11+ through CSS variable fallbacks
+- **No modern CSS dependencies**: Avoids `color-mix()`, `has()`, and other cutting-edge features
+
+### Color Variation Strategy
+- **Semantic colors**: Use pre-defined `-pale` variants from design system
+- **Custom colors**: Generate compatible rgba() variations with 15% opacity
+- **Hover states**: Use `rgba(0, 0, 0, 0.1)` for universal compatibility
+
 ## Benefits
 
+- **Maximum Compatibility**: Works across all browsers without polyfills
 - **Unified API**: Single `color` prop handles all color types
 - **Zero Configuration**: Custom colors work without code changes
 - **Performance Optimized**: Minimal CSS classes, maximum flexibility
-- **Modern CSS**: Leverages native browser capabilities
 - **Type Safe**: Full TypeScript support for all color formats
+- **Design System Integrated**: Seamless compatibility with existing color tokens
 
 ## Implementation Checklist
 
 - [ ] Define predefined colors array
 - [ ] Implement JavaScript color type detection
 - [ ] Add smart CSS variable wrapping
-- [ ] Use CSS variables in stylesheets
-- [ ] Leverage `color-mix()` for variations
+- [ ] Use CSS variables with pale variants in stylesheets
+- [ ] Implement pale color generation for custom colors
+- [ ] Use rgba() for hover states
 - [ ] Test with all supported color formats
+- [ ] Verify compatibility across target browsers
 
-This standardized approach ensures consistent color handling across all components while maintaining flexibility for custom requirements.
+This standardized approach ensures consistent color handling across all components while maintaining maximum browser compatibility and flexibility for custom requirements.
