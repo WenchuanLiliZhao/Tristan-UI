@@ -1,5 +1,100 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Tristan-UI Styling System
+
+## Design Token Architecture
+
+### Core Style Files
+- **[react/src/styles/_app.scss](mdc:react/src/styles/_app.scss)** - Main stylesheet entry point
+- **[react/src/styles/0_reset.scss](mdc:react/src/styles/0_reset.scss)** - CSS reset and base styles
+- **[react/src/styles/color.scss](mdc:react/src/styles/color.scss)** - Color system and variables
+- **[react/src/styles/spacing.scss](mdc:react/src/styles/spacing.scss)** - Spacing scale and grid system
+- **[react/src/styles/font.scss](mdc:react/src/styles/font.scss)** - Typography system
+- **[react/src/styles/shadow.scss](mdc:react/src/styles/shadow.scss)** - Shadow and elevation system
+- **[react/src/styles/z-index.scss](mdc:react/src/styles/z-index.scss)** - Z-index layering system
+
+### Color Management
+- **[react/src/design-system/shared/ColorManager.ts](mdc:react/src/design-system/shared/ColorManager.ts)** - Programmatic color utilities
+- **[react/src/styles/color.ts](mdc:react/src/styles/color.ts)** - TypeScript color definitions
+
+## CSS Modules Pattern
+
+### Component Styling
+All components use CSS Modules for scoped styling:
+- File naming: `styles.module.scss`
+- Class naming: `tristan-{component}--{variant}`
+- Import pattern: `import styles from "./styles.module.scss"`
+
+### Style Organization
+```scss
+.tristan-button {
+  // Base component styles
+  
+  &--filled {
+    // Filled variant
+  }
+  
+  &--outlined {
+    // Outlined variant
+  }
+  
+  &--disabled {
+    // Disabled state
+  }
+  
+  &__icon {
+    // Element styles
+  }
+}
+```
+
+## Design Tokens Usage
+
+### Semantic Colors
+- `default` - Standard neutral styling
+- `success` - Success states and positive actions
+- `active` - Active/selected states
+- `warning` - Warning states and caution
+- `error` - Error states and destructive actions
+
+### Size Scale
+- `small` - Compact sizing for dense interfaces
+- `medium` - Default/standard sizing
+- `large` - Prominent sizing for emphasis
+
+### Component Variants
+- `filled` - Solid background styling
+- `outlined` - Border-only styling
+- `ghost` - Minimal/transparent styling
+
+## SCSS Features
+
+### Variable System
+Use SCSS variables for consistency:
+- Color variables from [react/src/styles/color.scss](mdc:react/src/styles/color.scss)
+- Spacing variables from [react/src/styles/spacing.scss](mdc:react/src/styles/spacing.scss)
+- Typography variables from [react/src/styles/font.scss](mdc:react/src/styles/font.scss)
+
+### Mixins and Functions
+- Leverage SCSS mixins for common patterns
+- Use functions for calculations and transformations
+- Maintain consistency across components
+
+## Material Icons Integration
+- **[react/src/design-system/ui-components/general/Icon/fonts/material-icons.scss](mdc:react/src/design-system/ui-components/general/Icon/fonts/material-icons.scss)** - Material Icons font integration
+- Icon usage through the [Icon component](mdc:react/src/design-system/ui-components/general/Icon/index.tsx)
+
+## Responsive Design
+- Mobile-first approach
+- Flexible layouts using CSS Grid and Flexbox
+- Consistent breakpoints across components
+- Touch-friendly sizing for interactive elements
+
+## CSS Export System
+The library exports styles for external usage:
+- Main stylesheet export: `./dist/tristan-ui.css`
+- SCSS source access: `./styles/*`
+- Individual component styles through CSS Modules
