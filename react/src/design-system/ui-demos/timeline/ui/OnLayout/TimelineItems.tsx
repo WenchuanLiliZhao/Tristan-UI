@@ -20,6 +20,7 @@ interface TimelineItemsProps {
     groupTitle: string;
     groupItems: TimelineItemType[];
     placements: PlacementResult[];
+    isEndSpacer?: boolean;
   }>;
   displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;

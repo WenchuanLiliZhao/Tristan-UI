@@ -47,6 +47,7 @@ export const TimelineConst = {
 
 export const TimelineConstCalc = {
   groupMinHeight: TimelineConst.cellHeight * 2,
+  groupsEndHeight: "50vh",
 
   rulerHeight: TimelineConst.yearLabelHight + TimelineConst.monthLabelHight + TimelineConst.dayLabelHight,
 };

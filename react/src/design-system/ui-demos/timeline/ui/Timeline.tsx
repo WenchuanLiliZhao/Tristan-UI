@@ -42,6 +42,7 @@ import {
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar, SIDEBAR_WIDTH } from "./Sidebar/TimelineSidebar";
+import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../data/hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
@@ -131,7 +132,7 @@ export function Timeline<T = Record<string, unknown>>({
   }
 
   // Pre-calculate placements for each group separately
-  const groupPlacements = inputData.data.map((group) => {
+  const groupPlacements: GroupPlacement[] = inputData.data.map((group) => {
     const sortedGroupItems = sortTimelineItemsByStartDate(group.groupItems as TimelineItemType<T>[]);
     const placements: PlacementResult[] = [];
 
@@ -164,6 +165,7 @@ export function Timeline<T = Record<string, unknown>>({
     groupTitle: "", // 空标题
     groupItems: [], // 空项目列表
     placements: [], // 空放置结果
+    isEndSpacer: true, // 标识这是最后的占位分组
   });
 
   return (

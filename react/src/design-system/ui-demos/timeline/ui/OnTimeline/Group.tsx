@@ -10,6 +10,7 @@ interface TimelineGroupProps {
     groupTitle: string;
     groupItems: TimelineItemType[];
     placements: PlacementResult[];
+    isEndSpacer?: boolean;
   };
   year: number;
   monthIndex: number;
@@ -32,15 +33,20 @@ export const TimelineGroup: React.FC<TimelineGroupProps> = ({
   displayConfig,
   onIssueClick,
 }) => {
+  // 如果是最后的占位分组，使用 groupsEndHeight
+  const finalHeight = groupData.isEndSpacer 
+    ? TimelineConstCalc.groupsEndHeight 
+    : `${calculateMaxOverlapCardinality(groupData.groupItems) * cellHeight + groupGap}px`;
+  const finalMinHeight = groupData.isEndSpacer 
+    ? TimelineConstCalc.groupsEndHeight 
+    : TimelineConstCalc.groupMinHeight;
+
   return (
     <div
       className={styles["timeline-group"]}
       style={{
-        height: `${
-          calculateMaxOverlapCardinality(groupData.groupItems) *
-          cellHeight + groupGap
-        }px`,
-        minHeight: TimelineConstCalc.groupMinHeight,
+        height: finalHeight,
+        minHeight: finalMinHeight,
       }}
     >
       {groupData.placements.map((placement) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./Item.module.scss";
 import {
   type TimelineItemType,
@@ -21,7 +21,7 @@ interface TimelineItemProps {
   displayConfig?: TimelineItemDisplayConfig;
 }
 
-// 渲染图形信息区域的字段
+// 渲染图形信息区域的字段 - 使用CSS变量优化
 const renderGraphicField = (
   item: TimelineItemType,
   config: FieldDisplayConfig,
@@ -49,29 +49,25 @@ const renderGraphicField = (
 
   switch (config.displayType) {
     case "icon": {
-      // 处理颜色：现在直接使用 CSS 变量
-      const iconColor = displayProps.color;
-      const iconStyle: React.CSSProperties = {};
-
-      if (iconColor && typeof iconColor === "string") {
-        // 如果是 CSS 变量名，包装在 var() 中
-        if (iconColor.startsWith('--')) {
-          iconStyle.color = `var(${iconColor})`;
-        } else {
-          // 其他颜色直接使用
-          iconStyle.color = iconColor;
-        }
-      }
-
       return (
-        <div key={key} className={styles["timeline-item-icon"]}>
+        <div 
+          key={key} 
+          className={styles["timeline-item-icon"]}
+          style={{
+            // 正确处理 CSS 变量：如果是变量名则用 var() 包装，否则直接使用
+            color: displayProps.color ? 
+              (displayProps.color as string).startsWith('--') ? 
+                `var(${displayProps.color})` : 
+                (displayProps.color as string) 
+              : undefined
+          }}
+        >
           <Icon
             name={
               (displayProps.iconName as string) ||
               (displayProps.icon as string) ||
               "help"
             }
-            style={iconStyle}
           />
         </div>
       );
@@ -84,8 +80,8 @@ const renderGraphicField = (
               (displayProps.value as number) || (fieldValue as number) || 0
             }
             size={12}
-            color={displayProps.color as Color}
-            // showText={displayProps.showText as boolean}
+            // 直接使用颜色名称，从颜色值中提取
+            color={displayProps.color ? extractColorName(displayProps.color as string) as Color : "primary"}
           />
         </div>
       );
@@ -151,6 +147,11 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   onIssueClick,
   displayConfig,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // 注意：对于简单的颜色应用（如图标），直接使用颜色值比 CSS 变量更直接
+  // CSS 变量优化适用于复杂的主题切换场景
+  
   // 计算issue跨越的月数
   const calculateSpannedMonths = (startDate: Date, endDate: Date): number => {
     const startYear = startDate.getFullYear();
@@ -166,6 +167,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   return (
     <div className={styles["timeline-item"]}>
       <div
+        ref={containerRef}
         className={styles["timeline-item-container"]}
         style={{
           height: cellHeight - TimelineConst.itemVPadding * 2,

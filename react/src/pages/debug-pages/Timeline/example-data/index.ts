@@ -55,7 +55,7 @@ export const priority = {
   },
   medium: {
     name: "Medium",
-    color: getRainbowColor('amber'),
+    color: getRainbowColor('blue'),
     icon: "stat_1"
   },
   low: {

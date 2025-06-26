@@ -4,10 +4,11 @@ import { TimelineConst, TimelineConstCalc } from "../_constants";
 import { type TimelineItemType } from "../../data/types";
 import { type PlacementResult } from "../../data/utils";
 
-interface GroupPlacement {
+export interface GroupPlacement {
   groupTitle: string;
   groupItems: TimelineItemType[];
   placements: PlacementResult[];
+  isEndSpacer?: boolean; // 标识是否为最后的占位分组
 }
 
 interface TimelineSidebarProps {
@@ -67,13 +68,21 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
             const marginBottom =
               index < groupPlacements.length - 1 ? groupGap : 0;
 
+            // 如果是最后的占位分组，使用 groupsEndHeight
+            const finalHeight = group.isEndSpacer 
+              ? TimelineConstCalc.groupsEndHeight 
+              : groupHeight;
+            const finalMinHeight = group.isEndSpacer 
+              ? TimelineConstCalc.groupsEndHeight 
+              : TimelineConstCalc.groupMinHeight;
+
             return (
               <div
-                key={group.groupTitle}
+                key={group.groupTitle || `spacer-${index}`}
                 className={styles["timeline-sidebar-group"]}
                 style={{
-                  height: groupHeight,
-                  minHeight: TimelineConstCalc.groupMinHeight,
+                  height: finalHeight,
+                  minHeight: finalMinHeight,
                   marginBottom: marginBottom,
                 }}
               >

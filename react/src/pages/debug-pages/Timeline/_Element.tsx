@@ -7,10 +7,15 @@ import {
   type TimelineConfigType,
   createFieldConfig,
 } from "../../../design-system/ui-demos/timeline/data/types";
-import { ExampleData, priority, status, type ProjectDataType } from "./example-data";
-
+import {
+  ExampleData,
+  priority,
+  status,
+  type ProjectDataType,
+} from "./example-data";
 
 export function Element(): React.ReactElement {
+
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
   const itemDisplayConfigSimple = {
     graphicFields: [
@@ -34,6 +39,9 @@ export function Element(): React.ReactElement {
   const sortedData = groupTimelineItemsByField(ExampleData, "category");
 
   return (
-    <Timeline<ProjectDataType> init={timelineConfig} inputData={sortedData} />
+    <div style={{ height: "100vh" }}>
+      {/* Timeline 主演示 */}
+      <Timeline<ProjectDataType> init={timelineConfig} inputData={sortedData} />
+    </div>
   );
 }

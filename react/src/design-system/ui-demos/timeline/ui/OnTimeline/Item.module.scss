@@ -6,6 +6,9 @@
   width: 16px;
   height: 20px;
   font-size: 16px;
+  
+  // CSS 变量优化：动态颜色占位符
+  color: var(--element-icon-color, currentColor);
 }
 
 .timeline-item-progress-container {
@@ -14,6 +17,12 @@
   justify-content: center;
   width: 16px;
   height: 20px;
+  
+  // CSS 变量优化：进度条颜色占位符
+  --progress-color: var(--element-progress-color, var(--color--semantic-active));
+  --progress-color-dark: var(--element-progress-color-dark, var(--color--semantic-active-dark));
+  --progress-color-half: var(--element-progress-color-half, var(--color--semantic-active-half));
+  --progress-color-pale: var(--element-progress-color-pale, var(--color--semantic-active-pale));
 }
 
 // 主组件 TimelineItem 的样式结构
