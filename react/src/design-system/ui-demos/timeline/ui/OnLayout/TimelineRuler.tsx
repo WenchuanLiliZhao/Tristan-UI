@@ -78,7 +78,7 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
           {/* 年份标签 - 只在每年的第一个月显示 */}
           <div
             className={styles["timeline-ruler-year-label"]}
-            style={{ height: `${TimelineConst.yearLabelHight}px` }}
+            style={{ height: `${TimelineConst.yearLabelHeight}px` }}
           >
             {year}
           </div>
@@ -93,7 +93,7 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
               >
                 <div
                   className={styles["timeline-ruler-month-label"]}
-                  style={{ height: `${TimelineConst.monthLabelHight}px` }}
+                  style={{ height: `${TimelineConst.monthLabelHeight}px` }}
                 >
                   {monthNames[monthIndex]}<span className={styles["year-for-month"]}>{year}</span>
                 </div>
@@ -117,7 +117,7 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
                               : ""
                           }`}
                           style={{
-                            height: `${TimelineConst.dayLabelHight}px`,
+                            height: `${TimelineConst.dayLabelHeight}px`,
                           }}
                         >
                           <div

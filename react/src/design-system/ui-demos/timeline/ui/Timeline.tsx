@@ -50,13 +50,13 @@ import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 
 // 时间视图配置
-const TIME_VIEW_CONFIG = {
-  year: { dayWidth: 4.5, label: "Year", zoomThreshold: 9 },
-  month: { dayWidth: 8, label: "Month", zoomThreshold: 8 },
-  day: { dayWidth: 24, label: "Day", zoomThreshold: 9 },
-} as const;
+const TIME_VIEW_CONFIG = [
+  { type: "year", dayWidth: 4.5, label: "Year", zoomThreshold: 9 },
+  { type: "month", dayWidth: 8, label: "Month", zoomThreshold: 8 },
+  { type: "day", dayWidth: 24, label: "Day", zoomThreshold: 9 },
+] as const;
 
-type TimeViewType = keyof typeof TIME_VIEW_CONFIG;
+type TimeViewType = (typeof TIME_VIEW_CONFIG)[number]["type"];
 
 // 通用的Timeline组件 - 支持泛型，现在作为主要接口
 export function Timeline<T = Record<string, unknown>>({
@@ -70,8 +70,9 @@ export function Timeline<T = Record<string, unknown>>({
 
   // State for time view mode and corresponding dayWidth - 使用默认值
   const [currentTimeView] = useState<TimeViewType>("month");
-  const dayWidth = TIME_VIEW_CONFIG[currentTimeView].dayWidth;
-  const zoomThreshold = TIME_VIEW_CONFIG[currentTimeView].zoomThreshold;
+  const { dayWidth, zoomThreshold } = TIME_VIEW_CONFIG.find(
+    (config) => config.type === currentTimeView
+  )!;
 
   // 添加主滚动容器的引用 - 现在只需要一个
   const mainScrollRef = useRef<HTMLDivElement>(null);

@@ -44,9 +44,9 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
           className={styles["timeline-sidebar-ruler-space"]}
           style={{
             height:
-              TimelineConst.yearLabelHight +
-              TimelineConst.monthLabelHight +
-              TimelineConst.dayLabelHight,
+              TimelineConst.yearLabelHeight +
+              TimelineConst.monthLabelHeight +
+              TimelineConst.dayLabelHeight,
           }}
         ></div>
       </div>
