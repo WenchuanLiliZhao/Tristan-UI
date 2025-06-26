@@ -28,9 +28,6 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   progress = 0,
   size = "medium",
   color = "primary",
-  backgroundColor = "white",
-  backgroundOpacity = 0.03,
-  strokeWidth = 2,
   showText = false,
   text,
   animationDuration = 300,
@@ -60,9 +57,6 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   // 构建样式对象
   const componentStyle = {
     '--progress': clampedProgress,
-    '--background-color': backgroundColor,
-    '--background-opacity': backgroundOpacity,
-    '--stroke-width': `${strokeWidth}px`,
     '--animation-duration': `${animationDuration}ms`,
     ...((!isPreDefinedColor && color) && { '--custom-progress-color': color }),
   } as React.CSSProperties & Record<string, string | number>;

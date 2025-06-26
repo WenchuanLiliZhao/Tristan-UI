@@ -9,7 +9,7 @@ import {
 import {
   ExampleData,
   priority,
-  status,
+  team,
   type ProjectDataType,
 } from "./example-data";
 
@@ -22,7 +22,7 @@ export function Element(): React.ReactElement {
       createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),
     ],
     tagFields: [
-      createFieldConfig.tagFromMap<ProjectDataType>("status", status),
+      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
     ],
   };
 
