@@ -1,4 +1,6 @@
 .lili-progress-circle {
+  --element-color: var(--color--semantic-active);
+
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -50,14 +52,13 @@
     width: 12px;
     height: 12px;
     
-    .lili-progress-circle__svg {
-      viewBox: 0 0 12 12;
-    }
-    
     .lili-progress-circle__background,
     .lili-progress-circle__progress {
       r: 5px; // (12 - 2) / 2 = 5px radius
       stroke-dasharray: 31.416; // 2 * π * 5
+    }
+    
+    .lili-progress-circle__progress {
       stroke-dashoffset: calc(31.416 - (31.416 * var(--progress, 0) / 100));
     }
     
@@ -70,14 +71,13 @@
     width: 16px;
     height: 16px;
     
-    .lili-progress-circle__svg {
-      viewBox: 0 0 16 16;
-    }
-    
     .lili-progress-circle__background,
     .lili-progress-circle__progress {
       r: 7px; // (16 - 2) / 2 = 7px radius
       stroke-dasharray: 43.982; // 2 * π * 7
+    }
+
+    .lili-progress-circle__progress {
       stroke-dashoffset: calc(43.982 - (43.982 * var(--progress, 0) / 100));
     }
     
@@ -90,14 +90,13 @@
     width: 24px;
     height: 24px;
     
-    .lili-progress-circle__svg {
-      viewBox: 0 0 24 24;
-    }
-    
     .lili-progress-circle__background,
     .lili-progress-circle__progress {
       r: 11px; // (24 - 2) / 2 = 11px radius
       stroke-dasharray: 69.115; // 2 * π * 11
+    }
+
+    .lili-progress-circle__progress {
       stroke-dashoffset: calc(69.115 - (69.115 * var(--progress, 0) / 100));
     }
     
@@ -110,14 +109,13 @@
     width: 32px;
     height: 32px;
     
-    .lili-progress-circle__svg {
-      viewBox: 0 0 32 32;
-    }
-    
     .lili-progress-circle__background,
     .lili-progress-circle__progress {
       r: 15px; // (32 - 2) / 2 = 15px radius
       stroke-dasharray: 94.248; // 2 * π * 15
+    }
+
+    .lili-progress-circle__progress {
       stroke-dashoffset: calc(94.248 - (94.248 * var(--progress, 0) / 100));
     }
     

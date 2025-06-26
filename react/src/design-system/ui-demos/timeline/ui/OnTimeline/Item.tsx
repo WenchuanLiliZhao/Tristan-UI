@@ -79,7 +79,7 @@ const renderGraphicField = (
             progress={
               (displayProps.value as number) || (fieldValue as number) || 0
             }
-            size={12}
+            size={"tiny"}
             // 直接使用颜色名称，从颜色值中提取
             color={displayProps.color ? extractColorName(displayProps.color as string) as Color : "primary"}
           />
