@@ -123,10 +123,17 @@ export interface SortedTimelineDataType<T = Record<string, unknown>> {
   data: TimelineGroupType<T>[];
 }
 
+export interface ZoomLevelType {
+  label: string;
+  dayWidth: number;
+  setAsDefault?: boolean;
+}
+
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
   init?: TimelineConfigType<T>;
   inputData: SortedTimelineDataType<T>;
+  zoomLevels?: ZoomLevelType[];
   onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
   onItemClick?: (item: TimelineItemType<T>) => void;
 }

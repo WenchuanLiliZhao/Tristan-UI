@@ -28,7 +28,7 @@
  * <Timeline inputData={data} />
  */
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import {
   type TimelineProps,
   type TimelineItemType,
@@ -48,29 +48,41 @@ import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
+import { ZoomControls } from "./ZoomControls";
 
 // 时间视图配置
 const TIME_VIEW_CONFIG = [
-  { type: "year", dayWidth: 4.5, label: "Year", zoomThreshold: 9 },
-  { type: "month", dayWidth: 8, label: "Month", zoomThreshold: 8 },
-  { type: "day", dayWidth: 24, label: "Day", zoomThreshold: 9 },
+  { type: "year", dayWidth: 4.5, label: "Year", setAsDefault: false },
+  { type: "month", dayWidth: 8, label: "Month", setAsDefault: true },
+  { type: "day", dayWidth: 24, label: "Day", setAsDefault: false },
 ] as const;
-
-type TimeViewType = (typeof TIME_VIEW_CONFIG)[number]["type"];
 
 // 通用的Timeline组件 - 支持泛型，现在作为主要接口
 export function Timeline<T = Record<string, unknown>>({
   // init 参数为未来扩展保留，暂时不使用
   inputData,
   init,
+  zoomLevels,
 }: TimelineProps<T>) {
   // Constants for layout calculations
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
   const groupGapForTesting = TimelineConst.groupGap;
 
-  // State for time view mode and corresponding dayWidth - 使用默认值
-  const [currentTimeView] = useState<TimeViewType>("month");
-  const { dayWidth, zoomThreshold } = TIME_VIEW_CONFIG.find(
+  const timeViewConfig = useMemo(() => {
+    const levels = zoomLevels && zoomLevels.length > 0 ? zoomLevels : TIME_VIEW_CONFIG;
+    return levels.map((zl) => ({
+      ...zl,
+      type: zl.label.toLowerCase().replace(" ", "-"),
+      setAsDefault: zl.setAsDefault ?? false,
+    }));
+  }, [zoomLevels]);
+
+  const [currentTimeView, setCurrentTimeView] = useState<string>(() => {
+    const defaultView = timeViewConfig.find((view) => view.setAsDefault);
+    return defaultView ? defaultView.type : timeViewConfig[0].type;
+  });
+
+  const { dayWidth } = timeViewConfig.find(
     (config) => config.type === currentTimeView
   )!;
 
@@ -175,6 +187,11 @@ export function Timeline<T = Record<string, unknown>>({
     <div 
       className={styles["timeline-container"]}
     >
+      <ZoomControls
+        zoomLevels={timeViewConfig}
+        currentZoom={currentTimeView}
+        onZoomChange={setCurrentTimeView}
+      />
       <div className={styles["timeline-body"]}>
         {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
         <div
@@ -206,7 +223,6 @@ export function Timeline<T = Record<string, unknown>>({
                 yearList={yearList}
                 startMonth={startMonth}
                 dayWidth={dayWidth}
-                zoomThreshold={zoomThreshold}
               />
             </div>
           </div>
@@ -231,7 +247,6 @@ export function Timeline<T = Record<string, unknown>>({
                 yearList={yearList}
                 startMonth={startMonth}
                 dayWidth={dayWidth}
-                zoomThreshold={zoomThreshold}
                 cellHeight={cellHeight}
                 groupGap={groupGapForTesting}
                 groupPlacements={groupPlacements}
@@ -247,8 +262,6 @@ export function Timeline<T = Record<string, unknown>>({
     </div>
   );
 }
-
-
 
 // 默认导出Timeline组件
 export { Timeline as default };

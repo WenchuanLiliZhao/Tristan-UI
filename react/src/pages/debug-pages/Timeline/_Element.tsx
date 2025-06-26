@@ -4,6 +4,7 @@ import {
   groupTimelineItemsByField,
   type TimelineConfigType,
   createFieldConfig,
+  type ZoomLevelType,
 } from "../../../design-system/ui-demos/timeline";
 import {
   ExampleData,
@@ -36,10 +37,21 @@ export function Element(): React.ReactElement {
   // Group data by category
   const sortedData = groupTimelineItemsByField(ExampleData, "category");
 
+  const zoomLevels: ZoomLevelType[] = [
+    { label: "Day", dayWidth: 32 },
+    { label: "Month", dayWidth: 24 },
+    { label: "Quarter", dayWidth: 12, setAsDefault: true },
+    { label: "Year", dayWidth: 6 },
+  ];
+
   return (
     <div style={{ height: "100vh" }}>
       {/* Timeline 主演示 */}
-      <Timeline<ProjectDataType> init={timelineConfig} inputData={sortedData} />
+      <Timeline<ProjectDataType>
+        init={timelineConfig}
+        inputData={sortedData}
+        zoomLevels={zoomLevels}
+      />
     </div>
   );
 }

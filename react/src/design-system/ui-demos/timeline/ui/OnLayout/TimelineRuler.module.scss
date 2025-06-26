@@ -46,11 +46,6 @@
       flex-direction: column;
       position: relative;
 
-      &.zoomed {
-        // border-right: 1px solid var(--color--border-prime);
-        display: block;
-      }
-
       .timeline-ruler-day-label {
         // padding: 4px;
         text-align: center;
@@ -67,14 +62,6 @@
         .timeline-ruler-day-label-text {
           text-align: center;
           font-size: 10px;
-
-          display: none;
-
-          
-
-          &.zoomed {
-            display: block;
-          }
         }
       }
     }

@@ -15,7 +15,6 @@ interface TimelineItemsProps {
   yearList: number[];
   startMonth: number;
   dayWidth: number;
-  zoomThreshold: number;
   cellHeight: number;
   groupGap: number;
   groupPlacements: Array<{
@@ -34,7 +33,6 @@ export const TimelineItems: React.FC<TimelineItemsProps> = ({
   yearList,
   startMonth,
   dayWidth,
-  zoomThreshold,
   cellHeight,
   groupGap,
   groupPlacements,
@@ -61,9 +59,7 @@ export const TimelineItems: React.FC<TimelineItemsProps> = ({
                     (_, dayIndex) => (
                       <div
                         key={dayIndex}
-                        className={`${styles["timeline-ruler-day-column"]} ${
-                          dayWidth > zoomThreshold ? styles["zoomed"] : ""
-                        }`}
+                        className={styles["timeline-ruler-day-column"]}
                         style={{ width: `${dayWidth}px` }}
                       >
                         

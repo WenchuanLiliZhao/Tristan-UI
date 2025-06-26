@@ -13,21 +13,23 @@
   overscroll-behavior-x: none;
 
   .timeline-body {
-    flex: 1;
+    flex-grow: 1;
     display: flex;
-    position: relative;
-    overflow: hidden;
+    flex-direction: column;
+    overflow: hidden; /* 确保子元素滚动 */
+    position: relative; /* 添加相对定位 */
+    height: 100%;
   }
 
   .timeline-main-scroll {
+    overflow-x: auto;
     flex: 1;
-    overflow: auto;
     position: relative;
     scroll-behavior: smooth;
     
     // 确保滚动容器也禁用overscroll行为
     overscroll-behavior: none;
-    overscroll-behavior-x: none;
+    overscroll-behavior-x: auto;
   }
 
   .timeline-right-sidebar {
@@ -80,4 +82,12 @@
     background-color: var(--color--bg-prime);
     min-height: 150vh;
   }
+}
+
+.zoom-controls {
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eee;
 }

@@ -43,7 +43,7 @@ export const TimelineConst = {
   monthLabelHeight: 48,
   dayLabelHeight: 20,
 
-  zoomThreshold: 8, // 缩放阈值，当缩放比例小于该值时，显示年视图
+  zoomThreshold: 14, // 缩放阈值
 
   itemVPadding: 2,
   itemHPadding: 2,
