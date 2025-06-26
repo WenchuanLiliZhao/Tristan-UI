@@ -1,0 +1,201 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+rule_type: "component_patterns"
+applies_to: ["*.tsx", "*.ts", "*.scss", "*.module.scss"]
+priority: "high"
+category: "design_system"
+tags: ["colors", "components", "css-variables", "optimization"]
+---
+
+# Component Color System Standardization Guide
+
+## Overview
+
+This document establishes a standardized approach for implementing color systems in React components, ensuring consistency, maintainability, and optimal performance across the design system.
+
+## Core Principles
+
+### 1. Minimal Predefined Colors
+Define only essential semantic colors as CSS classes:
+- `primary`, `secondary`, `success`, `warning`, `error`, `info`
+
+### 2. JavaScript-Driven Color Detection
+Use code logic to determine color types:
+
+```typescript
+const predefinedColors = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
+const isPredefinedColor = predefinedColors.includes(color as string);
+```
+
+### 3. CSS Variable Interface
+Use `--element-color` as the unified color transmission mechanism:
+
+```typescript
+const componentStyle = !isPredefinedColor && color ? {
+  '--element-color': (color as string).startsWith('--') ? `var(${color})` : color,
+} as React.CSSProperties : {};
+```
+
+### 4. Modern CSS Functions
+Leverage `color-mix()` for automatic color variations:
+
+```scss
+background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
+```
+
+## Standard Implementation Pattern
+
+### TypeScript Interface
+
+```typescript
+export interface ComponentProps extends BaseComponentProps {
+  color?: Color | string; // Supports both predefined and custom colors
+}
+```
+
+### Component Structure
+
+```typescript
+export const Component: React.FC<ComponentProps> = ({
+  color = "primary",
+  ...rest
+}) => {
+  // Define predefined colors
+  const predefinedColors = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
+  const isPredefinedColor = predefinedColors.includes(color as string);
+
+  // Build CSS classes
+  const classes = [
+    styles.baseClass,
+    isPredefinedColor && styles[`baseClass--${color}`],
+    className,
+  ].filter(Boolean).join(" ");
+
+  // Handle custom colors with smart CSS variable detection
+  const componentStyle = !isPredefinedColor && color ? {
+    '--element-color': (color as string).startsWith('--') ? `var(${color})` : color,
+  } as React.CSSProperties : {};
+
+  return (
+    <div 
+      className={classes} 
+      style={componentStyle}
+      {...rest}
+    />
+  );
+};
+```
+
+### SCSS Structure
+
+```scss
+.component {
+  --element-color: var(--color--semantic-primary); // Default fallback
+
+  // Base styles using CSS variables
+  color: var(--element-color);
+  border: 1px solid var(--element-color);
+  
+  // Automatic color variations using modern CSS
+  background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
+
+  // Predefined semantic color classes
+  &--primary {
+    --element-color: var(--color--semantic-primary);
+  }
+
+  &--secondary {
+    --element-color: var(--color--semantic-secondary);
+  }
+
+  &--success {
+    --element-color: var(--color--semantic-success);
+  }
+
+  &--warning {
+    --element-color: var(--color--semantic-warning);
+  }
+
+  &--error {
+    --element-color: var(--color--semantic-error);
+  }
+
+  &--info {
+    --element-color: var(--color--semantic-info);
+  }
+}
+```
+
+## Smart CSS Variable Handling
+
+### Automatic Detection and Wrapping
+The system automatically detects CSS variable names and wraps them correctly:
+
+```typescript
+// Smart color processing
+const processColor = (color: string) => {
+  return color.startsWith('--') ? `var(${color})` : color;
+};
+```
+
+### Design System Integration
+Perfect compatibility with design system color functions:
+
+```typescript
+// These all work seamlessly:
+<Component color="primary" />                           // Predefined
+<Component color={getRainbowColor('rose')} />          // Design system function
+<Component color="#ff6b6b" />                          // Direct hex
+<Component color="var(--my-custom-color)" />           // Custom CSS variable
+```
+
+## Supported Color Formats
+
+### 1. Predefined Semantic Colors
+```typescript
+<Component color="success" />    // Maps to CSS class
+<Component color="error" />      // Maps to CSS class
+```
+
+### 2. Design System Colors
+```typescript
+<Component color={getRainbowColor('purple')} />    // Returns: --color-chart--rainbow-purple
+<Component color={getSemanticColor('success')} />  // Returns: --color--semantic-success
+```
+
+### 3. Direct Color Values
+```typescript
+<Component color="#ff6b6b" />                  // Hex
+<Component color="rgb(255, 107, 107)" />       // RGB
+<Component color="hsl(0, 100%, 70%)" />        // HSL
+<Component color="tomato" />                   // Named colors
+```
+
+### 4. Custom CSS Variables
+```typescript
+<Component color="var(--my-brand-color)" />    // Pre-wrapped
+<Component color="--my-brand-color" />         // Auto-wrapped to var(--my-brand-color)
+```
+
+## Benefits
+
+- **Unified API**: Single `color` prop handles all color types
+- **Zero Configuration**: Custom colors work without code changes
+- **Performance Optimized**: Minimal CSS classes, maximum flexibility
+- **Modern CSS**: Leverages native browser capabilities
+- **Type Safe**: Full TypeScript support for all color formats
+
+## Implementation Checklist
+
+- [ ] Define predefined colors array
+- [ ] Implement JavaScript color type detection
+- [ ] Add smart CSS variable wrapping
+- [ ] Use CSS variables in stylesheets
+- [ ] Leverage `color-mix()` for variations
+- [ ] Test with all supported color formats
+
+This standardized approach ensures consistent color handling across all components while maintaining flexibility for custom requirements.

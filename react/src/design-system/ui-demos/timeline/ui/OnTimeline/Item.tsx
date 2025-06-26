@@ -8,8 +8,6 @@ import {
 import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
 import type { Color } from "../../../../ui-components/types";
-import type { RainbowColorName } from "../../../../../styles/color";
-import { extractColorName } from "../../../../../styles/color";
 
 interface TimelineItemProps {
   item: TimelineItemType;
@@ -120,10 +118,9 @@ const renderTagField = (
     String(fieldValue);
   const key = `${item.id}-${String(config.field)}-${index}`;
 
-  // 提取颜色名称用于 CSS 类
+  // 处理颜色 - 统一使用 color 属性，支持预定义颜色和自定义颜色
   const colorValue = displayProps.color as string;
-  const colorName = colorValue ? extractColorName(colorValue) : 'primary';
-
+  
   return (
     <Tag
       key={key}
@@ -131,7 +128,7 @@ const renderTagField = (
         (displayProps.variant as "contained" | "outlined") || "contained"
       }
       size="small"
-      color={colorName as Color | RainbowColorName}
+      color={colorValue || "primary"}
     >
       {tagText}
     </Tag>

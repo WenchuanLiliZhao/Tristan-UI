@@ -8,7 +8,7 @@ export interface TagProps extends BaseComponentProps {
   children?: React.ReactNode;
   variant?: "contained" | "outlined";
   size?: Size;
-  color?: Color | RainbowColorName;
+  color?: Color | RainbowColorName | string;
   closable?: boolean;
   onClose?: () => void;
   disabled?: boolean;
@@ -26,18 +26,28 @@ export const Tag: React.FC<TagProps> = ({
   "data-testid": dataTestId,
   ...rest
 }) => {
+  // 定义预定义颜色列表（只保留核心语义颜色）
+  const predefinedColors = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
+  const isPredefinedColor = predefinedColors.includes(color as string);
+
   const baseClass = "lili-tag";
   
   const classes = [
     styles[baseClass],
     styles[`${baseClass}--${variant}`],
     styles[`${baseClass}--${size}`],
-    styles[`${baseClass}--${color}`],
+    // 只有预定义颜色才使用颜色类
+    isPredefinedColor && styles[`${baseClass}--${color}`],
     disabled && styles[`${baseClass}--disabled`],
     className,
   ]
     .filter(Boolean)
     .join(" ");
+
+  // 构建动态样式对象
+  const componentStyle = !isPredefinedColor && color ? {
+    '--element-color': (color as string).startsWith('--') ? `var(${color})` : color,
+  } as React.CSSProperties : {};
 
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -50,6 +60,7 @@ export const Tag: React.FC<TagProps> = ({
   return (
     <span
       className={classes}
+      style={componentStyle}
       data-testid={dataTestId}
       {...rest}
     >

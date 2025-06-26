@@ -1,9 +1,7 @@
 // Tag Base Styles
 .lili-tag {
   --element-color: var(--color--semantic-active);
-  --element-color-pale: var(--color--semantic-active-pale);
-  --element-color-pale: var(--color--semantic-active-pale);
-
+  
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -36,169 +34,64 @@
   // Variant styles - Contained
   &--contained {
     color: var(--element-color);
-    background-color: var(--element-color-pale);
-    border: 1px solid var(--element-color-pale);
+    background-color: color-mix(in srgb, var(--element-color) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--element-color) 15%, transparent);
 
+    // 预定义语义颜色
     &.lili-tag--primary {
       --element-color: var(--color--semantic-primary);
-      --element-color-pale: var(--color--semantic-primary-pale);
-      --element-color-pale: var(--color--semantic-primary-pale);
     }
 
     &.lili-tag--secondary {
       --element-color: var(--color--semantic-secondary);
-      --element-color-pale: var(--color--semantic-secondary-pale);
-      --element-color-pale: var(--color--semantic-secondary-pale);
     }
 
     &.lili-tag--success {
       --element-color: var(--color--semantic-success);
-      --element-color-pale: var(--color--semantic-success-pale);
-      --element-color-pale: var(--color--semantic-success-pale);
     }
 
     &.lili-tag--warning {
       --element-color: var(--color--semantic-warning);
-      --element-color-pale: var(--color--semantic-warning-pale);
-      --element-color-pale: var(--color--semantic-warning-pale);
     }
 
     &.lili-tag--error {
       --element-color: var(--color--semantic-error);
-      --element-color-pale: var(--color--semantic-error-pale);
-      --element-color-pale: var(--color--semantic-error-pale);
     }
 
     &.lili-tag--info {
       --element-color: var(--color--semantic-info);
-      --element-color-pale: var(--color--semantic-info-pale);
-      --element-color-pale: var(--color--semantic-info-pale);
-    }
-
-    // Rainbow colors for contained variant
-    &.lili-tag--amber {
-      --element-color: var(--color-chart--rainbow-amber);
-      --element-color-pale: var(--color-chart--rainbow-amber-pale);
-      --element-color-pale: var(--color-chart--rainbow-amber-pale);
-    }
-
-    &.lili-tag--orange {
-      --element-color: var(--color-chart--rainbow-orange);
-      --element-color-pale: var(--color-chart--rainbow-orange-pale);
-      --element-color-pale: var(--color-chart--rainbow-orange-pale);
-    }
-
-    &.lili-tag--rose {
-      --element-color: var(--color-chart--rainbow-rose);
-      --element-color-pale: var(--color-chart--rainbow-rose-pale);
-      --element-color-pale: var(--color-chart--rainbow-rose-pale);
-    }
-
-    &.lili-tag--pink {
-      --element-color: var(--color-chart--rainbow-pink);
-      --element-color-pale: var(--color-chart--rainbow-pink-pale);
-      --element-color-pale: var(--color-chart--rainbow-pink-pale);
-    }
-
-    &.lili-tag--purple {
-      --element-color: var(--color-chart--rainbow-purple);
-      --element-color-pale: var(--color-chart--rainbow-purple-pale);
-      --element-color-pale: var(--color-chart--rainbow-purple-pale);
-    }
-
-    &.lili-tag--blue {
-      --element-color: var(--color-chart--rainbow-blue);
-      --element-color-pale: var(--color-chart--rainbow-blue-pale);
-      --element-color-pale: var(--color-chart--rainbow-blue-pale);
-    }
-
-    &.lili-tag--cyan {
-      --element-color: var(--color-chart--rainbow-cyan);
-      --element-color-pale: var(--color-chart--rainbow-cyan-pale);
-      --element-color-pale: var(--color-chart--rainbow-cyan-pale);
-    }
-
-    &.lili-tag--emerald {
-      --element-color: var(--color-chart--rainbow-emerald);
-      --element-color-pale: var(--color-chart--rainbow-emerald-pale);
-      --element-color-pale: var(--color-chart--rainbow-emerald-pale);
     }
   }
 
   // Variant styles - Outlined
   &--outlined {
     background-color: transparent;
-    border: 1px solid;
+    border: 1px solid var(--element-color);
+    color: var(--element-color);
 
+    // 预定义语义颜色
     &.lili-tag--primary {
-      border-color: #3b82f6;
-      color: #3b82f6;
+      --element-color: var(--color--semantic-primary);
     }
 
     &.lili-tag--secondary {
-      border-color: #6b7280;
-      color: #6b7280;
+      --element-color: var(--color--semantic-secondary);
     }
 
     &.lili-tag--success {
-      border-color: #10b981;
-      color: #059669;
+      --element-color: var(--color--semantic-success);
     }
 
     &.lili-tag--warning {
-      border-color: #f59e0b;
-      color: #d97706;
+      --element-color: var(--color--semantic-warning);
     }
 
     &.lili-tag--error {
-      border-color: #ef4444;
-      color: #dc2626;
+      --element-color: var(--color--semantic-error);
     }
 
     &.lili-tag--info {
-      border-color: #3b82f6;
-      color: #1e40af;
-    }
-
-    // Rainbow colors for outlined variant
-    &.lili-tag--amber {
-      border-color: var(--color-chart--rainbow-amber);
-      color: var(--color-chart--rainbow-amber);
-    }
-
-    &.lili-tag--orange {
-      border-color: var(--color-chart--rainbow-orange);
-      color: var(--color-chart--rainbow-orange);
-    }
-
-    &.lili-tag--rose {
-      border-color: var(--color-chart--rainbow-rose);
-      color: var(--color-chart--rainbow-rose);
-    }
-
-    &.lili-tag--pink {
-      border-color: var(--color-chart--rainbow-pink);
-      color: var(--color-chart--rainbow-pink);
-    }
-
-    &.lili-tag--purple {
-      border-color: var(--color-chart--rainbow-purple);
-      color: var(--color-chart--rainbow-purple);
-    }
-
-    &.lili-tag--blue {
-      border-color: var(--color-chart--rainbow-blue);
-      color: var(--color-chart--rainbow-blue);
-    }
-
-    &.lili-tag--cyan {
-      border-color: var(--color-chart--rainbow-cyan);
-      color: var(--color-chart--rainbow-cyan);
-    }
-
-    &.lili-tag--emerald {
-      border-color: var(--color-chart--rainbow-emerald);
-      color: var(--color-chart--rainbow-emerald);
+      --element-color: var(--color--semantic-info);
     }
   }
 
@@ -235,7 +128,7 @@
 
     &:hover:not(:disabled) {
       opacity: 1;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: color-mix(in srgb, currentColor 10%, transparent);
     }
 
     &:disabled {
