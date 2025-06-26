@@ -31,7 +31,7 @@ import React from "react";
 import {
   monthNames,
   getDaysInMonth,
-} from "../../data/utils";
+} from "../../utils/time";
 import { TimelineConst } from "../_constants";
 import { Column } from "../Shared/Column";
 import styles from "./TimelineRuler.module.scss";

@@ -1,9 +1,11 @@
 import React from "react";
 import {
   getDaysInMonth,
+} from "../../utils/time";
+import {
   type PlacementResult,
-} from "../../data/utils";
-import { type TimelineItemType, type TimelineItemDisplayConfig } from "../../data/types";
+} from "../../utils/placement";
+import { type TimelineItemType, type TimelineItemDisplayConfig } from "../../types";
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 // import styles from "../../Timeline.module.scss";

@@ -4,7 +4,7 @@ import {
   type TimelineItemType,
   type TimelineItemDisplayConfig,
   type FieldDisplayConfig,
-} from "../../data/types";
+} from "../../types";
 import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
 import type { Color } from "../../../../ui-components/types";

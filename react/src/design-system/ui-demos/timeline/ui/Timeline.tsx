@@ -30,20 +30,22 @@
 
 import { useState, useRef, useCallback } from "react";
 import {
-  TimelineItemInterval,
-  sortTimelineItemsByStartDate,
   type TimelineProps,
   type TimelineItemType,
   type TimelineItemDisplayConfig,
   BaseTimelineItemKeys,
+} from "../types";
+import {
+  TimelineItemInterval,
+  sortTimelineItemsByStartDate,
   findPlacement,
   type PlacementResult
-} from "../data";
+} from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar, SIDEBAR_WIDTH } from "./Sidebar/TimelineSidebar";
 import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
-import { useCenterBasedZoom, useDisableBrowserGestures } from "../data/hooks";
+import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 

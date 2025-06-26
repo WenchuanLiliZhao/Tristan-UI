@@ -26,7 +26,7 @@
  */
 
 import React from "react";
-import type { RainbowColorVar, SemanticColorVar } from "../../../../styles/color";
+import type { RainbowColorVar, SemanticColorVar } from "../../../styles/color";
 
 /**
  * Timeline 颜色类型 - 支持以下三种颜色使用方式：
@@ -199,101 +199,57 @@ export const createFieldConfig = {
   /** 创建图标字段配置 */
   iconFromMap: <T>(field: keyof T, map: Record<string, { icon?: string; color: TimelineColorType }>) => ({
     field,
-    displayType: 'icon' as const, 
+    displayType: 'icon' as const,
     mapping: FieldMappers.iconFromMap(map),
     visible: true,
   }),
   
   /** 创建标签字段配置 */
-  tagFromMap: <T>(
-    field: keyof T, 
-    map: Record<string, { name: string; color: TimelineColorType }>, 
-    options?: {
-      variant?: 'contained' | 'outlined';
-      hideValue?: unknown;
-      color?: TimelineColorType;
-    }
-  ) => ({
+  tagFromMap: <T>(field: keyof T, map: Record<string, { name: string; color: TimelineColorType }>, options?: {
+    variant?: 'contained' | 'outlined';
+    hideValue?: unknown;
+  }) => ({
     field,
     displayType: 'tag' as const,
-    mapping: (value: unknown) => ({
-      text: map[String(value)]?.name || String(value),
-      color: options?.color || map[String(value)]?.color || 'gray',
-      variant: options?.variant || 'contained',
-    }),
+    mapping: FieldMappers.fromMap(map),
     visible: options?.hideValue !== undefined ? 
-      (item: unknown) => (item as Record<string, unknown>)[String(field)] !== options.hideValue : true,
+      (item: TimelineItemType<T>) => item[field] !== options.hideValue : 
+      true,
+    ...(options?.variant && { variant: options.variant }),
   }),
   
   /** 创建简单文本标签配置 */
-  tag: <T>(field: keyof T, options?: { 
+  simpleTag: <T>(field: keyof T, options?: { 
     color?: TimelineColorType; 
     variant?: 'contained' | 'outlined';
     hideValue?: unknown;
   }) => ({
     field,
     displayType: 'tag' as const,
-    mapping: FieldMappers.text({ color: options?.color, variant: options?.variant }),
+    mapping: FieldMappers.text(options),
     visible: options?.hideValue !== undefined ? 
-      (item: unknown) => (item as Record<string, unknown>)[String(field)] !== options.hideValue : true,
+      (item: TimelineItemType<T>) => item[field] !== options.hideValue : 
+      true,
   }),
 };
 
-// 📋 预设模板
-export const TimelineTemplates = {
-  /** 项目管理模板 */
-  projectManagement: <T>(dataMaps: {
-    status?: Record<string, { name: string; color: TimelineColorType }>;
-    team?: Record<string, { name: string; color: TimelineColorType }>;
-    priority?: Record<string, { icon?: string; color: TimelineColorType; name?: string }>;
-  }) => ({
-    graphicFields: [
-      createFieldConfig.progress<T>('progress' as keyof T),
-      ...(dataMaps.priority ? [createFieldConfig.iconFromMap<T>('priority' as keyof T, dataMaps.priority)] : []),
-    ] as FieldDisplayConfig<T>[],
-    tagFields: [
-      ...(dataMaps.status ? [createFieldConfig.tagFromMap<T>('status' as keyof T, dataMaps.status)] : []),
-      ...(dataMaps.team ? [createFieldConfig.tagFromMap<T>('team' as keyof T, dataMaps.team)] : []),
-    ] as FieldDisplayConfig<T>[],
-  }),
-  
-  /** 任务管理模板 */
-  taskManagement: <T>(dataMaps: {
-    assignee?: Record<string, { name: string; color: TimelineColorType }>;
-    priority?: Record<string, { name: string; color: TimelineColorType }>;
-    status?: Record<string, { name: string; color: TimelineColorType }>;
-  }) => ({
-    graphicFields: [
-      createFieldConfig.progress<T>('progress' as keyof T, { showText: true }),
-    ] as FieldDisplayConfig<T>[],
-    tagFields: [
-      ...(dataMaps.assignee ? [createFieldConfig.tagFromMap<T>('assignee' as keyof T, dataMaps.assignee)] : []),
-      ...(dataMaps.priority ? [createFieldConfig.tagFromMap<T>('priority' as keyof T, dataMaps.priority)] : []),
-      ...(dataMaps.status ? [createFieldConfig.tagFromMap<T>('status' as keyof T, dataMaps.status)] : []),
-    ] as FieldDisplayConfig<T>[],
-  }),
-};
-
-// 🔧 配置构建器类
+// 🏗️ Timeline配置构建器类
 export class TimelineConfigBuilder<T = Record<string, unknown>> {
   private config: TimelineItemDisplayConfig<T> = { 
     graphicFields: [], 
     tagFields: [] 
   };
-  
-  /** 添加进度条字段 */
+
   addProgress(field: keyof T, options?: { showText?: boolean; color?: TimelineColorType }) {
-    this.config.graphicFields?.push(createFieldConfig.progress<T>(field, options));
+    this.config.graphicFields?.push(createFieldConfig.progress(field, options));
     return this;
   }
-  
-  /** 添加图标字段 */
+
   addIcon(field: keyof T, map: Record<string, { icon?: string; color: TimelineColorType }>) {
-    this.config.graphicFields?.push(createFieldConfig.iconFromMap<T>(field, map));
+    this.config.graphicFields?.push(createFieldConfig.iconFromMap(field, map));
     return this;
   }
-  
-  /** 添加标签字段 */
+
   addTag(
     field: keyof T, 
     map: Record<string, { name: string; color: TimelineColorType }>, 
@@ -302,24 +258,20 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
       hideValue?: unknown;
     }
   ) {
-    this.config.tagFields?.push(createFieldConfig.tagFromMap<T>(field, map, options));
+    this.config.tagFields?.push(createFieldConfig.tagFromMap(field, map, options));
     return this;
   }
-  
-  /** 添加简单文本标签 */
+
   addSimpleTag(field: keyof T, options?: { 
     color?: TimelineColorType; 
     variant?: 'contained' | 'outlined';
     hideValue?: unknown;
   }) {
-    this.config.tagFields?.push(createFieldConfig.tag<T>(field, options));
+    this.config.tagFields?.push(createFieldConfig.simpleTag(field, options));
     return this;
   }
-  
-  /** 构建最终配置 */
+
   build(): TimelineItemDisplayConfig<T> {
     return this.config;
   }
-}
-
- 
+} 

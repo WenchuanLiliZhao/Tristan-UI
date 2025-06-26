@@ -1,4 +1,4 @@
-import { type TimelineItemType } from "../../data/types";
+import { type TimelineItemType } from "../../types";
 
 interface OutPutTermsType {
   [key: string]: number;

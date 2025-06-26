@@ -2,11 +2,9 @@ import React from "react";
 import {
   Timeline,
   groupTimelineItemsByField,
-} from "../../../design-system/ui-demos";
-import {
   type TimelineConfigType,
   createFieldConfig,
-} from "../../../design-system/ui-demos/timeline/data/types";
+} from "../../../design-system/ui-demos/timeline";
 import {
   ExampleData,
   priority,

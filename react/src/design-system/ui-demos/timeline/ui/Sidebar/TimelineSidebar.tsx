@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
-import { type TimelineItemType } from "../../data/types";
-import { type PlacementResult } from "../../data/utils";
+import { type TimelineItemType } from "../../types";
+import { type PlacementResult } from "../../utils/placement";
 
 export interface GroupPlacement {
   groupTitle: string;
