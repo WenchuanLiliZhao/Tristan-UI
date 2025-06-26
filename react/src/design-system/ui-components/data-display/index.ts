@@ -1,2 +1,2 @@
 export * from './ProgressCircle';
-export * from './RichTooltip';
+export * from './Tooltip';

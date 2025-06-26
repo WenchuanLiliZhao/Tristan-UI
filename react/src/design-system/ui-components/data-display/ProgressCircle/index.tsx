@@ -58,7 +58,7 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
   const componentStyle = {
     '--progress': clampedProgress,
     '--animation-duration': `${animationDuration}ms`,
-    ...((!isPreDefinedColor && color) && { '--custom-progress-color': color }),
+    ...((!isPreDefinedColor && color) && { '--element-color': color }),
   } as React.CSSProperties & Record<string, string | number>;
 
   return (

@@ -25,12 +25,12 @@ export const RichTooltipItem: React.FC<RichTooltipItemProps> = ({
   value,
 }) => {
   return (
-    <div className={styles.item}>
-      <div className={styles.label}>
-        {icon && <Icon name={icon} style={{ color: iconColor }} />}
+    <div className={styles["item"]}>
+      <div className={styles["label"]}>
+        {icon && <Icon className={styles["icon"]} name={icon} style={{ color: iconColor }} />}
         <span>{label}</span>
       </div>
-      {value && <div className={styles.value}>{value}</div>}
+      {value && <div className={styles["value"]}>{value}</div>}
     </div>
   );
 };
@@ -53,6 +53,7 @@ interface RichTooltipProps {
   trigger: ReactElement<any>;
   position?: Position;
   offset?: number;
+  alwaysVisible?: boolean;
 }
 
 export const RichTooltip: React.FC<RichTooltipProps> = ({
@@ -60,16 +61,25 @@ export const RichTooltip: React.FC<RichTooltipProps> = ({
   trigger,
   position = "bottom-start",
   offset = 8,
+  alwaysVisible = false,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(alwaysVisible);
   const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const triggerElement = React.cloneElement(trigger, {
     ref: triggerRef,
-    onMouseEnter: () => setIsVisible(true),
-    onMouseLeave: () => setIsVisible(false),
+    ...(alwaysVisible ? {} : {
+      onMouseEnter: () => setIsVisible(true),
+      onMouseLeave: () => setIsVisible(false),
+    }),
   });
+
+  React.useEffect(() => {
+    if (alwaysVisible) {
+      setIsVisible(true);
+    }
+  }, [alwaysVisible]);
 
   return (
     <>
@@ -81,7 +91,7 @@ export const RichTooltip: React.FC<RichTooltipProps> = ({
           position={position}
           offset={offset}
         >
-          <div className={styles.container}>{children}</div>
+          <div className={styles["container"]}>{children}</div>
         </TooltipPortal>
       )}
     </>

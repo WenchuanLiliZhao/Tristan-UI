@@ -10,6 +10,17 @@
   min-width: 200px;
 }
 
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+
+  .icon {
+    font-size: 14px;
+  }
+}
+
+
 .item {
   display: flex;
   justify-content: space-between;
@@ -23,11 +34,6 @@
   }
 }
 
-.label {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-s);
-}
 
 .value {
   font-weight: 500;

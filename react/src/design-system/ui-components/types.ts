@@ -8,7 +8,7 @@ export interface BaseComponentProps {
 export type Size = 'tiny' | 'small' | 'medium' | 'large';
 
 // Color variants
-export type Color = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type Color = 'primary' | 'secondary' | 'active' | 'success' | 'warning' | 'error' | 'info';
 
 
 // Input specific types

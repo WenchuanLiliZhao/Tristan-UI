@@ -43,32 +43,51 @@ export function Element(): React.ReactElement {
   ];
 
   return (
-    <div
-      style={{
-        padding: "100px",
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "120px",
-        justifyItems: "center",
-      }}
-    >
-      {/* Default position (bottom-start) */}
-      <RichTooltip trigger={<Button>Default (bottom-start)</Button>}>
-        {tooltipItems}
-      </RichTooltip>
+    <div>
+      {/* 固定显示的调试版本 - 使用完整的 TooltipPortal */}
+      <div
+        style={{
+          padding: "20px",
+          borderBottom: "2px solid #eee",
+          marginBottom: "20px",
+        }}
+      >
+        <h3 style={{ marginBottom: "16px", color: "#666" }}>
+          🔧 固定显示调试版本 (完整 Portal + 定位)
+        </h3>
+        <RichTooltip trigger={<Button>test</Button>} alwaysVisible={true}>
+          {tooltipItems}
+        </RichTooltip>
+      </div>
 
-      {/* Other positions */}
-      {positions
-        .filter((p) => p !== "bottom-start")
-        .map((position) => (
-          <RichTooltip
-            key={position}
-            trigger={<Button>{position}</Button>}
-            position={position}
-          >
-            {tooltipItems}
-          </RichTooltip>
-        ))}
+      {/* 原有的 hover 版本 */}
+      <div
+        style={{
+          padding: "100px",
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "120px",
+          justifyItems: "center",
+        }}
+      >
+        {/* Default position (bottom-start) */}
+        <RichTooltip trigger={<Button>Default (bottom-start)</Button>}>
+          {tooltipItems}
+        </RichTooltip>
+
+        {/* Other positions */}
+        {positions
+          .filter((p) => p !== "bottom-start")
+          .map((position) => (
+            <RichTooltip
+              key={position}
+              trigger={<Button>{position}</Button>}
+              position={position}
+            >
+              {tooltipItems}
+            </RichTooltip>
+          ))}
+      </div>
     </div>
   );
 }

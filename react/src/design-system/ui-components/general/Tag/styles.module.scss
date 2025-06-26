@@ -1,5 +1,9 @@
 // Tag Base Styles
 .lili-tag {
+  --element-color: var(--color--semantic-active);
+  --element-color-pale: var(--color--semantic-active-pale);
+  --element-color-pale: var(--color--semantic-active-pale);
+
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -31,89 +35,93 @@
 
   // Variant styles - Contained
   &--contained {
+    color: var(--element-color);
+    background-color: var(--element-color-pale);
+    border: 1px solid var(--element-color-pale);
+
     &.lili-tag--primary {
-      background-color: rgba(59, 130, 246, 0.1);
-      color: #1d4ed8;
-      border: 1px solid rgba(59, 130, 246, 0.2);
+      --element-color: var(--color--semantic-primary);
+      --element-color-pale: var(--color--semantic-primary-pale);
+      --element-color-pale: var(--color--semantic-primary-pale);
     }
 
     &.lili-tag--secondary {
-      background-color: rgba(107, 114, 128, 0.1);
-      color: #374151;
-      border: 1px solid rgba(107, 114, 128, 0.2);
+      --element-color: var(--color--semantic-secondary);
+      --element-color-pale: var(--color--semantic-secondary-pale);
+      --element-color-pale: var(--color--semantic-secondary-pale);
     }
 
     &.lili-tag--success {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: #065f46;
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      --element-color: var(--color--semantic-success);
+      --element-color-pale: var(--color--semantic-success-pale);
+      --element-color-pale: var(--color--semantic-success-pale);
     }
 
     &.lili-tag--warning {
-      background-color: rgba(245, 158, 11, 0.1);
-      color: #92400e;
-      border: 1px solid rgba(245, 158, 11, 0.2);
+      --element-color: var(--color--semantic-warning);
+      --element-color-pale: var(--color--semantic-warning-pale);
+      --element-color-pale: var(--color--semantic-warning-pale);
     }
 
     &.lili-tag--error {
-      background-color: rgba(239, 68, 68, 0.1);
-      color: #991b1b;
-      border: 1px solid rgba(239, 68, 68, 0.2);
+      --element-color: var(--color--semantic-error);
+      --element-color-pale: var(--color--semantic-error-pale);
+      --element-color-pale: var(--color--semantic-error-pale);
     }
 
     &.lili-tag--info {
-      background-color: rgba(59, 130, 246, 0.1);
-      color: #1e40af;
-      border: 1px solid rgba(59, 130, 246, 0.2);
+      --element-color: var(--color--semantic-info);
+      --element-color-pale: var(--color--semantic-info-pale);
+      --element-color-pale: var(--color--semantic-info-pale);
     }
 
     // Rainbow colors for contained variant
     &.lili-tag--amber {
-      background-color: var(--color-chart--rainbow-amber-pale);
-      color: var(--color-chart--rainbow-amber);
-      border: 1px solid var(--color-chart--rainbow-amber-half);
+      --element-color: var(--color-chart--rainbow-amber);
+      --element-color-pale: var(--color-chart--rainbow-amber-pale);
+      --element-color-pale: var(--color-chart--rainbow-amber-pale);
     }
 
     &.lili-tag--orange {
-      background-color: var(--color-chart--rainbow-orange-pale);
-      color: var(--color-chart--rainbow-orange);
-      border: 1px solid var(--color-chart--rainbow-orange-half);
+      --element-color: var(--color-chart--rainbow-orange);
+      --element-color-pale: var(--color-chart--rainbow-orange-pale);
+      --element-color-pale: var(--color-chart--rainbow-orange-pale);
     }
 
     &.lili-tag--rose {
-      background-color: var(--color-chart--rainbow-rose-pale);
-      color: var(--color-chart--rainbow-rose);
-      border: 1px solid var(--color-chart--rainbow-rose-half);
+      --element-color: var(--color-chart--rainbow-rose);
+      --element-color-pale: var(--color-chart--rainbow-rose-pale);
+      --element-color-pale: var(--color-chart--rainbow-rose-pale);
     }
 
     &.lili-tag--pink {
-      background-color: var(--color-chart--rainbow-pink-pale);
-      color: var(--color-chart--rainbow-pink);
-      border: 1px solid var(--color-chart--rainbow-pink-half);
+      --element-color: var(--color-chart--rainbow-pink);
+      --element-color-pale: var(--color-chart--rainbow-pink-pale);
+      --element-color-pale: var(--color-chart--rainbow-pink-pale);
     }
 
     &.lili-tag--purple {
-      background-color: var(--color-chart--rainbow-purple-pale);
-      color: var(--color-chart--rainbow-purple);
-      border: 1px solid var(--color-chart--rainbow-purple-half);
+      --element-color: var(--color-chart--rainbow-purple);
+      --element-color-pale: var(--color-chart--rainbow-purple-pale);
+      --element-color-pale: var(--color-chart--rainbow-purple-pale);
     }
 
     &.lili-tag--blue {
-      background-color: var(--color-chart--rainbow-blue-pale);
-      color: var(--color-chart--rainbow-blue);
-      border: 1px solid var(--color-chart--rainbow-blue-half);
+      --element-color: var(--color-chart--rainbow-blue);
+      --element-color-pale: var(--color-chart--rainbow-blue-pale);
+      --element-color-pale: var(--color-chart--rainbow-blue-pale);
     }
 
     &.lili-tag--cyan {
-      background-color: var(--color-chart--rainbow-cyan-pale);
-      color: var(--color-chart--rainbow-cyan);
-      border: 1px solid var(--color-chart--rainbow-cyan-half);
+      --element-color: var(--color-chart--rainbow-cyan);
+      --element-color-pale: var(--color-chart--rainbow-cyan-pale);
+      --element-color-pale: var(--color-chart--rainbow-cyan-pale);
     }
 
     &.lili-tag--emerald {
-      background-color: var(--color-chart--rainbow-emerald-pale);
-      color: var(--color-chart--rainbow-emerald);
-      border: 1px solid var(--color-chart--rainbow-emerald-half);
+      --element-color: var(--color-chart--rainbow-emerald);
+      --element-color-pale: var(--color-chart--rainbow-emerald-pale);
+      --element-color-pale: var(--color-chart--rainbow-emerald-pale);
     }
   }
 
