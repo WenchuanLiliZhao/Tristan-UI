@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Tristan-UI Component Development Patterns
+
+## Component Structure
+Every component in Tristan-UI follows a consistent structure based on the [Button component](mdc:react/src/design-system/ui-components/general/Button/index.tsx):
+
+### Required Files Per Component
+- `index.tsx` - Main component implementation
+- `styles.module.scss` - Component-specific styles
+- `README.md` - Component documentation
+
+### Component Interface Pattern
+```typescript
+export interface ComponentProps extends BaseComponentProps {
+  children?: React.ReactNode;
+  variant?: "filled" | "outlined" | "ghost";
+  size?: Size;
+  semantic?: "default" | "success" | "active" | "warning" | "error";
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+```
+
+## Key Patterns
+
+### Base Props Extension
+- All components extend `BaseComponentProps` from [react/src/design-system/ui-components/types.ts](mdc:react/src/design-system/ui-components/types.ts)
+- Include `data-testid` support for testing
+- Support `className` prop for custom styling
+
+### CSS Class Naming
+- Use BEM-like naming: `tristan-{component}--{variant}`
+- Base class: `styles["tristan-button"]`
+- Variants: `styles["tristan-button--filled"]`
+- Modifiers: `styles["tristan-button--disabled"]`
+
+### Style Module Pattern
+Components use CSS Modules (`.module.scss`) for scoped styling:
+- Main component styles in base class
+- Variants and modifiers as separate classes
+- Consistent use of design tokens from [react/src/styles/](mdc:react/src/styles)
+
+### Icon Integration
+- Use the [Icon component](mdc:react/src/design-system/ui-components/general/Icon/index.tsx) for consistent iconography
+- Support both functional and decorative icons
+- Material Icons integration via [react/src/design-system/ui-components/general/Icon/fonts/material-icons.scss](mdc:react/src/design-system/ui-components/general/Icon/fonts/material-icons.scss)
+
+### Hover Effects
+- Use [HoverBox component](mdc:react/src/design-system/ui-components/shared/HoverBox/index.tsx) for consistent hover states
+- Apply across interactive components
+
+## Export Pattern
+Components are exported through a hierarchical index system:
+- Individual component exports in component directories
+- Category-level exports in [react/src/design-system/ui-components/general/index.ts](mdc:react/src/design-system/ui-components/general/index.ts)
+- Main export in [react/src/design-system/ui-components/index.ts](mdc:react/src/design-system/ui-components/index.ts)
+
+## TypeScript Usage
+- Use generic types for flexible component APIs
+- Extend base interfaces for consistency
+- Proper typing for event handlers and callbacks
+- Support for forwarded refs when needed

@@ -1,0 +1,75 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Timeline System Architecture
+
+## Overview
+The Timeline system is a major, complex component in Tristan-UI (located in the `ui-demos` directory, which contains full-featured components rather than demos). It provides interactive time-based data visualization with features like zooming, grouping, and intelligent layout.
+
+## Core Files
+
+### Main Timeline Component
+- **[react/src/design-system/ui-demos/timeline/ui/Timeline.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/Timeline.tsx)** - Main Timeline component with layout logic
+- **[react/src/design-system/ui-demos/timeline/types.ts](mdc:react/src/design-system/ui-demos/timeline/types.ts)** - TypeScript definitions for Timeline
+- **[react/src/design-system/ui-demos/timeline/ui/_constants.ts](mdc:react/src/design-system/ui-demos/timeline/ui/_constants.ts)** - Layout constants and calculations
+
+### Timeline Layout Components
+- **[react/src/design-system/ui-demos/timeline/ui/OnLayout/TimelineRuler.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/OnLayout/TimelineRuler.tsx)** - Time ruler with year/month/day labels
+- **[react/src/design-system/ui-demos/timeline/ui/OnLayout/TimelineItems.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/OnLayout/TimelineItems.tsx)** - Timeline item rendering and positioning
+
+### Timeline UI Components
+- **[react/src/design-system/ui-demos/timeline/ui/OnTimeline/Group.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/OnTimeline/Group.tsx)** - Group container for timeline items
+- **[react/src/design-system/ui-demos/timeline/ui/OnTimeline/Item.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/OnTimeline/Item.tsx)** - Individual timeline item component
+- **[react/src/design-system/ui-demos/timeline/ui/Sidebar/TimelineSidebar.tsx](mdc:react/src/design-system/ui-demos/timeline/ui/Sidebar/TimelineSidebar.tsx)** - Sidebar with group labels and navigation
+
+## Key Constants and Configuration
+
+### Layout Constants
+From [react/src/design-system/ui-demos/timeline/ui/_constants.ts](mdc:react/src/design-system/ui-demos/timeline/ui/_constants.ts):
+- `cellHeight: 84` - Height of each timeline item row
+- `groupGap: 0` - Spacing between groups
+- `yearZoom: 4.5` - Zoom level for year view
+- `monthZoom: 24` - Zoom level for month view
+
+### Time View Configuration
+- Year view: 4.5px per day
+- Month view: 8px per day
+- Day view: 24px per day
+
+## Utility Functions
+
+### Core Utilities
+- **[react/src/design-system/ui-demos/timeline/utils/time.ts](mdc:react/src/design-system/ui-demos/timeline/utils/time.ts)** - Time calculations and date utilities
+- **[react/src/design-system/ui-demos/timeline/utils/placement.ts](mdc:react/src/design-system/ui-demos/timeline/utils/placement.ts)** - Item placement and collision detection
+- **[react/src/design-system/ui-demos/timeline/utils/sorting.ts](mdc:react/src/design-system/ui-demos/timeline/utils/sorting.ts)** - Timeline item sorting algorithms
+
+### Custom Hooks
+- **[react/src/design-system/ui-demos/timeline/hooks/useCenterBasedZoom.ts](mdc:react/src/design-system/ui-demos/timeline/hooks/useCenterBasedZoom.ts)** - Zoom functionality
+- **[react/src/design-system/ui-demos/timeline/hooks/useDisableBrowserGestures.ts](mdc:react/src/design-system/ui-demos/timeline/hooks/useDisableBrowserGestures.ts)** - Gesture handling
+
+## Data Structure Requirements
+
+### Timeline Item Interface
+Each timeline item must include:
+- `id` - Unique identifier
+- `name` - Display name
+- `startDate` - Start date (Date object)
+- `endDate` - End date (Date object)
+
+### Group Structure
+Timeline data is organized in groups:
+- `groupTitle` - Group display name
+- `groupItems` - Array of timeline items
+- Optional grouping metadata
+
+## Testing and Examples
+- **[react/src/pages/debug-pages/Timeline/](mdc:react/src/pages/debug-pages/Timeline)** - Timeline testing page and usage examples
+- **[react/src/pages/debug-pages/Timeline/example-data/](mdc:react/src/pages/debug-pages/Timeline/example-data)** - Sample data for testing the Timeline component
+
+## Performance Considerations
+- Intelligent item placement to avoid overlaps
+- Virtual scrolling for large datasets
+- Optimized CSS variables for smooth zooming
+- Gesture handling for touch devices

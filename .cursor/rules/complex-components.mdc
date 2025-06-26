@@ -1,0 +1,83 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Complex Components Architecture
+
+## Overview
+The `ui-demos` directory (which needs a better name) contains complex, full-featured components that are more sophisticated than the basic UI components. These are substantial components with their own internal architecture, multiple sub-components, and advanced functionality.
+
+## Directory Structure
+**[react/src/design-system/ui-demos/](mdc:react/src/design-system/ui-demos)** - Complex components directory
+
+## Component Categories
+
+### Major Components vs Basic Components
+
+#### Basic UI Components (ui-components)
+- **[react/src/design-system/ui-components/](mdc:react/src/design-system/ui-components)** - Simple, reusable UI elements
+- Examples: Button, Icon, Switch, Tag, ProgressCircle
+- Typically single-file components with minimal complexity
+- Focused on specific UI patterns
+
+#### Complex Components (ui-demos - needs renaming)
+- **[react/src/design-system/ui-demos/](mdc:react/src/design-system/ui-demos)** - Advanced, feature-rich components
+- Examples: Timeline system
+- Multi-file architecture with sub-components
+- Complex state management and interactions
+- Rich feature sets and advanced functionality
+
+## Timeline as Example
+**[react/src/design-system/ui-demos/timeline/](mdc:react/src/design-system/ui-demos/timeline)** - Full Timeline system
+
+### Internal Architecture
+- `ui/` - Multiple UI sub-components
+- `hooks/` - Custom React hooks
+- `utils/` - Utility functions and algorithms
+- `types.ts` - Complex type definitions
+- Multiple SCSS modules for styling
+
+### Complexity Indicators
+- 10+ source files
+- Custom hooks for behavior
+- Complex layout algorithms
+- Multiple interaction patterns
+- Sophisticated state management
+
+## Development Patterns
+
+### Complex Component Structure
+```
+ComplexComponent/
+├── ui/                    # UI sub-components
+│   ├── Component.tsx
+│   ├── Component.module.scss
+│   └── SubComponents/
+├── hooks/                 # Custom hooks
+│   ├── useFeature.ts
+│   └── index.ts
+├── utils/                 # Utilities
+│   ├── calculations.ts
+│   └── helpers.ts
+├── types.ts              # Type definitions
+├── index.ts              # Main export
+└── README.md            # Documentation
+```
+
+### Naming Convention Note
+The `ui-demos` directory name is a misnomer and should be renamed to better reflect its purpose:
+- Possible names: `advanced-components`, `complex-components`, `feature-components`
+- Current name causes confusion with actual demo/example code
+
+## Integration with Debug Pages
+Complex components have corresponding test/example pages in:
+- **[react/src/pages/debug-pages/](mdc:react/src/pages/debug-pages)** - For testing and demonstrating usage
+
+## Future Components
+Additional complex components should follow the Timeline pattern:
+- Comprehensive internal architecture
+- Multiple sub-components
+- Custom hooks for behavior
+- Extensive utility functions
+- Rich interaction patterns

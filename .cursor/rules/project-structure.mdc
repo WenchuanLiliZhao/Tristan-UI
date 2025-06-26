@@ -1,0 +1,50 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Tristan-UI Project Structure Guide
+
+## Overview
+Tristan-UI is a modern React component library and design system built with TypeScript, SCSS, and Vite. The project follows a modular architecture with clear separation between UI components, demos, and utilities.
+
+## Key Directories
+
+### Main React Application
+- **[react/](mdc:react)** - Main React application directory
+- **[react/src/](mdc:react/src)** - Source code root
+- **[react/package.json](mdc:react/package.json)** - Project dependencies and configuration
+
+### Design System Architecture
+- **[react/src/design-system/](mdc:react/src/design-system)** - Design system root
+- **[react/src/design-system/ui-components/](mdc:react/src/design-system/ui-components)** - Reusable UI components
+- **[react/src/design-system/ui-demos/](mdc:react/src/design-system/ui-demos)** - Complex, full-featured components (note: directory name needs updating)
+- **[react/src/design-system/shared/](mdc:react/src/design-system/shared)** - Shared utilities and configurations
+
+### Component Categories
+- **[react/src/design-system/ui-components/general/](mdc:react/src/design-system/ui-components/general)** - General purpose components (Button, Icon, Switch, Tag)
+- **[react/src/design-system/ui-components/navigation/](mdc:react/src/design-system/ui-components/navigation)** - Navigation components (TopNav)
+- **[react/src/design-system/ui-components/data-display/](mdc:react/src/design-system/ui-components/data-display)** - Data display components (ProgressCircle, Tooltips)
+- **[react/src/design-system/ui-components/layout/](mdc:react/src/design-system/ui-components/layout)** - Layout components (TristanLayout)
+
+### Styling System
+- **[react/src/styles/](mdc:react/src/styles)** - Global styles and design tokens
+- **[react/src/styles/color.scss](mdc:react/src/styles/color.scss)** - Color system definitions
+- **[react/src/styles/spacing.scss](mdc:react/src/styles/spacing.scss)** - Spacing scale
+- **[react/src/styles/font.scss](mdc:react/src/styles/font.scss)** - Typography system
+
+### Pages and Demos
+- **[react/src/pages/](mdc:react/src/pages)** - Application pages
+- **[react/src/pages/debug-pages/](mdc:react/src/pages/debug-pages)** - Component testing and demo pages
+
+## File Naming Conventions
+- Components use PascalCase directories with `index.tsx` entry points
+- Style files use `styles.module.scss` for component-scoped styles
+- Type definitions in `types.ts` files
+- Constants in `_constants.ts` files (prefixed with underscore)
+- Documentation in `README.md` files per component
+
+## Entry Points
+- **[react/src/main.tsx](mdc:react/src/main.tsx)** - Application entry point
+- **[react/src/design-system/ui-components/index.ts](mdc:react/src/design-system/ui-components/index.ts)** - Main component exports
+- **[react/src/design-system/shared/index.ts](mdc:react/src/design-system/shared/index.ts)** - Shared utilities export

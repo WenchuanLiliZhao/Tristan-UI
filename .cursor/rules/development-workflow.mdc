@@ -1,0 +1,108 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Tristan-UI Development Workflow
+
+## Build System and Configuration
+
+### Vite Configuration
+- **[react/vite.config.ts](mdc:react/vite.config.ts)** - Vite build configuration
+- **[react/tsconfig.json](mdc:react/tsconfig.json)** - Main TypeScript configuration
+- **[react/tsconfig.app.json](mdc:react/tsconfig.app.json)** - App-specific TypeScript config
+- **[react/tsconfig.lib.json](mdc:react/tsconfig.lib.json)** - Library build TypeScript config
+
+### ESLint Configuration
+- **[react/eslint.config.js](mdc:react/eslint.config.js)** - ESLint rules and configuration
+
+## NPM Scripts
+
+### Development
+- `npm run dev` - Start development server with Vite
+- `npm run preview` - Preview production build
+
+### Building
+- `npm run build` - Build application
+- `npm run build:lib` - Build component library for publishing
+- `npm run build:types` - Generate TypeScript declarations
+
+### Quality Assurance
+- `npm run lint` - Run ESLint checks
+- `npm run clean` - Clean build artifacts
+
+## Project Structure Conventions
+
+### Component Organization
+1. Each component gets its own directory
+2. Required files: `index.tsx`, `styles.module.scss`, `README.md`
+3. Optional files: types, utilities, sub-components
+
+### Import/Export Patterns
+- Barrel exports through `index.ts` files
+- Consistent re-export hierarchy
+- Type-only imports where appropriate
+
+### File Naming
+- Components: PascalCase directories
+- Utilities: camelCase files
+- Constants: `_constants.ts` (underscore prefix)
+- Types: `types.ts`
+- Styles: `styles.module.scss`
+
+## Demo Development
+
+### Debug Pages
+- **[react/src/pages/debug-pages/](mdc:react/src/pages/debug-pages)** - Component testing pages
+- Each component has its own demo in `_Element.tsx`
+- Example data stored in `example-data/` directories
+
+### Demo Structure
+```
+ComponentDemo/
+├── index.tsx          # Demo page entry
+├── _Element.tsx       # Demo component
+└── example-data/      # Sample data (if needed)
+    ├── _example1.ts
+    └── index.ts
+```
+
+## Documentation Standards
+
+### Component README
+Each component should include:
+- Purpose and use cases
+- Props API documentation
+- Usage examples
+- Design considerations
+
+### Code Comments
+- JSDoc comments for public APIs
+- Inline comments for complex logic
+- Chinese comments acceptable for internal documentation
+
+## Version Management
+- **[react/package.json](mdc:react/package.json)** version: `0.4.7`
+- Semantic versioning for releases
+- Peer dependencies for React 18+
+
+## Library Distribution
+
+### Build Outputs
+- `dist/index.js` - CommonJS build
+- `dist/index.esm.js` - ES Module build
+- `dist/index.d.ts` - TypeScript declarations
+- `dist/tristan-ui.css` - Compiled styles
+
+### Package Exports
+- Main component library
+- Style exports for external use
+- TypeScript definitions
+- SCSS source files
+
+## Development Environment
+- Node.js >= 16.0.0
+- React 19.1.0+
+- TypeScript 5.8.3
+- Vite 6.3.5+ for build tooling
+- SCSS for styling
