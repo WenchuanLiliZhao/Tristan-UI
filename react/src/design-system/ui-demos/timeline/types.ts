@@ -145,6 +145,7 @@ export interface TimelineProps<T = Record<string, unknown>> {
   init?: TimelineConfigType<T>;
   inputData: SortedTimelineDataType<T>;
   zoomLevels?: ZoomLevelType[];
+  fetchByTimeInterval?: [Date, Date];
   onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
   onItemClick?: (item: TimelineItemType<T>) => void;
 }

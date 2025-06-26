@@ -63,10 +63,30 @@ export function Timeline<T = Record<string, unknown>>({
   inputData,
   init,
   zoomLevels,
+  fetchByTimeInterval,
 }: TimelineProps<T>) {
   // Constants for layout calculations
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
   const groupGapForTesting = TimelineConst.groupGap;
+
+  // Filter data based on fetchByTimeInterval
+  const filteredData = useMemo(() => {
+    if (!fetchByTimeInterval) {
+      return inputData;
+    }
+    const [start, end] = fetchByTimeInterval;
+    const filteredGroups = inputData.data
+      .map((group) => {
+        const filteredItems = group.groupItems.filter((item) => {
+          const itemStart = new Date(item.startDate);
+          return itemStart >= start && itemStart <= end;
+        });
+        return { ...group, groupItems: filteredItems };
+      })
+      .filter((group) => group.groupItems.length > 0);
+
+    return { ...inputData, data: filteredGroups };
+  }, [inputData, fetchByTimeInterval]);
 
   const timeViewConfig = useMemo(() => {
     const levels = zoomLevels && zoomLevels.length > 0 ? zoomLevels : TIME_VIEW_CONFIG;
@@ -96,7 +116,7 @@ export function Timeline<T = Record<string, unknown>>({
   const gestureDisableRef = useDisableBrowserGestures();
 
   // Flatten all items from all groups for timeline calculations
-  const allItems = inputData.data.flatMap((group) => group.groupItems);
+  const allItems = filteredData.data.flatMap((group) => group.groupItems);
 
   // Sort items by start date to ensure consistent placement
   const sortedItems = sortTimelineItemsByStartDate(allItems as TimelineItemType<T>[]);
@@ -147,7 +167,7 @@ export function Timeline<T = Record<string, unknown>>({
   }
 
   // Pre-calculate placements for each group separately
-  const groupPlacements: GroupPlacement[] = inputData.data.map((group) => {
+  const groupPlacements: GroupPlacement[] = filteredData.data.map((group) => {
     const sortedGroupItems = sortTimelineItemsByStartDate(group.groupItems as TimelineItemType<T>[]);
     const placements: PlacementResult[] = [];
 

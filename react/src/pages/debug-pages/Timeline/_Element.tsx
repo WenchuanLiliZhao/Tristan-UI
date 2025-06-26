@@ -67,6 +67,10 @@ export function Element(): React.ReactElement {
         init={timelineConfig}
         inputData={sortedData}
         zoomLevels={zoomLevels}
+        fetchByTimeInterval={[
+          new Date("2024-01-01"),
+          new Date("2024-12-30"),
+        ]}
       />
     </div>
   );
