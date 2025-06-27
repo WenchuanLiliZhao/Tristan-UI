@@ -51,6 +51,18 @@ export const TimelineConst = {
 
   // 在最晚 issue 年份后额外显示的年数
   additionalYearsAfterLatest: 10,
+
+  // 性能优化配置
+  performance: {
+    // 虚拟滚动：视窗外的缓冲区大小（以天为单位）
+    virtualScrollBufferDays: 60,
+    // 批量渲染：每批次渲染的天数
+    batchRenderDays: 90,
+    // React.memo优化：是否启用组件缓存
+    enableMemoization: true,
+    // 延迟渲染：非关键视图区域的延迟时间(ms)
+    deferredRenderDelay: 100,
+  },
 };
 
 export const TimelineConstCalc = {
