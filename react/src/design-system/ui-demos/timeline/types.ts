@@ -112,14 +112,6 @@ export interface TimelineItemDisplayConfig<T = Record<string, unknown>> {
   tagFields?: FieldDisplayConfig<T>[];
 }
 
-// Timeline 配置接口
-export interface TimelineConfigType<TExtended = Record<string, unknown>> {
-  dataType?: TExtended;
-  groupBy?: keyof (BaseTimelineItemType & TExtended);
-  /** 项目显示配置 */
-  itemDisplayConfig?: TimelineItemDisplayConfig<TExtended>;
-}
-
 // 分组数据结构 - 通用化
 export interface TimelineGroupType<T = Record<string, unknown>> {
   groupTitle: string;
@@ -142,17 +134,23 @@ export interface ZoomLevelType {
 
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
-  init?: TimelineConfigType<T>;
+  /** 项目显示配置 */
+  init?: TimelineItemDisplayConfig<T>;
   /** 输入数据 - 可以是原始数据数组或已分组的数据 */
   inputData: SortedTimelineDataType<T> | TimelineItemType<T>[];
   /** 分组字段（当 inputData 是原始数据数组时使用） */
   groupBy?: keyof (BaseTimelineItemType & T);
   zoomLevels?: ZoomLevelType[];
   fetchByTimeInterval?: [Date, Date];
-  onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
   onItemClick?: (item: TimelineItemType<T>) => void;
   /** Current zoom level (optional - managed internally if not provided) */
   currentZoom?: string;
+  /**
+   * 当未启用缩放功能时，设置每天的默认宽度（单位：像素）。
+   * 如果提供了 `zoomLevels`，此属性将被忽略。
+   * @default 12
+   */
+  defaultDayWidth?: number;
 }
 
 // 预定义的常用映射函数

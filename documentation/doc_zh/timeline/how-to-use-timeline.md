@@ -306,8 +306,7 @@ import React from "react";
 import { 
   Timeline, 
   groupTimelineItemsByField,
-  createFieldConfig,
-  type TimelineConfigType 
+  createFieldConfig 
 } from "tristan-ui";
 import { ExampleData, type ProjectDataType, status, team, priority, riskLevel } from "./example-data";
 
@@ -330,16 +329,11 @@ function TimelineExample() {
     ],
   };
 
-  const timelineConfig: TimelineConfigType<ProjectDataType> = {
-    groupBy: "category",
-    itemDisplayConfig,
-  };
-
   const sortedData = groupTimelineItemsByField(ExampleData, "category");
 
   return (
     <Timeline<ProjectDataType> 
-      init={timelineConfig} 
+      init={itemDisplayConfig} 
       inputData={sortedData} 
     />
   );
@@ -359,10 +353,7 @@ function TemplateExample() {
     priority,
   });
 
-  const timelineConfig: TimelineConfigType<ProjectDataType> = {
-    groupBy: "category",
-    itemDisplayConfig,
-  };
+  // 直接使用 itemDisplayConfig，无需包装
 
   // ... 其余代码相同
 }
@@ -458,8 +449,7 @@ import "tristan-ui/dist/tristan-ui.css";
 import { 
   Timeline, 
   groupTimelineItemsByField,
-  createFieldConfig,
-  type TimelineConfigType 
+  createFieldConfig 
 } from "tristan-ui";
 
 // 导入您的数据和类型
@@ -478,19 +468,13 @@ function App() {
     ],
   };
 
-  // Timeline 配置
-  const timelineConfig: TimelineConfigType<ProjectDataType> = {
-    groupBy: "category",
-    itemDisplayConfig,
-  };
-
   // 使用工具函数按指定字段分组数据
   const groupedData = groupTimelineItemsByField(ExampleData, "category");
 
   return (
     <div>
       <Timeline<ProjectDataType>
-        init={timelineConfig}
+        init={itemDisplayConfig}
         inputData={groupedData}
       />
     </div>
@@ -542,11 +526,6 @@ function AdvancedTimeline() {
     ],
   };
 
-  const timelineConfig: TimelineConfigType<ProjectDataType> = {
-    groupBy,
-    itemDisplayConfig,
-  };
-
   return (
     <div>
       {/* 分组选择器 */}
@@ -562,7 +541,7 @@ function AdvancedTimeline() {
       
       {/* Timeline 组件 */}
       <Timeline<ProjectDataType>
-        init={timelineConfig}
+        init={itemDisplayConfig}
         inputData={groupedData}
       />
     </div>
@@ -758,16 +737,8 @@ oldData.push(newItem);
 | 属性 | 类型 | 必需 | 描述 |
 |------|------|------|------|
 | `inputData` | `SortedTimelineDataType<T>` | ✅ | 已分组的时间线数据 |
-| `init` | `TimelineConfigType<T>` | ❌ | 配置对象，包含 groupBy 和 itemDisplayConfig |
-
-### TimelineConfigType
-
-```typescript
-interface TimelineConfigType<T> {
-  groupBy?: keyof (BaseTimelineItemType & T);
-  itemDisplayConfig?: TimelineItemDisplayConfig<T>;
-}
-```
+| `init` | `TimelineItemDisplayConfig<T>` | ❌ | 项目显示配置，直接传递无需包装 |
+| `groupBy` | `keyof (BaseTimelineItemType & T)` | ❌ | 分组字段（当 inputData 是原始数据数组时使用） |
 
 ### TimelineItemDisplayConfig
 

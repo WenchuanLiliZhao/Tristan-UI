@@ -1,33 +1,30 @@
 .floating-button-group {
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-index-nav);
   pointer-events: none; /* Allow clicks to pass through the container */
 
-  &__container {
+  .container {
     display: flex;
-    gap: 8px;
-    padding: 12px;
-    background-color: var(--color--bg-secondary);
+    gap: 6px;
+    padding: 7px;
+    background-color: var(--color--bg-prime);
     border: 1px solid var(--color--border-prime);
     border-radius: 8px;
     box-shadow: var(--shadow--pop-up);
     pointer-events: auto; /* Re-enable clicks for the actual button container */
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    
-    /* Smooth animations */
-    transition: all 0.2s ease-in-out;
-    
-    &:hover {
-      box-shadow: var(--shadow--modal);
-      transform: translateY(-1px);
+
+    .item-group {
+      display: flex;
+      gap: 6px;
     }
   }
 
-  &__button {
+  .button {
     /* Button-specific overrides can go here if needed */
     transition: all 0.15s ease-in-out;
-    
+
     &:hover {
       transform: translateY(-1px);
     }
@@ -76,7 +73,7 @@
       bottom: 12px;
     }
 
-    &__container {
+    .container {
       padding: 8px;
       gap: 6px;
       border-radius: 6px;
@@ -85,7 +82,7 @@
 
   /* Dark mode support */
   @media (prefers-color-scheme: dark) {
-    &__container {
+    .container {
       background-color: var(--color--bg-secondary);
       border-color: var(--color--border-prime);
     }
@@ -93,17 +90,24 @@
 
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
-    &__container,
-    &__button {
+    .container,
+    .button {
       transition: none;
     }
 
-    &__container:hover {
+    .container:hover {
       transform: none;
     }
 
-    &__button:hover {
+    .button:hover {
       transform: none;
     }
+  }
+}
+
+.hidden {
+  .item,
+  :global(.tristan-button-group-devider) {
+    display: none;
   }
 }

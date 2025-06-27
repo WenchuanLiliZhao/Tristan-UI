@@ -86,17 +86,8 @@ function CustomTimeline() {
   
   return (
     <Timeline<ProjectData>
-      init={{
-        dataType: {
-          status: 'Planning' as const,
-          priority: 'Medium' as const,
-          department: '',
-          budget: 0
-        },
-        groupBy: 'department'
-      }}
       inputData={groupedData}
-      onGroupByChange={(newGroupBy) => setGroupBy(newGroupBy)}
+      groupBy={groupBy}
     />
   );
 }
@@ -146,21 +137,8 @@ function TeamTimeline() {
   
   return (
     <Timeline<TeamData>
-      init={{
-        dataType: {
-          status: "On Track",
-          progress: 0,
-          category: "",
-          team: {
-            name: "",
-            color: "#666666"
-          },
-          priority: "Medium"
-        },
-        groupBy: "category"
-      }}
       inputData={groupedData}
-      onGroupByChange={(newGroupBy) => setGroupBy(newGroupBy)}
+      groupBy={groupBy}
     />
   );
 }
@@ -172,18 +150,9 @@ function TeamTimeline() {
 
 | 属性 | 类型 | 必需 | 描述 |
 |------|------|------|------|
-| `init` | `TimelineConfig<T>` | 可选 | 初始化配置，包含数据类型定义和默认分组 |
+| `init` | `TimelineItemDisplayConfig<T>` | 可选 | 项目显示配置，直接传递无需包装 |
 | `inputData` | `SortedTimelineData<T>` | 必需 | 已分组的时间线数据 |
-| `onGroupByChange` | `(groupBy: keyof T) => void` | 可选 | 分组方式改变时的回调 |
-
-### TimelineConfig
-
-```tsx
-interface TimelineConfig<TExtended = Record<string, unknown>> {
-  dataType?: TExtended;  // 自定义数据类型示例
-  groupBy?: keyof (BaseTimelineItem & TExtended);  // 默认分组字段
-}
-```
+| `groupBy` | `keyof (BaseTimelineItem & T)` | 可选 | 分组字段（当 inputData 是原始数据数组时使用） |
 
 ### BaseTimelineItem
 

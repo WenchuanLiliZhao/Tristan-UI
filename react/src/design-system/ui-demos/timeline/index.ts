@@ -10,8 +10,7 @@ export * from './hooks';
 // 🎨 导出主组件
 export { Timeline } from './ui/Timeline';
 
-// 🎛️ 导出控制组件
-export { ZoomControls } from './ui/ZoomControls';
+
 
 // 🪝 导出 hooks 和工具函数
 export { useTimelineZoom } from './ui/Timeline';

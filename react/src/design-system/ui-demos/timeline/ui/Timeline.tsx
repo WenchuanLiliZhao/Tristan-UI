@@ -1,27 +1,27 @@
 /* eslint-disable react-refresh/only-export-components */
 /**
  * 📅 Timeline时间线主组件
- * 
+ *
  * 这是设计系统中最重要的组件之一，用于展示项目或任务的时间线。
  * Timeline可以显示多个项目在时间轴上的分布，支持分组、缩放和响应式布局。
- * 
+ *
  * 🎯 主要特性：
  * - 智能布局：自动避免项目重叠，垂直分层显示
  * - 分组显示：可以按团队、状态等字段分组
  * - 时间缩放：支持年、月、日三种时间视图
  * - 响应式：自适应不同屏幕尺寸
- * 
+ *
  * 📊 数据要求：
  * 每个时间线项目必须包含：id（唯一标识）、name（名称）、startDate（开始日期）、endDate（结束日期）
- * 
+ *
  * 💡 使用示例：
  * const data = {
  *   meta: { sortBy: 'team' },
  *   data: [{
  *     groupTitle: "开发团队",
  *     groupItems: [{
- *       id: "1", name: "项目A", 
- *       startDate: new Date("2024-01-01"), 
+ *       id: "1", name: "项目A",
+ *       startDate: new Date("2024-01-01"),
  *       endDate: new Date("2024-02-01")
  *     }]
  *   }]
@@ -43,7 +43,7 @@ import {
   sortTimelineItemsByStartDate,
   findPlacement,
   groupTimelineItemsByField,
-  type PlacementResult
+  type PlacementResult,
 } from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
@@ -52,8 +52,10 @@ import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
-import { Button } from "../../../ui-components/general/Button";
 import { FloatingButtonGroup } from "../../../ui-components/navigation/FloatingButtonGroup";
+import {
+  Button,
+} from "../../../ui-components/general/Button/index";
 
 // 内部函数：创建 zoom controls
 function createZoomControls(
@@ -67,6 +69,7 @@ function createZoomControls(
         <Button
           key={level.type}
           variant={currentZoom === level.type ? "filled" : "ghost"}
+          semantic={currentZoom === level.type ? "active" : "default"}
           onClick={() => onZoomChange(level.type)}
         >
           {level.label}
@@ -92,10 +95,19 @@ interface InternalZoomConfig {
 }
 
 // Hook 来管理 zoom 状态和配置
-function useTimelineZoom(zoomLevels?: Array<{ label: string; dayWidth: number; setAsDefault?: boolean }>) {
+function useTimelineZoom(
+  zoomLevels?: Array<{
+    label: string;
+    dayWidth: number;
+    setAsDefault?: boolean;
+  }>
+) {
   // 处理 zoom levels 转换为内部格式
   const timeViewConfig = useMemo((): InternalZoomConfig[] => {
-    const levels = zoomLevels && zoomLevels.length > 0 ? zoomLevels : DEFAULT_TIME_VIEW_CONFIG;
+    const levels =
+      zoomLevels && zoomLevels.length > 0
+        ? zoomLevels
+        : DEFAULT_TIME_VIEW_CONFIG;
     return levels.map((zl) => ({
       ...zl,
       type: zl.label.toLowerCase().replace(" ", "-"),
@@ -110,7 +122,9 @@ function useTimelineZoom(zoomLevels?: Array<{ label: string; dayWidth: number; s
   });
 
   // 获取当前 zoom 配置
-  const currentZoomConfig = timeViewConfig.find(config => config.type === currentZoom)!;
+  const currentZoomConfig = timeViewConfig.find(
+    (config) => config.type === currentZoom
+  )!;
 
   return {
     timeViewConfig,
@@ -123,26 +137,26 @@ function useTimelineZoom(zoomLevels?: Array<{ label: string; dayWidth: number; s
 
 // 通用的Timeline组件 - 支持泛型，现在作为主要接口
 export function Timeline<T = Record<string, unknown>>({
-  // init 参数为未来扩展保留，暂时不使用
+  // init 参数直接接收 TimelineItemDisplayConfig，简化配置
   inputData,
   init,
   groupBy,
   zoomLevels,
   fetchByTimeInterval,
   currentZoom: externalCurrentZoom,
+  defaultDayWidth = 12,
 }: TimelineProps<T>) {
   // 如果没有提供 zoomLevels，使用默认的 dayWidth
-  const defaultDayWidth = 8; // 默认 dayWidth，相当于 "Month" 视图
-  
+
   // 始终调用 useTimelineZoom hook（React Hook 规则）
   const zoomManagement = useTimelineZoom(zoomLevels);
-  
+
   // 确定最终使用的 dayWidth
   const dayWidth = (() => {
     if (externalCurrentZoom && zoomLevels) {
       // 如果提供了外部 currentZoom 和 zoomLevels，查找对应的 dayWidth
-      const zoomConfig = zoomLevels.find(zl => 
-        zl.label.toLowerCase().replace(" ", "-") === externalCurrentZoom
+      const zoomConfig = zoomLevels.find(
+        (zl) => zl.label.toLowerCase().replace(" ", "-") === externalCurrentZoom
       );
       return zoomConfig?.dayWidth || defaultDayWidth;
     } else if (zoomLevels && zoomManagement) {
@@ -161,10 +175,11 @@ export function Timeline<T = Record<string, unknown>>({
   // 处理输入数据：根据数据类型和 groupBy 参数决定如何处理
   const processedData = useMemo(() => {
     // 检查是否是已分组的数据
-    const isGroupedData = Array.isArray(inputData) === false && 
-      typeof inputData === 'object' && 
-      'data' in inputData && 
-      'meta' in inputData;
+    const isGroupedData =
+      Array.isArray(inputData) === false &&
+      typeof inputData === "object" &&
+      "data" in inputData &&
+      "meta" in inputData;
 
     if (isGroupedData) {
       // 如果是已分组的数据，直接使用
@@ -172,18 +187,20 @@ export function Timeline<T = Record<string, unknown>>({
     } else {
       // 如果是原始数据数组
       const rawData = inputData as TimelineItemType<T>[];
-      
+
       if (groupBy) {
         // 如果指定了 groupBy，进行分组
         return groupTimelineItemsByField(rawData, groupBy);
       } else {
         // 如果没有指定 groupBy，创建一个单组的数据结构
         return {
-          meta: { sortBy: 'id' as keyof (BaseTimelineItemType & T) },
-          data: [{
-            groupTitle: "",
-            groupItems: rawData,
-          }]
+          meta: { sortBy: "id" as keyof (BaseTimelineItemType & T) },
+          data: [
+            {
+              groupTitle: "",
+              groupItems: rawData,
+            },
+          ],
         } as SortedTimelineDataType<T>;
       }
     }
@@ -212,19 +229,22 @@ export function Timeline<T = Record<string, unknown>>({
   const hasGrouping = useMemo(() => {
     // 如果指定了 groupBy，则有分组
     if (groupBy) return true;
-    
+
     // 如果输入数据是已分组格式且有多个组或组标题非空，则有分组
-    const isGroupedData = Array.isArray(inputData) === false && 
-      typeof inputData === 'object' && 
-      'data' in inputData && 
-      'meta' in inputData;
-    
+    const isGroupedData =
+      Array.isArray(inputData) === false &&
+      typeof inputData === "object" &&
+      "data" in inputData &&
+      "meta" in inputData;
+
     if (isGroupedData) {
       const groupedData = inputData as SortedTimelineDataType<T>;
-      return groupedData.data.length > 1 || 
-             (groupedData.data.length === 1 && groupedData.data[0].groupTitle !== "");
+      return (
+        groupedData.data.length > 1 ||
+        (groupedData.data.length === 1 && groupedData.data[0].groupTitle !== "")
+      );
     }
-    
+
     return false;
   }, [inputData, groupBy]);
 
@@ -233,7 +253,7 @@ export function Timeline<T = Record<string, unknown>>({
 
   // 使用自定义hook实现中心缩放功能，针对主内容容器
   const { containerRef: zoomContainerRef } = useCenterBasedZoom(dayWidth);
-  
+
   // 使用自定义hook禁用浏览器左右滑动手势
   const gestureDisableRef = useDisableBrowserGestures();
 
@@ -241,14 +261,19 @@ export function Timeline<T = Record<string, unknown>>({
   const allItems = filteredData.data.flatMap((group) => group.groupItems);
 
   // Sort items by start date to ensure consistent placement
-  const sortedItems = sortTimelineItemsByStartDate(allItems as TimelineItemType<T>[]);
-  
+  const sortedItems = sortTimelineItemsByStartDate(
+    allItems as TimelineItemType<T>[]
+  );
+
   // 构建用于计算时间间隔的数据，使用基础字段键
-  const timelineIntervalData = sortedItems.map(item => ({
-    id: item.id || '',
-    name: item.name || '',
-    startDate: item.startDate || item[BaseTimelineItemKeys.START_DATE as keyof typeof item],
-    endDate: item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item],
+  const timelineIntervalData = sortedItems.map((item) => ({
+    id: item.id || "",
+    name: item.name || "",
+    startDate:
+      item.startDate ||
+      item[BaseTimelineItemKeys.START_DATE as keyof typeof item],
+    endDate:
+      item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item],
   }));
 
   // Get list of years and start month that need to be displayed
@@ -259,21 +284,23 @@ export function Timeline<T = Record<string, unknown>>({
   // 计算 Timeline 的总宽度
   const calculateTimelineWidth = useCallback(() => {
     let totalDays = 0;
-    
+
     yearList.forEach((year, yearIndex) => {
       // 第一年从 startMonth 开始，其他年份从1月开始
       const monthStart = yearIndex === 0 ? startMonth : 0;
       const monthEnd = 11; // 12月结束
-      
+
       for (let month = monthStart; month <= monthEnd; month++) {
         // 计算当前月份的天数
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         totalDays += daysInMonth;
       }
     });
-    
+
     // 只有在有分组时才加上左侧边栏的宽度
-    return totalDays * dayWidth + (hasGrouping ? TimelineConst.sidebarWidth : 0);
+    return (
+      totalDays * dayWidth + (hasGrouping ? TimelineConst.sidebarWidth : 0)
+    );
   }, [yearList, startMonth, dayWidth, hasGrouping]);
 
   // 获取计算出的 Timeline 总宽度
@@ -282,7 +309,7 @@ export function Timeline<T = Record<string, unknown>>({
   // 生成 zoom controls（如果有 zoomLevels）
   const zoomControls = useMemo(() => {
     if (!zoomLevels || !zoomManagement) return null;
-    
+
     return createZoomControls(
       zoomManagement.timeViewConfig,
       zoomManagement.currentZoom,
@@ -301,12 +328,19 @@ export function Timeline<T = Record<string, unknown>>({
 
   // Pre-calculate placements for each group separately
   const groupPlacements: GroupPlacement[] = filteredData.data.map((group) => {
-    const sortedGroupItems = sortTimelineItemsByStartDate(group.groupItems as TimelineItemType<T>[]);
+    const sortedGroupItems = sortTimelineItemsByStartDate(
+      group.groupItems as TimelineItemType<T>[]
+    );
     const placements: PlacementResult[] = [];
 
     sortedGroupItems.forEach((item) => {
-      const startDate = new Date(item.startDate || item[BaseTimelineItemKeys.START_DATE as keyof typeof item]);
-      const endDate = new Date(item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item]);
+      const startDate = new Date(
+        item.startDate ||
+          item[BaseTimelineItemKeys.START_DATE as keyof typeof item]
+      );
+      const endDate = new Date(
+        item.endDate || item[BaseTimelineItemKeys.END_DATE as keyof typeof item]
+      );
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const column = findPlacement(placements, item as any, startDate, endDate);
@@ -338,9 +372,7 @@ export function Timeline<T = Record<string, unknown>>({
 
   return (
     <React.Fragment>
-      <div 
-        className={styles["timeline-container"]}
-      >
+      <div className={styles["timeline-container"]}>
         <div className={styles["timeline-body"]}>
           {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
           <div
@@ -352,7 +384,7 @@ export function Timeline<T = Record<string, unknown>>({
             className={styles["timeline-main-scroll"]}
           >
             {/* 时间线尺子组件 - sticky 定位在顶部 */}
-            <div 
+            <div
               className={styles["timeline-ruler-sticky"]}
               style={{ width: `${timelineWidth}px` }}
             >
@@ -379,7 +411,7 @@ export function Timeline<T = Record<string, unknown>>({
             </div>
 
             {/* 时间线内容区域 */}
-            <div 
+            <div
               className={styles["timeline-content-inner"]}
               style={{ width: `${timelineWidth}px` }}
             >
@@ -403,7 +435,7 @@ export function Timeline<T = Record<string, unknown>>({
                   cellHeight={cellHeight}
                   groupGap={groupGapForTesting}
                   groupPlacements={groupPlacements}
-                  displayConfig={init?.itemDisplayConfig as TimelineItemDisplayConfig}
+                  displayConfig={init as TimelineItemDisplayConfig}
                   onIssueClick={() => {
                     // Issue 点击事件，不再同步到URL
                   }}
@@ -416,9 +448,16 @@ export function Timeline<T = Record<string, unknown>>({
 
       {/* 默认渲染 zoom controls（如果有 zoomLevels） */}
       {zoomControls && zoomLevels && (
-        <FloatingButtonGroup 
-          items={[zoomControls]} 
-          position="bottom-right" 
+        <FloatingButtonGroup
+          itemGroups={[
+            [
+              <Button key="today" variant="ghost">
+                Today
+              </Button>,
+            ],
+            [zoomControls],
+          ]}
+          position="bottom-right"
         />
       )}
     </React.Fragment>

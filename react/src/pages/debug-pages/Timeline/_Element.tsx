@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Timeline,
-  type TimelineConfigType,
   createFieldConfig,
   type ZoomLevelType,
 } from "../../../design-system/ui-demos/timeline";
@@ -39,19 +38,10 @@ export function Element(): React.ReactElement {
     tagFields: [createFieldConfig.tagFromMap<ProjectDataType>("team", team)],
   };
 
-  // 🎯 Method 2 and 3 example code shown in comments below
-
-  // Timeline configuration - using Method 1 here
-  const timelineConfig: TimelineConfigType<ProjectDataType> = {
-    groupBy: "category",
-    itemDisplayConfig: itemDisplayConfigSimple,
-  };
-
   const zoomLevels: ZoomLevelType[] = [
-    { label: "Day", dayWidth: 48 },
-    { label: "Month", dayWidth: 24 },
-    { label: "Quarter", dayWidth: 12, setAsDefault: true },
-    { label: "Year", dayWidth: 6 },
+    { label: "Days", dayWidth: 48 },
+    { label: "Months", dayWidth: 24 },
+    { label: "Quarters", dayWidth: 8, setAsDefault: true },
   ];
 
   return (
@@ -59,9 +49,10 @@ export function Element(): React.ReactElement {
       {/* 🎉 终极简洁！Timeline 自动管理一切 */}
       <Timeline<ProjectDataType>
         fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
-        init={timelineConfig}
+        init={itemDisplayConfigSimple}
         inputData={ExampleData}
         groupBy="category"
+        // defaultDayWidth={24} // 如果用户不想设置 zoomLevels，则使用 defaultDayWidth
         zoomLevels={zoomLevels}
       />
     </div>

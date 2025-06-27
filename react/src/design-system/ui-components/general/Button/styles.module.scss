@@ -274,3 +274,13 @@
   }
 }
 
+.tristan-button-group-devider {
+  height: 32px;
+  padding: 4px 2px;
+
+  .line {
+    width: 1px;
+    height: 100%;
+    background-color: var(--color--border-prime);
+  }
+}

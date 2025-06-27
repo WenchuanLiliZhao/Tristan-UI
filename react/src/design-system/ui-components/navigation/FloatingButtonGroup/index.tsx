@@ -1,22 +1,24 @@
-import React from 'react';
-import type { BaseComponentProps } from '../../types';
-import styles from './styles.module.scss';
+import React, { useState } from "react";
+import type { BaseComponentProps } from "../../types";
+import styles from "./styles.module.scss";
+import { Button, ButtonGroupDevider } from "../../general";
 
 export interface FloatingButtonGroupProps extends BaseComponentProps {
   /** Array of React elements (typically buttons) */
-  items: React.ReactNode[];
+  itemGroups: React.ReactNode[][];
   /** Position of the floating group */
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   /** Whether to show the group (for conditional visibility) */
   visible?: boolean;
+  canBeHidden?: boolean;
 }
 
 /**
  * FloatingButtonGroup Component
- * 
+ *
  * A floating group of React elements that can be positioned anywhere on the screen.
  * Commonly used for quick actions, view controls, or navigation shortcuts.
- * 
+ *
  * @example
  * ```tsx
  * <FloatingButtonGroup
@@ -30,35 +32,63 @@ export interface FloatingButtonGroupProps extends BaseComponentProps {
  * ```
  */
 export const FloatingButtonGroup: React.FC<FloatingButtonGroupProps> = ({
-  items,
-  position = 'bottom-right',
+  itemGroups,
+  position = "bottom-right",
   visible = true,
   className,
-  'data-testid': dataTestId,
+  "data-testid": dataTestId,
+  canBeHidden = true,
   ...rest
 }) => {
-  if (!visible || items.length === 0) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const handleToggle = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
+  if (!visible || itemGroups.length === 0) {
     return null;
   }
 
   const containerClasses = [
-    styles['floating-button-group'],
+    styles["floating-button-group"],
     styles[`floating-button-group--${position}`],
-    className
-  ].filter(Boolean).join(' ');
+    isCollapsed && canBeHidden ? styles.hidden : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div 
-      className={containerClasses}
-      data-testid={dataTestId}
-      {...rest}
-    >
-      <div className={styles['floating-button-group__container']}>
-        {items.map((item, index) => (
-          <div key={index} className={styles['floating-button-group__item']}>
-            {item}
-          </div>
-        ))}
+    <div className={containerClasses} data-testid={dataTestId} {...rest}>
+      <div className={styles["container"]}>
+        {!isCollapsed &&
+          itemGroups.map((itemGroup, index) => (
+            <div
+              key={index}
+              className={styles["item-group"]}
+            >
+              {index > 0 && <ButtonGroupDevider />}
+              {itemGroup.map((item, index) => (
+                <div
+                  key={index}
+                  className={styles["item"]}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          ))}
+        {!isCollapsed && canBeHidden && itemGroups.length > 0 && (
+          <ButtonGroupDevider />
+        )}
+        {canBeHidden && (
+          <Button
+            icon={isCollapsed ? "chevron_left" : "chevron_right"}
+            variant="ghost"
+            onClick={handleToggle}
+          />
+        )}
       </div>
     </div>
   );
