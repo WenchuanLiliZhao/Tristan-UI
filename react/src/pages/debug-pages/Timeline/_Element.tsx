@@ -2,7 +2,6 @@ import React from "react";
 import {
   Timeline,
   createFieldConfig,
-  type ZoomLevelType,
 } from "../../../design-system/ui-demos/timeline";
 import {
   ExampleData,
@@ -11,9 +10,19 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
-// import { FloatingButtonGroup } from "../../../design-system/ui-components"; // 仅在自定义渲染时需要
+import { FloatingButtonGroup, Button } from "../../../design-system/ui-components";
 
 export function Element(): React.ReactElement {
+  // 🎯 统一的dayWidth状态管理
+  const [dayWidth, setDayWidth] = React.useState<number>(8); // 默认为Quarters
+
+  // 🎯 定义缩放级别配置
+  const zoomLevels = [
+    { label: "Days", dayWidth: 48 },
+    { label: "Months", dayWidth: 24 },
+    { label: "Quarters", dayWidth: 8 },
+  ];
+
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
   const itemDisplayConfigSimple = {
     graphicFields: [
@@ -38,22 +47,41 @@ export function Element(): React.ReactElement {
     tagFields: [createFieldConfig.tagFromMap<ProjectDataType>("team", team)],
   };
 
-  const zoomLevels: ZoomLevelType[] = [
-    { label: "Days", dayWidth: 48 },
-    { label: "Months", dayWidth: 24 },
-    { label: "Quarters", dayWidth: 8, setAsDefault: true },
-  ];
+  // 🎯 创建缩放按钮组
+  const createZoomButtons = () => {
+    return zoomLevels.map((level) => (
+      <Button
+        key={level.label}
+        variant={dayWidth === level.dayWidth ? "filled" : "ghost"}
+        onClick={() => setDayWidth(level.dayWidth)}
+      >
+        {level.label}
+      </Button>
+    ));
+  };
 
   return (
     <div style={{ height: "100vh" }}>
-      {/* 🎉 终极简洁！Timeline 自动管理一切 */}
+      {/* 🎉 Timeline使用统一的dayWidth状态 */}
       <Timeline<ProjectDataType>
-        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
+        // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={itemDisplayConfigSimple}
         inputData={ExampleData}
         groupBy="category"
-        // defaultDayWidth={24} // 如果用户不想设置 zoomLevels，则使用 defaultDayWidth
-        zoomLevels={zoomLevels}
+        defaultDayWidth={dayWidth} // 直接使用dayWidth状态
+      />
+
+      {/* 🎛️ 自定义缩放控制 */}
+      <FloatingButtonGroup
+        itemGroups={[
+          [
+            <Button key="today" variant="ghost">
+              Today
+            </Button>,
+          ],
+          createZoomButtons(),
+        ]}
+        position="bottom-right"
       />
     </div>
   );

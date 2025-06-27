@@ -4,6 +4,9 @@ export * from './types';
 // 🔧 导出所有工具函数
 export * from './utils';
 
+// 🔍 导出zoom level监听器hooks (优先导出)
+export { useZoomLevelMonitor, useTodayButtonZoomResponse } from './hooks/useZoomLevelMonitor';
+
 // ⚡ 导出所有 Hooks
 export * from './hooks';
 

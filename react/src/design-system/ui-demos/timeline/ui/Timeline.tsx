@@ -50,6 +50,7 @@ import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar } from "./Sidebar/TimelineSidebar";
 import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
+import { useZoomLevelMonitor } from "../hooks/useZoomLevelMonitor";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 import { FloatingButtonGroup } from "../../../ui-components/navigation/FloatingButtonGroup";
@@ -257,6 +258,45 @@ export function Timeline<T = Record<string, unknown>>({
   // 使用自定义hook禁用浏览器左右滑动手势
   const gestureDisableRef = useDisableBrowserGestures();
 
+  // 🔍 使用zoom level监听器 - 实施方案A
+  const { activeLevel, getActiveLevelLabel } = useZoomLevelMonitor(
+    dayWidth,
+    zoomLevels || [],
+    {
+      onZoomLevelChanged: (newLevel, previousLevel) => {
+        console.log('🎯 Timeline zoom level changed:', {
+          from: previousLevel?.label || 'none',
+          to: newLevel.label,
+          dayWidth: newLevel.dayWidth
+        });
+      }
+    }
+  );
+
+  // 🎯 Today按钮的智能行为 - 基于当前zoom level
+  const handleTodayClick = useCallback(() => {
+    const currentLevel = getActiveLevelLabel();
+    console.log('📅 Today button clicked:', {
+      currentZoomLevel: currentLevel,
+      strategy: currentLevel.toLowerCase() || 'default'
+    });
+    
+    // TODO: 实现具体的滚动逻辑
+    switch (currentLevel.toLowerCase()) {
+      case 'days':
+        console.log('📅 Scrolling to exact today date (Days view)');
+        break;
+      case 'months':
+        console.log('📅 Scrolling to current month (Months view)');
+        break;
+      case 'quarters':
+        console.log('📅 Scrolling to current quarter (Quarters view)');
+        break;
+      default:
+        console.log('📅 Smart scroll based on current zoom level');
+    }
+  }, [getActiveLevelLabel]);
+
   // Flatten all items from all groups for timeline calculations
   const allItems = filteredData.data.flatMap((group) => group.groupItems);
 
@@ -451,8 +491,12 @@ export function Timeline<T = Record<string, unknown>>({
         <FloatingButtonGroup
           itemGroups={[
             [
-              <Button key="today" variant="ghost">
-                Today
+              <Button 
+                key="today" 
+                variant="ghost"
+                onClick={handleTodayClick}
+              >
+                {`Today${activeLevel ? ` (${activeLevel.label})` : ''}`}
               </Button>,
             ],
             [zoomControls],
