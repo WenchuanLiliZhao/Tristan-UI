@@ -57,6 +57,7 @@ import { FloatingButtonGroup } from "../../../ui-components/navigation/FloatingB
 import {
   Button,
 } from "../../../ui-components/general/Button/index";
+import { TodayButton } from "./Shared/TodayButton";
 
 // 内部函数：创建 zoom controls
 function createZoomControls(
@@ -297,74 +298,7 @@ export function Timeline<T = Record<string, unknown>>({
     inputData: timelineIntervalData,
   });
 
-  // 🎯 Today按钮的智能行为 - 滚动到今天并居中
-  const handleTodayClick = useCallback(() => {
-    if (!mainScrollRef.current) {
-      // console.warn('📅 Today button: main scroll container not found');
-      return;
-    }
 
-    // 计算今天在时间轴上的位置
-    const today = new Date();
-    const todayYear = today.getFullYear();
-    const todayMonth = today.getMonth(); // 0-11
-    const todayDate = today.getDate(); // 1-31
-
-    // 检查今天是否在时间轴范围内
-    const firstYear = yearList[0];
-    const lastYear = yearList[yearList.length - 1];
-    
-    if (todayYear < firstYear || todayYear > lastYear) {
-      // console.warn('📅 Today is outside the timeline range');
-      return;
-    }
-
-    // 计算从时间轴开始到今天的总天数
-    let totalDaysToToday = 0;
-
-    // 遍历到今天所在年份之前的所有年份
-    for (let year = firstYear; year < todayYear; year++) {
-      const yearIndex = year - firstYear;
-      const monthStart = yearIndex === 0 ? startMonth : 0;
-      const monthEnd = 11;
-
-      for (let month = monthStart; month <= monthEnd; month++) {
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        totalDaysToToday += daysInMonth;
-      }
-    }
-
-    // 添加今天所在年份从开始到今天所在月份前的天数
-    const todayYearIndex = todayYear - firstYear;
-    const todayYearMonthStart = todayYearIndex === 0 ? startMonth : 0;
-    
-    for (let month = todayYearMonthStart; month < todayMonth; month++) {
-      const daysInMonth = new Date(todayYear, month + 1, 0).getDate();
-      totalDaysToToday += daysInMonth;
-    }
-
-    // 添加今天所在月份到今天的天数
-    totalDaysToToday += todayDate - 1; // 减1因为日期是从1开始的
-
-    // 计算今天在时间轴上的像素位置
-    const todayPositionInTimeline = totalDaysToToday * dayWidth;
-
-    // 获取滚动容器的信息
-    const container = mainScrollRef.current;
-    const containerWidth = container.clientWidth;
-    const maxScrollWidth = container.scrollWidth;
-    const sidebarWidth = hasGrouping ? TimelineConst.sidebarWidth : 0;
-
-    // 执行滚动，使今天位于中轴线
-    const targetScrollLeft = todayPositionInTimeline - (containerWidth - sidebarWidth) / 2;
-    const finalScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScrollWidth - containerWidth));
-
-    container.scrollTo({
-      left: finalScrollLeft,
-      behavior: 'smooth'
-    });
-
-  }, [yearList, startMonth, dayWidth, hasGrouping]);
 
   // 计算 Timeline 的总宽度
   const calculateTimelineWidth = useCallback(() => {
@@ -536,13 +470,15 @@ export function Timeline<T = Record<string, unknown>>({
         <FloatingButtonGroup
           itemGroups={[
             [
-              <Button 
-                key="today" 
+              <TodayButton
+                key="today"
+                scrollContainerRef={mainScrollRef}
+                yearList={yearList}
+                startMonth={startMonth}
+                dayWidth={dayWidth}
+                hasGrouping={hasGrouping}
                 variant="ghost"
-                onClick={handleTodayClick}
-              >
-                {`Today`}
-              </Button>,
+              />,
             ],
             [zoomControls],
           ]}

@@ -31,6 +31,7 @@ import React from "react";
 import { monthNames, getDaysInMonth } from "../../utils/time";
 import { TimelineConst } from "../_constants";
 import { Column } from "../Shared/Column";
+import { TimelinePointer } from "../Shared/TimelinePointer";
 import styles from "./TimelineRuler.module.scss";
 
 interface TimelineRulerProps {
@@ -99,24 +100,28 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
                         className={`${styles["timeline-ruler-day"]}`}
                         style={{ width: `${dayWidth}px` }}
                       >
-                        <div
-                          className={`${styles["timeline-ruler-day-label"]} ${
-                            isToday(year, monthIndex, dayIndex)
-                              ? styles["today"]
-                              : ""
-                          }`}
-                          style={{
-                            height: `${TimelineConst.dayLabelHeight}px`,
-                          }}
-                        >
-                          {dayWidth >= TimelineConst.zoomThreshold && (
-                            <div
-                              className={`${styles["timeline-ruler-day-label-text"]}`}
-                            >
-                              {dayIndex + 1}
-                            </div>
-                          )}
-                        </div>
+                        {isToday(year, monthIndex, dayIndex) ? (
+                          <TimelinePointer />
+                        ) : (
+                          <div
+                            className={`${styles["timeline-ruler-day-label"]} ${
+                              isToday(year, monthIndex, dayIndex)
+                                ? styles["today"]
+                                : ""
+                            }`}
+                            style={{
+                              height: `${TimelineConst.dayLabelHeight}px`,
+                            }}
+                          >
+                            {dayWidth >= TimelineConst.zoomThreshold && (
+                              <div
+                                className={`${styles["timeline-ruler-day-label-text"]}`}
+                              >
+                                {dayIndex + 1}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     )
                   )}
