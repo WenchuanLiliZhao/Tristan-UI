@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../../../ui-components/general/Button";
 import type { ZoomLevelType } from "../types";
-import styles from "./Timeline.module.scss";
 
 interface ZoomControlsProps {
   zoomLevels: (ZoomLevelType & { type: string })[];
@@ -9,13 +8,17 @@ interface ZoomControlsProps {
   onZoomChange: (zoomType: string) => void;
 }
 
+/**
+ * ZoomControls Component (for backward compatibility)
+ * Renders zoom control buttons directly
+ */
 export const ZoomControls: React.FC<ZoomControlsProps> = ({
   zoomLevels,
   currentZoom,
   onZoomChange,
 }) => {
   return (
-    <div className={styles["zoom-controls"]}>
+    <React.Fragment>
       {zoomLevels.map((level) => (
         <Button
           key={level.type}
@@ -25,6 +28,6 @@ export const ZoomControls: React.FC<ZoomControlsProps> = ({
           {level.label}
         </Button>
       ))}
-    </div>
+    </React.Fragment>
   );
 }; 

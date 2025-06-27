@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /**
  * 📅 Timeline时间线主组件
  * 
@@ -28,7 +29,7 @@
  * <Timeline inputData={data} />
  */
 
-import { useState, useRef, useCallback, useMemo } from "react";
+import React, { useRef, useCallback, useMemo, useState } from "react";
 import {
   type TimelineProps,
   type TimelineItemType,
@@ -48,14 +49,52 @@ import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
-import { ZoomControls } from "./ZoomControls";
+import { Button } from "../../../ui-components/general/Button";
 
-// 时间视图配置
-const TIME_VIEW_CONFIG = [
+// 默认时间视图配置
+const DEFAULT_TIME_VIEW_CONFIG = [
   { type: "year", dayWidth: 4.5, label: "Year", setAsDefault: false },
   { type: "month", dayWidth: 8, label: "Month", setAsDefault: true },
   { type: "day", dayWidth: 24, label: "Day", setAsDefault: false },
 ] as const;
+
+// 内部zoom配置类型
+interface InternalZoomConfig {
+  type: string;
+  dayWidth: number;
+  label: string;
+  setAsDefault: boolean;
+}
+
+// Hook 来管理 zoom 状态和配置
+function useTimelineZoom(zoomLevels?: Array<{ label: string; dayWidth: number; setAsDefault?: boolean }>) {
+  // 处理 zoom levels 转换为内部格式
+  const timeViewConfig = useMemo((): InternalZoomConfig[] => {
+    const levels = zoomLevels && zoomLevels.length > 0 ? zoomLevels : DEFAULT_TIME_VIEW_CONFIG;
+    return levels.map((zl) => ({
+      ...zl,
+      type: zl.label.toLowerCase().replace(" ", "-"),
+      setAsDefault: zl.setAsDefault ?? false,
+    }));
+  }, [zoomLevels]);
+
+  // 管理当前 zoom 状态
+  const [currentZoom, setCurrentZoom] = useState<string>(() => {
+    const defaultView = timeViewConfig.find((view) => view.setAsDefault);
+    return defaultView ? defaultView.type : timeViewConfig[0].type;
+  });
+
+  // 获取当前 zoom 配置
+  const currentZoomConfig = timeViewConfig.find(config => config.type === currentZoom)!;
+
+  return {
+    timeViewConfig,
+    currentZoom,
+    setCurrentZoom,
+    currentZoomConfig,
+    dayWidth: currentZoomConfig.dayWidth,
+  };
+}
 
 // 通用的Timeline组件 - 支持泛型，现在作为主要接口
 export function Timeline<T = Record<string, unknown>>({
@@ -64,7 +103,31 @@ export function Timeline<T = Record<string, unknown>>({
   init,
   zoomLevels,
   fetchByTimeInterval,
+  currentZoom: externalCurrentZoom,
 }: TimelineProps<T>) {
+  // 如果没有提供 zoomLevels，使用默认的 dayWidth
+  const defaultDayWidth = 8; // 默认 dayWidth，相当于 "Month" 视图
+  
+  // 始终调用 useTimelineZoom hook（React Hook 规则）
+  const zoomManagement = useTimelineZoom(zoomLevels);
+  
+  // 确定最终使用的 dayWidth
+  const dayWidth = (() => {
+    if (externalCurrentZoom && zoomLevels) {
+      // 如果提供了外部 currentZoom 和 zoomLevels，查找对应的 dayWidth
+      const zoomConfig = zoomLevels.find(zl => 
+        zl.label.toLowerCase().replace(" ", "-") === externalCurrentZoom
+      );
+      return zoomConfig?.dayWidth || defaultDayWidth;
+    } else if (zoomLevels && zoomManagement) {
+      // 如果提供了 zoomLevels 且使用内部 zoom 管理
+      return zoomManagement.dayWidth;
+    } else {
+      // 如果没有 zoom 功能，使用默认值
+      return defaultDayWidth;
+    }
+  })();
+
   // Constants for layout calculations
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
   const groupGapForTesting = TimelineConst.groupGap;
@@ -87,26 +150,6 @@ export function Timeline<T = Record<string, unknown>>({
 
     return { ...inputData, data: filteredGroups };
   }, [inputData, fetchByTimeInterval]);
-
-  const timeViewConfig = useMemo(() => {
-    const levels = zoomLevels && zoomLevels.length > 0 ? zoomLevels : TIME_VIEW_CONFIG;
-    return levels.map((zl) => ({
-      ...zl,
-      type: zl.label.toLowerCase().replace(" ", "-"),
-      setAsDefault: zl.setAsDefault ?? false,
-    }));
-  }, [zoomLevels]);
-
-  const [currentTimeView, setCurrentTimeView] = useState<string>(() => {
-    const defaultView = timeViewConfig.find((view) => view.setAsDefault);
-    return defaultView ? defaultView.type : timeViewConfig[0].type;
-  });
-
-
-
-  const { dayWidth } = timeViewConfig.find(
-    (config) => config.type === currentTimeView
-  )!;
 
   // 添加主滚动容器的引用 - 现在只需要一个
   const mainScrollRef = useRef<HTMLDivElement>(null);
@@ -209,11 +252,6 @@ export function Timeline<T = Record<string, unknown>>({
     <div 
       className={styles["timeline-container"]}
     >
-      <ZoomControls
-        zoomLevels={timeViewConfig}
-        currentZoom={currentTimeView}
-        onZoomChange={setCurrentTimeView}
-      />
       <div className={styles["timeline-body"]}>
         {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
         <div
@@ -282,6 +320,30 @@ export function Timeline<T = Record<string, unknown>>({
         </div>
       </div>
     </div>
+  );
+}
+
+// 导出 useTimelineZoom hook 供外部使用
+export { useTimelineZoom };
+
+// 创建一个独立的 ZoomControls 生成函数
+export function createZoomControls(
+  timeViewConfig: InternalZoomConfig[],
+  currentZoom: string,
+  onZoomChange: (zoom: string) => void
+): React.ReactElement {
+  return (
+    <React.Fragment>
+      {timeViewConfig.map((level) => (
+        <Button
+          key={level.type}
+          variant={currentZoom === level.type ? "filled" : "ghost"}
+          onClick={() => onZoomChange(level.type)}
+        >
+          {level.label}
+        </Button>
+      ))}
+    </React.Fragment>
   );
 }
 

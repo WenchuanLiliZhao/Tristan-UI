@@ -1,6 +1,8 @@
 import React from "react";
 import {
   Timeline,
+  useTimelineZoom,
+  createZoomControls,
   groupTimelineItemsByField,
   type TimelineConfigType,
   createFieldConfig,
@@ -13,9 +15,9 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
+import { FloatingButtonGroup } from "../../../design-system/ui-components";
 
 export function Element(): React.ReactElement {
-
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
   const itemDisplayConfigSimple = {
     graphicFields: [
@@ -29,17 +31,15 @@ export function Element(): React.ReactElement {
       //
       createFieldConfig.progress<ProjectDataType>("progress", {
         progressColors: [
-          { upto: 30, color: getRainbowColor('amber') },
-          { upto: 70, color: getRainbowColor('blue') },
-          { upto: 100, color: getRainbowColor('emerald') },
-        ]
+          { upto: 30, color: getRainbowColor("amber") },
+          { upto: 70, color: getRainbowColor("blue") },
+          { upto: 100, color: getRainbowColor("emerald") },
+        ],
       }),
 
       createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),
     ],
-    tagFields: [
-      createFieldConfig.tagFromMap<ProjectDataType>("team", team),
-    ],
+    tagFields: [createFieldConfig.tagFromMap<ProjectDataType>("team", team)],
   };
 
   // 🎯 Method 2 and 3 example code shown in comments below
@@ -50,9 +50,6 @@ export function Element(): React.ReactElement {
     itemDisplayConfig: itemDisplayConfigSimple,
   };
 
-  // Group data by category
-  const sortedData = groupTimelineItemsByField(ExampleData, "category");
-
   const zoomLevels: ZoomLevelType[] = [
     { label: "Day", dayWidth: 48 },
     { label: "Month", dayWidth: 24 },
@@ -60,18 +57,35 @@ export function Element(): React.ReactElement {
     { label: "Year", dayWidth: 6 },
   ];
 
+  // 🎉 使用 hook 管理 zoom 状态
+  const { timeViewConfig, currentZoom, setCurrentZoom } = useTimelineZoom(zoomLevels);
+
+  // 🎉 创建 zoom controls
+  const zoomControls = createZoomControls(timeViewConfig, currentZoom, setCurrentZoom);
+
   return (
     <div style={{ height: "100vh" }}>
-      {/* Timeline 主演示 */}
+      {/* 🎉 超简单！分离式使用 Timeline 和 ZoomControls */}
+      
+      {/* 方法 1: 最简单用法 - 无需 zoom 功能 */}
+      {/* 
       <Timeline<ProjectDataType>
-        fetchByTimeInterval={[
-          new Date("2023-12-01"),
-          new Date("2024-12-30"),
-        ]}
+        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={timelineConfig}
-        inputData={sortedData}
-        zoomLevels={zoomLevels}
+        inputData={groupTimelineItemsByField(ExampleData, "category")}
       />
+      */}
+
+      {/* 方法 2: 带 zoom 功能的完整用法 */}
+      <Timeline<ProjectDataType>
+        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
+        init={timelineConfig}
+        inputData={groupTimelineItemsByField(ExampleData, "category")}
+        zoomLevels={zoomLevels}
+        currentZoom={currentZoom}
+      />
+
+      <FloatingButtonGroup items={[zoomControls]} position="bottom-right" />
     </div>
   );
 }

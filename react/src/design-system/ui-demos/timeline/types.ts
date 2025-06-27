@@ -148,6 +148,8 @@ export interface TimelineProps<T = Record<string, unknown>> {
   fetchByTimeInterval?: [Date, Date];
   onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
   onItemClick?: (item: TimelineItemType<T>) => void;
+  /** Current zoom level (optional - managed internally if not provided) */
+  currentZoom?: string;
 }
 
 // 预定义的常用映射函数
