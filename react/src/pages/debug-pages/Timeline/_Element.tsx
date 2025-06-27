@@ -23,6 +23,13 @@ export function Element(): React.ReactElement {
     { label: "Years", dayWidth: 4.5 },
   ];
 
+  // 🎯 定义分组选项配置
+  const groupByOptions = [
+    { label: "Category", field: "category" as const, setAsDefault: true },
+    { label: "Team", field: "team" as const },
+    { label: "Priority", field: "priority" as const },
+  ];
+
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
   const itemDisplayConfigSimple = {
     graphicFields: [
@@ -54,9 +61,9 @@ export function Element(): React.ReactElement {
         // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={itemDisplayConfigSimple}
         inputData={ExampleData}
-        groupBy="category"
+        groupByOptions={groupByOptions}
         defaultDayWidth={dayWidth} // 直接使用dayWidth状态
-        zoomLevels={zoomLevels} // 暂时注释掉，使用slider控制
+        zoomLevels={zoomLevels}
       />
     </div>
   );

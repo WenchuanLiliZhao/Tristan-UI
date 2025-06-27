@@ -95,7 +95,46 @@ function CustomTimeline() {
 
 ## 高级用法
 
-### 3. 用户示例中的用法
+### 3. 动态分组切换功能
+
+Timeline 现在支持通过内置的按钮组动态切换分组方式，无需外部状态管理：
+
+```tsx
+import { Timeline, createFieldConfig } from '@/design-system';
+import type { TimelineItem, GroupByOption } from '@/design-system';
+
+interface ProjectData {
+  status: 'Planning' | 'InProgress' | 'Completed';
+  priority: 'High' | 'Medium' | 'Low';
+  category: string;
+  team: string;
+}
+
+const projectData: TimelineItem<ProjectData>[] = [
+  // 你的数据...
+];
+
+// 定义分组选项配置
+const groupByOptions: GroupByOption<ProjectData>[] = [
+  { label: "Category", field: "category", setAsDefault: true }, // 默认分组
+  { label: "Team", field: "team" },
+  { label: "Priority", field: "priority" },
+];
+
+function DynamicGroupTimeline() {
+  return (
+    <Timeline<ProjectData>
+      inputData={projectData}
+      groupByOptions={groupByOptions} // 🎯 Timeline 内部管理分组切换
+      init={displayConfig}
+    />
+  );
+}
+```
+
+Timeline 会自动在右下角显示分组切换按钮组，用户可以点击切换分组方式。
+
+### 4. 传统方式（手动管理分组状态）
 
 根据用户需求，可以这样使用：
 
@@ -153,6 +192,9 @@ function TeamTimeline() {
 | `init` | `TimelineItemDisplayConfig<T>` | 可选 | 项目显示配置，直接传递无需包装 |
 | `inputData` | `SortedTimelineData<T>` | 必需 | 已分组的时间线数据 |
 | `groupBy` | `keyof (BaseTimelineItem & T)` | 可选 | 分组字段（当 inputData 是原始数据数组时使用） |
+| `groupByOptions` | `GroupByOption<T>[]` | 可选 | 分组选项配置，支持用户通过按钮组动态切换分组方式 |
+| `zoomLevels` | `ZoomLevelType[]` | 可选 | 缩放级别配置 |
+| `defaultDayWidth` | `number` | 可选 | 默认日宽度（未启用缩放时）|
 
 ### BaseTimelineItem
 
@@ -162,6 +204,26 @@ interface BaseTimelineItem {
   name: string;      // 显示名称
   startDate: Date;   // 开始日期
   endDate: Date;     // 结束日期
+}
+```
+
+### GroupByOption
+
+```tsx
+interface GroupByOption<T = Record<string, unknown>> {
+  label: string;                               // 显示标签
+  field: keyof (BaseTimelineItem & T);        // 分组字段
+  setAsDefault?: boolean;                      // 是否为默认选项
+}
+```
+
+### ZoomLevelType
+
+```tsx
+interface ZoomLevelType {
+  label: string;        // 显示标签
+  dayWidth: number;     // 每日宽度（像素）
+  setAsDefault?: boolean; // 是否为默认缩放级别
 }
 ```
 

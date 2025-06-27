@@ -17,6 +17,7 @@ interface TimelineSidebarProps {
   cellHeight: number;
   groupGap: number;
   isRulerMode?: boolean;
+  groupBy?: string;
 }
 
 export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
@@ -24,6 +25,7 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
   cellHeight,
   groupGap,
   isRulerMode = false,
+  groupBy,
 }) => {
   // 计算每个组的高度和位置
   const getGroupHeight = (placements: PlacementResult[]) => {
@@ -47,7 +49,9 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
               TimelineConst.monthLabelHeight +
               TimelineConst.dayLabelHeight,
           }}
-        ></div>
+        >
+          Group by: {groupBy}
+        </div>
       </div>
     );
   }

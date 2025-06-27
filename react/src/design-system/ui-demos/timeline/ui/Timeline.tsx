@@ -81,6 +81,32 @@ function createZoomControls(
   );
 }
 
+// 内部函数：创建分组切换控件
+function createGroupByControls<T = Record<string, unknown>>(
+  groupByOptions: Array<{
+    label: string;
+    field: keyof (BaseTimelineItemType & T);
+    setAsDefault?: boolean;
+  }>,
+  currentGroupBy: keyof (BaseTimelineItemType & T) | undefined,
+  onGroupByChange: (field: keyof (BaseTimelineItemType & T)) => void
+): React.ReactElement {
+  return (
+    <React.Fragment>
+      {groupByOptions.map((option) => (
+        <Button
+          key={String(option.field)}
+          variant={currentGroupBy === option.field ? "filled" : "ghost"}
+          semantic={currentGroupBy === option.field ? "active" : "default"}
+          onClick={() => onGroupByChange(option.field)}
+        >
+          {option.label}
+        </Button>
+      ))}
+    </React.Fragment>
+  );
+}
+
 // 默认时间视图配置
 const DEFAULT_TIME_VIEW_CONFIG = [
   { type: "year", dayWidth: 4.5, label: "Year", setAsDefault: false },
@@ -137,12 +163,38 @@ function useTimelineZoom(
   };
 }
 
+// Hook 来管理分组状态和配置
+function useTimelineGroupBy<T = Record<string, unknown>>(
+  groupByOptions?: Array<{
+    label: string;
+    field: keyof (BaseTimelineItemType & T);
+    setAsDefault?: boolean;
+  }>,
+  fallbackGroupBy?: keyof (BaseTimelineItemType & T)
+) {
+  // 管理当前分组字段
+  const [currentGroupBy, setCurrentGroupBy] = useState<keyof (BaseTimelineItemType & T) | undefined>(() => {
+    if (groupByOptions && groupByOptions.length > 0) {
+      const defaultOption = groupByOptions.find((option) => option.setAsDefault);
+      return defaultOption ? defaultOption.field : groupByOptions[0].field;
+    }
+    return fallbackGroupBy;
+  });
+
+  return {
+    groupByOptions,
+    currentGroupBy,
+    setCurrentGroupBy,
+  };
+}
+
 // 通用的Timeline组件 - 支持泛型，现在作为主要接口
 export function Timeline<T = Record<string, unknown>>({
   // init 参数直接接收 TimelineItemDisplayConfig，简化配置
   inputData,
   init,
   groupBy,
+  groupByOptions,
   zoomLevels,
   fetchByTimeInterval,
   currentZoom: externalCurrentZoom,
@@ -152,6 +204,9 @@ export function Timeline<T = Record<string, unknown>>({
 
   // 始终调用 useTimelineZoom hook（React Hook 规则）
   const zoomManagement = useTimelineZoom(zoomLevels);
+
+  // 使用分组管理 hook
+  const groupByManagement = useTimelineGroupBy(groupByOptions, groupBy);
 
   // 确定最终使用的 dayWidth
   const dayWidth = (() => {
@@ -174,6 +229,9 @@ export function Timeline<T = Record<string, unknown>>({
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
   const groupGapForTesting = TimelineConst.groupGap;
 
+  // 获取当前使用的分组字段
+  const effectiveGroupBy = groupByManagement.currentGroupBy || groupBy;
+
   // 处理输入数据：根据数据类型和 groupBy 参数决定如何处理
   const processedData = useMemo(() => {
     // 检查是否是已分组的数据
@@ -190,9 +248,9 @@ export function Timeline<T = Record<string, unknown>>({
       // 如果是原始数据数组
       const rawData = inputData as TimelineItemType<T>[];
 
-      if (groupBy) {
+      if (effectiveGroupBy) {
         // 如果指定了 groupBy，进行分组
-        return groupTimelineItemsByField(rawData, groupBy);
+        return groupTimelineItemsByField(rawData, effectiveGroupBy);
       } else {
         // 如果没有指定 groupBy，创建一个单组的数据结构
         return {
@@ -206,7 +264,7 @@ export function Timeline<T = Record<string, unknown>>({
         } as SortedTimelineDataType<T>;
       }
     }
-  }, [inputData, groupBy]);
+  }, [inputData, effectiveGroupBy]);
 
   // Filter data based on fetchByTimeInterval
   const filteredData = useMemo(() => {
@@ -229,8 +287,8 @@ export function Timeline<T = Record<string, unknown>>({
 
   // 检测是否有分组（用于决定是否显示 sidebar）
   const hasGrouping = useMemo(() => {
-    // 如果指定了 groupBy，则有分组
-    if (groupBy) return true;
+    // 如果指定了 effectiveGroupBy，则有分组
+    if (effectiveGroupBy) return true;
 
     // 如果输入数据是已分组格式且有多个组或组标题非空，则有分组
     const isGroupedData =
@@ -248,7 +306,7 @@ export function Timeline<T = Record<string, unknown>>({
     }
 
     return false;
-  }, [inputData, groupBy]);
+  }, [inputData, effectiveGroupBy]);
 
   // 添加主滚动容器的引用 - 现在只需要一个
   const mainScrollRef = useRef<HTMLDivElement>(null);
@@ -336,6 +394,27 @@ export function Timeline<T = Record<string, unknown>>({
     );
   }, [zoomLevels, zoomManagement]);
 
+  // 生成分组切换控件（如果有 groupByOptions）
+  const groupByControls = useMemo(() => {
+    if (!groupByOptions || groupByOptions.length === 0) return null;
+
+    return createGroupByControls(
+      groupByOptions,
+      groupByManagement.currentGroupBy,
+      groupByManagement.setCurrentGroupBy
+    );
+  }, [groupByOptions, groupByManagement.currentGroupBy, groupByManagement.setCurrentGroupBy]);
+
+  // 获取当前选择的 groupBy 选项的 label
+  const currentGroupByLabel = useMemo(() => {
+    if (!groupByOptions || !groupByManagement.currentGroupBy) return undefined;
+    
+    const currentOption = groupByOptions.find(
+      option => option.field === groupByManagement.currentGroupBy
+    );
+    return currentOption?.label;
+  }, [groupByOptions, groupByManagement.currentGroupBy]);
+
   // Early return if no items to display
   if (allItems.length === 0) {
     return (
@@ -415,6 +494,7 @@ export function Timeline<T = Record<string, unknown>>({
                     cellHeight={cellHeight}
                     groupGap={groupGapForTesting}
                     isRulerMode={true}
+                    groupBy={currentGroupByLabel}
                   />
                 </div>
               )}
@@ -441,6 +521,7 @@ export function Timeline<T = Record<string, unknown>>({
                     groupPlacements={groupPlacements}
                     cellHeight={cellHeight}
                     groupGap={groupGapForTesting}
+                    groupBy={currentGroupByLabel}
                   />
                 </div>
               )}
@@ -465,8 +546,8 @@ export function Timeline<T = Record<string, unknown>>({
         </div>
       </div>
 
-      {/* 默认渲染 zoom controls（如果有 zoomLevels） */}
-      {zoomControls && zoomLevels && (
+      {/* 渲染控制面板（zoom controls 和 groupBy controls） */}
+      {(zoomControls || groupByControls) && (
         <FloatingButtonGroup
           itemGroups={[
             [
@@ -480,8 +561,9 @@ export function Timeline<T = Record<string, unknown>>({
                 variant="ghost"
               />,
             ],
-            [zoomControls],
-          ]}
+            ...(groupByControls ? [[groupByControls]] : []),
+            ...(zoomControls ? [[zoomControls]] : []),
+          ].filter(group => group.length > 0)}
           position="bottom-right"
         />
       )}

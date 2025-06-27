@@ -132,6 +132,16 @@ export interface ZoomLevelType {
   setAsDefault?: boolean;
 }
 
+// 分组选项配置
+export interface GroupByOption<T = Record<string, unknown>> {
+  /** 显示标签 */
+  label: string;
+  /** 分组字段 */
+  field: keyof (BaseTimelineItemType & T);
+  /** 是否为默认选项 */
+  setAsDefault?: boolean;
+}
+
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
   /** 项目显示配置 */
@@ -140,6 +150,8 @@ export interface TimelineProps<T = Record<string, unknown>> {
   inputData: SortedTimelineDataType<T> | TimelineItemType<T>[];
   /** 分组字段（当 inputData 是原始数据数组时使用） */
   groupBy?: keyof (BaseTimelineItemType & T);
+  /** 分组选项配置 - 支持用户动态切换分组方式 */
+  groupByOptions?: GroupByOption<T>[];
   zoomLevels?: ZoomLevelType[];
   fetchByTimeInterval?: [Date, Date];
   onItemClick?: (item: TimelineItemType<T>) => void;
