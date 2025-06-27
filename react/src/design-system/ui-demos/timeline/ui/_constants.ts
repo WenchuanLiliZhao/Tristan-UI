@@ -44,7 +44,7 @@ export const TimelineConst = {
   monthLabelHeight: 48,
   dayLabelHeight: 20,
 
-  zoomThreshold: 14, // 缩放阈值
+  zoomThreshold: 20, // 缩放阈值
 
   itemVPadding: 2,
   itemHPadding: 2,
