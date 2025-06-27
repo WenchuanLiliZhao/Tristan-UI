@@ -54,7 +54,7 @@ export function Element(): React.ReactElement {
   const sortedData = groupTimelineItemsByField(ExampleData, "category");
 
   const zoomLevels: ZoomLevelType[] = [
-    { label: "Day", dayWidth: 32 },
+    { label: "Day", dayWidth: 48 },
     { label: "Month", dayWidth: 24 },
     { label: "Quarter", dayWidth: 12, setAsDefault: true },
     { label: "Year", dayWidth: 6 },
@@ -64,13 +64,13 @@ export function Element(): React.ReactElement {
     <div style={{ height: "100vh" }}>
       {/* Timeline 主演示 */}
       <Timeline<ProjectDataType>
+        fetchByTimeInterval={[
+          new Date("2023-12-01"),
+          new Date("2024-12-30"),
+        ]}
         init={timelineConfig}
         inputData={sortedData}
         zoomLevels={zoomLevels}
-        fetchByTimeInterval={[
-          new Date("2024-04-01"),
-          new Date("2024-12-30"),
-        ]}
       />
     </div>
   );
