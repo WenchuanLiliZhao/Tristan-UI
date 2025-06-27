@@ -3,6 +3,7 @@ import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
 import { type TimelineItemType } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
+import { RichTooltip, RichTooltipItem } from "../../../../ui-components";
 
 export interface GroupPlacement {
   groupTitle: string;
@@ -17,8 +18,6 @@ interface TimelineSidebarProps {
   groupGap: number;
   isRulerMode?: boolean;
 }
-
-export const SIDEBAR_WIDTH = 200;
 
 export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
   groupPlacements,
@@ -38,7 +37,7 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
     return (
       <div
         className={styles["timeline-sidebar"]}
-        style={{ width: SIDEBAR_WIDTH }}
+        style={{ width: TimelineConst.sidebarWidth }}
       >
         <div
           className={styles["timeline-sidebar-ruler-space"]}
@@ -56,7 +55,7 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
   return (
     <div
       className={styles["timeline-sidebar"]}
-      style={{ width: SIDEBAR_WIDTH }}
+      style={{ width: TimelineConst.sidebarWidth }}
     >
       <div className={styles["timeline-sidebar-content"]}>
         {/* 与时间线尺子对齐的占位区域 */}
@@ -69,11 +68,11 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
               index < groupPlacements.length - 1 ? groupGap : 0;
 
             // 如果是最后的占位分组，使用 groupsEndHeight
-            const finalHeight = group.isEndSpacer 
-              ? TimelineConstCalc.groupsEndHeight 
+            const finalHeight = group.isEndSpacer
+              ? TimelineConstCalc.groupsEndHeight
               : groupHeight;
-            const finalMinHeight = group.isEndSpacer 
-              ? TimelineConstCalc.groupsEndHeight 
+            const finalMinHeight = group.isEndSpacer
+              ? TimelineConstCalc.groupsEndHeight
               : TimelineConstCalc.groupMinHeight;
 
             return (
@@ -94,8 +93,10 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
                     bottom: 0,
                   }}
                 >
-                  <div className={styles["timeline-sidebar-group-title"]}>
-                    {group.groupTitle}
+                  <div>
+                    <RichTooltip trigger={<span className={styles["timeline-sidebar-group-title"]}>{group.groupTitle}</span>} position="right-start">
+                      {[<RichTooltipItem label={group.groupTitle} />]}
+                    </RichTooltip>
                   </div>
                 </div>
               </div>

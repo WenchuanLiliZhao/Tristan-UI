@@ -34,6 +34,7 @@
 export const TimelineConst = {
   cellHeight: 84,
   groupGap: 0,
+  sidebarWidth: 240,
   // 💀 Unused constant
   // yearZoom: 4.5, 
   // 💀 Unused constant

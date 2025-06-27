@@ -6,7 +6,6 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  border-radius: 16px;
   font-family: inherit;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
@@ -16,8 +15,10 @@
   // Size variants
   &--small {
     padding: 2px 8px;
-    font-size: 12px;
-    min-height: 20px;
+    font-size: 11px;
+    line-height: 14px;
+    padding: 1px 5px;
+    border-radius: 4px;
   }
 
   &--medium {

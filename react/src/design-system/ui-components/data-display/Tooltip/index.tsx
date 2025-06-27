@@ -16,6 +16,7 @@ export interface RichTooltipItemProps {
   iconColor?: string;
   label: ReactNode;
   value?: ReactNode;
+  autoWidth?: boolean;
 }
 
 export const RichTooltipItem: React.FC<RichTooltipItemProps> = ({
@@ -23,12 +24,13 @@ export const RichTooltipItem: React.FC<RichTooltipItemProps> = ({
   iconColor,
   label,
   value,
+  autoWidth = false,
 }) => {
   return (
-    <div className={styles["item"]}>
+    <div className={`${styles["item"]} ${autoWidth ? styles["auto-width"] : ""}`}>
       <div className={styles["label"]}>
         {icon && <Icon className={styles["icon"]} name={icon} style={{ color: iconColor }} />}
-        <span>{label}</span>
+        <span className={styles["label-text"]}>{label}</span>
       </div>
       {value && <div className={styles["value"]}>{value}</div>}
     </div>

@@ -36,19 +36,21 @@ DayWidthSlider 已经集成到 Timeline 组件中，位于时间轴上方。可�
 - `--color-text-sec` - 次文本色
 - `--color-accent` - 强调色（滑块颜色） 
 
-# Timeline 中心缩放功能
+# Timeline 中心缩放功能 ✅
 
 ## 概述
 
 这个模块实现了从画面正中间开始的缩放体验。当用户调整缩放级别时，视图会以当前可见区域的中心点为基准进行缩放，保持中心位置不变，类似于GarageBand的缩放体验。
 
+**功能状态：✅ 已完成实现**
+
 ## 核心文件
 
-### `useCenterBasedZoom.tsx`
-自定义 React Hook，封装了中心缩放的核心逻辑。
+### `useCenterBasedZoom.ts`
+自定义 React Hook，封装了中心缩放的核心逻辑。完整实现了缩放因子计算、视图中心点定位和滚动位置调整。
 
 ### `Timeline.tsx`
-使用了 `useCenterBasedZoom` hook 的时间轴组件。
+使用了 `useCenterBasedZoom` hook 的时间轴组件，通过传递 `dayWidth` 参数实现最小化集成。
 
 ## 使用方法
 

@@ -68,7 +68,7 @@ export function Element(): React.ReactElement {
         inputData={sortedData}
         zoomLevels={zoomLevels}
         fetchByTimeInterval={[
-          new Date("2024-01-01"),
+          new Date("2024-04-01"),
           new Date("2024-12-30"),
         ]}
       />

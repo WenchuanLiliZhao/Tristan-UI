@@ -43,7 +43,7 @@ import {
 } from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
-import { TimelineSidebar, SIDEBAR_WIDTH } from "./Sidebar/TimelineSidebar";
+import { TimelineSidebar } from "./Sidebar/TimelineSidebar";
 import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
@@ -102,6 +102,8 @@ export function Timeline<T = Record<string, unknown>>({
     return defaultView ? defaultView.type : timeViewConfig[0].type;
   });
 
+
+
   const { dayWidth } = timeViewConfig.find(
     (config) => config.type === currentTimeView
   )!;
@@ -151,7 +153,7 @@ export function Timeline<T = Record<string, unknown>>({
     });
     
     // 加上左侧边栏的宽度
-    return totalDays * dayWidth + SIDEBAR_WIDTH;
+    return totalDays * dayWidth + TimelineConst.sidebarWidth;
   }, [yearList, startMonth, dayWidth]);
 
   // 获取计算出的 Timeline 总宽度
