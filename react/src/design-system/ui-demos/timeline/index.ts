@@ -14,7 +14,7 @@ export { Timeline } from './ui/Timeline';
 export { ZoomControls } from './ui/ZoomControls';
 
 // 🪝 导出 hooks 和工具函数
-export { useTimelineZoom, createZoomControls } from './ui/Timeline';
+export { useTimelineZoom } from './ui/Timeline';
 
 // 🎯 便利导出：常用的具体函数（避免深层导入）
 export { groupTimelineItemsByField, sortTimelineItemsByStartDate } from './utils/sorting';

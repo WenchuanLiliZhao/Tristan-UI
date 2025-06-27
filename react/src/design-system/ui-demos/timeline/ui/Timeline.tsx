@@ -53,6 +53,28 @@ import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 import { Button } from "../../../ui-components/general/Button";
+import { FloatingButtonGroup } from "../../../ui-components/navigation/FloatingButtonGroup";
+
+// 内部函数：创建 zoom controls
+function createZoomControls(
+  timeViewConfig: InternalZoomConfig[],
+  currentZoom: string,
+  onZoomChange: (zoom: string) => void
+): React.ReactElement {
+  return (
+    <React.Fragment>
+      {timeViewConfig.map((level) => (
+        <Button
+          key={level.type}
+          variant={currentZoom === level.type ? "filled" : "ghost"}
+          onClick={() => onZoomChange(level.type)}
+        >
+          {level.label}
+        </Button>
+      ))}
+    </React.Fragment>
+  );
+}
 
 // 默认时间视图配置
 const DEFAULT_TIME_VIEW_CONFIG = [
@@ -257,6 +279,17 @@ export function Timeline<T = Record<string, unknown>>({
   // 获取计算出的 Timeline 总宽度
   const timelineWidth = calculateTimelineWidth();
 
+  // 生成 zoom controls（如果有 zoomLevels）
+  const zoomControls = useMemo(() => {
+    if (!zoomLevels || !zoomManagement) return null;
+    
+    return createZoomControls(
+      zoomManagement.timeViewConfig,
+      zoomManagement.currentZoom,
+      zoomManagement.setCurrentZoom
+    );
+  }, [zoomLevels, zoomManagement]);
+
   // Early return if no items to display
   if (allItems.length === 0) {
     return (
@@ -304,107 +337,96 @@ export function Timeline<T = Record<string, unknown>>({
   });
 
   return (
-    <div 
-      className={styles["timeline-container"]}
-    >
-      <div className={styles["timeline-body"]}>
-        {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
-        <div
-          ref={(el) => {
-            mainScrollRef.current = el;
-            zoomContainerRef.current = el;
-            gestureDisableRef.current = el;
-          }}
-          className={styles["timeline-main-scroll"]}
-        >
-          {/* 时间线尺子组件 - sticky 定位在顶部 */}
-          <div 
-            className={styles["timeline-ruler-sticky"]}
-            style={{ width: `${timelineWidth}px` }}
+    <React.Fragment>
+      <div 
+        className={styles["timeline-container"]}
+      >
+        <div className={styles["timeline-body"]}>
+          {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
+          <div
+            ref={(el) => {
+              mainScrollRef.current = el;
+              zoomContainerRef.current = el;
+              gestureDisableRef.current = el;
+            }}
+            className={styles["timeline-main-scroll"]}
           >
-            {/* 左侧边栏的尺子占位区域 */}
-            {hasGrouping && (
-              <div className={styles["timeline-sidebar-ruler-placeholder"]}>
-                <TimelineSidebar
-                  groupPlacements={groupPlacements}
-                  cellHeight={cellHeight}
-                  groupGap={groupGapForTesting}
-                  isRulerMode={true}
+            {/* 时间线尺子组件 - sticky 定位在顶部 */}
+            <div 
+              className={styles["timeline-ruler-sticky"]}
+              style={{ width: `${timelineWidth}px` }}
+            >
+              {/* 左侧边栏的尺子占位区域 */}
+              {hasGrouping && (
+                <div className={styles["timeline-sidebar-ruler-placeholder"]}>
+                  <TimelineSidebar
+                    groupPlacements={groupPlacements}
+                    cellHeight={cellHeight}
+                    groupGap={groupGapForTesting}
+                    isRulerMode={true}
+                  />
+                </div>
+              )}
+
+              {/* 右侧时间线尺子 */}
+              <div className={styles["timeline-ruler-content"]}>
+                <TimelineRuler
+                  yearList={yearList}
+                  startMonth={startMonth}
+                  dayWidth={dayWidth}
                 />
               </div>
-            )}
-
-            {/* 右侧时间线尺子 */}
-            <div className={styles["timeline-ruler-content"]}>
-              <TimelineRuler
-                yearList={yearList}
-                startMonth={startMonth}
-                dayWidth={dayWidth}
-              />
             </div>
-          </div>
 
-          {/* 时间线内容区域 */}
-          <div 
-            className={styles["timeline-content-inner"]}
-            style={{ width: `${timelineWidth}px` }}
-          >
-            {/* 左侧可调整大小的侧边栏 */}
-            {hasGrouping && (
-              <div className={styles["timeline-sidebar"]}>
-                <TimelineSidebar
-                  groupPlacements={groupPlacements}
+            {/* 时间线内容区域 */}
+            <div 
+              className={styles["timeline-content-inner"]}
+              style={{ width: `${timelineWidth}px` }}
+            >
+              {/* 左侧可调整大小的侧边栏 */}
+              {hasGrouping && (
+                <div className={styles["timeline-sidebar"]}>
+                  <TimelineSidebar
+                    groupPlacements={groupPlacements}
+                    cellHeight={cellHeight}
+                    groupGap={groupGapForTesting}
+                  />
+                </div>
+              )}
+
+              {/* 时间线项目容器 */}
+              <div className={styles["timeline-items-container"]}>
+                <TimelineItems
+                  yearList={yearList}
+                  startMonth={startMonth}
+                  dayWidth={dayWidth}
                   cellHeight={cellHeight}
                   groupGap={groupGapForTesting}
+                  groupPlacements={groupPlacements}
+                  displayConfig={init?.itemDisplayConfig as TimelineItemDisplayConfig}
+                  onIssueClick={() => {
+                    // Issue 点击事件，不再同步到URL
+                  }}
                 />
               </div>
-            )}
-
-            {/* 时间线项目容器 */}
-            <div className={styles["timeline-items-container"]}>
-              <TimelineItems
-                yearList={yearList}
-                startMonth={startMonth}
-                dayWidth={dayWidth}
-                cellHeight={cellHeight}
-                groupGap={groupGapForTesting}
-                groupPlacements={groupPlacements}
-                displayConfig={init?.itemDisplayConfig as TimelineItemDisplayConfig}
-                onIssueClick={() => {
-                  // Issue 点击事件，不再同步到URL
-                }}
-              />
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* 默认渲染 zoom controls（如果有 zoomLevels） */}
+      {zoomControls && zoomLevels && (
+        <FloatingButtonGroup 
+          items={[zoomControls]} 
+          position="bottom-right" 
+        />
+      )}
+    </React.Fragment>
   );
 }
 
 // 导出 useTimelineZoom hook 供外部使用
 export { useTimelineZoom };
-
-// 创建一个独立的 ZoomControls 生成函数
-export function createZoomControls(
-  timeViewConfig: InternalZoomConfig[],
-  currentZoom: string,
-  onZoomChange: (zoom: string) => void
-): React.ReactElement {
-  return (
-    <React.Fragment>
-      {timeViewConfig.map((level) => (
-        <Button
-          key={level.type}
-          variant={currentZoom === level.type ? "filled" : "ghost"}
-          onClick={() => onZoomChange(level.type)}
-        >
-          {level.label}
-        </Button>
-      ))}
-    </React.Fragment>
-  );
-}
 
 // 默认导出Timeline组件
 export { Timeline as default };

@@ -1,8 +1,6 @@
 import React from "react";
 import {
   Timeline,
-  useTimelineZoom,
-  createZoomControls,
   type TimelineConfigType,
   createFieldConfig,
   type ZoomLevelType,
@@ -14,7 +12,7 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
-import { FloatingButtonGroup } from "../../../design-system/ui-components";
+// import { FloatingButtonGroup } from "../../../design-system/ui-components"; // 仅在自定义渲染时需要
 
 export function Element(): React.ReactElement {
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
@@ -56,46 +54,16 @@ export function Element(): React.ReactElement {
     { label: "Year", dayWidth: 6 },
   ];
 
-  // 🎉 使用 hook 管理 zoom 状态
-  const { timeViewConfig, currentZoom, setCurrentZoom } = useTimelineZoom(zoomLevels);
-
-  // 🎉 创建 zoom controls
-  const zoomControls = createZoomControls(timeViewConfig, currentZoom, setCurrentZoom);
-
   return (
     <div style={{ height: "100vh" }}>
-      {/* 🎉 超简单！分离式使用 Timeline 和 ZoomControls */}
-      
-      {/* 方法 1: 最简单用法 - 无需 zoom 功能，无分组，无 sidebar */}
-      {/* 
-      <Timeline<ProjectDataType>
-        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
-        init={timelineConfig}
-        inputData={ExampleData}
-      />
-      */}
-
-      {/* 方法 2: 简单用法 - 无需 zoom 功能，带分组 */}
-      {/* 
-      <Timeline<ProjectDataType>
-        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
-        init={timelineConfig}
-        inputData={ExampleData}
-        groupBy="category"
-      />
-      */}
-
-      {/* 方法 3: 完整用法 - 带 zoom 功能和分组 */}
+      {/* 🎉 终极简洁！Timeline 自动管理一切 */}
       <Timeline<ProjectDataType>
         fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={timelineConfig}
         inputData={ExampleData}
         groupBy="category"
         zoomLevels={zoomLevels}
-        currentZoom={currentZoom}
       />
-
-      <FloatingButtonGroup items={[zoomControls]} position="bottom-right" />
     </div>
   );
 }
