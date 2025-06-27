@@ -3,6 +3,7 @@
  */
 
 import { type TimelineItemType } from "../types";
+import { TimelineConst } from "../ui/_constants";
 
 /**
  * Month names mapping for timeline display
@@ -58,7 +59,7 @@ export function TimelineItemInterval({ inputData }: TimelineItemIntervalProps): 
 
   const startYear = earliestStartDate.getFullYear();
   const startMonth = earliestStartDate.getMonth();
-  const endYear = latestEndDate.getFullYear();
+  const endYear = latestEndDate.getFullYear() + TimelineConst.additionalYearsAfterLatest;
 
   const years: number[] = [];
   for (let year = startYear; year <= endYear; year++) {

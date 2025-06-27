@@ -48,6 +48,9 @@ export const TimelineConst = {
 
   itemVPadding: 2,
   itemHPadding: 2,
+
+  // 在最晚 issue 年份后额外显示的年数
+  additionalYearsAfterLatest: 10,
 };
 
 export const TimelineConstCalc = {

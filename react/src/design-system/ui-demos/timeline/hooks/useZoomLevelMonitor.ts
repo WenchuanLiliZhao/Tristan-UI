@@ -74,13 +74,6 @@ export const useZoomLevelMonitor = (
       // 更新状态
       setActiveLevel(newActiveLevel);
       
-      console.log('🔍 Zoom Level Monitor:', {
-        from: oldLevel?.label || 'none',
-        to: newActiveLevel?.label || 'none',
-        dayWidth: dayWidth,
-        timestamp: new Date().toISOString()
-      });
-      
       // 触发通用回调
       if (callbacks.onZoomLevelChanged && newActiveLevel) {
         callbacks.onZoomLevelChanged(newActiveLevel, oldLevel);
@@ -140,8 +133,8 @@ export const useTodayButtonZoomResponse = (
     dayWidth,
     zoomLevels,
     {
-      onZoomLevelChanged: (newLevel) => {
-        console.log(`📅 Today button strategy updated for: ${newLevel.label}`);
+      onZoomLevelChanged: () => {
+        // console.log(`📅 Today button strategy updated for: ${newLevel.label}`);
       }
     }
   );

@@ -10,17 +10,17 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
-import { FloatingButtonGroup, Button } from "../../../design-system/ui-components";
 
 export function Element(): React.ReactElement {
   // 🎯 统一的dayWidth状态管理
-  const [dayWidth, setDayWidth] = React.useState<number>(8); // 默认为Quarters
+  const [dayWidth] = React.useState<number>(8); // 默认为Quarters
 
   // 🎯 定义缩放级别配置
   const zoomLevels = [
-    { label: "Days", dayWidth: 48 },
+    // { label: "Days", dayWidth: 32 },
     { label: "Months", dayWidth: 24 },
-    { label: "Quarters", dayWidth: 8 },
+    { label: "Quarters", dayWidth: 8, setAsDefault: true },
+    { label: "Years", dayWidth: 4.5 },
   ];
 
   // 🎯 Method 1: Use createFieldConfig to simplify configuration
@@ -47,19 +47,6 @@ export function Element(): React.ReactElement {
     tagFields: [createFieldConfig.tagFromMap<ProjectDataType>("team", team)],
   };
 
-  // 🎯 创建缩放按钮组
-  const createZoomButtons = () => {
-    return zoomLevels.map((level) => (
-      <Button
-        key={level.label}
-        variant={dayWidth === level.dayWidth ? "filled" : "ghost"}
-        onClick={() => setDayWidth(level.dayWidth)}
-      >
-        {level.label}
-      </Button>
-    ));
-  };
-
   return (
     <div style={{ height: "100vh" }}>
       {/* 🎉 Timeline使用统一的dayWidth状态 */}
@@ -69,19 +56,7 @@ export function Element(): React.ReactElement {
         inputData={ExampleData}
         groupBy="category"
         defaultDayWidth={dayWidth} // 直接使用dayWidth状态
-      />
-
-      {/* 🎛️ 自定义缩放控制 */}
-      <FloatingButtonGroup
-        itemGroups={[
-          [
-            <Button key="today" variant="ghost">
-              Today
-            </Button>,
-          ],
-          createZoomButtons(),
-        ]}
-        position="bottom-right"
+        zoomLevels={zoomLevels} // 暂时注释掉，使用slider控制
       />
     </div>
   );
