@@ -1,63 +1,21 @@
 {
-  "name": "tristan-ui",
+  "name": "tristan-ui-workspace",
   "version": "0.4.8",
-  "description": "A modern React component library and design system",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
-    },
-    "./dist/tristan-ui.css": "./dist/tristan-ui.css",
-    "./dist/style.css": "./dist/tristan-ui.css",
-    "./style.css": "./dist/tristan-ui.css",
-    "./styles": "./src/styles/_app.scss",
-    "./styles/*": "./src/styles/*"
-  },
-  "files": [
-    "dist",
-    "src/styles",
-    "README.md"
+  "private": true,
+  "description": "Tristan UI component library workspace",
+  "workspaces": [
+    "packages/*"
   ],
-  "sideEffects": [
-    "**/*.css",
-    "**/*.scss"
-  ],
-  "keywords": [
-    "react",
-    "design-system",
-    "components",
-    "ui",
-    "typescript",
-    "scss",
-    "component-library"
-  ],
-  "author": "wenchuanlilizhao",
-  "license": "MIT",
-  "homepage": "https://github.com/wenchuanlilizhao/tristan-ui#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wenchuanlilizhao/tristan-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/wenchuanlilizhao/tristan-ui/issues"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:lib": "vite build --mode library && tsc -p tsconfig.lib.json --emitDeclarationOnly",
-    "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly",
-    "lint": "eslint .",
+    "build": "npm run build --workspaces",
+    "build:core": "npm run build -w @tristan-ui/core",
+    "build:timeline": "npm run build -w @tristan-ui/timeline", 
+    "build:lib": "npm run build:core && npm run build:timeline",
+    "lint": "eslint packages/*/src",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build:lib",
+    "clean": "npm run clean --workspaces",
+    "publish:all": "npm run build:lib && npm publish --workspaces",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

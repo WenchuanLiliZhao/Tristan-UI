@@ -1,0 +1,65 @@
+{
+  "name": "@tristan-ui/core",
+  "version": "0.4.8",
+  "description": "Tristan UI core components - lightweight design system",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js", 
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./dist/style.css": "./dist/tristan-ui-core.css",
+    "./style.css": "./dist/tristan-ui-core.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "keywords": [
+    "react",
+    "design-system", 
+    "components",
+    "ui",
+    "typescript",
+    "lightweight"
+  ],
+  "author": "wenchuanlilizhao",
+  "license": "MIT",
+  "homepage": "https://github.com/wenchuanlilizhao/tristan-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenchuanlilizhao/tristan-ui.git",
+    "directory": "react/packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/wenchuanlilizhao/tristan-ui/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "vite build --mode library && tsc --emitDeclarationOnly",
+    "clean": "rm -rf dist",
+    "dev": "vite build --mode library --watch"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.3.3",
+    "sass": "^1.81.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.1"
+  }
+} 
