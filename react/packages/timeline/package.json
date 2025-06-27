@@ -1,6 +1,6 @@
 {
   "name": "tristan-ui-timeline",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "Advanced Timeline component for Tristan UI - powerful data visualization",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -55,7 +55,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "tristan-ui-core": "file:../core"
+    "tristan-ui-core": "^0.4.12"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",
