@@ -3,7 +3,6 @@ import {
   Timeline,
   useTimelineZoom,
   createZoomControls,
-  groupTimelineItemsByField,
   type TimelineConfigType,
   createFieldConfig,
   type ZoomLevelType,
@@ -67,20 +66,31 @@ export function Element(): React.ReactElement {
     <div style={{ height: "100vh" }}>
       {/* 🎉 超简单！分离式使用 Timeline 和 ZoomControls */}
       
-      {/* 方法 1: 最简单用法 - 无需 zoom 功能 */}
+      {/* 方法 1: 最简单用法 - 无需 zoom 功能，无分组，无 sidebar */}
       {/* 
       <Timeline<ProjectDataType>
         fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={timelineConfig}
-        inputData={groupTimelineItemsByField(ExampleData, "category")}
+        inputData={ExampleData}
       />
       */}
 
-      {/* 方法 2: 带 zoom 功能的完整用法 */}
+      {/* 方法 2: 简单用法 - 无需 zoom 功能，带分组 */}
+      {/* 
       <Timeline<ProjectDataType>
         fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
         init={timelineConfig}
-        inputData={groupTimelineItemsByField(ExampleData, "category")}
+        inputData={ExampleData}
+        groupBy="category"
+      />
+      */}
+
+      {/* 方法 3: 完整用法 - 带 zoom 功能和分组 */}
+      <Timeline<ProjectDataType>
+        fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
+        init={timelineConfig}
+        inputData={ExampleData}
+        groupBy="category"
         zoomLevels={zoomLevels}
         currentZoom={currentZoom}
       />

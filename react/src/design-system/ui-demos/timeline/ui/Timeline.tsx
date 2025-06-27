@@ -34,12 +34,15 @@ import {
   type TimelineProps,
   type TimelineItemType,
   type TimelineItemDisplayConfig,
+  type SortedTimelineDataType,
+  type BaseTimelineItemType,
   BaseTimelineItemKeys,
 } from "../types";
 import {
   TimelineItemInterval,
   sortTimelineItemsByStartDate,
   findPlacement,
+  groupTimelineItemsByField,
   type PlacementResult
 } from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
@@ -101,6 +104,7 @@ export function Timeline<T = Record<string, unknown>>({
   // init 参数为未来扩展保留，暂时不使用
   inputData,
   init,
+  groupBy,
   zoomLevels,
   fetchByTimeInterval,
   currentZoom: externalCurrentZoom,
@@ -132,13 +136,44 @@ export function Timeline<T = Record<string, unknown>>({
   const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
   const groupGapForTesting = TimelineConst.groupGap;
 
+  // 处理输入数据：根据数据类型和 groupBy 参数决定如何处理
+  const processedData = useMemo(() => {
+    // 检查是否是已分组的数据
+    const isGroupedData = Array.isArray(inputData) === false && 
+      typeof inputData === 'object' && 
+      'data' in inputData && 
+      'meta' in inputData;
+
+    if (isGroupedData) {
+      // 如果是已分组的数据，直接使用
+      return inputData as SortedTimelineDataType<T>;
+    } else {
+      // 如果是原始数据数组
+      const rawData = inputData as TimelineItemType<T>[];
+      
+      if (groupBy) {
+        // 如果指定了 groupBy，进行分组
+        return groupTimelineItemsByField(rawData, groupBy);
+      } else {
+        // 如果没有指定 groupBy，创建一个单组的数据结构
+        return {
+          meta: { sortBy: 'id' as keyof (BaseTimelineItemType & T) },
+          data: [{
+            groupTitle: "",
+            groupItems: rawData,
+          }]
+        } as SortedTimelineDataType<T>;
+      }
+    }
+  }, [inputData, groupBy]);
+
   // Filter data based on fetchByTimeInterval
   const filteredData = useMemo(() => {
     if (!fetchByTimeInterval) {
-      return inputData;
+      return processedData;
     }
     const [start, end] = fetchByTimeInterval;
-    const filteredGroups = inputData.data
+    const filteredGroups = processedData.data
       .map((group) => {
         const filteredItems = group.groupItems.filter((item) => {
           const itemStart = new Date(item.startDate);
@@ -148,8 +183,28 @@ export function Timeline<T = Record<string, unknown>>({
       })
       .filter((group) => group.groupItems.length > 0);
 
-    return { ...inputData, data: filteredGroups };
-  }, [inputData, fetchByTimeInterval]);
+    return { ...processedData, data: filteredGroups };
+  }, [processedData, fetchByTimeInterval]);
+
+  // 检测是否有分组（用于决定是否显示 sidebar）
+  const hasGrouping = useMemo(() => {
+    // 如果指定了 groupBy，则有分组
+    if (groupBy) return true;
+    
+    // 如果输入数据是已分组格式且有多个组或组标题非空，则有分组
+    const isGroupedData = Array.isArray(inputData) === false && 
+      typeof inputData === 'object' && 
+      'data' in inputData && 
+      'meta' in inputData;
+    
+    if (isGroupedData) {
+      const groupedData = inputData as SortedTimelineDataType<T>;
+      return groupedData.data.length > 1 || 
+             (groupedData.data.length === 1 && groupedData.data[0].groupTitle !== "");
+    }
+    
+    return false;
+  }, [inputData, groupBy]);
 
   // 添加主滚动容器的引用 - 现在只需要一个
   const mainScrollRef = useRef<HTMLDivElement>(null);
@@ -195,9 +250,9 @@ export function Timeline<T = Record<string, unknown>>({
       }
     });
     
-    // 加上左侧边栏的宽度
-    return totalDays * dayWidth + TimelineConst.sidebarWidth;
-  }, [yearList, startMonth, dayWidth]);
+    // 只有在有分组时才加上左侧边栏的宽度
+    return totalDays * dayWidth + (hasGrouping ? TimelineConst.sidebarWidth : 0);
+  }, [yearList, startMonth, dayWidth, hasGrouping]);
 
   // 获取计算出的 Timeline 总宽度
   const timelineWidth = calculateTimelineWidth();
@@ -268,14 +323,16 @@ export function Timeline<T = Record<string, unknown>>({
             style={{ width: `${timelineWidth}px` }}
           >
             {/* 左侧边栏的尺子占位区域 */}
-            <div className={styles["timeline-sidebar-ruler-placeholder"]}>
-              <TimelineSidebar
-                groupPlacements={groupPlacements}
-                cellHeight={cellHeight}
-                groupGap={groupGapForTesting}
-                isRulerMode={true}
-              />
-            </div>
+            {hasGrouping && (
+              <div className={styles["timeline-sidebar-ruler-placeholder"]}>
+                <TimelineSidebar
+                  groupPlacements={groupPlacements}
+                  cellHeight={cellHeight}
+                  groupGap={groupGapForTesting}
+                  isRulerMode={true}
+                />
+              </div>
+            )}
 
             {/* 右侧时间线尺子 */}
             <div className={styles["timeline-ruler-content"]}>
@@ -293,13 +350,15 @@ export function Timeline<T = Record<string, unknown>>({
             style={{ width: `${timelineWidth}px` }}
           >
             {/* 左侧可调整大小的侧边栏 */}
-            <div className={styles["timeline-sidebar"]}>
-              <TimelineSidebar
-                groupPlacements={groupPlacements}
-                cellHeight={cellHeight}
-                groupGap={groupGapForTesting}
-              />
-            </div>
+            {hasGrouping && (
+              <div className={styles["timeline-sidebar"]}>
+                <TimelineSidebar
+                  groupPlacements={groupPlacements}
+                  cellHeight={cellHeight}
+                  groupGap={groupGapForTesting}
+                />
+              </div>
+            )}
 
             {/* 时间线项目容器 */}
             <div className={styles["timeline-items-container"]}>

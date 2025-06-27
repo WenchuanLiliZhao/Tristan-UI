@@ -143,7 +143,10 @@ export interface ZoomLevelType {
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
   init?: TimelineConfigType<T>;
-  inputData: SortedTimelineDataType<T>;
+  /** 输入数据 - 可以是原始数据数组或已分组的数据 */
+  inputData: SortedTimelineDataType<T> | TimelineItemType<T>[];
+  /** 分组字段（当 inputData 是原始数据数组时使用） */
+  groupBy?: keyof (BaseTimelineItemType & T);
   zoomLevels?: ZoomLevelType[];
   fetchByTimeInterval?: [Date, Date];
   onGroupByChange?: (groupBy: keyof (BaseTimelineItemType & T)) => void;
