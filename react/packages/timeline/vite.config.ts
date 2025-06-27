@@ -18,12 +18,12 @@ export default defineConfig({
       fileName: (format) => format === 'es' ? 'index.esm.js' : 'index.js',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@tristan-ui/core'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          '@tristan-ui/core': 'TristanUICore'
+          external: ['react', 'react-dom', 'tristan-ui-core'],
+    output: {
+      globals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        'tristan-ui-core': 'TristanUICore'
         },
         assetFileNames: (assetInfo) => {
           const extType = assetInfo.name?.split('.').at(1);

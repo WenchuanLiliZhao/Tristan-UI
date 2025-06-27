@@ -1,6 +1,6 @@
 {
-  "name": "@tristan-ui/timeline",
-  "version": "0.4.8",
+  "name": "tristan-ui-timeline",
+  "version": "0.4.12",
   "description": "Advanced Timeline component for Tristan UI - powerful data visualization",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -46,7 +46,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "vite build --mode library && tsc -p tsconfig.json --emitDeclarationOnly",
+    "build": "vite build --mode library && tsc -p tsconfig.json --emitDeclarationOnly && cp dist/src/index.d.ts dist/index.d.ts",
     "clean": "rm -rf dist",
     "dev": "vite build --mode library --watch"
   },
@@ -55,7 +55,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@tristan-ui/core": "file:../core"
+    "tristan-ui-core": "file:../core"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",
@@ -65,4 +65,4 @@
     "typescript": "^5.6.3",
     "vite": "^6.0.1"
   }
-} 
+}

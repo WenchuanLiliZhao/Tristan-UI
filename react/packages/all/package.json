@@ -1,6 +1,6 @@
 {
   "name": "tristan-ui",
-  "version": "0.4.8",
+  "version": "0.4.12",
   "description": "Complete Tristan UI component library - modern React design system",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -56,11 +56,11 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@tristan-ui/core": "^0.4.8",
-    "@tristan-ui/timeline": "^0.4.8"
+    "tristan-ui-core": "^0.4.12",
+    "tristan-ui-timeline": "^0.4.12"
   },
   "devDependencies": {
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
   }
-} 
+}

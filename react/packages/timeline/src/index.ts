@@ -10,6 +10,9 @@ export type {
   BaseTimelineItemType
 } from './types';
 
+// Timeline Configuration Helper
+export { createFieldConfig } from './types';
+
 // Timeline Utilities Export
 export {
   sortTimelineItemsByStartDate,

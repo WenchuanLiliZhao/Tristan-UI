@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button } from "@tristan-ui/core";
+import { Button } from "tristan-ui-core";
 import { TimelineConst } from "../_constants";
 
 interface TodayButtonProps {

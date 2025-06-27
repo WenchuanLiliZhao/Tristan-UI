@@ -4,14 +4,17 @@
   "private": true,
   "description": "Tristan UI component library workspace",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "demo"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run dev -w tristan-ui-demo",
+    "demo": "npm run dev -w tristan-ui-demo",
     "build": "npm run build --workspaces",
-    "build:core": "npm run build -w @tristan-ui/core",
-    "build:timeline": "npm run build -w @tristan-ui/timeline", 
+    "build:core": "npm run build -w tristan-ui-core",
+    "build:timeline": "npm run build -w tristan-ui-timeline", 
     "build:lib": "npm run build:core && npm run build:timeline",
+    "build:demo": "npm run build -w tristan-ui-demo",
     "lint": "eslint packages/*/src",
     "preview": "vite preview",
     "clean": "npm run clean --workspaces",

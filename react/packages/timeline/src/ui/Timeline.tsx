@@ -53,8 +53,8 @@ import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import { useZoomLevelMonitor } from "../hooks/useZoomLevelMonitor";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
-// Timeline 的核心组件依赖项 - 使用 @tristan-ui/core
-import { FloatingButtonGroup, Button } from "@tristan-ui/core";
+// Timeline 的核心组件依赖项 - 使用 tristan-ui-core
+import { FloatingButtonGroup, Button } from "tristan-ui-core";
 import { TodayButton } from "./Shared/TodayButton";
 
 // 内部函数：创建 zoom controls
