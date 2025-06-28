@@ -11,7 +11,7 @@ export { useZoomLevelMonitor, useTodayButtonZoomResponse } from './hooks/useZoom
 export * from './hooks';
 
 // 🎨 导出主组件
-export { Timeline } from './ui/Timeline';
+// export { Timeline } from './ui/Timeline';
 export { IssueDetails } from './ui/IssueDetails';
 export { TimelineView } from './ui/TimelineView';
 

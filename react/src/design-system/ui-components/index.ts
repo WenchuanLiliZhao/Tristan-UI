@@ -13,3 +13,4 @@ export * from './data-display';
 export * from './layout';
 export * from './shared/dateUtils';
 export * from './shared/useSmartPosition';
+export * from './shared/useFullscreen';

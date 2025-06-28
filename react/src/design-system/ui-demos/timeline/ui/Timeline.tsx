@@ -29,7 +29,7 @@
  * <Timeline inputData={data} />
  */
 
-import React, { useRef, useCallback, useMemo, useState } from "react";
+import React, { useRef, useCallback, useMemo, useState, useEffect } from "react";
 import {
   type TimelineProps,
   type TimelineItemType,
@@ -60,6 +60,7 @@ import {
 import { TodayButton } from "./Shared/TodayButton";
 import { RightSidebar } from "../../../ui-components";
 import { IssueDetails } from "./IssueDetails";
+import { useFullscreen } from "../../../ui-components/shared/useFullscreen";
 
 // 内部函数：创建 zoom controls
 function createZoomControls(
@@ -77,32 +78,6 @@ function createZoomControls(
           onClick={() => onZoomChange(level.type)}
         >
           {level.label}
-        </Button>
-      ))}
-    </React.Fragment>
-  );
-}
-
-// 内部函数：创建分组切换控件
-function createGroupByControls<T = Record<string, unknown>>(
-  groupByOptions: Array<{
-    label: string;
-    field: keyof (BaseTimelineItemType & T);
-    setAsDefault?: boolean;
-  }>,
-  currentGroupBy: keyof (BaseTimelineItemType & T) | undefined,
-  onGroupByChange: (field: keyof (BaseTimelineItemType & T)) => void
-): React.ReactElement {
-  return (
-    <React.Fragment>
-      {groupByOptions.map((option) => (
-        <Button
-          key={String(option.field)}
-          variant={currentGroupBy === option.field ? "filled" : "ghost"}
-          semantic={currentGroupBy === option.field ? "active" : "default"}
-          onClick={() => onGroupByChange(option.field)}
-        >
-          {option.label}
         </Button>
       ))}
     </React.Fragment>
@@ -322,6 +297,19 @@ export function Timeline<T = Record<string, unknown>>({
   // 使用自定义hook禁用浏览器左右滑动手势
   const gestureDisableRef = useDisableBrowserGestures();
 
+  // 👉 Add fullscreen hook targeting the whole document (page level)
+  const {
+    ref: docFsRef,
+    isFullscreen,
+    toggleFullscreen,
+  } = useFullscreen<HTMLElement>();
+
+  // Set the target element to the document's root so that the whole page enters full-screen
+  useEffect(() => {
+    // document.documentElement includes the entire page
+    docFsRef(document.documentElement);
+  }, [docFsRef]);
+
   // 🔍 使用zoom level监听器 - 实施方案A
   useZoomLevelMonitor(
     dayWidth,
@@ -399,23 +387,12 @@ export function Timeline<T = Record<string, unknown>>({
     );
   }, [zoomLevels, zoomManagement]);
 
-  // 生成分组切换控件（如果有 groupByOptions）
-  const groupByControls = useMemo(() => {
-    if (!groupByOptions || groupByOptions.length === 0) return null;
-
-    return createGroupByControls(
-      groupByOptions,
-      groupByManagement.currentGroupBy,
-      groupByManagement.setCurrentGroupBy
-    );
-  }, [groupByOptions, groupByManagement.currentGroupBy, groupByManagement.setCurrentGroupBy]);
-
-  // 获取当前选择的 groupBy 选项的 label
+  // 获取当前选择的 groupBy 选项的 label（用于侧边栏展示）
   const currentGroupByLabel = useMemo(() => {
     if (!groupByOptions || !groupByManagement.currentGroupBy) return undefined;
-    
+
     const currentOption = groupByOptions.find(
-      option => option.field === groupByManagement.currentGroupBy
+      (option) => option.field === groupByManagement.currentGroupBy
     );
     return currentOption?.label;
   }, [groupByOptions, groupByManagement.currentGroupBy]);
@@ -584,27 +561,33 @@ export function Timeline<T = Record<string, unknown>>({
         </div>
       </div>
 
-      {/* 渲染控制面板（zoom controls 和 groupBy controls） */}
-      {(zoomControls || groupByControls) && (
-        <FloatingButtonGroup
-          itemGroups={[
-            [
-              <TodayButton
-                key="today"
-                scrollContainerRef={mainScrollRef}
-                yearList={yearList}
-                startMonth={startMonth}
-                dayWidth={dayWidth}
-                hasGrouping={hasGrouping}
-                variant="ghost"
-              />,
-            ],
-            // ...(groupByControls ? [[groupByControls]] : []),
-            ...(zoomControls ? [[zoomControls]] : []),
-          ].filter(group => group.length > 0)}
-          position="bottom-right"
-        />
-      )}
+      {/* 渲染控制面板（zoom controls） */}
+      <FloatingButtonGroup
+        itemGroups={[
+          [
+            // Added fullscreen toggle button
+            <Button
+              key="fullscreen-toggle"
+              icon={isFullscreen ? "fullscreen_exit" : "fullscreen"}
+              variant="ghost"
+              onClick={toggleFullscreen}
+            />
+          ],
+          [
+            <TodayButton
+              key="today"
+              scrollContainerRef={mainScrollRef}
+              yearList={yearList}
+              startMonth={startMonth}
+              dayWidth={dayWidth}
+              hasGrouping={hasGrouping}
+              variant="ghost"
+            />,
+          ],
+          ...(zoomControls ? [[zoomControls]] : []),
+        ].filter(group => group.length > 0)}
+        position="bottom-right"
+      />
 
       {/* 渲染右侧边栏 */}
       <RightSidebar
