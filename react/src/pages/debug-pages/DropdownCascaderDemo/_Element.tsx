@@ -307,15 +307,17 @@ export const Element: React.FC = () => {
       <section style={{ marginBottom: "3rem" }}>
         <h2>Position Examples</h2>
         <p style={{ marginBottom: "1rem", color: "var(--color--text-secondary)" }}>
-          Dropdowns with different positioning options.
+          Dropdowns with all 8 positioning options: top, bottom, left, and right with start/end alignment.
         </p>
         
         <div style={{ 
           display: "grid", 
           gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", 
-          gap: "1rem",
-          alignItems: "flex-start"
+          gap: "1.5rem",
+          alignItems: "flex-start",
+          padding: "2rem"
         }}>
+          {/* Top Positions */}
           <Dropdown
             trigger={<Button variant="outlined" size="small">Top Start</Button>}
             groups={[{ items: [
@@ -338,6 +340,7 @@ export const Element: React.FC = () => {
             width={120}
           />
 
+          {/* Bottom Positions */}
           <Dropdown
             trigger={<Button variant="outlined" size="small">Bottom Start</Button>}
             groups={[{ items: [
@@ -359,6 +362,68 @@ export const Element: React.FC = () => {
             position="bottom-end"
             width={120}
           />
+
+          {/* Left Positions */}
+          <Dropdown
+            trigger={<Button variant="outlined" size="small">Left Start</Button>}
+            groups={[{ items: [
+              { key: "1", content: "Option 1", value: "1" },
+              { key: "2", content: "Option 2", value: "2" }
+            ]}]}
+            onItemClick={handleItemClick}
+            position="left-start"
+            width={120}
+          />
+
+          <Dropdown
+            trigger={<Button variant="outlined" size="small">Left End</Button>}
+            groups={[{ items: [
+              { key: "1", content: "Option 1", value: "1" },
+              { key: "2", content: "Option 2", value: "2" }
+            ]}]}
+            onItemClick={handleItemClick}
+            position="left-end"
+            width={120}
+          />
+
+          {/* Right Positions */}
+          <Dropdown
+            trigger={<Button variant="outlined" size="small">Right Start</Button>}
+            groups={[{ items: [
+              { key: "1", content: "Option 1", value: "1" },
+              { key: "2", content: "Option 2", value: "2" }
+            ]}]}
+            onItemClick={handleItemClick}
+            position="right-start"
+            width={120}
+          />
+
+          <Dropdown
+            trigger={<Button variant="outlined" size="small">Right End</Button>}
+            groups={[{ items: [
+              { key: "1", content: "Option 1", value: "1" },
+              { key: "2", content: "Option 2", value: "2" }
+            ]}]}
+            onItemClick={handleItemClick}
+            position="right-end"
+            width={120}
+          />
+        </div>
+
+        <div style={{ 
+          marginTop: "1.5rem", 
+          padding: "1rem", 
+          backgroundColor: "var(--color--bg-subtle)", 
+          borderRadius: "6px",
+          fontSize: "0.9rem",
+          color: "var(--color--text-secondary)"
+        }}>
+          <strong>Position Guide:</strong>
+          <ul style={{ marginTop: "0.5rem", paddingLeft: "1.5rem" }}>
+            <li><strong>start:</strong> Aligns to the start edge (left for top/bottom, top for left/right)</li>
+            <li><strong>end:</strong> Aligns to the end edge (right for top/bottom, bottom for left/right)</li>
+            <li><strong>Smart positioning:</strong> Automatically adjusts if dropdown would overflow viewport</li>
+          </ul>
         </div>
       </section>
 

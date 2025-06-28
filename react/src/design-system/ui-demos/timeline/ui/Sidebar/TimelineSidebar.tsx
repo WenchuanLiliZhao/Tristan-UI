@@ -82,7 +82,7 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
                 </div>
               }
               groups={createGroupByOptions()}
-              position="bottom-start"
+              position="right-start"
               onItemClick={handleGroupByChange}
               width={160}
             />
