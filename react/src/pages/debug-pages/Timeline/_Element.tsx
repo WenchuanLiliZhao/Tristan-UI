@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Timeline,
+  TimelineView,
   createFieldConfig,
   createSidebarProperty,
 } from "../../../design-system/ui-demos/timeline";
@@ -12,10 +12,24 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
+import { TopNav, TristanLayout } from "../../../design-system/ui-components";
 
 export function Element(): React.ReactElement {
-  // 🎯 统一的dayWidth状态管理
-  const [dayWidth] = React.useState<number>(8); // 默认为Quarters
+
+  // 🎯 自定义属性映射顺序（用户可配置）
+  const propertyOrder: string[] = [
+    'name',
+    'id', 
+    'projectKey',
+    'status',
+    'priority',
+    'progress',
+    'team',
+    'category',
+    'riskLevel',
+    'startDate',
+    'endDate'
+  ];
 
   // 🎯 定义缩放级别配置
   const zoomLevels = [
@@ -63,7 +77,7 @@ export function Element(): React.ReactElement {
       showCount: false,
     }),
     createSidebarProperty.fromMap<ProjectDataType>("team", team, {
-      label: "Teams", 
+      label: "Teams",
       showCount: false,
     }),
     // createSidebarProperty.fromMap<ProjectDataType>("priority", priority, {
@@ -75,14 +89,21 @@ export function Element(): React.ReactElement {
   return (
     <div style={{ height: "100vh" }}>
       {/* 🎉 Timeline使用统一的dayWidth状态 */}
-      <Timeline<ProjectDataType>
-        // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
-        init={itemDisplayConfigSimple}
-        inputData={ExampleData}
-        groupByOptions={groupByOptions}
-        sidebarProperties={sidebarProperties}
-        defaultDayWidth={dayWidth} // 直接使用dayWidth状态
-        zoomLevels={zoomLevels}
+
+      <TristanLayout
+        top={<TopNav left={[]} right={[]} />}
+        main={
+          <TimelineView<ProjectDataType>
+            // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
+            init={itemDisplayConfigSimple}
+            inputData={ExampleData}
+            groupByOptions={groupByOptions}
+            sidebarProperties={sidebarProperties}
+            defaultDayWidth={24} // 直接使用dayWidth状态
+            zoomLevels={zoomLevels}
+            propertyOrder={propertyOrder}
+          />
+        }
       />
     </div>
   );

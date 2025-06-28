@@ -179,6 +179,8 @@ export interface TimelineProps<T = Record<string, unknown>> {
    * @default 12
    */
   defaultDayWidth?: number;
+  /** 右侧详情面板属性显示顺序 */
+  propertyOrder?: string[];
 }
 
 // 预定义的常用映射函数

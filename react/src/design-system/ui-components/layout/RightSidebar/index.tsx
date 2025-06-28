@@ -1,0 +1,55 @@
+import React from 'react';
+import styles from './styles.module.scss';
+import { Icon } from '../../general';
+import type { BaseComponentProps } from '../../types';
+
+interface RightSidebarProps extends BaseComponentProps {
+  /** Whether the sidebar is open */
+  isOpen: boolean;
+  /** Function to close the sidebar */
+  onClose: () => void;
+  /** Title of the sidebar */
+  title?: string;
+  /** Content to display in the sidebar */
+  children: React.ReactNode;
+  /** Width of the sidebar */
+  width?: number | string;
+}
+
+export const RightSidebar: React.FC<RightSidebarProps> = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  width = 400,
+  className = '',
+  'data-testid': dataTestId,
+  ...rest
+}) => {
+  return (
+    <div
+      className={`${styles.sidebar} ${className}`}
+      data-testid={dataTestId}
+      style={{
+        width: typeof width === 'number' ? `${width}px` : width,
+        display: isOpen ? 'block' : 'none',
+      }}
+      {...rest}
+    >
+      {/* Header */}
+      <div className={styles.header}>
+        <h3 className={styles.title}>{title || 'Details'}</h3>
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Close sidebar"
+        >
+          <Icon name="close" />
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className={styles.content}>{children}</div>
+    </div>
+  );
+}; 

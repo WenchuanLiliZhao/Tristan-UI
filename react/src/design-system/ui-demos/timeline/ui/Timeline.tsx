@@ -58,6 +58,8 @@ import {
   Button,
 } from "../../../ui-components/general/Button/index";
 import { TodayButton } from "./Shared/TodayButton";
+import { RightSidebar } from "../../../ui-components";
+import { IssueDetails } from "./IssueDetails";
 
 // 内部函数：创建 zoom controls
 function createZoomControls(
@@ -198,8 +200,10 @@ export function Timeline<T = Record<string, unknown>>({
   sidebarProperties,
   zoomLevels,
   fetchByTimeInterval,
+  onItemClick,
   currentZoom: externalCurrentZoom,
   defaultDayWidth = 12,
+  propertyOrder,
 }: TimelineProps<T>) {
   // 如果没有提供 zoomLevels，使用默认的 dayWidth
 
@@ -416,6 +420,17 @@ export function Timeline<T = Record<string, unknown>>({
     return currentOption?.label;
   }, [groupByOptions, groupByManagement.currentGroupBy]);
 
+  // 添加侧边栏状态和处理程序
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<TimelineItemType<T> | null>(null);
+
+  const handleItemClick = useCallback((item: TimelineItemType<T>) => {
+    // 调用外部回调（如果有）
+    if (onItemClick) onItemClick(item);
+    setSelectedItem(item);
+    setSidebarOpen(true);
+  }, [onItemClick]);
+
   // Early return if no items to display
   if (allItems.length === 0) {
     return (
@@ -561,9 +576,7 @@ export function Timeline<T = Record<string, unknown>>({
                   groupGap={groupGapForTesting}
                   groupPlacements={groupPlacements}
                   displayConfig={init as TimelineItemDisplayConfig}
-                  onIssueClick={() => {
-                    // Issue 点击事件，不再同步到URL
-                  }}
+                  onIssueClick={handleItemClick as unknown as (issue: TimelineItemType) => void}
                 />
               </div>
             </div>
@@ -592,6 +605,20 @@ export function Timeline<T = Record<string, unknown>>({
           position="bottom-right"
         />
       )}
+
+      {/* 渲染右侧边栏 */}
+      <RightSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        width={400}
+      >
+        {selectedItem && (
+          <IssueDetails
+            item={selectedItem}
+            propertyOrder={propertyOrder}
+          />
+        )}
+      </RightSidebar>
     </React.Fragment>
   );
 }
