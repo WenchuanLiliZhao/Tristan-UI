@@ -5,6 +5,7 @@ import SwitchDemo from "./SwitchDemo";
 import LayoutDemo from "./LayoutDemo";
 import IconDemo from "./IconDemo";
 import RichTooltipDemo from "./RichTooltipDemo";
+import DropdownCascaderDemo from "./DropdownCascaderDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -14,4 +15,5 @@ export const DebugPages = {
   LayoutDemo,
   IconDemo,
   RichTooltipDemo,
+  DropdownCascaderDemo,
 }

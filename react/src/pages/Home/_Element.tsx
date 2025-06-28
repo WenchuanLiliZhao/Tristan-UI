@@ -19,6 +19,7 @@ export const Element: React.FC = () => {
     { name: 'Tag Demo', path: '/tag-demo', description: 'Tag component demonstration - View different styles and usage patterns of the tag component' },
     { name: 'Layout Demo', path: '/layout-demo', description: 'Layout component demonstration - View different styles and usage patterns of the layout component' },
     { name: 'RichTooltip Demo', path: '/rich-tooltip-demo', description: 'RichTooltip component demonstration - View different styles and usage patterns of the RichTooltip component' },
+    { name: 'Dropdown & Cascader Demo', path: '/dropdown-cascader-demo', description: 'Dropdown and Cascader components demonstration - Interactive dropdowns with flexible content and positioning options' },
   ];
 
   return (

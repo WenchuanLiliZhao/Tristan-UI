@@ -3,7 +3,7 @@ import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
 import { type TimelineItemType } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
-import { RichTooltip, RichTooltipItem } from "../../../../ui-components";
+import { RichTooltip, RichTooltipItem, Dropdown, type CascaderGroupProps } from "../../../../ui-components";
 
 export interface GroupPlacement {
   groupTitle: string;
@@ -18,6 +18,8 @@ interface TimelineSidebarProps {
   groupGap: number;
   isRulerMode?: boolean;
   groupBy?: string;
+  groupByOptions?: { key: string; label: string; value: string }[];
+  onGroupByChange?: (value: string) => void;
 }
 
 export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
@@ -26,12 +28,34 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
   groupGap,
   isRulerMode = false,
   groupBy,
+  groupByOptions = [],
+  onGroupByChange,
 }) => {
   // 计算每个组的高度和位置
   const getGroupHeight = (placements: PlacementResult[]) => {
     if (placements.length === 0) return cellHeight;
     const maxColumn = Math.max(...placements.map((p) => p.column));
     return (maxColumn + 1) * cellHeight;
+  };
+
+  // 创建 groupBy 选项的 cascader 数据
+  const createGroupByOptions = (): CascaderGroupProps[] => {
+    if (groupByOptions.length === 0) return [];
+    
+    return [{
+      groupTitle: "Group By Options",
+      items: groupByOptions.map(option => ({
+        key: option.key,
+        content: <span>{option.label}</span>,
+        value: option.value,
+      }))
+    }];
+  };
+
+  const handleGroupByChange = (value: string | number | object | undefined) => {
+    if (typeof value === 'string' && onGroupByChange) {
+      onGroupByChange(value);
+    }
   };
 
   // 如果是 ruler 模式，只返回占位区域
@@ -50,7 +74,23 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
               TimelineConst.dayLabelHeight,
           }}
         >
-          Group by: {groupBy}
+          {groupByOptions.length > 0 ? (
+            <Dropdown
+              trigger={
+                <div className={styles["timeline-sidebar-ruler-space-group-by"]}>
+                  Group by: {groupBy}
+                </div>
+              }
+              groups={createGroupByOptions()}
+              position="bottom-start"
+              onItemClick={handleGroupByChange}
+              width={160}
+            />
+          ) : (
+            <div className={styles["timeline-sidebar-ruler-space-group-by"]}>
+              Group by: {groupBy}
+            </div>
+          )}
         </div>
       </div>
     );

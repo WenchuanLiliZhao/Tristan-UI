@@ -495,6 +495,17 @@ export function Timeline<T = Record<string, unknown>>({
                     groupGap={groupGapForTesting}
                     isRulerMode={true}
                     groupBy={currentGroupByLabel}
+                    groupByOptions={groupByOptions?.map(option => ({
+                      key: String(option.field),
+                      label: option.label,
+                      value: String(option.field)
+                    }))}
+                    onGroupByChange={(value) => {
+                      const option = groupByOptions?.find(opt => String(opt.field) === value);
+                      if (option && groupByManagement) {
+                        groupByManagement.setCurrentGroupBy(option.field);
+                      }
+                    }}
                   />
                 </div>
               )}
@@ -522,6 +533,17 @@ export function Timeline<T = Record<string, unknown>>({
                     cellHeight={cellHeight}
                     groupGap={groupGapForTesting}
                     groupBy={currentGroupByLabel}
+                    groupByOptions={groupByOptions?.map(option => ({
+                      key: String(option.field),
+                      label: option.label,
+                      value: String(option.field)
+                    }))}
+                    onGroupByChange={(value) => {
+                      const option = groupByOptions?.find(opt => String(opt.field) === value);
+                      if (option && groupByManagement) {
+                        groupByManagement.setCurrentGroupBy(option.field);
+                      }
+                    }}
                   />
                 </div>
               )}
@@ -561,7 +583,7 @@ export function Timeline<T = Record<string, unknown>>({
                 variant="ghost"
               />,
             ],
-            ...(groupByControls ? [[groupByControls]] : []),
+            // ...(groupByControls ? [[groupByControls]] : []),
             ...(zoomControls ? [[zoomControls]] : []),
           ].filter(group => group.length > 0)}
           position="bottom-right"

@@ -52,7 +52,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:analyze": "tsc -b && vite build --mode analyze",
     "build:lib": "vite build --mode library && tsc -p tsconfig.lib.json --emitDeclarationOnly",
+    "build:lib:analyze": "npm run build:lib && echo '📊 Bundle Size Analysis:' && ls -lh dist/ | grep -E '\\.js|\\.css'",
     "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -17,6 +17,25 @@
       position: sticky;
       top: 0;
       z-index: 10;
+
+      .timeline-sidebar-ruler-space-group-by {
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--color--text-secondary);
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        -webkit-user-select: none;
+        user-select: none;
+
+        &:hover {
+          background-color: var(--color--bg-subtle);
+        }
+
+        &:active {
+          background-color: var(--color--bg-muted);
+        }
+      }
     }
 
     .timeline-sidebar-groups {
