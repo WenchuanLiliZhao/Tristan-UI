@@ -69,7 +69,7 @@ function createZoomControls(
   onZoomChange: (zoom: string) => void
 ): React.ReactElement {
   return (
-    <React.Fragment>
+    <div id={"timeline-zoom-controls"} style={{ display: "flex", gap: "4px" }}>
       {timeViewConfig.map((level) => (
         <Button
           key={level.type}
@@ -80,7 +80,7 @@ function createZoomControls(
           {level.label}
         </Button>
       ))}
-    </React.Fragment>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     id: "1",
     name: "Interactive Calculus Workshop",
     startDate: new Date("2023-12-16"),
-    endDate: new Date("2024-01-31"),
+    endDate: new Date("2024-01-24"),
     projectKey: "CALC-001",
     status: "high",
     progress: 50,
@@ -17,7 +17,7 @@ export const Example_Issues_1: ProjectDataType[] = [
   {
     id: "2",
     name: "Mobile App Development",
-    startDate: new Date("2024-02-01"),
+    startDate: new Date("2024-01-25"),
     endDate: new Date("2024-03-31"),
     projectKey: "MOBILE-002",
     status: "low",
