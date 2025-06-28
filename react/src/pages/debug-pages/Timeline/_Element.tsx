@@ -12,7 +12,7 @@ import {
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
-import { TopNav, TristanLayout } from "../../../design-system/ui-components";
+import { NavTitle, TopNav, TristanLayout, TristanLogo } from "../../../design-system/ui-components";
 
 export function Element(): React.ReactElement {
 
@@ -91,7 +91,7 @@ export function Element(): React.ReactElement {
       {/* 🎉 Timeline使用统一的dayWidth状态 */}
 
       <TristanLayout
-        top={<TopNav left={[]} right={[]} />}
+        top={<TopNav left={[<TristanLogo width={32} height={32} />, <NavTitle title="Roadmap of lululemon Initiatives" />]} right={[]} />}
         main={
           <TimelineView<ProjectDataType>
             // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}

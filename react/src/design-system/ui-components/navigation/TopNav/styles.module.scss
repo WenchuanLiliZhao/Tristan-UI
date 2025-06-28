@@ -12,6 +12,14 @@
   .left, .right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
   }
+}
+
+.nav-title {
+  color: var(--color--text-prime);
+
+  font-size: 16px;
+  line-height: var(--spacing-nav-item-size);
+  font-weight: bold;
 }
