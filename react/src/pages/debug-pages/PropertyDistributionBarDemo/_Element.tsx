@@ -143,6 +143,120 @@ export function Element(): React.ReactElement {
         />
       </section>
 
+      {/* Tooltip 模式示例 */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ marginBottom: '20px', color: '#374151' }}>Legend Modes</h2>
+        
+        <h3 style={{ marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>Individual Segment Tooltips</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="status"
+          mapping={statusMapping}
+          label="Hover individual segments"
+          showLegend={true}
+          legendMode="tooltip"
+          tooltipPosition="top-start"
+        />
+        
+        <h3 style={{ marginTop: '30px', marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>Hover Entire Bar (Summary)</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="team"
+          mapping={teamMapping}
+          label="Hover the entire bar"
+          showLegend={true}
+          legendMode="hover"
+          tooltipPosition="bottom-end"
+        />
+      </section>
+
+      {/* 位置示例 */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ marginBottom: '20px', color: '#374151' }}>Tooltip Positions</h2>
+        
+        <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: '1fr 1fr' }}>
+          <div>
+            <h3 style={{ marginBottom: '10px', color: '#4b5563', fontSize: '14px' }}>Right Position</h3>
+            <PropertyDistributionBar
+              data={projectData}
+              field="priority"
+              mapping={priorityMapping}
+              label="Tooltip on right"
+              showLegend={true}
+              legendMode="hover"
+              tooltipPosition="right-start"
+            />
+          </div>
+          
+          <div>
+            <h3 style={{ marginBottom: '10px', color: '#4b5563', fontSize: '14px' }}>Left Position</h3>
+            <PropertyDistributionBar
+              data={projectData}
+              field="status"
+              mapping={statusMapping}
+              label="Tooltip on left"
+              showLegend={true}
+              legendMode="hover"
+              tooltipPosition="left-end"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 自定义显示格式示例 */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ marginBottom: '20px', color: '#374151' }}>Custom Display Format</h2>
+        
+        <h3 style={{ marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>No Unit Text (Numbers Only)</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="status"
+          mapping={statusMapping}
+          label="Status distribution (numbers only)"
+          showLegend={true}
+          legendMode="hover"
+          tooltipPosition="top-start"
+        />
+        
+        <h3 style={{ marginTop: '30px', marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>Custom Unit Text</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="status"
+          mapping={statusMapping}
+          label="Project status (custom unit)"
+          showLegend={true}
+          legendMode="hover"
+          countUnit="projects"
+          tooltipPosition="top-start"
+        />
+        
+        <h3 style={{ marginTop: '30px', marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>No Decimal Places</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="team"
+          mapping={teamMapping}
+          label="Team distribution (integer percentages)"
+          showLegend={true}
+          legendMode="hover"
+          countUnit="members"
+          percentageDecimalPlaces={0}
+          tooltipPosition="bottom-start"
+        />
+        
+        <h3 style={{ marginTop: '30px', marginBottom: '15px', color: '#4b5563', fontSize: '16px' }}>High Precision</h3>
+        <PropertyDistributionBar
+          data={projectData}
+          field="priority"
+          mapping={priorityMapping}
+          label="Priority distribution (2 decimal places)"
+          showLegend={true}
+          legendMode="tooltip"
+          countUnit="tasks"
+          percentageDecimalPlaces={2}
+          tooltipPosition="right-start"
+        />
+      </section>
+
       {/* 数据概览 */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ marginBottom: '20px', color: '#374151' }}>Data Overview</h2>

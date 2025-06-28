@@ -101,7 +101,12 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
                         style={{ width: `${dayWidth}px` }}
                       >
                         {isToday(year, monthIndex, dayIndex) ? (
-                          <TimelinePointer />
+                          <TimelinePointer 
+                            year={year}
+                            month={monthIndex}
+                            day={dayIndex + 1}
+                            position="right-middle"
+                          />
                         ) : (
                           <div
                             className={`${styles["timeline-ruler-day-label"]} ${

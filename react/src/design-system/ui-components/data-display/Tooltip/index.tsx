@@ -8,10 +8,14 @@ import React, {
 import { createPortal } from "react-dom";
 import styles from "./styles.module.scss";
 import { Icon, type IconProps } from "../../general/Icon";
+import { type Position } from "../../types";
+
+// Re-export Position type for convenience
+export type { Position };
 
 // ========== Tooltip Item ==========
 
-export interface RichTooltipItemProps {
+export interface TooltipItemProps {
   icon?: IconProps["name"];
   iconColor?: string;
   label: ReactNode;
@@ -19,7 +23,7 @@ export interface RichTooltipItemProps {
   autoWidth?: boolean;
 }
 
-export const RichTooltipItem: React.FC<RichTooltipItemProps> = ({
+export const RichTooltipItem: React.FC<TooltipItemProps> = ({
   icon,
   iconColor,
   label,
@@ -39,31 +43,23 @@ export const RichTooltipItem: React.FC<RichTooltipItemProps> = ({
 
 // ========== Tooltip Container ==========
 
-type Position =
-  | "top-start"
-  | "top-end"
-  | "bottom-start"
-  | "bottom-end"
-  | "left-start"
-  | "left-end"
-  | "right-start"
-  | "right-end";
-
-interface RichTooltipProps {
-  children: ReactElement<RichTooltipItemProps>[];
+interface TooltipProps {
+  children: ReactElement<TooltipItemProps>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trigger: ReactElement<any>;
   position?: Position;
   offset?: number;
   alwaysVisible?: boolean;
+  autoWidth?: boolean;
 }
 
-export const RichTooltip: React.FC<RichTooltipProps> = ({
+export const RichTooltip: React.FC<TooltipProps> = ({
   children,
   trigger,
   position = "bottom-start",
   offset = 8,
   alwaysVisible = false,
+  autoWidth = false,
 }) => {
   const [isVisible, setIsVisible] = useState(alwaysVisible);
   const triggerRef = useRef<HTMLElement>(null);
@@ -83,6 +79,17 @@ export const RichTooltip: React.FC<RichTooltipProps> = ({
     }
   }, [alwaysVisible]);
 
+  // Clone children and pass autoWidth to each TooltipItem
+  const enhancedChildren = React.Children.map(children, (child) => {
+    if (React.isValidElement<TooltipItemProps>(child)) {
+      return React.cloneElement(child, {
+        ...child.props,
+        autoWidth: autoWidth,
+      });
+    }
+    return child;
+  });
+
   return (
     <>
       {triggerElement}
@@ -93,7 +100,7 @@ export const RichTooltip: React.FC<RichTooltipProps> = ({
           position={position}
           offset={offset}
         >
-          <div className={styles["container"]}>{children}</div>
+          <div className={styles["container"]}>{enhancedChildren}</div>
         </TooltipPortal>
       )}
     </>
@@ -140,6 +147,10 @@ const TooltipPortal: React.FC<TooltipPortalProps> = ({
           top = triggerTop + triggerHeight + offset;
           left = triggerLeft;
           break;
+        case "bottom-middle":
+          top = triggerTop + triggerHeight + offset;
+          left = triggerLeft + (triggerWidth - tooltipWidth) / 2;
+          break;
         case "bottom-end":
           top = triggerTop + triggerHeight + offset;
           left = triggerLeft + triggerWidth - tooltipWidth;
@@ -147,6 +158,10 @@ const TooltipPortal: React.FC<TooltipPortalProps> = ({
         case "top-start":
           top = triggerTop - tooltipHeight - offset;
           left = triggerLeft;
+          break;
+        case "top-middle":
+          top = triggerTop - tooltipHeight - offset;
+          left = triggerLeft + (triggerWidth - tooltipWidth) / 2;
           break;
         case "top-end":
           top = triggerTop - tooltipHeight - offset;
@@ -156,12 +171,20 @@ const TooltipPortal: React.FC<TooltipPortalProps> = ({
           top = triggerTop;
           left = triggerLeft + triggerWidth + offset;
           break;
+        case "right-middle":
+          top = triggerTop + (triggerHeight - tooltipHeight) / 2;
+          left = triggerLeft + triggerWidth + offset;
+          break;
         case "right-end":
           top = triggerTop + triggerHeight - tooltipHeight;
           left = triggerLeft + triggerWidth + offset;
           break;
         case "left-start":
           top = triggerTop;
+          left = triggerLeft - tooltipWidth - offset;
+          break;
+        case "left-middle":
+          top = triggerTop + (triggerHeight - tooltipHeight) / 2;
           left = triggerLeft - tooltipWidth - offset;
           break;
         case "left-end":

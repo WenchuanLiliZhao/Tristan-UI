@@ -38,6 +38,41 @@ const statusMapping = {
 />
 ```
 
+## Legend Modes
+
+The component supports three different ways to display legend information:
+
+### `below` (Default)
+- Traditional legend displayed below the distribution bar
+- Shows all segments with color indicators and counts
+- Takes up additional vertical space
+- Always visible, good for persistent reference
+
+### `tooltip` 
+- Individual tooltips for each segment on hover
+- Clean, space-efficient design
+- Interactive discovery of segment details
+- Good for dense layouts where space is limited
+
+### `hover`
+- Single tooltip showing all segments when hovering the entire bar
+- Comprehensive overview in one interaction
+- Most space-efficient option
+- Ideal for overview/summary use cases
+
+## Tooltip Positioning
+
+For `tooltip` and `hover` legend modes, you can control the tooltip position using the `tooltipPosition` prop. Available positions:
+
+- `"top-start"` - Above the element, aligned to start
+- `"top-end"` - Above the element, aligned to end
+- `"bottom-start"` - Below the element, aligned to start
+- `"bottom-end"` - Below the element, aligned to end
+- `"left-start"` - Left of the element, aligned to start
+- `"left-end"` - Left of the element, aligned to end
+- `"right-start"` - Right of the element, aligned to start
+- `"right-end"` - Right of the element, aligned to end
+
 ## Props
 
 | Prop | Type | Default | Description |
@@ -46,7 +81,11 @@ const statusMapping = {
 | `field` | `string` | - | Property name to analyze distribution for |
 | `mapping` | `PropertyDistributionMapping` | - | Maps field values to display names and colors |
 | `label` | `string` | - | Optional label displayed above the bar |
-| `showLegend` | `boolean` | `false` | Show legend with counts below the bar |
+| `showLegend` | `boolean` | `false` | Show legend with counts |
+| `legendMode` | `'below' \| 'tooltip' \| 'hover'` | `'below'` | How to display the legend |
+| `tooltipPosition` | `Position` | `'top-start'` | Tooltip position for tooltip and hover modes |
+| `countUnit` | `string` | `undefined` | Unit text for displaying count (e.g., 'projects', 'tasks'). If not provided, only numbers are shown |
+| `percentageDecimalPlaces` | `number` | `1` | Number of decimal places for percentage display |
 | `height` | `number` | `4` | Height of the distribution bar in pixels |
 | `enableHover` | `boolean` | `true` | Enable hover effects on segments |
 | `className` | `string` | - | Additional CSS class name |
@@ -71,7 +110,107 @@ const statusMapping = {
 />
 ```
 
-### With Legend and Click Handling
+### With Different Legend Modes
+
+```tsx
+// Traditional legend below the bar
+<PropertyDistributionBar
+  data={projectData}
+  field="team"
+  mapping={teamMapping}
+  label="Team Distribution"
+  showLegend={true}
+  legendMode="below"
+/>
+
+// Individual segment tooltips
+<PropertyDistributionBar
+  data={projectData}
+  field="team"
+  mapping={teamMapping}
+  label="Team Distribution"
+  showLegend={true}
+  legendMode="tooltip"
+/>
+
+// Hover entire bar for summary tooltip
+<PropertyDistributionBar
+  data={projectData}
+  field="team"
+  mapping={teamMapping}
+  label="Team Distribution"
+  showLegend={true}
+  legendMode="hover"
+  tooltipPosition="top-start"
+/>
+```
+
+### With Custom Tooltip Position
+
+```tsx
+// Tooltip appearing to the right
+<PropertyDistributionBar
+  data={projectData}
+  field="team"
+  mapping={teamMapping}
+  label="Team Distribution"
+  showLegend={true}
+  legendMode="hover"
+  tooltipPosition="right-start"
+/>
+
+// Tooltip appearing below, useful in tight layouts
+<PropertyDistributionBar
+  data={projectData}
+  field="team"
+  mapping={teamMapping}
+  showLegend={true}
+  legendMode="tooltip"
+  tooltipPosition="bottom-end"
+/>
+```
+
+### With Custom Display Format
+
+```tsx
+// No unit text, just numbers
+<PropertyDistributionBar
+  data={projectData}
+  field="status"
+  mapping={statusMapping}
+  label="Status Distribution"
+  showLegend={true}
+  legendMode="hover"
+  percentageDecimalPlaces={0}
+  // countUnit is undefined, will show "5 (50%)" instead of "5 items (50%)"
+/>
+
+// Custom unit and no decimal places for percentages
+<PropertyDistributionBar
+  data={projectData}
+  field="status"
+  mapping={statusMapping}
+  label="Project Status"
+  showLegend={true}
+  legendMode="hover"
+  countUnit="projects"
+  percentageDecimalPlaces={0}
+/>
+
+// Show more precise percentages
+<PropertyDistributionBar
+  data={largeDataset}
+  field="category"
+  mapping={categoryMapping}
+  label="Category Distribution"
+  showLegend={true}
+  legendMode="tooltip"
+  countUnit="records"
+  percentageDecimalPlaces={2}
+/>
+```
+
+### With Click Handling
 
 ```tsx
 <PropertyDistributionBar
@@ -80,6 +219,8 @@ const statusMapping = {
   mapping={teamMapping}
   label="Team Distribution"
   showLegend={true}
+  legendMode="tooltip"
+  tooltipPosition="top-start"
   onSegmentClick={(segment) => {
     console.log(`Clicked ${segment.name}: ${segment.count} items`);
   }}

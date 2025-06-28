@@ -30,7 +30,7 @@ export const team = {
     color: getRainbowColor('emerald')
   },
   engineering: {
-    name: "Engineering",
+    name: "Engineering Team",
     color: getRainbowColor('purple')
   },
   design: {

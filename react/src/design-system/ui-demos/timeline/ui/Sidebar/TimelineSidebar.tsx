@@ -1,9 +1,15 @@
-import { } from "react";
+import {} from "react";
 import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
 import { type TimelineItemType, type SidebarPropertyConfig } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
-import { RichTooltip, RichTooltipItem, Dropdown, type CascaderGroupProps, PropertyDistributionBar } from "../../../../ui-components";
+import {
+  RichTooltip,
+  RichTooltipItem,
+  Dropdown,
+  type CascaderGroupProps,
+  PropertyDistributionBar,
+} from "../../../../ui-components";
 
 export interface GroupPlacement<T = Record<string, unknown>> {
   groupTitle: string;
@@ -43,19 +49,21 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
   // 创建 groupBy 选项的 cascader 数据
   const createGroupByOptions = (): CascaderGroupProps[] => {
     if (groupByOptions.length === 0) return [];
-    
-    return [{
-      groupTitle: "Group By Options",
-      items: groupByOptions.map(option => ({
-        key: option.key,
-        content: <span>{option.label}</span>,
-        value: option.value,
-      }))
-    }];
+
+    return [
+      {
+        groupTitle: "Group By Options",
+        items: groupByOptions.map((option) => ({
+          key: option.key,
+          content: <span>{option.label}</span>,
+          value: option.value,
+        })),
+      },
+    ];
   };
 
   const handleGroupByChange = (value: string | number | object | undefined) => {
-    if (typeof value === 'string' && onGroupByChange) {
+    if (typeof value === "string" && onGroupByChange) {
       onGroupByChange(value);
     }
   };
@@ -79,7 +87,9 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
           {groupByOptions.length > 0 ? (
             <Dropdown
               trigger={
-                <div className={styles["timeline-sidebar-ruler-space-group-by"]}>
+                <div
+                  className={styles["timeline-sidebar-ruler-space-group-by"]}
+                >
                   Group by: {groupBy}
                 </div>
               }
@@ -140,22 +150,43 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
                   }}
                 >
                   <div>
-                    <RichTooltip trigger={<span className={styles["timeline-sidebar-group-title"]}>{group.groupTitle}</span>} position="right-start">
-                      {[<RichTooltipItem label={group.groupTitle} />]}
+                    <RichTooltip
+                      trigger={
+                        <span
+                          className={styles["timeline-sidebar-group-title"]}
+                        >
+                          {group.groupTitle}
+                        </span>
+                      }
+                      position="right-start"
+                    >
+                      {[
+                        <RichTooltipItem
+                          key="group-title"
+                          label={group.groupTitle}
+                        />,
+                      ]}
                     </RichTooltip>
                   </div>
-                  
+
                   {/* 属性分布可视化 */}
                   {sidebarProperties.length > 0 && !group.isEndSpacer && (
-                    <div className={styles["timeline-sidebar-group-properties"]}>
+                    <div
+                      className={styles["timeline-sidebar-group-properties"]}
+                    >
                       {sidebarProperties.map((propertyConfig) => (
                         <PropertyDistributionBar
                           key={String(propertyConfig.field)}
-                          data={group.groupItems as Array<Record<string, unknown>>}
+                          data={
+                            group.groupItems as Array<Record<string, unknown>>
+                          }
                           field={String(propertyConfig.field)}
                           mapping={propertyConfig.mapping}
                           label={propertyConfig.label}
-                          showLegend={propertyConfig.showCount}
+                          showLegend={true}
+                          legendMode="hover"
+                          tooltipPosition="right-start"
+                          percentageDecimalPlaces={0}
                         />
                       ))}
                     </div>

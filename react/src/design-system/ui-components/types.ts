@@ -10,6 +10,21 @@ export type Size = 'tiny' | 'small' | 'medium' | 'large';
 // Color variants
 export type Color = 'primary' | 'secondary' | 'active' | 'success' | 'warning' | 'error' | 'info';
 
+// Position variants for tooltips and popovers
+export type Position =
+  | "top-start"
+  | "top-middle" 
+  | "top-end"
+  | "bottom-start"
+  | "bottom-middle"
+  | "bottom-end"
+  | "left-start"
+  | "left-middle"
+  | "left-end"
+  | "right-start"
+  | "right-middle"
+  | "right-end";
+
 
 // Input specific types
 export interface InputProps extends BaseComponentProps {
