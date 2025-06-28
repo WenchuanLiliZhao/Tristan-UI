@@ -205,11 +205,17 @@ export const CommonFieldMappings = {
 // 🚀 新的改进版映射函数库
 export const FieldMappers = {
   /** 从对象映射生成标签 */
-  fromMap: (map: Record<string, { name: string; color: TimelineColorType; icon?: string }>) => 
-    (value: unknown) => ({
+  fromMap: (map: Record<string, { name: string; color: TimelineColorType; icon?: string }>) => {
+    const fn = (value: unknown) => ({
       text: map[String(value)]?.name || String(value),
       color: map[String(value)]?.color || 'gray',
-    }),
+    });
+    // attach source map for retrieval
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    fn._sourceMap = map;
+    return fn;
+  },
   
   /** 进度条映射 */
   progress: (options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) => 
@@ -246,22 +252,30 @@ export const FieldMappers = {
     },
   
   /** 图标映射 */
-  iconFromMap: (map: Record<string, { icon?: string; color: TimelineColorType; name?: string }>) => 
-    (value: unknown) => {
+  iconFromMap: (map: Record<string, { icon?: string; color: TimelineColorType; name?: string }>) => {
+    const fn = (value: unknown) => {
       const mapValue = map[String(value)];
       return {
         iconName: mapValue?.icon || 'help',
         color: mapValue?.color || 'gray',
       };
-    },
+    };
+    // Attach original map for external access
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    fn._sourceMap = map;
+    return fn;
+  },
   
   /** 简单文本映射 */
-  text: (options?: { color?: TimelineColorType; variant?: 'contained' | 'outlined' }) => 
-    (value: unknown) => ({
+  text: (options?: { color?: TimelineColorType; variant?: 'contained' | 'outlined' }) => {
+    const fn = (value: unknown) => ({
       text: String(value),
       ...(options?.color && { color: options.color }),
       ...(options?.variant && { variant: options.variant }),
-    }),
+    });
+    return fn;
+  },
 };
 
 // 🎯 简化配置对象创建函数

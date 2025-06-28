@@ -1,5 +1,5 @@
 .floating-button-group {
-  position: fixed;
+  position: absolute;
   z-index: var(--z-index-nav);
   pointer-events: none; /* Allow clicks to pass through the container */
 

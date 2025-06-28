@@ -2,25 +2,14 @@
   overflow-y: auto;
 }
 
-.tristan-layout {
+.tristan-layout__content {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
+  flex-direction: row;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
-
-  &__top {
-    height: auto;
-    width: 100%;
-    flex-shrink: 0;
-  }
-
-  &__content {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-  }
+  height: 100%;
+  width: 100%;
 
   &__left {
     width: auto;
@@ -40,5 +29,18 @@
     flex-shrink: 0;
     min-width: 0;
     height: 100%;
+  }
+}
+
+.tristan-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+
+  &__top {
+    height: auto;
+    width: 100%;
+    flex-shrink: 0;
   }
 }
