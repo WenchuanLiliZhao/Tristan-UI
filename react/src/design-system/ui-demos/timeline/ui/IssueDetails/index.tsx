@@ -1,8 +1,12 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { Tag, Icon } from '../../../../ui-components';
+// import { Tag, Icon } from '../../../../ui-components'; // Tag may still be used for fallback
 import type { TimelineItemType } from '../../types';
 import type { IssueDetailsConfig, PropertyMappingConfig } from '../../issueDetailsConfig';
+import { TextField } from './TextField';
+import { DateField } from './DateField';
+import { ProgressField } from './ProgressField';
+import { TagField } from './TagField';
 
 interface IssueDetailsProps<T = Record<string, unknown>> {
   /** The issue/item to display */
@@ -55,48 +59,42 @@ export function IssueDetails<T = Record<string, unknown>>({
     key in item && item[key as keyof typeof item] !== undefined && item[key as keyof typeof item] !== null
   );
 
-  const formatValue = (key: string, value: unknown): React.ReactNode => {
+  // Decide which specialized field component to render
+  const renderField = (key: string, value: unknown): React.ReactNode => {
     // Check if there's a custom formatter provided in config
     const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
     if (mappingConfig?.formatter) {
-      return mappingConfig.formatter(value);
+      return (
+        <TextField label={getLabel(key)} value={mappingConfig.formatter(value)} />
+      );
     }
 
-    // Check if there's a mapping for this property
+    // Tag mapping
     const mapping = mappingConfig?.valueMapping;
     if (mapping && typeof value === 'string' && mapping[value]) {
       const mapped = mapping[value];
       return (
-        <Tag 
-          color={mapped.color} 
-          variant="contained"
-        >
-          {mapped.icon && <Icon name={mapped.icon} />}
-          {mapped.name}
-        </Tag>
+        <TagField
+          label={getLabel(key)}
+          name={mapped.name}
+          color={mapped.color}
+          icon={mapped.icon}
+        />
       );
     }
 
-    // Handle different data types
+    // progress
+    if ((mappingConfig?.displayType === 'progress' || key === 'progress') && typeof value === 'number') {
+      return <ProgressField label={getLabel(key)} value={Number(value)} />;
+    }
+
+    // date
     if (value instanceof Date) {
-      return value.toLocaleDateString();
+      return <DateField label={getLabel(key)} value={value} />;
     }
 
-    if (key === 'progress' && typeof value === 'number') {
-      return (
-        <div className={styles.progressContainer}>
-          <div className={styles.progressBar}>
-            <div 
-              className={styles.progressFill} 
-              style={{ width: `${value}%` }}
-            />
-          </div>
-          <span className={styles.progressText}>{value}%</span>
-        </div>
-      );
-    }
-
-    return String(value);
+    // default text
+    return <TextField label={getLabel(key)} value={String(value)} />;
   };
 
   const getLabel = (key: string): string => {
@@ -109,16 +107,7 @@ export function IssueDetails<T = Record<string, unknown>>({
       <div className={styles.properties}>
         {availableProperties.map((key) => {
           const value = item[key as keyof typeof item];
-          return (
-            <div key={key} className={styles.property}>
-              <div className={styles.propertyLabel}>
-                {getLabel(key)}
-              </div>
-              <div className={styles.propertyValue}>
-                {formatValue(key, value)}
-              </div>
-            </div>
-          );
+          return <React.Fragment key={key}>{renderField(key, value)}</React.Fragment>;
         })}
       </div>
     </div>

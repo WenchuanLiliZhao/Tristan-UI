@@ -172,7 +172,7 @@ export function Timeline<T = Record<string, unknown>>({
   init,
   groupBy,
   groupByOptions,
-  sidebarProperties,
+  groupTitleProperties: sidebarProperties,
   zoomLevels,
   fetchByTimeInterval,
   onItemClick,

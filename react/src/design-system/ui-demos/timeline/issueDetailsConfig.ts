@@ -12,6 +12,8 @@ export interface PropertyMappingConfig {
   label?: string;
   /** Custom renderer for the value */
   formatter?: (value: unknown) => React.ReactNode;
+  /** Explicit display type override */
+  displayType?: 'text' | 'date' | 'progress' | 'tag';
   /** Mapping from raw field value to display metadata */
   valueMapping?: Record<string, ValueMappingEntry>;
 }

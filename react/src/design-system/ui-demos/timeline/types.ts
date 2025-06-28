@@ -167,7 +167,7 @@ export interface TimelineProps<T = Record<string, unknown>> {
   /** 分组选项配置 - 支持用户动态切换分组方式 */
   groupByOptions?: GroupByOption<T>[];
   /** 侧边栏属性分布配置 */
-  sidebarProperties?: SidebarPropertyConfig<T>[];
+  groupTitleProperties?: SidebarPropertyConfig<T>[];
   zoomLevels?: ZoomLevelType[];
   fetchByTimeInterval?: [Date, Date];
   onItemClick?: (item: TimelineItemType<T>) => void;

@@ -10,6 +10,7 @@ import {
   team,
   status,
   type ProjectDataType,
+  riskLevel,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
 import {
@@ -81,16 +82,36 @@ export function Element(): React.ReactElement {
     .setPropertyOrder([
       "name",
       "id",
+      "riskLevel",
       "projectKey",
       "status",
       "priority",
       "progress",
       "team",
       "category",
-      "riskLevel",
       "startDate",
       "endDate",
     ])
+    // 自定义 Tag 显示的映射与标签
+    .addPropertyMapping("status", {
+      label: "Status",
+      displayType: "tag",
+      // 复用前面定义的 status 映射（name、color、icon）
+      valueMapping: status,
+    })
+    .addPropertyMapping("riskLevel", {
+      label: "Risk Level",
+      displayType: "tag",
+      // 复用前面定义的 status 映射（name、color、icon）
+      valueMapping: riskLevel,
+    })
+    // progress 字段显式指定为进度条
+    .addPropertyMapping("progress", {
+      label: "Progress",
+      displayType: "progress",
+    })
+
+    
     .build();
 
   return (
@@ -110,7 +131,7 @@ export function Element(): React.ReactElement {
           init={itemDisplayConfigSimple}
           inputData={ExampleData}
           groupByOptions={groupByOptions}
-          sidebarProperties={sidebarProperties}
+          groupTitleProperties={sidebarProperties}
           defaultDayWidth={24} // 直接使用dayWidth状态
           zoomLevels={zoomLevels}
           issueDetailsConfig={issueDetailsConfig}
