@@ -195,6 +195,7 @@ export function Timeline<T = Record<string, unknown>>({
   init,
   groupBy,
   groupByOptions,
+  sidebarProperties,
   zoomLevels,
   fetchByTimeInterval,
   currentZoom: externalCurrentZoom,
@@ -425,7 +426,7 @@ export function Timeline<T = Record<string, unknown>>({
   }
 
   // Pre-calculate placements for each group separately
-  const groupPlacements: GroupPlacement[] = filteredData.data.map((group) => {
+  const groupPlacements: GroupPlacement<T>[] = filteredData.data.map((group) => {
     const sortedGroupItems = sortTimelineItemsByStartDate(
       group.groupItems as TimelineItemType<T>[]
     );
@@ -506,6 +507,7 @@ export function Timeline<T = Record<string, unknown>>({
                         groupByManagement.setCurrentGroupBy(option.field);
                       }
                     }}
+                    sidebarProperties={sidebarProperties}
                   />
                 </div>
               )}
@@ -544,6 +546,7 @@ export function Timeline<T = Record<string, unknown>>({
                         groupByManagement.setCurrentGroupBy(option.field);
                       }
                     }}
+                    sidebarProperties={sidebarProperties}
                   />
                 </div>
               )}

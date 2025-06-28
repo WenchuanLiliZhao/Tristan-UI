@@ -2,28 +2,21 @@ import React, { useMemo } from "react";
 import {
   getDaysInMonth,
 } from "../../utils/time";
-import {
-  type PlacementResult,
-} from "../../utils/placement";
 import { type TimelineItemType, type TimelineItemDisplayConfig } from "../../types";
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 import { TimelineConst } from "../_constants";
+import type { GroupPlacement } from "../Sidebar/TimelineSidebar";
 // import styles from "../../Timeline.module.scss";
 import styles from "./TimelineItems.module.scss"
 
-interface TimelineItemsProps {
+interface TimelineItemsProps<T = Record<string, unknown>> {
   yearList: number[];
   startMonth: number;
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
-  groupPlacements: Array<{
-    groupTitle: string;
-    groupItems: TimelineItemType[];
-    placements: PlacementResult[];
-    isEndSpacer?: boolean;
-  }>;
+  groupPlacements: GroupPlacement<T>[];
   displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }
@@ -36,7 +29,8 @@ const YearRenderer = React.memo<{
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
-  groupPlacements: TimelineItemsProps['groupPlacements'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  groupPlacements: any[];
   displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }>(({ year, yearIndex, startMonth, dayWidth, cellHeight, groupGap, groupPlacements, displayConfig, onIssueClick }) => {
@@ -76,7 +70,7 @@ const MonthRenderer = React.memo<{
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
-  groupPlacements: TimelineItemsProps['groupPlacements'];
+  groupPlacements: GroupPlacement[];
   displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }>(({ year, monthIndex, dayWidth, cellHeight, groupGap, groupPlacements, displayConfig, onIssueClick }) => {
@@ -136,7 +130,7 @@ const DayRenderer = React.memo<{
   dayWidth: number;
   cellHeight: number;
   groupGap: number;
-  groupPlacements: TimelineItemsProps['groupPlacements'];
+  groupPlacements: GroupPlacement[];
   displayConfig?: TimelineItemDisplayConfig;
   onIssueClick?: (issue: TimelineItemType) => void;
 }>(({ year, monthIndex, dayIndex, dayWidth, cellHeight, groupGap, groupPlacements, displayConfig, onIssueClick }) => {
@@ -186,7 +180,7 @@ const DayRenderer = React.memo<{
   );
 });
 
-export const TimelineItems: React.FC<TimelineItemsProps> = React.memo(({
+export const TimelineItems = React.memo(<T = Record<string, unknown>,>({
   yearList,
   startMonth,
   dayWidth,
@@ -195,7 +189,7 @@ export const TimelineItems: React.FC<TimelineItemsProps> = React.memo(({
   groupPlacements,
   displayConfig,
   onIssueClick,
-}) => {
+}: TimelineItemsProps<T>) => {
   return (
     <Column className={styles["timeline-vertical-column-container"]}>
       {yearList.map((year, yearIndex) => (
@@ -214,4 +208,4 @@ export const TimelineItems: React.FC<TimelineItemsProps> = React.memo(({
       ))}
     </Column>
   );
-}); 
+}) as <T = Record<string, unknown>>(props: TimelineItemsProps<T>) => React.ReactElement; 

@@ -1,28 +1,29 @@
-import React from "react";
+import { } from "react";
 import styles from "./TimelineSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
-import { type TimelineItemType } from "../../types";
+import { type TimelineItemType, type SidebarPropertyConfig } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
-import { RichTooltip, RichTooltipItem, Dropdown, type CascaderGroupProps } from "../../../../ui-components";
+import { RichTooltip, RichTooltipItem, Dropdown, type CascaderGroupProps, PropertyDistributionBar } from "../../../../ui-components";
 
-export interface GroupPlacement {
+export interface GroupPlacement<T = Record<string, unknown>> {
   groupTitle: string;
-  groupItems: TimelineItemType[];
+  groupItems: TimelineItemType<T>[];
   placements: PlacementResult[];
   isEndSpacer?: boolean; // 标识是否为最后的占位分组
 }
 
-interface TimelineSidebarProps {
-  groupPlacements: GroupPlacement[];
+interface TimelineSidebarProps<T = Record<string, unknown>> {
+  groupPlacements: GroupPlacement<T>[];
   cellHeight: number;
   groupGap: number;
   isRulerMode?: boolean;
   groupBy?: string;
   groupByOptions?: { key: string; label: string; value: string }[];
   onGroupByChange?: (value: string) => void;
+  sidebarProperties?: SidebarPropertyConfig<T>[];
 }
 
-export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
+export const TimelineSidebar = <T = Record<string, unknown>,>({
   groupPlacements,
   cellHeight,
   groupGap,
@@ -30,7 +31,8 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
   groupBy,
   groupByOptions = [],
   onGroupByChange,
-}) => {
+  sidebarProperties = [],
+}: TimelineSidebarProps<T>) => {
   // 计算每个组的高度和位置
   const getGroupHeight = (placements: PlacementResult[]) => {
     if (placements.length === 0) return cellHeight;
@@ -142,6 +144,22 @@ export const TimelineSidebar: React.FC<TimelineSidebarProps> = ({
                       {[<RichTooltipItem label={group.groupTitle} />]}
                     </RichTooltip>
                   </div>
+                  
+                  {/* 属性分布可视化 */}
+                  {sidebarProperties.length > 0 && !group.isEndSpacer && (
+                    <div className={styles["timeline-sidebar-group-properties"]}>
+                      {sidebarProperties.map((propertyConfig) => (
+                        <PropertyDistributionBar
+                          key={String(propertyConfig.field)}
+                          data={group.groupItems as Array<Record<string, unknown>>}
+                          field={String(propertyConfig.field)}
+                          mapping={propertyConfig.mapping}
+                          label={propertyConfig.label}
+                          showLegend={propertyConfig.showCount}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             );

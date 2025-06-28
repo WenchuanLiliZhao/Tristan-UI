@@ -22,3 +22,10 @@ export { useTimelineZoom } from './ui/Timeline';
 export { groupTimelineItemsByField, sortTimelineItemsByStartDate } from './utils/sorting';
 export { findPlacement, calculateMaxOverlapCardinality } from './utils/placement';
 export { TimelineItemInterval, calculateDurationInDays, monthNames } from './utils/time';
+
+// Export configuration helpers
+export { 
+  createFieldConfig,
+  createSidebarProperty,
+  TimelineConfigBuilder 
+} from './types';

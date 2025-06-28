@@ -142,6 +142,20 @@ export interface GroupByOption<T = Record<string, unknown>> {
   setAsDefault?: boolean;
 }
 
+/**
+ * 侧边栏属性分布配置
+ */
+export interface SidebarPropertyConfig<T = Record<string, unknown>> {
+  /** 要显示分布的字段 */
+  field: keyof T;
+  /** 字段值到颜色和名称的映射 */
+  mapping: Record<string, { name: string; color: TimelineColorType }>;
+  /** 显示标签（可选，默认使用字段名） */
+  label?: string;
+  /** 是否显示数量标签 */
+  showCount?: boolean;
+}
+
 // Timeline 组件 Props 接口
 export interface TimelineProps<T = Record<string, unknown>> {
   /** 项目显示配置 */
@@ -152,6 +166,8 @@ export interface TimelineProps<T = Record<string, unknown>> {
   groupBy?: keyof (BaseTimelineItemType & T);
   /** 分组选项配置 - 支持用户动态切换分组方式 */
   groupByOptions?: GroupByOption<T>[];
+  /** 侧边栏属性分布配置 */
+  sidebarProperties?: SidebarPropertyConfig<T>[];
   zoomLevels?: ZoomLevelType[];
   fetchByTimeInterval?: [Date, Date];
   onItemClick?: (item: TimelineItemType<T>) => void;
@@ -290,6 +306,24 @@ export const createFieldConfig = {
     visible: options?.hideValue !== undefined ? 
       (item: TimelineItemType<T>) => item[field] !== options.hideValue : 
       true,
+  }),
+};
+
+// 🎯 Sidebar属性配置简化创建函数
+export const createSidebarProperty = {
+  /** 从映射创建sidebar属性配置 */
+  fromMap: <T>(
+    field: keyof T, 
+    map: Record<string, { name: string; color: TimelineColorType }>, 
+    options?: { 
+      label?: string; 
+      showCount?: boolean; 
+    }
+  ): SidebarPropertyConfig<T> => ({
+    field,
+    mapping: map,
+    label: options?.label,
+    showCount: options?.showCount ?? false,
   }),
 };
 

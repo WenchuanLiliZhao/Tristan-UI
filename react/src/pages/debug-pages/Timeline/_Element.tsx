@@ -2,11 +2,13 @@ import React from "react";
 import {
   Timeline,
   createFieldConfig,
+  createSidebarProperty,
 } from "../../../design-system/ui-demos/timeline";
 import {
   ExampleData,
   priority,
   team,
+  status,
   type ProjectDataType,
 } from "./example-data";
 import { getRainbowColor } from "../../../styles";
@@ -54,6 +56,22 @@ export function Element(): React.ReactElement {
     tagFields: [createFieldConfig.tagFromMap<ProjectDataType>("team", team)],
   };
 
+  // 🎯 配置sidebar属性分布可视化
+  const sidebarProperties = [
+    createSidebarProperty.fromMap<ProjectDataType>("status", status, {
+      label: "Status",
+      showCount: false,
+    }),
+    createSidebarProperty.fromMap<ProjectDataType>("team", team, {
+      label: "Teams", 
+      showCount: false,
+    }),
+    // createSidebarProperty.fromMap<ProjectDataType>("priority", priority, {
+    //   label: "Priority",
+    //   showCount: false,
+    // }),
+  ];
+
   return (
     <div style={{ height: "100vh" }}>
       {/* 🎉 Timeline使用统一的dayWidth状态 */}
@@ -62,6 +80,7 @@ export function Element(): React.ReactElement {
         init={itemDisplayConfigSimple}
         inputData={ExampleData}
         groupByOptions={groupByOptions}
+        sidebarProperties={sidebarProperties}
         defaultDayWidth={dayWidth} // 直接使用dayWidth状态
         zoomLevels={zoomLevels}
       />
