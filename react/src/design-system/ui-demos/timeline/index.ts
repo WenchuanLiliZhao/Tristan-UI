@@ -27,5 +27,10 @@ export { TimelineItemInterval, calculateDurationInDays, monthNames } from './uti
 export { 
   createFieldConfig,
   createSidebarProperty,
-  TimelineConfigBuilder 
+  TimelineConfigBuilder
 } from './types';
+
+// Issue Details configuration helpers
+export { IssueDetailsConfigBuilder } from './issueDetailsConfig';
+
+export type { IssueDetailsConfig } from './issueDetailsConfig';

@@ -178,7 +178,7 @@ export function Timeline<T = Record<string, unknown>>({
   onItemClick,
   currentZoom: externalCurrentZoom,
   defaultDayWidth = 12,
-  propertyOrder,
+  issueDetailsConfig,
 }: TimelineProps<T>) {
   // 如果没有提供 zoomLevels，使用默认的 dayWidth
 
@@ -598,7 +598,7 @@ export function Timeline<T = Record<string, unknown>>({
         {selectedItem && (
           <IssueDetails
             item={selectedItem}
-            propertyOrder={propertyOrder}
+            config={issueDetailsConfig}
           />
         )}
       </RightSidebar>

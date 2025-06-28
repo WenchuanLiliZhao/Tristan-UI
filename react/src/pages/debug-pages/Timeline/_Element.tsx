@@ -18,23 +18,9 @@ import {
   TristanLayout,
   TristanLogo,
 } from "../../../design-system/ui-components";
+import { IssueDetailsConfigBuilder } from "../../../design-system/ui-demos/timeline/issueDetailsConfig";
 
 export function Element(): React.ReactElement {
-  // 🎯 自定义属性映射顺序（用户可配置）
-  const propertyOrder: string[] = [
-    "name",
-    "id",
-    "projectKey",
-    "status",
-    "priority",
-    "progress",
-    "team",
-    "category",
-    "riskLevel",
-    "startDate",
-    "endDate",
-  ];
-
   // 🎯 定义缩放级别配置
   const zoomLevels = [
     // { label: "Days", dayWidth: 32 },
@@ -90,6 +76,23 @@ export function Element(): React.ReactElement {
     // }),
   ];
 
+  // 🎯 IssueDetails 详情配置示例
+  const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
+    .setPropertyOrder([
+      "name",
+      "id",
+      "projectKey",
+      "status",
+      "priority",
+      "progress",
+      "team",
+      "category",
+      "riskLevel",
+      "startDate",
+      "endDate",
+    ])
+    .build();
+
   return (
     <TristanLayout
       top={
@@ -110,7 +113,7 @@ export function Element(): React.ReactElement {
           sidebarProperties={sidebarProperties}
           defaultDayWidth={24} // 直接使用dayWidth状态
           zoomLevels={zoomLevels}
-          propertyOrder={propertyOrder}
+          issueDetailsConfig={issueDetailsConfig}
         />
       }
     />

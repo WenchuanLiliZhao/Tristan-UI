@@ -2,25 +2,13 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { Tag, Icon } from '../../../../ui-components';
 import type { TimelineItemType } from '../../types';
-
-interface PropertyDisplayConfig {
-  /** Property key */
-  key: string;
-  /** Display label */
-  label: string;
-  /** Custom formatter function */
-  formatter?: (value: unknown) => React.ReactNode;
-}
+import type { IssueDetailsConfig, PropertyMappingConfig } from '../../issueDetailsConfig';
 
 interface IssueDetailsProps<T = Record<string, unknown>> {
   /** The issue/item to display */
   item: TimelineItemType<T>;
-  /** Custom property mapping order - if empty, uses default order */
-  propertyOrder?: string[];
-  /** Custom property display configurations */
-  propertyConfigs?: Record<string, PropertyDisplayConfig>;
-  /** Custom property value mappings (for tags, colors, etc.) */
-  propertyMappings?: Record<string, Record<string, { name: string; color: string; icon?: string }>>;
+  /** Configuration object controlling how properties are displayed */
+  config?: IssueDetailsConfig<T>;
 }
 
 // Default property order for timeline items
@@ -55,12 +43,12 @@ const DEFAULT_PROPERTY_LABELS: Record<string, string> = {
 
 export function IssueDetails<T = Record<string, unknown>>({
   item,
-  propertyOrder = [],
-  propertyConfigs = {},
-  propertyMappings = {}
+  config = {}
 }: IssueDetailsProps<T>): React.ReactElement {
   // Determine the final property order
-  const finalOrder = propertyOrder.length > 0 ? propertyOrder : DEFAULT_PROPERTY_ORDER;
+  const finalOrder = (config.propertyOrder && config.propertyOrder.length > 0)
+    ? (config.propertyOrder as string[])
+    : DEFAULT_PROPERTY_ORDER;
   
   // Filter only existing properties
   const availableProperties = finalOrder.filter(key => 
@@ -68,14 +56,14 @@ export function IssueDetails<T = Record<string, unknown>>({
   );
 
   const formatValue = (key: string, value: unknown): React.ReactNode => {
-    // Check if there's a custom formatter
-    const config = propertyConfigs[key];
-    if (config?.formatter) {
-      return config.formatter(value);
+    // Check if there's a custom formatter provided in config
+    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
+    if (mappingConfig?.formatter) {
+      return mappingConfig.formatter(value);
     }
 
     // Check if there's a mapping for this property
-    const mapping = propertyMappings[key];
+    const mapping = mappingConfig?.valueMapping;
     if (mapping && typeof value === 'string' && mapping[value]) {
       const mapped = mapping[value];
       return (
@@ -112,7 +100,8 @@ export function IssueDetails<T = Record<string, unknown>>({
   };
 
   const getLabel = (key: string): string => {
-    return propertyConfigs[key]?.label || DEFAULT_PROPERTY_LABELS[key] || key;
+    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
+    return mappingConfig?.label || DEFAULT_PROPERTY_LABELS[key] || key;
   };
 
   return (
