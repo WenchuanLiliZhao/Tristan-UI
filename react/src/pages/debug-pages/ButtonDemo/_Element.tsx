@@ -253,6 +253,54 @@ export const Element: React.FC = () => {
           </Button>
         </div>
       </div>
+
+      <div style={{ marginTop: "3rem" }}>
+        <h2>Full Width Mode</h2>
+        <p style={{ fontSize: "12px", color: "var(--color--text-secondary)" }}>
+          Below buttons have <code>widthMode="full width"</code> so the label sticks
+          to the left while the decorative icon stays on the far right.
+        </p>
+        <br />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.5rem",
+            width: "240px", // limit container to show full-width behaviour
+          }}
+        >
+          <Button
+            icon="add"
+            decoIcon="arrow_drop_down"
+            variant="outlined"
+            size="medium"
+            semantic="default"
+            widthMode="full width"
+          >
+            Default
+          </Button>
+          <Button
+            icon="add"
+            decoIcon="arrow_drop_down"
+            variant="filled"
+            size="medium"
+            semantic="success"
+            widthMode="full width"
+          >
+            Success
+          </Button>
+          <Button
+            icon="add"
+            decoIcon="arrow_drop_down"
+            variant="ghost"
+            size="medium"
+            semantic="active"
+            widthMode="full width"
+          >
+            Active
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

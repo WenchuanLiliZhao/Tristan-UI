@@ -41,7 +41,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   trigger,
   groups,
   position = "bottom-start",
-  offset = 8,
+  offset = 0,
   disabled = false,
   onItemClick,
   onVisibilityChange,

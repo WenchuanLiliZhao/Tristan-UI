@@ -47,8 +47,8 @@ import {
 } from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
-import { TimelineSidebar } from "./Sidebar/TimelineSidebar";
-import type { GroupPlacement } from "./Sidebar/TimelineSidebar";
+import { TimelineSidebar } from "./LeftSidebar/TimelineLeftSidebar";
+import type { GroupPlacement } from "./LeftSidebar/TimelineLeftSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import { useZoomLevelMonitor } from "../hooks/useZoomLevelMonitor";
 import styles from "./Timeline.module.scss";

@@ -1,11 +1,14 @@
 .dropdown-container {
   display: inline-block;
   position: relative;
+  
 }
 
 .dropdown-trigger {
   display: inline-block;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
   
   &.disabled {
     opacity: 0.5;
@@ -16,8 +19,12 @@
 
 .dropdown-portal {
   position: absolute;
-  z-index: 1000;
-  /* Portal styles are handled by positioning logic */
+  z-index: var(--z-index-nav);
+  background-color: var(--color--bg-prime);
+  border: 1px solid var(--color--border-prime);
+  border-radius: 8px;
+  box-shadow: var(--shaodw-pop-up);
+  padding: 4px;
 }
 
 .dropdown-cascader {

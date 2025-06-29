@@ -6,7 +6,7 @@ import { type TimelineItemType, type TimelineItemDisplayConfig } from "../../typ
 import { TimelineGroup } from "../OnTimeline/Group";
 import { Column } from "../Shared/Column";
 import { TimelineConst } from "../_constants";
-import type { GroupPlacement } from "../Sidebar/TimelineSidebar";
+import type { GroupPlacement } from "../LeftSidebar/TimelineLeftSidebar";
 // import styles from "../../Timeline.module.scss";
 import styles from "./TimelineItems.module.scss"
 

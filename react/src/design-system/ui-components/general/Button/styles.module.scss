@@ -17,12 +17,27 @@
   //   outline-offset: 2px;
   // }
 
+  &__content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--full-width {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   &--small {
     padding: 6px calc(12px - var(--border-width));
   }
 
   &--medium {
-    padding: 0 calc(7px - var(--border-width));
+    padding: 0 calc(8px - var(--border-width));
     height: 32px;
     border-radius: 4px;
     gap: 1px;
@@ -35,7 +50,6 @@
     .tristan-button__content {
       font-size: 14px;
       line-height: 22px;
-      padding: 0 3px;
     }
   }
 
@@ -263,6 +277,8 @@
     justify-content: center;
     flex-shrink: 0;
   }
+
+  
 }
 
 @keyframes spin {

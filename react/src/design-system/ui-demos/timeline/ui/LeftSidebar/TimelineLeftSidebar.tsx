@@ -1,5 +1,5 @@
 import {} from "react";
-import styles from "./TimelineSidebar.module.scss";
+import styles from "./TimelineLeftSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
 import { type TimelineItemType, type SidebarPropertyConfig } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
@@ -9,6 +9,8 @@ import {
   Dropdown,
   type CascaderGroupProps,
   PropertyDistributionBar,
+  Icon,
+  Button,
 } from "../../../../ui-components";
 
 export interface GroupPlacement<T = Record<string, unknown>> {
@@ -52,10 +54,19 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
 
     return [
       {
-        groupTitle: "Group By Options",
         items: groupByOptions.map((option) => ({
           key: option.key,
-          content: <span>{option.label}</span>,
+          content: (
+            <Button
+              size="medium"
+              widthMode="full width"
+              decoIcon={option.label === groupBy ? "check" : undefined}
+              variant={option.label === groupBy ? "filled" : "ghost"}
+              semantic={option.label === groupBy ? "active" : "default"}
+            >
+              {option.label}
+            </Button>
+          ),
           value: option.value,
         })),
       },
@@ -84,25 +95,28 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
               TimelineConst.dayLabelHeight,
           }}
         >
-          {groupByOptions.length > 0 ? (
-            <Dropdown
-              trigger={
-                <div
-                  className={styles["timeline-sidebar-ruler-space-group-by"]}
-                >
-                  Group by: {groupBy}
-                </div>
-              }
-              groups={createGroupByOptions()}
-              position="right-start"
-              onItemClick={handleGroupByChange}
-              width={160}
-            />
-          ) : (
-            <div className={styles["timeline-sidebar-ruler-space-group-by"]}>
-              Group by: {groupBy}
-            </div>
-          )}
+          <div className={styles["group-by-container"]}>
+            <div className={styles["group-by-label"]}>Group By</div>
+
+            {groupByOptions.length > 0 ? (
+              <Dropdown
+                className={styles["group-by-dropdown"]}
+                trigger={
+                  <div className={styles["group-by-value-container"]}>
+                    <div className={styles["group-by-value"]}>{groupBy}</div>
+                    <Icon
+                      className={styles["group-by-value-icon"]}
+                      name="chevron_right"
+                    />
+                  </div>
+                }
+                groups={createGroupByOptions()}
+                position="right-start"
+                onItemClick={handleGroupByChange}
+                width={160}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
     );

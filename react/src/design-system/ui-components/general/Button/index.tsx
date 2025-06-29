@@ -23,6 +23,8 @@ export interface ButtonProps extends BaseComponentProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Button type */
   type?: "button" | "submit" | "reset";
+  /** Width mode of button */
+  widthMode?: "auto width" | "full width";
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -37,6 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
   type = "button",
   className = "",
   "data-testid": dataTestId,
+  widthMode = "auto width",
   ...rest
 }) => {
   const baseClass = "tristan-button";
@@ -45,6 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
     styles[`${baseClass}--${variant}`],
     styles[`${baseClass}--${size}`],
     styles[`${baseClass}--${semantic}`],
+    widthMode === "full width" && styles[`${baseClass}--full-width`],
     disabled && styles[`${baseClass}--disabled`],
     className,
   ]
@@ -60,14 +64,16 @@ export const Button: React.FC<ButtonProps> = ({
       data-testid={dataTestId}
       {...rest}
     >
-      {icon && (
-        <span className={styles[`${baseClass}__icon`]}>
-          <Icon name={icon} />
-        </span>
-      )}
-      {children && (
-        <span className={styles[`${baseClass}__content`]}>{children}</span>
-      )}
+      <div className={styles[`${baseClass}__content-container`]}>
+        {icon && (
+          <span className={styles[`${baseClass}__icon`]}>
+            <Icon name={icon} />
+          </span>
+        )}
+        {children && (
+          <span className={styles[`${baseClass}__content`]}>{children}</span>
+        )}
+      </div>
       {decoIcon && (
         <span className={styles[`${baseClass}__icon`]}>
           <Icon name={decoIcon} />
