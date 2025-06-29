@@ -48,6 +48,7 @@ import {
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
 import { TimelineSidebar } from "./LeftSidebar/TimelineLeftSidebar";
+import { GroupBySelector } from "./Shared/GroupBySelector";
 import type { GroupPlacement } from "./LeftSidebar/TimelineLeftSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import { useZoomLevelMonitor } from "../hooks/useZoomLevelMonitor";
@@ -464,6 +465,24 @@ export function Timeline<T = Record<string, unknown>>({
   return (
     <React.Fragment>
       <div className={styles["timeline-container"]}>
+        {/* 独立的 GroupBy 选择器覆盖层 */}
+        {hasGrouping && (
+          <GroupBySelector
+            groupBy={currentGroupByLabel}
+            groupByOptions={groupByOptions?.map(option => ({
+              key: String(option.field),
+              label: option.label,
+              value: String(option.field)
+            }))}
+            onGroupByChange={(value) => {
+              const option = groupByOptions?.find(opt => String(opt.field) === value);
+              if (option && groupByManagement) {
+                groupByManagement.setCurrentGroupBy(option.field);
+              }
+            }}
+          />
+        )}
+
         <div className={styles["timeline-body"]}>
           {/* 主滚动容器 - 处理横向滚动，ruler 和 content 都在其中 */}
           <div
@@ -487,18 +506,6 @@ export function Timeline<T = Record<string, unknown>>({
                     cellHeight={cellHeight}
                     groupGap={groupGapForTesting}
                     isRulerMode={true}
-                    groupBy={currentGroupByLabel}
-                    groupByOptions={groupByOptions?.map(option => ({
-                      key: String(option.field),
-                      label: option.label,
-                      value: String(option.field)
-                    }))}
-                    onGroupByChange={(value) => {
-                      const option = groupByOptions?.find(opt => String(opt.field) === value);
-                      if (option && groupByManagement) {
-                        groupByManagement.setCurrentGroupBy(option.field);
-                      }
-                    }}
                     sidebarProperties={sidebarProperties}
                   />
                 </div>
@@ -526,18 +533,6 @@ export function Timeline<T = Record<string, unknown>>({
                     groupPlacements={groupPlacements}
                     cellHeight={cellHeight}
                     groupGap={groupGapForTesting}
-                    groupBy={currentGroupByLabel}
-                    groupByOptions={groupByOptions?.map(option => ({
-                      key: String(option.field),
-                      label: option.label,
-                      value: String(option.field)
-                    }))}
-                    onGroupByChange={(value) => {
-                      const option = groupByOptions?.find(opt => String(opt.field) === value);
-                      if (option && groupByManagement) {
-                        groupByManagement.setCurrentGroupBy(option.field);
-                      }
-                    }}
                     sidebarProperties={sidebarProperties}
                   />
                 </div>
@@ -594,6 +589,7 @@ export function Timeline<T = Record<string, unknown>>({
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         width={400}
+        title={issueDetailsConfig?.title}
       >
         {selectedItem && (
           <IssueDetails

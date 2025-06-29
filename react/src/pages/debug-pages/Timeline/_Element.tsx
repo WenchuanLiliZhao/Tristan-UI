@@ -91,6 +91,7 @@ export function Element(): React.ReactElement {
 
   {/* 🎯 IssueDetails 详情配置示例: */}
   const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
+    .setTitle("Project Details") // 自定义sidebar标题
     .setPropertyOrder([
       { property: "name", displayType: "text" },
       { property: "id", displayType: "text" },
@@ -156,7 +157,7 @@ export function Element(): React.ReactElement {
       }
       main={
         <TimelineView<ProjectDataType>
-          fetchByTimeInterval={[new Date("2025-01-01"), new Date("2025-12-30")]}
+          // fetchByTimeInterval={[new Date("2025-01-01"), new Date("2025-12-30")]}
           init={itemDisplayConfigSimple}
           inputData={ExampleData}
           groupByOptions={groupByOptions}

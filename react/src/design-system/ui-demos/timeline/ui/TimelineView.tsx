@@ -31,6 +31,7 @@ export function TimelineView<T = Record<string, unknown>>(props: TimelineProps<T
           isOpen={Boolean(selectedItem && props.issueDetailsConfig)}
           onClose={() => setSelectedItem(null)}
           width={400}
+          title={props.issueDetailsConfig?.title}
         >
           {selectedItem && props.issueDetailsConfig && (
             <IssueDetails<T>

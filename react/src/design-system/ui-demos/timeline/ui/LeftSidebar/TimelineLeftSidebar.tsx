@@ -6,11 +6,7 @@ import { type PlacementResult } from "../../utils/placement";
 import {
   RichTooltip,
   RichTooltipItem,
-  Dropdown,
-  type CascaderGroupProps,
   PropertyDistributionBar,
-  Icon,
-  Button,
 } from "../../../../ui-components";
 
 export interface GroupPlacement<T = Record<string, unknown>> {
@@ -25,9 +21,6 @@ interface TimelineSidebarProps<T = Record<string, unknown>> {
   cellHeight: number;
   groupGap: number;
   isRulerMode?: boolean;
-  groupBy?: string;
-  groupByOptions?: { key: string; label: string; value: string }[];
-  onGroupByChange?: (value: string) => void;
   sidebarProperties?: SidebarPropertyConfig<T>[];
 }
 
@@ -36,9 +29,6 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
   cellHeight,
   groupGap,
   isRulerMode = false,
-  groupBy,
-  groupByOptions = [],
-  onGroupByChange,
   sidebarProperties = [],
 }: TimelineSidebarProps<T>) => {
   // 计算每个组的高度和位置
@@ -48,38 +38,9 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
     return (maxColumn + 1) * cellHeight;
   };
 
-  // 创建 groupBy 选项的 cascader 数据
-  const createGroupByOptions = (): CascaderGroupProps[] => {
-    if (groupByOptions.length === 0) return [];
+  // GroupBy 相关逻辑现在由独立的 GroupBySelector 组件处理
 
-    return [
-      {
-        items: groupByOptions.map((option) => ({
-          key: option.key,
-          content: (
-            <Button
-              size="medium"
-              widthMode="full width"
-              decoIcon={option.label === groupBy ? "check" : undefined}
-              variant={option.label === groupBy ? "filled" : "ghost"}
-              semantic={option.label === groupBy ? "active" : "default"}
-            >
-              {option.label}
-            </Button>
-          ),
-          value: option.value,
-        })),
-      },
-    ];
-  };
-
-  const handleGroupByChange = (value: string | number | object | undefined) => {
-    if (typeof value === "string" && onGroupByChange) {
-      onGroupByChange(value);
-    }
-  };
-
-  // 如果是 ruler 模式，只返回占位区域
+  // 如果是 ruler 模式，只返回空的占位区域（GroupBy 现在由独立组件处理）
   if (isRulerMode) {
     return (
       <div
@@ -95,28 +56,7 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
               TimelineConst.dayLabelHeight,
           }}
         >
-          <div className={styles["group-by-container"]}>
-            <div className={styles["group-by-label"]}>Group By</div>
-
-            {groupByOptions.length > 0 ? (
-              <Dropdown
-                className={styles["group-by-dropdown"]}
-                trigger={
-                  <div className={styles["group-by-value-container"]}>
-                    <div className={styles["group-by-value"]}>{groupBy}</div>
-                    <Icon
-                      className={styles["group-by-value-icon"]}
-                      name="chevron_right"
-                    />
-                  </div>
-                }
-                groups={createGroupByOptions()}
-                position="right-start"
-                onItemClick={handleGroupByChange}
-                width={160}
-              />
-            ) : null}
-          </div>
+          {/* GroupBy 选择器现在由独立的 GroupBySelector 组件处理 */}
         </div>
       </div>
     );

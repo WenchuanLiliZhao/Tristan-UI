@@ -61,6 +61,8 @@ export interface PropertyConfig {
  * Configuration object for IssueDetails component.
  */
 export interface IssueDetailsConfig<T = Record<string, unknown>> {
+  /** Custom title for the sidebar (optional, defaults to "Details") */
+  title?: string;
   /** Mapping configuration for each field */
   propertyMappings?: Record<keyof T | string, PropertyMappingConfig>;
   /** Order of properties shown in the UI */
@@ -103,6 +105,12 @@ export class IssueDetailsConfigBuilder<T = Record<string, unknown>> {
     
     this.config.propertyMappings = mappings as Record<keyof T | string, PropertyMappingConfig>;
     
+    return this;
+  }
+
+  /** Set the sidebar title */
+  setTitle(title: string): this {
+    this.config.title = title;
     return this;
   }
 
