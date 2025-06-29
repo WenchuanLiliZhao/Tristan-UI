@@ -181,7 +181,15 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           left: `${TimelineConst.itemHPadding}px`,
           cursor: onIssueClick ? "pointer" : "default",
         }}
+        role={onIssueClick ? "button" : undefined}
+        tabIndex={onIssueClick ? 0 : undefined}
         onClick={() => onIssueClick?.(item)}
+        onKeyDown={(e) => {
+          if (onIssueClick && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            onIssueClick(item);
+          }
+        }}
       >
         <div className={styles["timeline-item-graphic-info"]}>
           {displayConfig?.graphicFields?.map((config, index) =>

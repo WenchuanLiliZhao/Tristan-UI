@@ -45,7 +45,14 @@
     color: var(--color--text-prime);
     
     &:hover {
+      border-color: var(--color--semantic-active-half);
+    }
+    
+    &:focus {
       border-color: var(--color--semantic-active);
+
+      // outline: 1px solid var(--color--semantic-active);
+      // outline-offset: 2px;
     }
     
     .timeline-item-graphic-info {
