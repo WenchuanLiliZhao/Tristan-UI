@@ -278,7 +278,13 @@
     flex-shrink: 0;
   }
 
-  
+  &--focusable {
+    &:focus-visible,
+    &:focus {
+      outline: 2px solid var(--color--border-prime) !important;
+      outline-offset: 2px;
+    }
+  }
 }
 
 @keyframes spin {

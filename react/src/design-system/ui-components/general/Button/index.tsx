@@ -25,6 +25,8 @@ export interface ButtonProps extends BaseComponentProps {
   type?: "button" | "submit" | "reset";
   /** Width mode of button */
   widthMode?: "auto width" | "full width";
+  /** Whether the button should be focusable via keyboard and show focus outline */
+  focusable?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -40,6 +42,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = "",
   "data-testid": dataTestId,
   widthMode = "auto width",
+  focusable = false,
   ...rest
 }) => {
   const baseClass = "tristan-button";
@@ -50,6 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
     styles[`${baseClass}--${semantic}`],
     widthMode === "full width" && styles[`${baseClass}--full-width`],
     disabled && styles[`${baseClass}--disabled`],
+    focusable && styles[`${baseClass}--focusable`],
     className,
   ]
     .filter(Boolean)
@@ -61,6 +65,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={classes}
       disabled={disabled}
       onClick={onClick}
+      tabIndex={focusable ? 0 : -1}
       data-testid={dataTestId}
       {...rest}
     >

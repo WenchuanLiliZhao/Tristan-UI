@@ -28,31 +28,38 @@
         line-height: 12px;
         text-transform: uppercase;
         font-weight: bold;
-      }
-
-      .group-by-value-container {
-        display: flex;
-        flex-direction: row;
-        gap: 2px;
-        align-items: center;
-        justify-content: space-between;
-
-        .group-by-value {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--color--text-secondary);
-          line-height: 20px;
-        }
-
-        .group-by-value-icon {
-          font-size: 18px;
-          color: var(--color--text-secondary);
-          line-height: 20px;
-        }
+        padding: 0 8px;
       }
 
       .group-by-dropdown {
         width: 100%;
+        padding: 4px 8px;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: var(--color--bg-hover);
+        }
+
+        .group-by-value-container {
+          display: flex;
+          flex-direction: row;
+          gap: 2px;
+          align-items: center;
+          justify-content: space-between;
+  
+          .group-by-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color--text-secondary);
+            line-height: 20px;
+          }
+  
+          .group-by-value-icon {
+            font-size: 18px;
+            color: var(--color--text-secondary);
+            line-height: 20px;
+          }
+        }
       }
     }
   }

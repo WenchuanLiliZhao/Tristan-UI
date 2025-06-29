@@ -45,15 +45,26 @@ export function Element(): React.ReactElement {
       // - If progress = 100, color is 'success'.
       // createFieldConfig.progress<ProjectDataType>("progress"),
 
-      // 2. Progress (Custom Colors): Uncomment the code below to see it in action.
+      // 2. Progress (Custom Colors): Three ways to define custom colors.
       // You will need to import `getRainbowColor` from "../../../styles/color".
       //
+      // Method A: Static colors
+      //   inprogressColor: getRainbowColor("amber"),
+      //   doneColor: getRainbowColor("emerald"),
+      //
+      // Method B: Dynamic colors based on item properties (current example)
+      //   inprogressColor: (item) => riskLevel[item.riskLevel].color,
+      //
+      // Method C: Complex color ranges with multiple stops
+      //   progressColors: [
+      //     { upto: 30, color: getRainbowColor("amber") },
+      //     { upto: 70, color: getRainbowColor("blue") },
+      //     { upto: 100, color: getRainbowColor("emerald") },
+      //   ]
+      //
       createFieldConfig.progress<ProjectDataType>("progress", {
-        progressColors: [
-          { upto: 30, color: getRainbowColor("amber") },
-          { upto: 70, color: getRainbowColor("blue") },
-          { upto: 100, color: getRainbowColor("emerald") },
-        ],
+        inprogressColor: (item) => riskLevel[item.riskLevel].color,
+        doneColor: getRainbowColor("emerald"),
       }),
 
       createFieldConfig.iconFromMap<ProjectDataType>("priority", priority),

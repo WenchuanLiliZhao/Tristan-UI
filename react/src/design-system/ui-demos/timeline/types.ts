@@ -96,7 +96,7 @@ export interface FieldDisplayConfig<T = Record<string, unknown>> {
    * - 对于 tag: 返回 { text: string, color?: string, variant?: 'contained' | 'outlined' }
    */
   mapping?: 
-    | ((value: unknown) => Record<string, unknown>)
+    | ((value: unknown, item?: TimelineItemType<T>) => Record<string, unknown>)
     | Record<string, Record<string, unknown>>;
   /** 自定义样式 */
   style?: React.CSSProperties;
@@ -218,11 +218,17 @@ export const FieldMappers = {
   },
   
   /** 进度条映射 */
-  progress: (options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) => 
-    (value: unknown) => {
+  progress: <T = Record<string, unknown>>(options?: { 
+    showText?: boolean; 
+    progressColors?: ProgressColorStop[];
+    inprogressColor?: string | ((item: TimelineItemType<T>) => string);
+    doneColor?: string | ((item: TimelineItemType<T>) => string);
+  }) => 
+    (value: unknown, item?: TimelineItemType<T>) => {
       const progressValue = Math.max(0, Math.min(100, Number(value) || 0));
       let progressColor: TimelineColorType | undefined = undefined;
 
+      // 优先使用 progressColors 配置
       if (options?.progressColors && options.progressColors.length > 0) {
         // 从小到大排序，确保先匹配到最小的 upto
         const sortedColors = [...options.progressColors].sort((a, b) => a.upto - b.upto);
@@ -232,6 +238,24 @@ export const FieldMappers = {
           progressColor = matchedColor.color.startsWith('--') 
             ? `var(${matchedColor.color})` 
             : matchedColor.color;
+        }
+      }
+      // 其次使用简化的 inprogressColor 和 doneColor 配置
+      else if (options?.inprogressColor || options?.doneColor) {
+        if (progressValue < 100 && options.inprogressColor) {
+          const colorValue = typeof options.inprogressColor === 'function' 
+            ? options.inprogressColor(item!)
+            : options.inprogressColor;
+          progressColor = colorValue.startsWith('--') 
+            ? `var(${colorValue})` 
+            : colorValue;
+        } else if (progressValue >= 100 && options.doneColor) {
+          const colorValue = typeof options.doneColor === 'function' 
+            ? options.doneColor(item!)
+            : options.doneColor;
+          progressColor = colorValue.startsWith('--') 
+            ? `var(${colorValue})` 
+            : colorValue;
         }
       }
 
@@ -281,10 +305,15 @@ export const FieldMappers = {
 // 🎯 简化配置对象创建函数
 export const createFieldConfig = {
   /** 创建进度条字段配置 */
-  progress: <T>(field: keyof T, options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) => ({
+  progress: <T>(field: keyof T, options?: { 
+    showText?: boolean; 
+    progressColors?: ProgressColorStop[];
+    inprogressColor?: string | ((item: TimelineItemType<T>) => string);
+    doneColor?: string | ((item: TimelineItemType<T>) => string);
+  }) => ({
     field,
     displayType: 'progress' as const,
-    mapping: FieldMappers.progress(options),
+    mapping: FieldMappers.progress<T>(options),
     visible: true,
   }),
   
@@ -350,7 +379,12 @@ export class TimelineConfigBuilder<T = Record<string, unknown>> {
     tagFields: [] 
   };
 
-  addProgress(field: keyof T, options?: { showText?: boolean; progressColors?: ProgressColorStop[] }) {
+  addProgress(field: keyof T, options?: { 
+    showText?: boolean; 
+    progressColors?: ProgressColorStop[];
+    inprogressColor?: string | ((item: TimelineItemType<T>) => string);
+    doneColor?: string | ((item: TimelineItemType<T>) => string);
+  }) {
     this.config.graphicFields?.push(createFieldConfig.progress(field, options));
     return this;
   }

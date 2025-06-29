@@ -37,7 +37,7 @@ const renderGraphicField = (
 
   if (config.mapping) {
     if (typeof config.mapping === "function") {
-      displayProps = config.mapping(fieldValue);
+      displayProps = config.mapping(fieldValue, item);
     } else if (typeof fieldValue === "string" && config.mapping[fieldValue]) {
       displayProps = config.mapping[fieldValue];
     }
@@ -106,7 +106,7 @@ const renderTagField = (
 
   if (config.mapping) {
     if (typeof config.mapping === "function") {
-      displayProps = config.mapping(fieldValue);
+      displayProps = config.mapping(fieldValue, item);
     } else if (typeof fieldValue === "string" && config.mapping[fieldValue]) {
       displayProps = config.mapping[fieldValue];
     }
