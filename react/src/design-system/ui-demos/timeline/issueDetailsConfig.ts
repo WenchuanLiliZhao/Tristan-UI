@@ -1,4 +1,4 @@
-import type React from 'react';
+
 
 export interface ValueMappingEntry {
   name: string;
@@ -10,17 +10,55 @@ export interface ValueMappingEntry {
 export interface PropertyMappingConfig {
   /** Custom label in the UI (optional) */
   label?: string;
-  /** Custom renderer for the value */
-  formatter?: (value: unknown) => React.ReactNode;
   /** Explicit display type override */
   displayType?: 'text' | 'date' | 'progress' | 'tag';
   /** Mapping from raw field value to display metadata */
   valueMapping?: Record<string, ValueMappingEntry>;
+  /** Additional display options for different field types */
+  displayOptions?: {
+    // Text field options
+    color?: string;
+    fontWeight?: 'normal' | 'medium' | 'semibold' | 'bold';
+    fontSize?: 'sm' | 'base' | 'lg' | 'xl';
+    // Date field options
+    dateFormat?: 'short' | 'medium' | 'long' | 'full';
+    locale?: string;
+    // Progress field options
+    progressColor?: string;
+    showProgressText?: boolean;
+    progressHeight?: 'sm' | 'md' | 'lg';
+    progressVariant?: 'default' | 'rounded' | 'square';
+    // Tag field options
+    tagVariant?: 'contained' | 'outlined';
+  };
+}
+
+// Simplified property configuration interface
+export interface PropertyConfig {
+  property: string;
+  displayType?: 'text' | 'date' | 'progress' | 'tag';
+  label?: string;
+  valueMapping?: Record<string, ValueMappingEntry>;
+  displayOptions?: {
+    // Text field options
+    color?: string;
+    fontWeight?: 'normal' | 'medium' | 'semibold' | 'bold';
+    fontSize?: 'sm' | 'base' | 'lg' | 'xl';
+    // Date field options
+    dateFormat?: 'short' | 'medium' | 'long' | 'full';
+    locale?: string;
+    // Progress field options
+    progressColor?: string;
+    showProgressText?: boolean;
+    progressHeight?: 'sm' | 'md' | 'lg';
+    progressVariant?: 'default' | 'rounded' | 'square';
+    // Tag field options
+    tagVariant?: 'contained' | 'outlined';
+  };
 }
 
 /**
  * Configuration object for IssueDetails component.
- * All properties are optional so that users can override only what they need.
  */
 export interface IssueDetailsConfig<T = Record<string, unknown>> {
   /** Mapping configuration for each field */
@@ -45,18 +83,26 @@ export class IssueDetailsConfigBuilder<T = Record<string, unknown>> {
     return new IssueDetailsConfigBuilder<T>();
   }
 
-  /** Add or update mapping configuration for a specific field */
-  addPropertyMapping(field: keyof T | string, mapping: PropertyMappingConfig): this {
-    if (!this.config.propertyMappings) {
-      this.config.propertyMappings = {} as Record<keyof T | string, PropertyMappingConfig>;
-    }
-    (this.config.propertyMappings as Record<keyof T | string, PropertyMappingConfig>)[field] = mapping;
-    return this;
-  }
-
-  /** Define the overall display order of properties */
-  setPropertyOrder(order: (keyof T | string)[]): this {
-    this.config.propertyOrder = order;
+  /** Define the overall display order and configuration of properties */
+  setPropertyOrder(propertyConfigs: PropertyConfig[]): this {
+    this.config.propertyOrder = propertyConfigs.map(config => config.property);
+    
+    // Process each property config and add to property mappings
+    const mappings: Record<string, PropertyMappingConfig> = {};
+    
+    propertyConfigs.forEach(config => {
+      if (config.displayType || config.label || config.valueMapping || config.displayOptions) {
+        mappings[config.property] = {
+          label: config.label,
+          displayType: config.displayType,
+          valueMapping: config.valueMapping,
+          displayOptions: config.displayOptions
+        };
+      }
+    });
+    
+    this.config.propertyMappings = mappings as Record<keyof T | string, PropertyMappingConfig>;
+    
     return this;
   }
 

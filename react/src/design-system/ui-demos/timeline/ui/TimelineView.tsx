@@ -11,7 +11,11 @@ export function TimelineView<T = Record<string, unknown>>(props: TimelineProps<T
   // When a timeline item is clicked, update local state and forward the event if provided
   const handleItemClick = (item: TimelineItemType<T>) => {
     props.onItemClick?.(item);
-    setSelectedItem(item);
+    
+    // Only set selected item if issueDetailsConfig is provided
+    if (props.issueDetailsConfig) {
+      setSelectedItem(item);
+    }
   };
 
   return (
@@ -24,11 +28,11 @@ export function TimelineView<T = Record<string, unknown>>(props: TimelineProps<T
       }
       right={
         <RightSidebar
-          isOpen={Boolean(selectedItem)}
+          isOpen={Boolean(selectedItem && props.issueDetailsConfig)}
           onClose={() => setSelectedItem(null)}
           width={400}
         >
-          {selectedItem && (
+          {selectedItem && props.issueDetailsConfig && (
             <IssueDetails<T>
               item={selectedItem}
               config={props.issueDetailsConfig}

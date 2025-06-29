@@ -77,42 +77,60 @@ export function Element(): React.ReactElement {
     // }),
   ];
 
-  // 🎯 IssueDetails 详情配置示例
+
+  {/* 🎯 IssueDetails 详情配置示例: */}
   const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     .setPropertyOrder([
-      "name",
-      "id",
-      "riskLevel",
-      "projectKey",
-      "status",
-      "priority",
-      "progress",
-      "team",
-      "category",
-      "startDate",
-      "endDate",
+      { property: "name", displayType: "text" },
+      { property: "id", displayType: "text" },
+      { 
+        property: "riskLevel", 
+        displayType: "tag", 
+        valueMapping: riskLevel,
+        label: "Risk Level"
+      },
+      { property: "projectKey", displayType: "text" },
+      { 
+        property: "status", 
+        displayType: "tag", 
+        valueMapping: status,
+        label: "Status"
+      },
+      { 
+        property: "priority", 
+        displayType: "tag", 
+        valueMapping: priority,
+        label: "Priority"
+      },
+      { 
+        property: "progress", 
+        displayType: "progress",
+        label: "Progress" 
+      },
+      { 
+        property: "team", 
+        displayType: "text", 
+        displayOptions: { 
+          color: "var(--color--semantic-active)",
+          fontWeight: "medium" 
+        }
+      },
+      { property: "category", displayType: "text" },
+      { 
+        property: "startDate", 
+        displayType: "date",
+        displayOptions: { dateFormat: "medium" }
+      },
+      { 
+        property: "endDate", 
+        displayType: "date",
+        displayOptions: { dateFormat: "medium" }
+      },
     ])
-    // 自定义 Tag 显示的映射与标签
-    .addPropertyMapping("status", {
-      label: "Status",
-      displayType: "tag",
-      // 复用前面定义的 status 映射（name、color、icon）
-      valueMapping: status,
-    })
-    .addPropertyMapping("riskLevel", {
-      label: "Risk Level",
-      displayType: "tag",
-      // 复用前面定义的 status 映射（name、color、icon）
-      valueMapping: riskLevel,
-    })
-    // progress 字段显式指定为进度条
-    .addPropertyMapping("progress", {
-      label: "Progress",
-      displayType: "progress",
-    })
-
-    
     .build();
+
+  {/* 🎯 可选配置示例：注释掉上面的配置，取消注释下面这行，体验无 issue details 的效果 */}
+  // const issueDetailsConfig = undefined;
 
   return (
     <TristanLayout

@@ -1,12 +1,8 @@
 import React from 'react';
 import styles from './styles.module.scss';
-// import { Tag, Icon } from '../../../../ui-components'; // Tag may still be used for fallback
 import type { TimelineItemType } from '../../types';
 import type { IssueDetailsConfig, PropertyMappingConfig } from '../../issueDetailsConfig';
-import { TextField } from './TextField';
-import { DateField } from './DateField';
-import { ProgressField } from './ProgressField';
-import { TagField } from './TagField';
+import { TextField, DateField, ProgressField, TagField } from '../../../../ui-components/data-display';
 
 interface IssueDetailsProps<T = Record<string, unknown>> {
   /** The issue/item to display */
@@ -61,40 +57,98 @@ export function IssueDetails<T = Record<string, unknown>>({
 
   // Decide which specialized field component to render
   const renderField = (key: string, value: unknown): React.ReactNode => {
-    // Check if there's a custom formatter provided in config
     const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
-    if (mappingConfig?.formatter) {
-      return (
-        <TextField label={getLabel(key)} value={mappingConfig.formatter(value)} />
-      );
+    const displayOptions = mappingConfig?.displayOptions || {};
+    const displayType = mappingConfig?.displayType;
+    
+    if (displayType === 'tag' || (mappingConfig?.valueMapping && typeof value === 'string')) {
+      // Tag mapping
+      const mapping = mappingConfig?.valueMapping;
+      if (mapping && typeof value === 'string' && mapping[value]) {
+        const mapped = mapping[value];
+        return (
+          <TagField
+            label={getLabel(key)}
+            name={mapped.name}
+            color={mapped.color}
+            icon={mapped.icon}
+            variant={displayOptions.tagVariant}
+          />
+        );
+      } else if (displayType === 'tag') {
+        // Fallback for tag displayType without mapping
+        return (
+          <TagField
+            label={getLabel(key)}
+            name={String(value)}
+            color={displayOptions.color || 'primary'}
+            variant={displayOptions.tagVariant}
+          />
+        );
+      }
     }
 
-    // Tag mapping
-    const mapping = mappingConfig?.valueMapping;
-    if (mapping && typeof value === 'string' && mapping[value]) {
-      const mapped = mapping[value];
+    if (displayType === 'progress' && typeof value === 'number') {
       return (
-        <TagField
-          label={getLabel(key)}
-          name={mapped.name}
-          color={mapped.color}
-          icon={mapped.icon}
+        <ProgressField 
+          label={getLabel(key)} 
+          value={Number(value)}
+          color={displayOptions.progressColor}
+          showText={displayOptions.showProgressText}
+          height={displayOptions.progressHeight}
+          variant={displayOptions.progressVariant}
         />
       );
     }
 
-    // progress
-    if ((mappingConfig?.displayType === 'progress' || key === 'progress') && typeof value === 'number') {
-      return <ProgressField label={getLabel(key)} value={Number(value)} />;
+    if (displayType === 'date' && (value instanceof Date || typeof value === 'string')) {
+      const dateValue = value instanceof Date ? value : new Date(value);
+      return (
+        <DateField 
+          label={getLabel(key)} 
+          value={dateValue}
+          format={displayOptions.dateFormat}
+          locale={displayOptions.locale}
+          color={displayOptions.color}
+        />
+      );
     }
 
-    // date
+    if (displayType === 'text') {
+      return (
+        <TextField 
+          label={getLabel(key)} 
+          value={String(value)}
+          color={displayOptions.color}
+          fontWeight={displayOptions.fontWeight}
+          fontSize={displayOptions.fontSize}
+        />
+      );
+    }
+
+    // Auto-detect based on value type
     if (value instanceof Date) {
-      return <DateField label={getLabel(key)} value={value} />;
+      return (
+        <DateField 
+          label={getLabel(key)} 
+          value={value}
+          format={displayOptions.dateFormat}
+          locale={displayOptions.locale}
+          color={displayOptions.color}
+        />
+      );
     }
 
     // default text
-    return <TextField label={getLabel(key)} value={String(value)} />;
+    return (
+      <TextField 
+        label={getLabel(key)} 
+        value={String(value)}
+        color={displayOptions.color}
+        fontWeight={displayOptions.fontWeight}
+        fontSize={displayOptions.fontSize}
+      />
+    );
   };
 
   const getLabel = (key: string): string => {

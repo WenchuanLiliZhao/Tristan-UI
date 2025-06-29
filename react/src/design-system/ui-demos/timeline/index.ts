@@ -33,4 +33,4 @@ export {
 // Issue Details configuration helpers
 export { IssueDetailsConfigBuilder } from './issueDetailsConfig';
 
-export type { IssueDetailsConfig } from './issueDetailsConfig';
+export type { IssueDetailsConfig, PropertyConfig } from './issueDetailsConfig';
