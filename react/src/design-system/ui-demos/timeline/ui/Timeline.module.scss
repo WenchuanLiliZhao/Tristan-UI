@@ -44,7 +44,7 @@
   .timeline-ruler-sticky {
     position: sticky;
     top: 0;
-    z-index: 2; /* Lower than .timeline-sidebar (99) so pointer & ruler stay behind sidebar */
+    z-index: var(--z-index-subnav);
     background-color: var(--color--bg-prime);
     display: flex;
 

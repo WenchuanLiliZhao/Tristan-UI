@@ -156,7 +156,7 @@ export function Element(): React.ReactElement {
       }
       main={
         <TimelineView<ProjectDataType>
-          // fetchByTimeInterval={[new Date("2023-12-01"), new Date("2024-12-30")]}
+          fetchByTimeInterval={[new Date("2025-01-01"), new Date("2025-12-30")]}
           init={itemDisplayConfigSimple}
           inputData={ExampleData}
           groupByOptions={groupByOptions}
