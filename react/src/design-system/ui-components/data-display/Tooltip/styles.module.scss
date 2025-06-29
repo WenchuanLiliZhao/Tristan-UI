@@ -20,24 +20,32 @@
   .label {
     display: flex;
     align-items: center;
-    gap: var(--spacing-s);
-  
+    gap: 4px;
+
     .icon {
       font-size: 14px;
     }
-  
+
     .label-text {
       font-size: 12px;
       line-height: 18px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
   }
 
   .value {
     font-size: 12px;
     line-height: 18px;
+    color: var(--color--text-secondary);
+    flex-shrink: 0;
   }
 }
-
 
 .item {
   display: flex;
@@ -52,13 +60,12 @@
   }
 }
 
-
 .value {
   font-weight: 500;
 }
 
 .portal {
-    position: absolute;
-    z-index: var(--z-index-tooltip);
-    pointer-events: none; /* Allows hover to pass through to trigger */
-} 
+  position: absolute;
+  z-index: var(--z-index-tooltip);
+  pointer-events: none; /* Allows hover to pass through to trigger */
+}

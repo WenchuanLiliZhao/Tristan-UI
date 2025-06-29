@@ -7,6 +7,8 @@ export interface IconProps extends BaseComponentProps {
   name: string;
   /** 自定义样式 */
   style?: React.CSSProperties;
+  /** 是否使用填充（填充）模式 */
+  filled?: boolean;
 }
 
 /**
@@ -15,7 +17,7 @@ export interface IconProps extends BaseComponentProps {
  * @example
  * ```tsx
  * <Icon name="home" />
- * <Icon name="person" />
+ * <Icon name="person" filled />
  * <Icon name="settings" />
  * ```
  */
@@ -23,13 +25,19 @@ export const Icon: React.FC<IconProps> = ({
   name,
   className = '',
   style,
+  filled = false,
   'data-testid': dataTestId,
   ...rest
 }) => {
+  // 当 filled 为 true 时，覆盖字体的 FILL 轴为 1，实现填充效果
+  const fillStyle: React.CSSProperties | undefined = filled
+    ? { fontVariationSettings: "'FILL' 1" }
+    : undefined;
+
   return (
     <span
       className={`${className} material-icons`}
-      style={style}
+      style={{ ...style, ...fillStyle }}
       data-testid={dataTestId}
       {...rest}
     >

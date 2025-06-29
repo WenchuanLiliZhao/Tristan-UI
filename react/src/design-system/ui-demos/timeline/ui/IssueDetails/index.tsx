@@ -68,6 +68,7 @@ export function IssueDetails<T = Record<string, unknown>>({
         const mapped = mapping[value];
         return (
           <TagField
+            key={key}
             label={getLabel(key)}
             name={mapped.name}
             color={mapped.color}
@@ -79,6 +80,7 @@ export function IssueDetails<T = Record<string, unknown>>({
         // Fallback for tag displayType without mapping
         return (
           <TagField
+            key={key}
             label={getLabel(key)}
             name={String(value)}
             color={displayOptions.color || 'primary'}
@@ -91,6 +93,7 @@ export function IssueDetails<T = Record<string, unknown>>({
     if (displayType === 'progress' && typeof value === 'number') {
       return (
         <ProgressField 
+          key={key}
           label={getLabel(key)} 
           value={Number(value)}
           color={displayOptions.progressColor}
@@ -105,6 +108,7 @@ export function IssueDetails<T = Record<string, unknown>>({
       const dateValue = value instanceof Date ? value : new Date(value);
       return (
         <DateField 
+          key={key}
           label={getLabel(key)} 
           value={dateValue}
           format={displayOptions.dateFormat}
@@ -117,6 +121,7 @@ export function IssueDetails<T = Record<string, unknown>>({
     if (displayType === 'text') {
       return (
         <TextField 
+          key={key}
           label={getLabel(key)} 
           value={String(value)}
           color={displayOptions.color}
@@ -130,6 +135,7 @@ export function IssueDetails<T = Record<string, unknown>>({
     if (value instanceof Date) {
       return (
         <DateField 
+          key={key}
           label={getLabel(key)} 
           value={value}
           format={displayOptions.dateFormat}
@@ -142,6 +148,7 @@ export function IssueDetails<T = Record<string, unknown>>({
     // default text
     return (
       <TextField 
+        key={key}
         label={getLabel(key)} 
         value={String(value)}
         color={displayOptions.color}
@@ -161,7 +168,7 @@ export function IssueDetails<T = Record<string, unknown>>({
       <div className={styles.properties}>
         {availableProperties.map((key) => {
           const value = item[key as keyof typeof item];
-          return <React.Fragment key={key}>{renderField(key, value)}</React.Fragment>;
+          return renderField(key, value);
         })}
       </div>
     </div>

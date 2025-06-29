@@ -44,16 +44,16 @@
   .timeline-ruler-sticky {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 2; /* Lower than .timeline-sidebar (99) so pointer & ruler stay behind sidebar */
     background-color: var(--color--bg-prime);
     display: flex;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .timeline-sidebar-ruler-placeholder {
       position: sticky;
       left: 0;
       z-index: 101;
       background-color: var(--color--bg-prime);
+      border-bottom: 1px solid var(--color--border-prime);
       flex-shrink: 0;
     }
 

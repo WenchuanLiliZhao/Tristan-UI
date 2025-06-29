@@ -18,7 +18,8 @@
         "ignore": [
           "scrollbar-width",
           "scrollbar-width: thin",
-          "scrollbar-color"
+          "scrollbar-color",
+          "scrollbar-width: none"
         ]
       }
     ]

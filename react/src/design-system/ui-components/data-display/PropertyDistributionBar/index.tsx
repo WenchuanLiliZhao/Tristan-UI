@@ -27,10 +27,11 @@ export interface PropertyDistributionBarProps {
   mapping: PropertyDistributionMapping;
   /** 可选的显示标签 */
   label?: string;
+  flexLabelSize?: number | "auto";
   /** 是否显示图例（带数量） */
   showLegend?: boolean;
   /** 图例显示模式：'below' 在下方显示，'tooltip' 每个segment悬停提示，'hover' 整个条悬停显示汇总 */
-  legendMode?: 'below' | 'tooltip' | 'hover';
+  legendMode?: "below" | "tooltip" | "hover";
   /** tooltip位置（用于 tooltip 和 hover 模式） */
   tooltipPosition?: Position;
   /** 数量单位显示文本 */
@@ -48,19 +49,29 @@ export interface PropertyDistributionBarProps {
   /** 最小显示百分比（小于此值的segment将被合并为"其他"） */
   minPercentage?: number;
   /** 自定义排序函数 */
-  sortBy?: 'count' | 'name' | 'value' | ((a: PropertyDistributionSegment, b: PropertyDistributionSegment) => number);
+  sortBy?:
+    | "count"
+    | "name"
+    | "value"
+    | ((
+        a: PropertyDistributionSegment,
+        b: PropertyDistributionSegment
+      ) => number);
   /** 点击segment时的回调 */
   onSegmentClick?: (segment: PropertyDistributionSegment) => void;
 }
 
-export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = ({
+export const PropertyDistributionBar: React.FC<
+  PropertyDistributionBarProps
+> = ({
   data,
   field,
   mapping,
   label,
+  flexLabelSize = 12,
   showLegend = false,
-  legendMode = 'below',
-  tooltipPosition = 'top-start',
+  legendMode = "below",
+  tooltipPosition = "top-start",
   countUnit,
   percentageDecimalPlaces = 1,
   height = 4,
@@ -68,7 +79,7 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
   className,
   borderRadius = 2,
   minPercentage = 0,
-  sortBy = 'count',
+  sortBy = "count",
   onSegmentClick,
 }) => {
   const distribution = useMemo(() => {
@@ -78,54 +89,65 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
 
     if (total === 0) return [];
 
-    data.forEach(item => {
-      const value = String(item[field] || 'Unknown');
+    data.forEach((item) => {
+      const value = String(item[field] || "Unknown");
       counts[value] = (counts[value] || 0) + 1;
     });
 
     // 转换为分布数据
-    let distributionData: PropertyDistributionSegment[] = Object.entries(counts)
-      .map(([value, count]) => ({
-        value,
-        count,
-        percentage: (count / total) * 100,
-        color: mapping[value]?.color || '#999999',
-        name: mapping[value]?.name || value,
-      }));
+    let distributionData: PropertyDistributionSegment[] = Object.entries(
+      counts
+    ).map(([value, count]) => ({
+      value,
+      count,
+      percentage: (count / total) * 100,
+      color: mapping[value]?.color || "#999999",
+      name: mapping[value]?.name || value,
+    }));
 
     // 处理小百分比合并
     if (minPercentage > 0) {
-      const smallSegments = distributionData.filter(segment => segment.percentage < minPercentage);
-      const largeSegments = distributionData.filter(segment => segment.percentage >= minPercentage);
-      
+      const smallSegments = distributionData.filter(
+        (segment) => segment.percentage < minPercentage
+      );
+      const largeSegments = distributionData.filter(
+        (segment) => segment.percentage >= minPercentage
+      );
+
       if (smallSegments.length > 0) {
-        const otherCount = smallSegments.reduce((sum, segment) => sum + segment.count, 0);
-        const otherPercentage = smallSegments.reduce((sum, segment) => sum + segment.percentage, 0);
-        
+        const otherCount = smallSegments.reduce(
+          (sum, segment) => sum + segment.count,
+          0
+        );
+        const otherPercentage = smallSegments.reduce(
+          (sum, segment) => sum + segment.percentage,
+          0
+        );
+
         largeSegments.push({
-          value: 'others',
+          value: "others",
           count: otherCount,
           percentage: otherPercentage,
-          color: '#cccccc',
-          name: 'Others',
+          color: "#cccccc",
+          name: "Others",
         });
-        
+
         distributionData = largeSegments;
       }
     }
 
     // 排序
-    if (typeof sortBy === 'function') {
+    if (typeof sortBy === "function") {
       distributionData.sort(sortBy);
     } else {
       switch (sortBy) {
-        case 'count':
+        case "count":
           distributionData.sort((a, b) => b.count - a.count);
           break;
-        case 'name':
+        case "name":
           distributionData.sort((a, b) => a.name.localeCompare(b.name));
           break;
-        case 'value':
+        case "value":
           distributionData.sort((a, b) => a.value.localeCompare(b.value));
           break;
       }
@@ -145,26 +167,32 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
   };
 
   const renderSegment = (segment: PropertyDistributionSegment) => {
-    const colorValue = segment.color.startsWith('--') 
-      ? `var(${segment.color})` 
+    const colorValue = segment.color.startsWith("--")
+      ? `var(${segment.color})`
       : segment.color;
 
     const segmentElement = (
       <div
         key={segment.value}
         className={`${styles["property-distribution-segment"]} ${
-          enableHover ? styles["hoverable"] : ''
-        } ${onSegmentClick ? styles["clickable"] : ''}`}
+          enableHover ? styles["hoverable"] : ""
+        } ${onSegmentClick ? styles["clickable"] : ""}`}
         style={{
           width: `${segment.percentage}%`,
           backgroundColor: colorValue,
         }}
-                 title={showLegend && legendMode === 'below' ? `${segment.name}: ${segment.count}${countUnit ? ` ${countUnit}` : ''} (${segment.percentage.toFixed(percentageDecimalPlaces)}%)` : undefined}
+        title={
+          showLegend && legendMode === "below"
+            ? `${segment.name}: ${segment.count}${
+                countUnit ? ` ${countUnit}` : ""
+              } (${segment.percentage.toFixed(percentageDecimalPlaces)}%)`
+            : undefined
+        }
         onClick={() => handleSegmentClick(segment)}
         role={onSegmentClick ? "button" : undefined}
         tabIndex={onSegmentClick ? 0 : undefined}
         onKeyDown={(e) => {
-          if (onSegmentClick && (e.key === 'Enter' || e.key === ' ')) {
+          if (onSegmentClick && (e.key === "Enter" || e.key === " ")) {
             e.preventDefault();
             handleSegmentClick(segment);
           }
@@ -173,7 +201,7 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
     );
 
     // 如果启用图例且为 tooltip 模式，则包装在 RichTooltip 中
-    if (showLegend && legendMode === 'tooltip') {
+    if (showLegend && legendMode === "tooltip") {
       return (
         <RichTooltip
           key={segment.value}
@@ -182,13 +210,15 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
           offset={8}
         >
           {[
-                      <RichTooltipItem
-            key="segment-info"
-            icon="circle"
-            iconColor={colorValue}
-            label={segment.name}
-            value={`${segment.count}${countUnit ? ` ${countUnit}` : ''} (${segment.percentage.toFixed(percentageDecimalPlaces)}%)`}
-          />
+            <RichTooltipItem
+              key="segment-info"
+              icon="crop_square"
+              iconColor={colorValue}
+              label={segment.name}
+              value={`${segment.count}${
+                countUnit ? ` ${countUnit}` : ""
+              } (${segment.percentage.toFixed(percentageDecimalPlaces)}%)`}
+            />,
           ]}
         </RichTooltip>
       );
@@ -198,11 +228,11 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
   };
 
   const renderDistributionBar = () => (
-    <div 
+    <div
       className={styles["property-distribution-bar"]}
-      style={{ 
+      style={{
         height: `${height}px`,
-        borderRadius: `${borderRadius}px`
+        borderRadius: `${borderRadius}px`,
       }}
     >
       {distribution.map(renderSegment)}
@@ -213,22 +243,34 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
     const content = (
       <>
         {label && (
-          <div className={styles["property-distribution-label"]}>
+          <div
+            className={`${styles["property-distribution-label"]} ${
+              flexLabelSize ? styles["flex"] : ""
+            }`}
+            style={
+              flexLabelSize === "auto"
+                ? { width: "auto" }
+                : { width: `${flexLabelSize}px` }
+            }
+          >
             {label}
           </div>
         )}
-        
+
         {renderDistributionBar()}
 
-        {showLegend && legendMode === 'below' && (
+        {showLegend && legendMode === "below" && (
           <div className={styles["property-distribution-legend"]}>
-            {distribution.map(segment => (
-              <div key={segment.value} className={styles["property-distribution-legend-item"]}>
+            {distribution.map((segment) => (
+              <div
+                key={segment.value}
+                className={styles["property-distribution-legend-item"]}
+              >
                 <div
                   className={styles["property-distribution-legend-color"]}
                   style={{
-                    backgroundColor: segment.color.startsWith('--') 
-                      ? `var(${segment.color})` 
+                    backgroundColor: segment.color.startsWith("--")
+                      ? `var(${segment.color})`
                       : segment.color,
                   }}
                 />
@@ -243,25 +285,35 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
     );
 
     // 如果是 hover 模式，将整个内容包装在 RichTooltip 中
-    if (showLegend && legendMode === 'hover') {
+    if (showLegend && legendMode === "hover") {
       return (
         <RichTooltip
-          trigger={<div>{content}</div>}
+          trigger={
+            <div
+              className={`${styles["property-distribution-tooltip-trigger"]} ${
+                flexLabelSize ? styles["flex"] : ""
+              }`}
+            >
+              {content}
+            </div>
+          }
           position={tooltipPosition}
           offset={8}
         >
-          {distribution.map(segment => {
-            const colorValue = segment.color.startsWith('--') 
-              ? `var(${segment.color})` 
+          {distribution.map((segment) => {
+            const colorValue = segment.color.startsWith("--")
+              ? `var(${segment.color})`
               : segment.color;
-            
+
             return (
               <RichTooltipItem
                 key={segment.value}
-                icon="circle"
+                icon="crop_square"
                 iconColor={colorValue}
                 label={segment.name}
-                value={`${segment.count}${countUnit ? ` ${countUnit}` : ''} (${segment.percentage.toFixed(percentageDecimalPlaces)}%)`}
+                value={`${segment.count}${
+                  countUnit ? ` ${countUnit}` : ""
+                } (${segment.percentage.toFixed(percentageDecimalPlaces)}%)`}
               />
             );
           })}
@@ -273,8 +325,8 @@ export const PropertyDistributionBar: React.FC<PropertyDistributionBarProps> = (
   };
 
   return (
-    <div className={`${styles["property-distribution"]} ${className || ''}`}>
+    <div className={`${styles["property-distribution"]} ${className || ""}`}>
       {renderContent()}
     </div>
   );
-}; 
+};

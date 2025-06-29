@@ -17,6 +17,7 @@ export type { Position };
 
 export interface TooltipItemProps {
   icon?: IconProps["name"];
+  symbol?: ReactNode;
   iconColor?: string;
   label: ReactNode;
   value?: ReactNode;
@@ -31,9 +32,18 @@ export const RichTooltipItem: React.FC<TooltipItemProps> = ({
   autoWidth = false,
 }) => {
   return (
-    <div className={`${styles["item"]} ${autoWidth ? styles["auto-width"] : ""}`}>
+    <div
+      className={`${styles["item"]} ${autoWidth ? styles["auto-width"] : ""}`}
+    >
       <div className={styles["label"]}>
-        {icon && <Icon className={styles["icon"]} name={icon} style={{ color: iconColor }} />}
+        {icon && (
+          <Icon
+            className={styles["icon"]}
+            name={icon}
+            style={{ color: iconColor }}
+            filled
+          />
+        )}
         <span className={styles["label-text"]}>{label}</span>
       </div>
       {value && <div className={styles["value"]}>{value}</div>}
@@ -67,10 +77,12 @@ export const RichTooltip: React.FC<TooltipProps> = ({
 
   const triggerElement = React.cloneElement(trigger, {
     ref: triggerRef,
-    ...(alwaysVisible ? {} : {
-      onMouseEnter: () => setIsVisible(true),
-      onMouseLeave: () => setIsVisible(false),
-    }),
+    ...(alwaysVisible
+      ? {}
+      : {
+          onMouseEnter: () => setIsVisible(true),
+          onMouseLeave: () => setIsVisible(false),
+        }),
   });
 
   React.useEffect(() => {
