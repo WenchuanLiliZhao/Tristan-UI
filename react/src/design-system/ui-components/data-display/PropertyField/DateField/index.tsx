@@ -22,6 +22,6 @@ export const DateField: React.FC<DateFieldProps> = ({
   };
 
   return (
-    <PropertyFieldColumn label={label} content={formatDate(value)} color={color} />
+    <PropertyFieldColumn {...{ label, content: formatDate(value), color }} />
   );
 };

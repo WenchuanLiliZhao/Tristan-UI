@@ -93,15 +93,15 @@ export function Element(): React.ReactElement {
   const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     .setTitle("Project Details") // 自定义sidebar标题
     .setPropertyOrder([
+      { property: "projectKey", displayType: "text" },
       { property: "name", displayType: "text" },
-      { property: "id", displayType: "text" },
       { 
         property: "riskLevel", 
         displayType: "tag", 
         valueMapping: riskLevel,
         label: "Risk Level"
       },
-      { property: "projectKey", displayType: "text" },
+      
       { 
         property: "status", 
         displayType: "tag", 

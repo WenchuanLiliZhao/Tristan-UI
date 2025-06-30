@@ -9,7 +9,9 @@ import {
   DateField,
   ProgressField,
   TagField,
+  PropertyFieldsTable,
 } from "../../../../ui-components/data-display";
+
 
 interface IssueDetailsProps<T = Record<string, unknown>> {
   /** The issue/item to display */
@@ -113,9 +115,6 @@ export function IssueDetails<T = Record<string, unknown>>({
           label={getLabel(key)}
           value={Number(value)}
           color={displayOptions.progressColor}
-          showText={displayOptions.showProgressText}
-          height={displayOptions.progressHeight}
-          variant={displayOptions.progressVariant}
         />
       );
     }
@@ -181,11 +180,11 @@ export function IssueDetails<T = Record<string, unknown>>({
   };
 
   return (
-    <>
+    <PropertyFieldsTable>
       {availableProperties.map((key) => {
         const value = item[key as keyof typeof item];
         return renderField(key, value);
       })}
-    </>
+    </PropertyFieldsTable>
   );
 }

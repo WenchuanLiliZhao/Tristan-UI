@@ -1,5 +1,5 @@
 import React from "react";
-import { Tag, Icon, type TagProps } from "../../../general";
+import { Tag, type TagProps } from "../../../general";
 import { PropertyFieldColumn } from "../shared";
 
 export interface TagFieldProps {
@@ -15,14 +15,13 @@ export const TagField: React.FC<TagFieldProps> = ({
   label,
   name,
   color,
-  icon,
   variant = "contained",
 }) => (
   <PropertyFieldColumn
-    label={label}
+    {...{ label }}
     content={
-      <Tag color={color} variant={variant}>
-        {icon && <Icon name={icon} />} {name}
+      <Tag color={color} variant={variant} size="small">
+        {name}
       </Tag>
     }
   />

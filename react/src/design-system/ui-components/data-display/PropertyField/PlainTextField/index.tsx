@@ -12,5 +12,5 @@ export const PlainTextField: React.FC<TextFieldProps> = ({
   value, 
   color,
 }) => (
-  <PropertyFieldColumn label={label} content={value} color={color} />
+  <PropertyFieldColumn {...{ label, content: value, color }} />
 ); 

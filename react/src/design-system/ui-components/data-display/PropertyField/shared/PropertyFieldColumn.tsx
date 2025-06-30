@@ -1,7 +1,7 @@
 import styles from "./PropertyFieldColumn.module.scss";
 
 interface PropertyFieldColumnProps {
-  label: React.ReactNode;
+  label?: React.ReactNode;
   content: React.ReactNode;
   color?: string;
 }
@@ -13,7 +13,7 @@ export const PropertyFieldColumn = ({
 }: PropertyFieldColumnProps) => {
   return (
     <div className={styles["property-field-column"]}>
-      <div className={styles["property-field-column-label"]}>{label}</div>
+      {label && <div className={styles["property-field-column-label"]}>{label}</div>}
       <div className={styles["property-field-column-content"]} style={{ color }}>
         {content}
       </div>
