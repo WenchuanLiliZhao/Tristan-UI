@@ -144,8 +144,6 @@ export function IssueDetails<T = Record<string, unknown>>({
           label={getLabel(key)}
           value={String(value)}
           color={displayOptions.color}
-          fontWeight={displayOptions.fontWeight}
-          fontSize={displayOptions.fontSize}
         />
       );
     }
@@ -171,8 +169,6 @@ export function IssueDetails<T = Record<string, unknown>>({
         label={getLabel(key)}
         value={String(value)}
         color={displayOptions.color}
-        fontWeight={displayOptions.fontWeight}
-        fontSize={displayOptions.fontSize}
       />
     );
   };

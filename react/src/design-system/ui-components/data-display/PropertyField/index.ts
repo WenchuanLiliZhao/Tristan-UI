@@ -3,7 +3,7 @@
 // Property Field Components
 export { ProgressField, PropertyField } from './ProgressField';
 export { TagField } from './TagField';
-export { TextField } from './TextField';
+export { PlainTextField as TextField } from './PlainTextField';
 export { DateField } from './DateField';
 
 // Export all types
@@ -12,7 +12,7 @@ export type {
   PropertyFieldProps 
 } from './ProgressField';
 export type { TagFieldProps } from './TagField';
-export type { TextFieldProps } from './TextField';
+export type { TextFieldProps } from './PlainTextField';
 
 // DataField specific types (for external usage)
 export interface DateFieldProps {

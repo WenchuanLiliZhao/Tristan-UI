@@ -1,11 +1,14 @@
-import type { DateFieldProps } from "..";
+import { type DateFieldProps } from "..";
 import React from 'react';
+import { PropertyFieldColumn } from "../shared";
 
 // DateField Component
 export const DateField: React.FC<DateFieldProps> = ({ 
   value, 
   format = 'short',
   locale,
+  label,
+  color,
 }) => {
   const formatDate = (date: Date): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -19,6 +22,6 @@ export const DateField: React.FC<DateFieldProps> = ({
   };
 
   return (
-    <>{formatDate(value)}</>
+    <PropertyFieldColumn label={label} content={formatDate(value)} color={color} />
   );
 };

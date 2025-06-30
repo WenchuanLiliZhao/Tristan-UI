@@ -1,6 +1,6 @@
-import React from 'react';
-import { Tag, Icon } from '../../../general';
-import styles from './styles.module.scss';
+import React from "react";
+import { Tag, Icon, type TagProps } from "../../../general";
+import { PropertyFieldColumn } from "../shared";
 
 export interface TagFieldProps {
   label: string;
@@ -8,22 +8,22 @@ export interface TagFieldProps {
   color: string;
   icon?: string;
   /** Tag variant */
-  variant?: 'contained' | 'outlined';
+  variant?: TagProps['variant']
 }
 
-export const TagField: React.FC<TagFieldProps> = ({ 
-  label, 
-  name, 
-  color, 
+export const TagField: React.FC<TagFieldProps> = ({
+  label,
+  name,
+  color,
   icon,
-  variant = 'contained'
+  variant = "contained",
 }) => (
-  <div className={styles.property}> 
-    <div className={styles.propertyLabel}>{label}</div>
-    <div className={styles.propertyValue}>
+  <PropertyFieldColumn
+    label={label}
+    content={
       <Tag color={color} variant={variant}>
         {icon && <Icon name={icon} />} {name}
       </Tag>
-    </div>
-  </div>
-); 
+    }
+  />
+);

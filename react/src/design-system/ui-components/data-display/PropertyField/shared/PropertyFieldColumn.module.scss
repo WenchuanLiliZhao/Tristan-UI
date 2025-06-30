@@ -1,0 +1,11 @@
+.property-field-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.property-field-column-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color--text-secondary);
+}
