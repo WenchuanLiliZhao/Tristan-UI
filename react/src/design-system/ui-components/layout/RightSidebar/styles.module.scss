@@ -10,15 +10,13 @@
   justify-content: flex-end;
   // animation: fadeIn 0.2s ease-out;
 }
-
-.sidebar {
+  
+.right-sidebar {
   background-color: var(--color--bg-container);
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-lg);
-  // animation: slideIn 0.3s ease-out;
-  /* No sliding animation */
+  border-left: 1px solid var(--color--border-prime);
 }
 
 .header {
@@ -26,9 +24,9 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color--border-divider);
   background-color: var(--color--bg-container);
   flex-shrink: 0;
+  padding: 8px;
 }
 
 .title {

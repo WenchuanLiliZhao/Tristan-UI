@@ -28,7 +28,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
 }) => {
   return (
     <div
-      className={`${styles.sidebar} ${className}`}
+      className={`${styles["right-sidebar"]} ${className}`}
       data-testid={dataTestId}
       style={{
         width: typeof width === 'number' ? `${width}px` : width,
