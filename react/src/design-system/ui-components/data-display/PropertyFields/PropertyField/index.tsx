@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-export interface ProgressFieldProps {
+export interface PropertyFieldProps {
   label: string;
   value: number;
   /** Progress bar color */
@@ -14,7 +14,7 @@ export interface ProgressFieldProps {
   variant?: 'default' | 'rounded' | 'square';
 }
 
-export const ProgressField: React.FC<ProgressFieldProps> = ({ 
+export const PropertyField: React.FC<PropertyFieldProps> = ({ 
   label, 
   value, 
   color,
@@ -43,4 +43,8 @@ export const ProgressField: React.FC<ProgressFieldProps> = ({
       </div>
     </div>
   );
-}; 
+};
+
+// Legacy export for backward compatibility
+export const ProgressField = PropertyField;
+export type ProgressFieldProps = PropertyFieldProps; 

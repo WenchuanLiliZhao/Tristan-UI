@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag, Icon } from '../../general';
+import { Tag, Icon } from '../../../general';
 import styles from './styles.module.scss';
 
 export interface TagFieldProps {

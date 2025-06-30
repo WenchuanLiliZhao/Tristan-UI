@@ -1,19 +1,56 @@
-# Display Types
+# Property Fields
 
-Display Types 是专门为 Issue Details 设计的一套标准化字段显示组件。它们提供了统一的样式和配置选项，让你可以轻松地自定义不同数据类型的显示方式。
+Property Fields 是专门为 Issue Details 设计的一套标准化字段显示组件。它们提供了统一的样式和配置选项，让你可以轻松地自定义不同数据类型的显示方式。
+
+## 目录结构
+
+```
+PropertyFields/
+├── DataField/          # 统一的数据字段组件 (文本和日期)
+│   ├── index.tsx
+│   └── styles.module.scss
+├── PropertyField/      # 属性显示组件 (进度条)
+│   ├── index.tsx
+│   └── styles.module.scss
+├── TagField/          # 标签字段组件
+│   ├── index.tsx
+│   └── styles.module.scss
+├── index.ts           # 统一导出
+└── README.md
+```
 
 ## 可用组件
 
-### TextField
-用于显示文本内容，支持自定义颜色、字体大小和粗细。
+### DataField
+统一的数据字段组件，支持文本和日期类型的自动识别。
 
 ```tsx
-<TextField 
+// 文本数据
+<DataField 
   label="Name" 
   value="Project Alpha"
   color="var(--color--semantic-active)"
   fontWeight="medium"
   fontSize="lg"
+/>
+
+// 日期数据 (自动检测)
+<DataField 
+  label="Start Date" 
+  value={new Date('2024-01-15')}
+  format="medium"
+/>
+```
+
+### TextField
+单独的文本字段组件。
+
+```tsx
+<TextField 
+  label="Description" 
+  value="This is a sample description"
+  fontWeight="normal"
+  fontSize="base"
 />
 ```
 
@@ -26,14 +63,14 @@ Display Types 是专门为 Issue Details 设计的一套标准化字段显示组
 - `className?: string` - 自定义CSS类名
 
 ### DateField
-用于显示日期，支持多种格式化选项。
+单独的日期字段组件。
 
 ```tsx
 <DateField 
-  label="Start Date" 
-  value={new Date('2024-01-15')}
-  format="medium"
-  color="var(--color--text-secondary)"
+  label="Deadline" 
+  value={new Date('2024-12-31')}
+  format="long"
+  locale="en-US"
 />
 ```
 
@@ -44,11 +81,11 @@ Display Types 是专门为 Issue Details 设计的一套标准化字段显示组
 - `locale?: string` - 地区设置
 - `color?: string` - 文本颜色
 
-### ProgressField
-用于显示进度条，支持自定义颜色和样式。
+### PropertyField
+用于显示属性进度，支持自定义颜色和样式。
 
 ```tsx
-<ProgressField 
+<PropertyField 
   label="Completion" 
   value={75}
   color="var(--color--semantic-success)"
@@ -86,6 +123,16 @@ Display Types 是专门为 Issue Details 设计的一套标准化字段显示组
 - `icon?: string` - 图标名称（Material Icons）
 - `variant?: 'contained' | 'outlined'` - 标签变体
 
+## 向后兼容性
+
+为了确保现有代码的兼容性，我们保留了以下别名：
+
+```tsx
+// ProgressField 是 PropertyField 的别名
+export const ProgressField = PropertyField;
+export type ProgressFieldProps = PropertyFieldProps;
+```
+
 ## 在 Issue Details 中使用
 
 ### 简化语法
@@ -97,7 +144,7 @@ import { IssueDetailsConfigBuilder } from '@/design-system/ui-demos/timeline';
 
 const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
   .setPropertyOrder([
-    { property: "name", displayType: "text" },
+    { property: "name", displayType: "data" },  // 使用 DataField
     { 
       property: "status", 
       displayType: "tag", 
@@ -106,7 +153,7 @@ const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     },
     { 
       property: "progress", 
-      displayType: "progress",
+      displayType: "property",  // 使用 PropertyField
       displayOptions: { 
         color: "var(--color--semantic-success)",
         height: "lg"
@@ -114,7 +161,7 @@ const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     },
     { 
       property: "team", 
-      displayType: "text", 
+      displayType: "data", 
       displayOptions: { 
         color: "var(--color--semantic-active)",
         fontWeight: "medium" 
@@ -122,8 +169,8 @@ const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     },
     { 
       property: "startDate", 
-      displayType: "date",
-      displayOptions: { dateFormat: "long" }
+      displayType: "data",  // DataField 自动检测日期类型
+      displayOptions: { format: "long" }
     }
   ])
   .build();
@@ -145,29 +192,29 @@ const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
 
 ## 自定义样式
 
-所有组件都使用统一的 CSS 变量系统，你可以通过修改 `styles.module.scss` 来自定义全局样式，或者通过 `displayOptions` 来设置单个字段的样式。
+所有组件都使用统一的 CSS 变量系统，每个子目录都有自己的样式文件，你可以通过修改相应的 `styles.module.scss` 来自定义样式，或者通过 `displayOptions` 来设置单个字段的样式。
 
 ### 支持的显示选项 (displayOptions)
 
 ```tsx
 displayOptions: {
-  // 文本字段
+  // 数据字段 (DataField/TextField)
   color?: string;
   fontWeight?: 'normal' | 'medium' | 'semibold' | 'bold';
   fontSize?: 'sm' | 'base' | 'lg' | 'xl';
   
-  // 日期字段
-  dateFormat?: 'short' | 'medium' | 'long' | 'full';
+  // 日期字段 (DataField/DateField)
+  format?: 'short' | 'medium' | 'long' | 'full';
   locale?: string;
   
-  // 进度字段
-  progressColor?: string;
-  showProgressText?: boolean;
-  progressHeight?: 'sm' | 'md' | 'lg';
-  progressVariant?: 'default' | 'rounded' | 'square';
+  // 属性字段 (PropertyField)
+  color?: string;
+  showText?: boolean;
+  height?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'rounded' | 'square';
   
-  // 标签字段
-  tagVariant?: 'contained' | 'outlined';
+  // 标签字段 (TagField)
+  variant?: 'contained' | 'outlined';
 }
 ```
 
@@ -175,8 +222,8 @@ displayOptions: {
 
 如果需要添加新的显示类型，只需要：
 
-1. 在 `DisplayTypes` 文件夹中创建新的组件
-2. 在 `index.ts` 中导出
+1. 在 `PropertyFields` 文件夹中创建新的子目录和组件
+2. 在主 `index.ts` 中导出
 3. 在 `PropertyMappingConfig` 中添加相应的 `displayType` 和 `displayOptions`
 4. 在 `IssueDetails/index.tsx` 的 `renderField` 函数中添加渲染逻辑
 

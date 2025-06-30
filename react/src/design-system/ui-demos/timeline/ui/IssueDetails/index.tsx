@@ -1,8 +1,15 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import type { TimelineItemType } from '../../types';
-import type { IssueDetailsConfig, PropertyMappingConfig } from '../../issueDetailsConfig';
-import { TextField, DateField, ProgressField, TagField } from '../../../../ui-components/data-display';
+import React from "react";
+import type { TimelineItemType } from "../../types";
+import type {
+  IssueDetailsConfig,
+  PropertyMappingConfig,
+} from "../../issueDetailsConfig";
+import {
+  TextField,
+  DateField,
+  ProgressField,
+  TagField,
+} from "../../../../ui-components/data-display";
 
 interface IssueDetailsProps<T = Record<string, unknown>> {
   /** The issue/item to display */
@@ -13,58 +20,67 @@ interface IssueDetailsProps<T = Record<string, unknown>> {
 
 // Default property order for timeline items
 const DEFAULT_PROPERTY_ORDER = [
-  'id',
-  'name', 
-  'startDate',
-  'endDate',
-  'status',
-  'priority',
-  'team',
-  'progress',
-  'category',
-  'riskLevel',
-  'projectKey'
+  "id",
+  "name",
+  "startDate",
+  "endDate",
+  "status",
+  "priority",
+  "team",
+  "progress",
+  "category",
+  "riskLevel",
+  "projectKey",
 ];
 
 // Default property labels
 const DEFAULT_PROPERTY_LABELS: Record<string, string> = {
-  id: 'ID',
-  name: 'Name',
-  startDate: 'Start Date',
-  endDate: 'End Date',
-  status: 'Status',
-  priority: 'Priority',
-  team: 'Team',
-  progress: 'Progress',
-  category: 'Category',
-  riskLevel: 'Risk Level',
-  projectKey: 'Project Key'
+  id: "ID",
+  name: "Name",
+  startDate: "Start Date",
+  endDate: "End Date",
+  status: "Status",
+  priority: "Priority",
+  team: "Team",
+  progress: "Progress",
+  category: "Category",
+  riskLevel: "Risk Level",
+  projectKey: "Project Key",
 };
 
 export function IssueDetails<T = Record<string, unknown>>({
   item,
-  config = {}
+  config = {},
 }: IssueDetailsProps<T>): React.ReactElement {
   // Determine the final property order
-  const finalOrder = (config.propertyOrder && config.propertyOrder.length > 0)
-    ? (config.propertyOrder as string[])
-    : DEFAULT_PROPERTY_ORDER;
-  
+  const finalOrder =
+    config.propertyOrder && config.propertyOrder.length > 0
+      ? (config.propertyOrder as string[])
+      : DEFAULT_PROPERTY_ORDER;
+
   // Filter only existing properties
-  const availableProperties = finalOrder.filter(key => 
-    key in item && item[key as keyof typeof item] !== undefined && item[key as keyof typeof item] !== null
+  const availableProperties = finalOrder.filter(
+    (key) =>
+      key in item &&
+      item[key as keyof typeof item] !== undefined &&
+      item[key as keyof typeof item] !== null
   );
 
   // Decide which specialized field component to render
   const renderField = (key: string, value: unknown): React.ReactNode => {
-    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
+    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as
+      | PropertyMappingConfig
+      | undefined;
     const displayOptions = mappingConfig?.displayOptions || {};
     const displayType = mappingConfig?.displayType;
-    
-    if (displayType === 'tag' || (mappingConfig?.valueMapping && typeof value === 'string')) {
+
+    if (
+      displayType === "tag" ||
+      (mappingConfig?.valueMapping && typeof value === "string")
+    ) {
       // Tag mapping
       const mapping = mappingConfig?.valueMapping;
-      if (mapping && typeof value === 'string' && mapping[value]) {
+      if (mapping && typeof value === "string" && mapping[value]) {
         const mapped = mapping[value];
         return (
           <TagField
@@ -76,25 +92,25 @@ export function IssueDetails<T = Record<string, unknown>>({
             variant={displayOptions.tagVariant}
           />
         );
-      } else if (displayType === 'tag') {
+      } else if (displayType === "tag") {
         // Fallback for tag displayType without mapping
         return (
           <TagField
             key={key}
             label={getLabel(key)}
             name={String(value)}
-            color={displayOptions.color || 'primary'}
+            color={displayOptions.color || "primary"}
             variant={displayOptions.tagVariant}
           />
         );
       }
     }
 
-    if (displayType === 'progress' && typeof value === 'number') {
+    if (displayType === "progress" && typeof value === "number") {
       return (
-        <ProgressField 
+        <ProgressField
           key={key}
-          label={getLabel(key)} 
+          label={getLabel(key)}
           value={Number(value)}
           color={displayOptions.progressColor}
           showText={displayOptions.showProgressText}
@@ -104,12 +120,15 @@ export function IssueDetails<T = Record<string, unknown>>({
       );
     }
 
-    if (displayType === 'date' && (value instanceof Date || typeof value === 'string')) {
+    if (
+      displayType === "date" &&
+      (value instanceof Date || typeof value === "string")
+    ) {
       const dateValue = value instanceof Date ? value : new Date(value);
       return (
-        <DateField 
+        <DateField
           key={key}
-          label={getLabel(key)} 
+          label={getLabel(key)}
           value={dateValue}
           format={displayOptions.dateFormat}
           locale={displayOptions.locale}
@@ -118,11 +137,11 @@ export function IssueDetails<T = Record<string, unknown>>({
       );
     }
 
-    if (displayType === 'text') {
+    if (displayType === "text") {
       return (
-        <TextField 
+        <TextField
           key={key}
-          label={getLabel(key)} 
+          label={getLabel(key)}
           value={String(value)}
           color={displayOptions.color}
           fontWeight={displayOptions.fontWeight}
@@ -134,9 +153,9 @@ export function IssueDetails<T = Record<string, unknown>>({
     // Auto-detect based on value type
     if (value instanceof Date) {
       return (
-        <DateField 
+        <DateField
           key={key}
-          label={getLabel(key)} 
+          label={getLabel(key)}
           value={value}
           format={displayOptions.dateFormat}
           locale={displayOptions.locale}
@@ -147,9 +166,9 @@ export function IssueDetails<T = Record<string, unknown>>({
 
     // default text
     return (
-      <TextField 
+      <TextField
         key={key}
-        label={getLabel(key)} 
+        label={getLabel(key)}
         value={String(value)}
         color={displayOptions.color}
         fontWeight={displayOptions.fontWeight}
@@ -159,18 +178,18 @@ export function IssueDetails<T = Record<string, unknown>>({
   };
 
   const getLabel = (key: string): string => {
-    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as PropertyMappingConfig | undefined;
+    const mappingConfig = config.propertyMappings?.[key as keyof T | string] as
+      | PropertyMappingConfig
+      | undefined;
     return mappingConfig?.label || DEFAULT_PROPERTY_LABELS[key] || key;
   };
 
   return (
-    <div className={styles.issueDetails}>
-      <div className={styles.properties}>
-        {availableProperties.map((key) => {
-          const value = item[key as keyof typeof item];
-          return renderField(key, value);
-        })}
-      </div>
-    </div>
+    <>
+      {availableProperties.map((key) => {
+        const value = item[key as keyof typeof item];
+        return renderField(key, value);
+      })}
+    </>
   );
-} 
+}
