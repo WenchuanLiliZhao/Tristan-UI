@@ -209,7 +209,9 @@ export function Element(): React.ReactElement {
             <TristanLogo width={32} height={32} />,
             <NavTitle title="Roadmap of lululemon Initiatives" />,
           ]}
-          right={[]}
+          right={[
+            // 添加一个搜索框
+          ]}
         />
       }
       main={

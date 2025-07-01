@@ -19,7 +19,8 @@
           "scrollbar-width",
           "scrollbar-width: thin",
           "scrollbar-color",
-          "scrollbar-width: none"
+          "scrollbar-width: none",
+          "user-select"
         ]
       }
     ]

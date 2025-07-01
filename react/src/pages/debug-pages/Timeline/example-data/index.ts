@@ -31,7 +31,7 @@ export const team = {
   },
   engineering: {
     name: "Engineering Team Approval",
-    color: getRainbowColor('purple')
+    color: "var(--color--semantic-active)"
   },
   design: {
     name: "Design",
