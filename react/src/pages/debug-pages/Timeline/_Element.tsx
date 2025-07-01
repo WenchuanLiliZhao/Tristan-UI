@@ -74,10 +74,6 @@ export function Element(): React.ReactElement {
 
   // 🎯 配置sidebar属性分布可视化
   const sidebarProperties = [
-    createSidebarProperty.fromMap<ProjectDataType>("status", status, {
-      label: "Status",
-      showCount: false,
-    }),
     createSidebarProperty.fromMap<ProjectDataType>("team", team, {
       label: "Teams",
       showCount: false,
