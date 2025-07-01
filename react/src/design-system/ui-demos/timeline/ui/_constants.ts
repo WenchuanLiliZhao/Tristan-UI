@@ -49,6 +49,8 @@ export const TimelineConst = {
   itemVPadding: 2,
   itemHPadding: 2,
 
+  propertyDistributionBarFlexLabelSize: 52,
+
   // 在最晚 issue 年份后额外显示的年数
   additionalYearsAfterLatest: 10,
 

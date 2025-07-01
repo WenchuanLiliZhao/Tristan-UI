@@ -47,6 +47,7 @@ import {
 } from "../utils";
 import { TimelineRuler } from "./OnLayout/TimelineRuler";
 import { TimelineItems } from "./OnLayout/TimelineItems";
+import { TimelineGroupDividers } from "./OnLayout/TimelineGroupDividers";
 import { TimelineSidebar } from "./LeftSidebar/TimelineLeftSidebar";
 import { GroupBySelector } from "./Shared/GroupBySelector";
 import type { GroupPlacement } from "./LeftSidebar/TimelineLeftSidebar";
@@ -540,6 +541,17 @@ export function Timeline<T = Record<string, unknown>>({
 
               {/* 时间线项目容器 */}
               <div className={styles["timeline-items-container"]}>
+                                {/* Group Dividers 覆盖层 - 当有分组时显示 */}
+                {hasGrouping && (
+                  <TimelineGroupDividers
+                    groupPlacements={groupPlacements}
+                    cellHeight={cellHeight}
+                    groupGap={groupGapForTesting}
+                    timelineWidth={timelineWidth}
+                  />
+                )}
+
+                {/* 时间线项目容器 */}
                 <TimelineItems
                   yearList={yearList}
                   startMonth={startMonth}

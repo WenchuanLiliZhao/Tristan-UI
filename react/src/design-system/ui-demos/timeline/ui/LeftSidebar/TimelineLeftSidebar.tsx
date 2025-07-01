@@ -246,7 +246,7 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
                               legendMode="hover"
                               tooltipPosition="right-start"
                               percentageDecimalPlaces={0}
-                              flexLabelSize={44}
+                              flexLabelSize={TimelineConst.propertyDistributionBarFlexLabelSize}
                             />
                           );
                         } else {
@@ -264,7 +264,7 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
                               legendMode="hover"
                               tooltipPosition="right-start"
                               percentageDecimalPlaces={0}
-                              flexLabelSize={44}
+                              flexLabelSize={TimelineConst.propertyDistributionBarFlexLabelSize}
                             />
                           );
                         }
