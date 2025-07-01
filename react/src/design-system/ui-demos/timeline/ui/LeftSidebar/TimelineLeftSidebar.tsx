@@ -1,7 +1,7 @@
 import {} from "react";
 import styles from "./TimelineLeftSidebar.module.scss";
 import { TimelineConst, TimelineConstCalc } from "../_constants";
-import { type TimelineItemType, type SidebarPropertyConfig } from "../../types";
+import { type TimelineItemType, type SidebarPropertyConfig, type ProgressTooltipInterval } from "../../types";
 import { type PlacementResult } from "../../utils/placement";
 import {
   RichTooltip,
@@ -23,6 +23,98 @@ interface TimelineSidebarProps<T = Record<string, unknown>> {
   isRulerMode?: boolean;
   sidebarProperties?: SidebarPropertyConfig<T>[];
 }
+
+/**
+ * 将进度值转换为对应的区间标签
+ */
+const getProgressLabel = (value: number, intervals: ProgressTooltipInterval[], maxValue: number): string => {
+  // 将进度值标准化为百分比
+  const percentage = Math.min(100, Math.max(0, (value / maxValue) * 100));
+  
+  // 查找匹配的区间
+  for (const intervalConfig of intervals) {
+    const [leftType, startValue, endValue, rightType] = intervalConfig.interval;
+    
+    // 检查左边界条件
+    const leftCondition = leftType === "closed" 
+      ? percentage >= startValue 
+      : percentage > startValue;
+    
+    // 检查右边界条件
+    const rightCondition = rightType === "closed" 
+      ? percentage <= endValue 
+      : percentage < endValue;
+    
+    if (leftCondition && rightCondition) {
+      return intervalConfig.label;
+    }
+  }
+  
+  // 如果没有匹配的区间，返回默认标签
+  return "unknown";
+};
+
+/**
+ * 将进度配置转换为PropertyDistributionBar可用的mapping
+ */
+const convertProgressConfigToMapping = (
+  data: Array<Record<string, unknown>>,
+  field: string,
+  progressConfig: NonNullable<SidebarPropertyConfig['progressConfig']>
+): Record<string, { name: string; color: string }> => {
+  const mapping: Record<string, { name: string; color: string }> = {};
+  
+  // 为每个唯一的标签创建mapping
+  data.forEach(item => {
+    const rawValue = Number(item[field] || 0);
+    const label = getProgressLabel(rawValue, progressConfig.tooltip, progressConfig.maxValueOfEachItem);
+    
+    if (!mapping[label]) {
+      // 查找对应的颜色配置
+      const matchedInterval = progressConfig.tooltip.find(intervalConfig => {
+        const percentage = Math.min(100, Math.max(0, (rawValue / progressConfig.maxValueOfEachItem) * 100));
+        const [leftType, startValue, endValue, rightType] = intervalConfig.interval;
+        
+        // 检查左边界条件
+        const leftCondition = leftType === "closed" 
+          ? percentage >= startValue 
+          : percentage > startValue;
+        
+        // 检查右边界条件
+        const rightCondition = rightType === "closed" 
+          ? percentage <= endValue 
+          : percentage < endValue;
+        
+        return leftCondition && rightCondition;
+      });
+      
+      mapping[label] = {
+        name: label,
+        color: matchedInterval?.color || '--color-chart--gray-5',
+      };
+    }
+  });
+  
+  return mapping;
+};
+
+/**
+ * 将进度数据转换为带标签的数据
+ */
+const transformProgressData = (
+  data: Array<Record<string, unknown>>,
+  field: string,
+  progressConfig: NonNullable<SidebarPropertyConfig['progressConfig']>
+): Array<Record<string, unknown>> => {
+  return data.map(item => ({
+    ...item,
+    [field]: getProgressLabel(
+      Number(item[field] || 0),
+      progressConfig.tooltip,
+      progressConfig.maxValueOfEachItem
+    ),
+  }));
+};
 
 export const TimelineSidebar = <T = Record<string, unknown>,>({
   groupPlacements,
@@ -128,22 +220,55 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
                     <div
                       className={styles["timeline-sidebar-group-properties"]}
                     >
-                      {sidebarProperties.map((propertyConfig) => (
-                        <PropertyDistributionBar
-                          key={String(propertyConfig.field)}
-                          data={
-                            group.groupItems as Array<Record<string, unknown>>
-                          }
-                          field={String(propertyConfig.field)}
-                          mapping={propertyConfig.mapping}
-                          label={propertyConfig.label}
-                          showLegend={true}
-                          legendMode="hover"
-                          tooltipPosition="right-start"
-                          percentageDecimalPlaces={0}
-                          flexLabelSize={44}
-                        />
-                      ))}
+                      {sidebarProperties.map((propertyConfig) => {
+                        // 判断是映射类型还是进度类型配置
+                        if (propertyConfig.progressConfig) {
+                          // 进度类型配置
+                          const transformedData = transformProgressData(
+                            group.groupItems as Array<Record<string, unknown>>,
+                            String(propertyConfig.field),
+                            propertyConfig.progressConfig
+                          );
+                          const progressMapping = convertProgressConfigToMapping(
+                            group.groupItems as Array<Record<string, unknown>>,
+                            String(propertyConfig.field),
+                            propertyConfig.progressConfig
+                          );
+                          
+                          return (
+                            <PropertyDistributionBar
+                              key={String(propertyConfig.field)}
+                              data={transformedData}
+                              field={String(propertyConfig.field)}
+                              mapping={progressMapping}
+                              label={propertyConfig.label}
+                              showLegend={true}
+                              legendMode="hover"
+                              tooltipPosition="right-start"
+                              percentageDecimalPlaces={0}
+                              flexLabelSize={44}
+                            />
+                          );
+                        } else {
+                          // 映射类型配置
+                          return (
+                            <PropertyDistributionBar
+                              key={String(propertyConfig.field)}
+                              data={
+                                group.groupItems as Array<Record<string, unknown>>
+                              }
+                              field={String(propertyConfig.field)}
+                              mapping={propertyConfig.mapping || {}}
+                              label={propertyConfig.label}
+                              showLegend={true}
+                              legendMode="hover"
+                              tooltipPosition="right-start"
+                              percentageDecimalPlaces={0}
+                              flexLabelSize={44}
+                            />
+                          );
+                        }
+                      })}
                     </div>
                   )}
                 </div>

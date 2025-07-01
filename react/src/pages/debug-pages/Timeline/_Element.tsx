@@ -82,60 +82,121 @@ export function Element(): React.ReactElement {
       label: "Teams",
       showCount: false,
     }),
-    // createSidebarProperty.fromMap<ProjectDataType>("priority", priority, {
-    //   label: "Priority",
-    //   showCount: false,
-    // }),
+    createSidebarProperty.fromProgressField<ProjectDataType>("progress", {
+      label: "Progress",
+      maxValueOfEachItem: 100, // 设置每个 issue 的满分
+      // 如果不指定 tooltip，则使用默认配置：
+      // tooltip: [
+      //   {
+      //     interval: ["closed", 0, 0, "closed"],
+      //     label: "not started",
+      //     color: grayColors.gray5,
+      //   },
+      //   {
+      //     interval: ["open", 0, 100, "open"],
+      //     label: "in progress",
+      //     color: getSemanticColor("active"),
+      //   },
+      //   {
+      //     interval: ["closed", 100, 100, "closed"],
+      //     label: "done",
+      //     color: getSemanticColor("success"),
+      //   },
+      // ]
+      
+      // 🎨 自定义 tooltip 配置示例（取消注释以使用）：
+      // tooltip: [
+      //   {
+      //     interval: ["closed", 0, 0, "closed"],
+      //     label: "not started",
+      //     color: grayColors.gray5,
+      //   },
+      //   {
+      //     interval: ["open", 0, 50, "closed"],
+      //     label: "in progress",
+      //     color: getRainbowColor("emerald"),
+      //   },
+      //   {
+      //     interval: ["open", 50, 100, "open"],
+      //     label: "reviewing",
+      //     color: getRainbowColor("amber"),
+      //   },
+      //   {
+      //     interval: ["closed", 100, 100, "closed"],
+      //     label: "done",
+      //     color: getRainbowColor("emerald"),
+      //   },
+      // ]
+    }),
   ];
 
 
-  {/* 🎯 IssueDetails 详情配置示例: */}
+  {/* 🎯 IssueDetails 详情配置示例:
+      你可以为每个属性定义自定义标签 (label)，让界面更加友好和本地化。
+      标签优先级：自定义标签 > 默认标签 > 属性名
+      详细说明请参考：CUSTOM_LABELS_GUIDE.md
+  */}
   const issueDetailsConfig = IssueDetailsConfigBuilder.create<ProjectDataType>()
     .setTitle("Project Details") // 自定义sidebar标题
     .setPropertyOrder([
-      { property: "projectKey", displayType: "text" },
-      { property: "name", displayType: "text" },
+      { 
+        property: "projectKey", 
+        displayType: "text",
+        label: "项目编号" // 🏷️ 自定义标签：在UI中显示为"项目编号"而不是"Project Key"
+      },
+      { 
+        property: "name", 
+        displayType: "text",
+        label: "项目名称" // 🏷️ 自定义标签：在UI中显示为"项目名称"而不是"Name"
+      },
       { 
         property: "riskLevel", 
         displayType: "tag", 
         valueMapping: riskLevel,
-        label: "Risk Level"
+        label: "风险等级" // 🏷️ 自定义标签：在UI中显示为"风险等级"而不是"Risk Level"
       },
       
       { 
         property: "status", 
         displayType: "tag", 
         valueMapping: status,
-        label: "Status"
+        label: "项目状态" // 🏷️ 自定义标签：在UI中显示为"项目状态"而不是"Status"
       },
       { 
         property: "priority", 
         displayType: "tag", 
         valueMapping: priority,
-        label: "Priority"
+        label: "优先级" // 🏷️ 自定义标签：在UI中显示为"优先级"而不是"Priority"
       },
       { 
         property: "progress", 
         displayType: "progress",
-        label: "Progress" 
+        label: "完成进度" // 🏷️ 自定义标签：在UI中显示为"完成进度"而不是"Progress"
       },
       { 
         property: "team", 
         displayType: "text", 
+        label: "负责团队", // 🏷️ 自定义标签：在UI中显示为"负责团队"而不是"Team"
         displayOptions: { 
           color: "var(--color--semantic-active)",
           fontWeight: "medium" 
         }
       },
-      { property: "category", displayType: "text" },
+      { 
+        property: "category", 
+        displayType: "text",
+        label: "项目类别" // 🏷️ 自定义标签：在UI中显示为"项目类别"而不是"Category"
+      },
       { 
         property: "startDate", 
         displayType: "date",
+        label: "开始日期", // 🏷️ 自定义标签：在UI中显示为"开始日期"而不是"Start Date"
         displayOptions: { dateFormat: "medium" }
       },
       { 
         property: "endDate", 
         displayType: "date",
+        label: "结束日期", // 🏷️ 自定义标签：在UI中显示为"结束日期"而不是"End Date"
         displayOptions: { dateFormat: "medium" }
       },
     ])

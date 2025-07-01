@@ -198,19 +198,45 @@ export const Example_Issues_1: ProjectDataType[] = [
   },
   {
     id: "16",
+    name: "Performance Optimization",
+    startDate: new Date("2025-04-01"),
+    endDate: new Date("2025-05-31"),
+    projectKey: "PERF-016",
+    status: "low",
+    progress: 0,
+    team: "engineering",
+    priority: "medium",
+    category: "Advance Solutions",
+    riskLevel: "low"
+  },
+  {
+    id: "17",
+    name: "Social Media Integration",
+    startDate: new Date("2025-05-01"),
+    endDate: new Date("2025-06-30"),
+    projectKey: "SOCIAL-017",
+    status: "medium",
+    progress: 0,
+    team: "product",
+    priority: "low",
+    category: "Advance Capabilities",
+    riskLevel: "low"
+  },
+  {
+    id: "18",
     name: "Digital Twin Development",
     startDate: new Date("2025-05-01"),
     endDate: new Date("2025-05-31"),
     projectKey: "TWIN-016",
     status: "low",
-    progress: 5,
+    progress: 0,
     team: "engineering",
     priority: "high",
     category: "Advance Capabilities",
     riskLevel: "high"
   },
   {
-    id: "17",
+    id: "19",
     name: "Supply Chain Optimization",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -223,7 +249,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "18",
+    id: "20",
     name: "Microservices Architecture",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -236,7 +262,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "19",
+    id: "21",
     name: "Edge Computing Infrastructure",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -249,7 +275,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "20",
+    id: "22",
     name: "Quantum Computing Research",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -262,7 +288,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "21",
+    id: "23",
     name: "Green Energy Management",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-11-30"),
@@ -275,7 +301,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "22",
+    id: "24",
     name: "Healthcare Data Platform",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -288,7 +314,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "23",
+    id: "25",
     name: "Augmented Reality Interface",
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-01-31"),
@@ -301,7 +327,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "24",
+    id: "26",
     name: "Natural Language Processing",
     startDate: new Date("2024-02-01"),
     endDate: new Date("2024-02-29"),
@@ -314,7 +340,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "25",
+    id: "27",
     name: "Robotic Process Automation",
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-31"),
@@ -327,7 +353,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "26",
+    id: "28",
     name: "5G Network Integration",
     startDate: new Date("2024-04-01"),
     endDate: new Date("2024-04-30"),
@@ -340,7 +366,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "27",
+    id: "29",
     name: "Digital Identity Platform",
     startDate: new Date("2024-05-01"),
     endDate: new Date("2024-05-31"),
@@ -353,7 +379,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "28",
+    id: "30",
     name: "Computer Vision System",
     startDate: new Date("2024-06-01"),
     endDate: new Date("2024-06-30"),
@@ -366,7 +392,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "29",
+    id: "31",
     name: "Smart City Infrastructure",
     startDate: new Date("2024-07-01"),
     endDate: new Date("2024-07-31"),
@@ -379,7 +405,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "30",
+    id: "32",
     name: "Predictive Analytics Engine",
     startDate: new Date("2024-08-01"),
     endDate: new Date("2024-08-31"),
@@ -392,7 +418,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "31",
+    id: "33",
     name: "Voice Recognition System",
     startDate: new Date("2024-09-01"),
     endDate: new Date("2024-09-30"),
@@ -405,7 +431,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "32",
+    id: "34",
     name: "Distributed Database System",
     startDate: new Date("2024-10-01"),
     endDate: new Date("2024-10-31"),
@@ -418,7 +444,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "33",
+    id: "35",
     name: "Drone Delivery Network",
     startDate: new Date("2024-11-01"),
     endDate: new Date("2024-11-30"),
@@ -431,7 +457,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "34",
+    id: "36",
     name: "Facial Recognition Security",
     startDate: new Date("2024-12-01"),
     endDate: new Date("2024-12-31"),
@@ -444,7 +470,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "35",
+    id: "37",
     name: "Environmental Monitoring",
     startDate: new Date("2025-01-01"),
     endDate: new Date("2025-01-31"),
@@ -457,7 +483,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "36",
+    id: "38",
     name: "Automated Code Generation",
     startDate: new Date("2025-02-01"),
     endDate: new Date("2025-02-28"),
@@ -470,7 +496,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "37",
+    id: "39",
     name: "Smart Grid Integration",
     startDate: new Date("2025-03-01"),
     endDate: new Date("2025-03-31"),
@@ -483,7 +509,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "38",
+    id: "40",
     name: "Biometric Payment System",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -496,7 +522,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "39",
+    id: "41",
     name: "Real-time Translation",
     startDate: new Date("2025-05-01"),
     endDate: new Date("2025-06-30"),
@@ -509,7 +535,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "40",
+    id: "42",
     name: "Autonomous Vehicle Platform",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -522,7 +548,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "41",
+    id: "43",
     name: "Personalized Learning AI",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -535,7 +561,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "42",
+    id: "44",
     name: "Digital Wallet Integration",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -548,7 +574,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "43",
+    id: "45",
     name: "Smart Manufacturing",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -561,7 +587,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "44",
+    id: "46",
     name: "Neural Interface Development",
     startDate: new Date("2025-11-01"),
     endDate: new Date("2025-11-30"),
@@ -574,7 +600,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "45",
+    id: "47",
     name: "Climate Change Modeling",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -587,7 +613,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "low"
   },
   {
-    id: "46",
+    id: "48",
     name: "Holographic Display System",
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-01-31"),
@@ -600,7 +626,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "47",
+    id: "49",
     name: "Space Communication Network",
     startDate: new Date("2024-02-01"),
     endDate: new Date("2024-02-29"),
@@ -613,7 +639,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "high"
   },
   {
-    id: "48",
+    id: "50",
     name: "Gene Therapy Database",
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-31"),
@@ -626,7 +652,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "49",
+    id: "51",
     name: "Emotion Recognition AI",
     startDate: new Date("2024-04-01"),
     endDate: new Date("2024-04-30"),
@@ -639,7 +665,7 @@ export const Example_Issues_1: ProjectDataType[] = [
     riskLevel: "medium"
   },
   {
-    id: "50",
+    id: "52",
     name: "Underwater Exploration Robot",
     startDate: new Date("2024-05-01"),
     endDate: new Date("2024-05-31"),

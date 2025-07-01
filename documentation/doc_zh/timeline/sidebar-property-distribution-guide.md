@@ -2,7 +2,11 @@
 
 ## 概述
 
-Timeline 组件现在支持在左侧边栏显示每个分组中属性的分布可视化。这个功能让用户能够快速了解各个分组中不同属性值的分布情况，比如状态、团队、优先级等。
+Timeline 组件现在支持在左侧边栏显示每个分组中属性的分布可视化。这个功能让用户能够快速了解各个分组中不同属性值的分布情况，比如状态、团队、优先级、进度等。
+
+支持两种类型的属性分布：
+- **映射类型**：适用于有限枚举值的字段（如状态、团队、优先级）
+- **进度类型**：适用于数值字段（如进度、完成百分比）
 
 ## 效果展示
 
@@ -19,9 +23,9 @@ import {
 } from "tristan-ui";
 ```
 
-### 2. 定义属性映射
+### 2. 映射类型属性
 
-首先定义你想要可视化的属性及其颜色映射：
+适用于有限枚举值的字段，如状态、团队、优先级等：
 
 ```typescript
 import { getRainbowColor } from "tristan-ui";
@@ -59,24 +63,83 @@ const teamMap = {
 };
 ```
 
-### 3. 配置 Sidebar 属性
+### 3. 进度类型属性 (新功能)
 
-使用 `createSidebarProperty.fromMap` 创建属性配置：
+适用于数值字段，如进度、完成百分比等：
 
 ```typescript
+// 使用默认 tooltip 配置
 const sidebarProperties = [
-  createSidebarProperty.fromMap<ProjectDataType>("status", statusMap, {
-    label: "状态分布",
-    showCount: false, // 是否显示数量标签
+  createSidebarProperty.fromProgressField<ProjectDataType>("progress", {
+    label: "进度分布",
+    maxValueOfEachItem: 100, // 每个项目的最大值
+    // 不指定 tooltip 时，使用默认配置：
+    // - [0, 0]: "not started" (灰色)
+    // - [0, 100): "in progress" (绿色)  
+    // - [100, 100]: "done" (绿色)
   }),
-  createSidebarProperty.fromMap<ProjectDataType>("team", teamMap, {
-    label: "团队分布",
-    showCount: true, // 显示数量标签
+];
+
+// 使用自定义 tooltip 配置
+const sidebarPropertiesCustom = [
+  createSidebarProperty.fromProgressField<ProjectDataType>("progress", {
+    label: "进度分布",
+    maxValueOfEachItem: 100,
+    tooltip: [
+      {
+        interval: ["closed", 0, 0, "closed"],
+        label: "未开始",
+        color: grayColors.gray5,
+      },
+      {
+        interval: ["open", 0, 30, "closed"],
+        label: "刚开始",
+        color: getRainbowColor("rose"),
+      },
+      {
+        interval: ["open", 30, 70, "closed"],
+        label: "进行中",
+        color: getRainbowColor("amber"),
+      },
+      {
+        interval: ["open", 70, 100, "open"],
+        label: "即将完成",
+        color: getRainbowColor("blue"),
+      },
+      {
+        interval: ["closed", 100, 100, "closed"],
+        label: "已完成",
+        color: getRainbowColor("emerald"),
+      },
+    ]
   }),
 ];
 ```
 
-### 4. 传递给 Timeline 组件
+### 4. 配置 Sidebar 属性
+
+```typescript
+// 混合使用映射类型和进度类型
+const sidebarProperties = [
+  // 映射类型
+  createSidebarProperty.fromMap<ProjectDataType>("status", statusMap, {
+    label: "状态分布",
+    showCount: false,
+  }),
+  createSidebarProperty.fromMap<ProjectDataType>("team", teamMap, {
+    label: "团队分布",
+    showCount: true,
+  }),
+  
+  // 进度类型
+  createSidebarProperty.fromProgressField<ProjectDataType>("progress", {
+    label: "进度分布",
+    maxValueOfEachItem: 100,
+  }),
+];
+```
+
+### 5. 传递给 Timeline 组件
 
 ```typescript
 <Timeline<ProjectDataType>
@@ -148,7 +211,7 @@ function MyTimeline() {
 
 ## 配置选项
 
-### `createSidebarProperty.fromMap` 参数说明
+### `createSidebarProperty.fromMap` 参数说明 (映射类型)
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
@@ -156,6 +219,65 @@ function MyTimeline() {
 | `mapping` | `Record<string, { name: string; color: string }>` | 字段值到显示名称和颜色的映射 |
 | `options.label` | `string?` | 可选的显示标签，会显示在分布条上方 |
 | `options.showCount` | `boolean?` | 是否显示每个值的数量，默认为 `false` |
+
+### `createSidebarProperty.fromProgressField` 参数说明 (进度类型)
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `field` | `keyof T` | 要显示分布的数据字段名（数值类型） |
+| `options.label` | `string?` | 可选的显示标签，会显示在分布条上方 |
+| `options.showCount` | `boolean?` | 是否显示每个值的数量，默认为 `false` |
+| `options.maxValueOfEachItem` | `number?` | 每个项目的最大值，用于计算百分比，默认为 `100` |
+| `options.tooltip` | `ProgressTooltipInterval[]?` | 自定义区间配置，不指定时使用默认配置 |
+
+### 进度区间配置 (`ProgressTooltipInterval`)
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `interval` | `["open"\|"closed", number, number, "open"\|"closed"]` | 区间范围定义 [左边界类型, 起始值, 结束值, 右边界类型] |
+| `label` | `string` | 区间显示标签 |
+| `color` | `TimelineColorType` | 区间颜色 |
+
+#### 区间类型说明：
+- `["closed", 0, 50, "closed"]`：表示 [0, 50]，即 0 ≤ value ≤ 50
+- `["closed", 0, 50, "open"]`：表示 [0, 50)，即 0 ≤ value < 50  
+- `["open", 0, 50, "closed"]`：表示 (0, 50]，即 0 < value ≤ 50
+- `["open", 0, 50, "open"]`：表示 (0, 50)，即 0 < value < 50
+
+#### 常见区间示例：
+```typescript
+// 精确匹配某个值
+{ interval: ["closed", 0, 0, "closed"], label: "未开始" }      // value = 0
+{ interval: ["closed", 100, 100, "closed"], label: "完成" }   // value = 100
+
+// 范围匹配
+{ interval: ["open", 0, 50, "closed"], label: "初期" }        // 0 < value ≤ 50
+{ interval: ["open", 50, 100, "open"], label: "后期" }        // 50 < value < 100
+```
+
+### 默认进度配置
+
+如果不指定 `tooltip` 参数，将使用以下默认配置：
+
+```typescript
+[
+  {
+    interval: ["closed", 0, 0, "closed"],
+    label: "not started",
+    color: grayColors.gray5,
+  },
+  {
+    interval: ["open", 0, 100, "open"],
+    label: "in progress",
+    color: getRainbowColor("emerald"),
+  },
+  {
+    interval: ["closed", 100, 100, "closed"],
+    label: "done",
+    color: getRainbowColor("emerald"),
+  },
+]
+```
 
 ### 颜色支持
 

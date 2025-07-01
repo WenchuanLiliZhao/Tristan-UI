@@ -27,7 +27,7 @@
 
 import React from "react";
 import type { RainbowColorVar, SemanticColorVar } from "../../../styles/color";
-import { getSemanticColor } from "../../../styles/color";
+import { getSemanticColor, grayColors } from "../../../styles/color";
 
 /**
  * Timeline 颜色类型 - 支持以下三种颜色使用方式：
@@ -143,13 +143,32 @@ export interface GroupByOption<T = Record<string, unknown>> {
 }
 
 /**
+ * 进度条 tooltip 区间配置
+ */
+export interface ProgressTooltipInterval {
+  /** 区间范围定义 [左边界, 起始值, 结束值, 右边界] */
+  interval: ["open" | "closed", number, number, "open" | "closed"];
+  /** 区间显示标签 */
+  label: string;
+  /** 区间颜色 */
+  color: TimelineColorType;
+}
+
+/**
  * 侧边栏属性分布配置
  */
 export interface SidebarPropertyConfig<T = Record<string, unknown>> {
   /** 要显示分布的字段 */
   field: keyof T;
-  /** 字段值到颜色和名称的映射 */
-  mapping: Record<string, { name: string; color: TimelineColorType }>;
+  /** 字段值到颜色和名称的映射（用于映射类型字段） */
+  mapping?: Record<string, { name: string; color: TimelineColorType }>;
+  /** 进度字段配置（用于数值类型字段） */
+  progressConfig?: {
+    /** 每个 item 的最大值，用于计算百分比 */
+    maxValueOfEachItem: number;
+    /** tooltip 区间配置 */
+    tooltip: ProgressTooltipInterval[];
+  };
   /** 显示标签（可选，默认使用字段名） */
   label?: string;
   /** 是否显示数量标签 */
@@ -370,6 +389,46 @@ export const createSidebarProperty = {
     label: options?.label,
     showCount: options?.showCount ?? false,
   }),
+
+  /** 从进度字段创建sidebar属性配置 */
+  fromProgressField: <T>(
+    field: keyof T,
+    options?: {
+      label?: string;
+      showCount?: boolean;
+      maxValueOfEachItem?: number;
+      tooltip?: ProgressTooltipInterval[];
+    }
+  ): SidebarPropertyConfig<T> => {
+    // 默认的 tooltip 配置
+    const defaultTooltip: ProgressTooltipInterval[] = [
+      {
+        interval: ["closed", 0, 0, "closed"],
+        label: "not started",
+        color: grayColors.gray5,
+      },
+      {
+        interval: ["open", 0, 100, "open"],
+        label: "in progress", 
+        color: getSemanticColor("active"),
+      },
+      {
+        interval: ["closed", 100, 100, "closed"],
+        label: "done",
+        color: getSemanticColor("success"),
+      },
+    ];
+
+    return {
+      field,
+      progressConfig: {
+        maxValueOfEachItem: options?.maxValueOfEachItem ?? 100,
+        tooltip: options?.tooltip ?? defaultTooltip,
+      },
+      label: options?.label,
+      showCount: options?.showCount ?? false,
+    };
+  },
 };
 
 // 🏗️ Timeline配置构建器类
