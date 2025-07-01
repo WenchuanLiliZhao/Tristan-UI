@@ -19,4 +19,8 @@ export {
   type VirtualizedTimelineConfig,
   type VisibleTimeRange,
   type VirtualScrollProps
-} from './useVirtualizedTimeline'; 
+} from './useVirtualizedTimeline';
+export { 
+  useTimelineUrlParams,
+  type UseTimelineUrlParamsReturn
+} from './useTimelineUrlParams'; 

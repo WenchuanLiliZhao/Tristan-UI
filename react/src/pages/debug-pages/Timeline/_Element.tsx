@@ -222,6 +222,11 @@ export function Element(): React.ReactElement {
           defaultDayWidth={24} // 直接使用dayWidth状态
           zoomLevels={zoomLevels}
           issueDetailsConfig={issueDetailsConfig}
+          urlParams={{
+            defaultToday: true,
+            recordGroupby: true,
+            recordCurrentDate: true,
+          }}
         />
       }
     />

@@ -200,6 +200,20 @@ export interface TimelineProps<T = Record<string, unknown>> {
   defaultDayWidth?: number;
   /** Configuration for IssueDetails component shown in right sidebar */
   issueDetailsConfig?: import('./issueDetailsConfig').IssueDetailsConfig<T>;
+  /** URL 参数管理配置 */
+  urlParams?: TimelineUrlParamsConfig;
+}
+
+// URL 参数管理配置接口
+export interface TimelineUrlParamsConfig {
+  /** 当浏览器中不存在任何参数时，是否要默认跳转到今天 */
+  defaultToday?: boolean;
+  /** 浏览器 URL 是否要记录当前 groupBy 的参数 */
+  recordGroupby?: boolean;
+  /** 浏览器 URL 是否要记录当前的 zoomLevel */
+  recordZoomLevel?: boolean;
+  /** 浏览器 URL 是否要记录中轴线所对准的日期 */
+  recordCurrentDate?: boolean;
 }
 
 // 预定义的常用映射函数

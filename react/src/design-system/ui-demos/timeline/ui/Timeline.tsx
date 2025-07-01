@@ -53,6 +53,13 @@ import { GroupBySelector } from "./Shared/GroupBySelector";
 import type { GroupPlacement } from "./LeftSidebar/TimelineLeftSidebar";
 import { useCenterBasedZoom, useDisableBrowserGestures } from "../hooks";
 import { useZoomLevelMonitor } from "../hooks/useZoomLevelMonitor";
+import { useTimelineUrlParams } from "../hooks/useTimelineUrlParams";
+import {
+  scrollToDate,
+  calculateDateFromScrollPosition,
+  isDateInTimelineRange,
+} from "../utils/datePosition";
+import { parseTimelineUrlParams } from "../utils/urlParams";
 import styles from "./Timeline.module.scss";
 import { TimelineConst } from "./_constants";
 import { FloatingButtonGroup } from "../../../ui-components/navigation/FloatingButtonGroup";
@@ -181,19 +188,33 @@ export function Timeline<T = Record<string, unknown>>({
   currentZoom: externalCurrentZoom,
   defaultDayWidth = 12,
   issueDetailsConfig,
+  urlParams,
 }: TimelineProps<T>) {
-  // 如果没有提供 zoomLevels，使用默认的 dayWidth
+  // URL 参数管理
+  const urlParamsHook = useTimelineUrlParams(urlParams);
 
   // 始终调用 useTimelineZoom hook（React Hook 规则）
   const zoomManagement = useTimelineZoom(zoomLevels);
 
-  // 使用分组管理 hook
-  const groupByManagement = useTimelineGroupBy(groupByOptions, groupBy);
+  // 使用分组管理 hook，优先使用 URL 中的值
+  const effectiveInitialGroupBy = (() => {
+    if (urlParams?.recordGroupby && urlParamsHook.urlGroupBy && groupByOptions) {
+      const validOption = groupByOptions.find(
+        option => String(option.field) === urlParamsHook.urlGroupBy
+      );
+      if (validOption) {
+        return validOption.field;
+      }
+    }
+    return groupBy;
+  })();
+  
+  const groupByManagement = useTimelineGroupBy(groupByOptions, effectiveInitialGroupBy);
 
   // 确定最终使用的 dayWidth
   const dayWidth = (() => {
     if (externalCurrentZoom && zoomLevels) {
-      // 如果提供了外部 currentZoom 和 zoomLevels，查找对应的 dayWidth
+      // 如果有有效的 currentZoom 和 zoomLevels，查找对应的 dayWidth
       const zoomConfig = zoomLevels.find(
         (zl) => zl.label.toLowerCase().replace(" ", "-") === externalCurrentZoom
       );
@@ -293,6 +314,9 @@ export function Timeline<T = Record<string, unknown>>({
   // 添加主滚动容器的引用 - 现在只需要一个
   const mainScrollRef = useRef<HTMLDivElement>(null);
 
+  // 滚动事件的防抖处理
+  const scrollTimeoutRef = useRef<number | null>(null);
+
   // 使用自定义hook实现中心缩放功能，针对主内容容器
   const { containerRef: zoomContainerRef } = useCenterBasedZoom(dayWidth);
 
@@ -350,6 +374,151 @@ export function Timeline<T = Record<string, unknown>>({
   const { years: yearList, startMonth } = TimelineItemInterval({
     inputData: timelineIntervalData,
   });
+
+  // 滚动事件处理函数
+  const handleScroll = useCallback(() => {
+    if (!urlParams?.recordCurrentDate || !mainScrollRef.current) {
+      return;
+    }
+
+    // 清除之前的定时器
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    // 防抖处理，避免频繁更新 URL
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      const container = mainScrollRef.current;
+      if (!container || yearList.length === 0) return;
+
+      const scrollLeft = container.scrollLeft;
+      const containerWidth = container.clientWidth;
+      const sidebarWidth = hasGrouping ? TimelineConst.sidebarWidth : 0;
+
+      const currentDate = calculateDateFromScrollPosition(
+        scrollLeft,
+        containerWidth,
+        sidebarWidth,
+        yearList,
+        startMonth,
+        dayWidth
+      );
+
+      if (currentDate && isDateInTimelineRange(currentDate, yearList)) {
+        urlParamsHook.setUrlCurrentDate(currentDate);
+      }
+    }, 300); // 300ms 防抖
+  }, [urlParams?.recordCurrentDate, yearList, startMonth, dayWidth, hasGrouping, urlParamsHook]);
+
+  // 监听滚动事件
+  useEffect(() => {
+    const container = mainScrollRef.current;
+    if (!container || !urlParams?.recordCurrentDate) return;
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [handleScroll, urlParams?.recordCurrentDate]);
+
+  // URL 参数同步：groupBy 变化时更新 URL
+  useEffect(() => {
+    if (urlParams?.recordGroupby && groupByManagement.currentGroupBy) {
+      const currentGroupByStr = String(groupByManagement.currentGroupBy);
+      if (urlParamsHook.urlGroupBy !== currentGroupByStr) {
+        urlParamsHook.setUrlGroupBy(currentGroupByStr);
+      }
+    }
+  }, [groupByManagement.currentGroupBy, urlParams?.recordGroupby, urlParamsHook]);
+
+  // 监听 URL 参数变化，只处理浏览器前进/后退或外部 URL 变化
+  useEffect(() => {
+    const handlePopState = () => {
+      // 当浏览器前进/后退时，从 URL 读取参数并更新内部状态
+      const parsedParams = parseTimelineUrlParams();
+      
+             // 更新 groupBy
+       if (urlParams?.recordGroupby && parsedParams.groupBy && groupByOptions) {
+         const validOption = groupByOptions.find(
+           option => String(option.field) === parsedParams.groupBy
+         );
+         if (validOption && groupByManagement.currentGroupBy !== validOption.field) {
+           groupByManagement.setCurrentGroupBy(validOption.field);
+         }
+         urlParamsHook.setStateFromUrl({ groupBy: parsedParams.groupBy });
+       }
+      
+      // 更新 currentDate
+      if (urlParams?.recordCurrentDate && parsedParams.currentDate) {
+        urlParamsHook.setStateFromUrl({ currentDate: parsedParams.currentDate });
+        
+        // 滚动到指定日期
+        const container = mainScrollRef.current;
+        if (container && yearList.length > 0) {
+          const sidebarWidth = hasGrouping ? TimelineConst.sidebarWidth : 0;
+          scrollToDate(
+            container,
+            parsedParams.currentDate,
+            yearList,
+            startMonth,
+            dayWidth,
+            sidebarWidth,
+            false
+          );
+        }
+      }
+    };
+
+    // 监听浏览器前进/后退事件
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+     }, [urlParams, groupByOptions, groupByManagement, urlParamsHook, yearList, startMonth, dayWidth, hasGrouping]);
+
+  // 初始化时滚动到指定日期或今天
+  useEffect(() => {
+    const container = mainScrollRef.current;
+    if (!container || yearList.length === 0) return;
+
+    const sidebarWidth = hasGrouping ? TimelineConst.sidebarWidth : 0;
+    
+    // 如果 URL 中有日期参数，滚动到该日期
+    if (urlParamsHook.urlCurrentDate) {
+      scrollToDate(
+        container,
+        urlParamsHook.urlCurrentDate,
+        yearList,
+        startMonth,
+        dayWidth,
+        sidebarWidth,
+        false
+      );
+      return;
+    }
+
+    // 如果配置了 defaultToday 且没有其他 URL 参数，滚动到今天
+    if (urlParams?.defaultToday) {
+      const hasAnyTimelineParams = urlParamsHook.urlGroupBy || urlParamsHook.urlCurrentDate;
+      if (!hasAnyTimelineParams) {
+        const today = new Date();
+        if (isDateInTimelineRange(today, yearList)) {
+          scrollToDate(
+            container,
+            today,
+            yearList,
+            startMonth,
+            dayWidth,
+            sidebarWidth,
+            false
+          );
+        }
+      }
+    }
+  }, [yearList, startMonth, dayWidth, hasGrouping, urlParamsHook.urlCurrentDate, urlParamsHook.urlGroupBy, urlParams?.defaultToday, urlParamsHook]);
 
 
 
