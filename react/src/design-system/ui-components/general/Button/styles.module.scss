@@ -4,13 +4,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;  
+  border: none;
   cursor: pointer;
   font-family: inherit;
   text-decoration: none;
   outline: none;
   overflow: hidden;
-  
+
   // // Focus state
   // &:focus-visible, &:focus {
   //   outline: 2px solid var(--color--border-prime) !important;
@@ -50,6 +50,13 @@
     .tristan-button__content {
       font-size: 14px;
       line-height: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
+      text-align: left;
     }
   }
 
@@ -126,7 +133,7 @@
       border-color: var(--color--semantic-error-pale);
       background-color: var(--color--semantic-error-pale);
       color: var(--color--semantic-error);
-      
+
       &:hover:not(.tristan-button--disabled) {
         border-color: var(--color--semantic-error-half);
 
@@ -139,12 +146,10 @@
   }
 
   &--filled {
-    
     &.tristan-button--default {
       background-color: var(--color--bg-secondary);
       color: var(--color--text-secondary);
-      
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -155,7 +160,7 @@
     &.tristan-button--success {
       background-color: var(--color--semantic-success);
       color: var(--color-chart--base-white);
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -166,7 +171,7 @@
     &.tristan-button--active {
       background-color: var(--color--semantic-active);
       color: var(--color-chart--base-white);
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -177,7 +182,7 @@
     &.tristan-button--warning {
       background-color: var(--color--semantic-warning);
       color: var(--color-chart--base-white);
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -188,7 +193,7 @@
     &.tristan-button--error {
       background-color: var(--color--semantic-error);
       color: var(--color-chart--base-white);
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -197,13 +202,12 @@
     }
   }
 
-
   &--ghost {
     background-color: transparent;
 
     &.tristan-button--default {
       color: var(--color--text-secondary);
-      
+
       &:hover:not(.tristan-button--disabled) {
         .hover-box {
           opacity: 1;
@@ -213,7 +217,7 @@
 
     &.tristan-button--success {
       color: var(--color--semantic-success);
-      
+
       &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-success-pale);
       }
@@ -221,7 +225,7 @@
 
     &.tristan-button--active {
       color: var(--color--semantic-active);
-      
+
       &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-active-pale);
       }
@@ -229,7 +233,7 @@
 
     &.tristan-button--warning {
       color: var(--color--semantic-warning);
-      
+
       &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-warning-pale);
       }
@@ -237,7 +241,7 @@
 
     &.tristan-button--error {
       color: var(--color--semantic-error);
-      
+
       &:hover:not(.tristan-button--disabled) {
         background-color: var(--color--semantic-error-pale);
       }

@@ -38,58 +38,58 @@
 .cascader-item {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-  color: var(--color--text-prime);
-  font-size: 14px;
-  line-height: 1.4;
-  min-height: 36px;
-  -webkit-user-select: none;
-  user-select: none;
-  width: 100%;
-  text-align: left;
-  border: none;
-  background-color: transparent;
+  // padding: 8px 12px;
+  // border-radius: 6px;
+  // cursor: pointer;
+  // transition: background-color 0.15s ease;
+  // color: var(--color--text-prime);
+  // font-size: 14px;
+  // line-height: 1.4;
+  // min-height: 36px;
+  // -webkit-user-select: none;
+  // user-select: none;
+  // width: 100%;
+  // text-align: left;
+  // border: none;
+  // background-color: transparent;
   
-  &:hover:not(.cascader-item--disabled) {
-    background-color: var(--color--bg-subtle);
-  }
+  // &:hover:not(.cascader-item--disabled) {
+  //   background-color: var(--color--bg-subtle);
+  // }
 
-  &:active:not(.cascader-item--disabled) {
-    background-color: var(--color--bg-muted);
-  }
+  // &:active:not(.cascader-item--disabled) {
+  //   background-color: var(--color--bg-muted);
+  // }
 
-  &:focus-visible {
-    outline: 2px solid var(--color--primary-main);
-    outline-offset: -2px;
-  }
+  // &:focus-visible {
+  //   outline: 2px solid var(--color--primary-main);
+  //   outline-offset: -2px;
+  // }
 
-  &.cascader-item--disabled {
-    color: var(--color--text-disabled);
-    cursor: not-allowed;
-    opacity: 0.5;
+  // &.cascader-item--disabled {
+  //   color: var(--color--text-disabled);
+  //   cursor: not-allowed;
+  //   opacity: 0.5;
 
-    &:hover {
-      background-color: transparent;
-    }
-  }
+  //   &:hover {
+  //     background-color: transparent;
+  //   }
+  // }
 
-  &.cascader-item--interactive {
-    // Minimal styling for interactive content
-    padding: 4px;
+  // &.cascader-item--interactive {
+  //   // Minimal styling for interactive content
+  //   padding: 4px;
     
-    &:hover {
-      background-color: transparent;
-    }
+  //   &:hover {
+  //     background-color: transparent;
+  //   }
     
-    &:active {
-      background-color: transparent;
-    }
+  //   &:active {
+  //     background-color: transparent;
+  //   }
     
-    &:focus-visible {
-      outline: none;
-    }
-  }
+  //   &:focus-visible {
+  //     outline: none;
+  //   }
+  // }
 } 

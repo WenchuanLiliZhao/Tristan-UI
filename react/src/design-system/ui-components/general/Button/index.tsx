@@ -18,7 +18,7 @@ export interface ButtonProps extends BaseComponentProps {
   /** Icon to display (when showIcon is true) */
   icon?: string;
   /** Decorative icon to display (when showDecoIcon is true) */
-  decoIcon?: string;
+  prefixIcon?: string;
   /** Click handler */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Button type */
@@ -36,7 +36,7 @@ export const Button: React.FC<ButtonProps> = ({
   semantic = "default",
   disabled = false,
   icon,
-  decoIcon,
+  prefixIcon,
   onClick,
   type = "button",
   className = "",
@@ -79,9 +79,9 @@ export const Button: React.FC<ButtonProps> = ({
           <span className={styles[`${baseClass}__content`]}>{children}</span>
         )}
       </div>
-      {decoIcon && (
+      {prefixIcon && (
         <span className={styles[`${baseClass}__icon`]}>
-          <Icon name={decoIcon} />
+          <Icon name={prefixIcon} />
         </span>
       )}
       <HoverBox className={styles["hover-box"]} />

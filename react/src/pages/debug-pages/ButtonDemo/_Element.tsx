@@ -17,7 +17,7 @@ export const Element: React.FC = () => {
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="default"
@@ -32,7 +32,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="success"
@@ -47,7 +47,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="active"
@@ -62,7 +62,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="warning"
@@ -77,7 +77,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="error"
@@ -98,7 +98,7 @@ export const Element: React.FC = () => {
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="default"
@@ -113,7 +113,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="success"
@@ -128,7 +128,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="active"
@@ -143,7 +143,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="warning"
@@ -158,7 +158,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="error"
@@ -179,7 +179,7 @@ export const Element: React.FC = () => {
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="default"
@@ -194,7 +194,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="success"
@@ -209,7 +209,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="active"
@@ -224,7 +224,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="warning"
@@ -239,7 +239,7 @@ export const Element: React.FC = () => {
 
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="error"
@@ -271,7 +271,7 @@ export const Element: React.FC = () => {
         >
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="outlined"
             size="medium"
             semantic="default"
@@ -281,7 +281,7 @@ export const Element: React.FC = () => {
           </Button>
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="filled"
             size="medium"
             semantic="success"
@@ -291,7 +291,7 @@ export const Element: React.FC = () => {
           </Button>
           <Button
             icon="add"
-            decoIcon="arrow_drop_down"
+            prefixIcon="arrow_drop_down"
             variant="ghost"
             size="medium"
             semantic="active"

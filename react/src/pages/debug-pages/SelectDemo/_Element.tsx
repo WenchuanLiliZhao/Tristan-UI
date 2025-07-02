@@ -71,7 +71,7 @@ export const Element: React.FC = () => {
   ];
 
   const teamOptions = [
-    { key: 'frontend', label: 'Frontend Team', value: 'frontend' },
+    { key: 'frontend', label: 'Frontend Team Available', value: 'frontend' },
     { key: 'backend', label: 'Backend Team', value: 'backend' },
     { key: 'design', label: 'Design Team', value: 'design' },
     { key: 'qa', label: 'QA Team', value: 'qa' },
@@ -113,7 +113,7 @@ export const Element: React.FC = () => {
             <Button
               size="medium"
               widthMode="full width"
-              decoIcon={option.label === groupByValue ? "check" : undefined}
+              prefixIcon={option.label === groupByValue ? "check" : undefined}
               variant={option.label === groupByValue ? "filled" : "ghost"}
               semantic={option.label === groupByValue ? "active" : "default"}
             >
@@ -136,7 +136,7 @@ export const Element: React.FC = () => {
             <Button
               size="medium"
               widthMode="full width"
-              decoIcon={option.label === teamValue ? "check" : undefined}
+              prefixIcon={option.label === teamValue ? "check" : undefined}
               variant={option.label === teamValue ? "filled" : "ghost"}
               semantic={option.label === teamValue ? "active" : "default"}
             >
