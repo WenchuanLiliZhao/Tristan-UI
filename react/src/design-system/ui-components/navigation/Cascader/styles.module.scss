@@ -1,5 +1,14 @@
 
 
+.cascader {
+  background-color: var(--color--bg-prime);
+  border: 1px solid var(--color--border-prime);
+  border-radius: 8px;
+  box-shadow: var(--shadow-pop-up);
+  padding: 4px;
+  overflow: hidden;
+}
+
 .cascader-content {
   overflow-y: auto;
 }
@@ -29,27 +38,36 @@
 }
 
 .cascader-item {
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-  color: var(--text-default);
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    background-color: var(--bg-subtle);
+  // Override Button styles for cascader context
+  border: none !important;
+  background: transparent !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  min-height: auto !important;
+  width: 100% !important;
+  
+  // Override ghost button hover behavior for cascader
+  &:hover:not(.tristan-button--disabled) {
+    background-color: var(--bg-subtle) !important;
+    
+    .hover-box {
+      opacity: 0 !important;
+    }
   }
 
-  &:active {
-    background-color: var(--bg-muted);
+  &:active:not(.tristan-button--disabled) {
+    background-color: var(--bg-muted) !important;
   }
 
-  &.disabled {
-    color: var(--text-disabled);
-    cursor: not-allowed;
-    opacity: 0.5;
+  &.tristan-button--disabled {
+    color: var(--text-disabled) !important;
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
 
     &:hover {
-      background-color: transparent;
+      background-color: transparent !important;
     }
   }
 } 

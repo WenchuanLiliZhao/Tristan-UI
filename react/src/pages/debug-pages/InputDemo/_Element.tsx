@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SearchBar } from '../../../design-system/ui-components';
+import { Input } from '../../../design-system/ui-components/data-entry';
 
 export const Element: React.FC = () => {
   const [controlledValue, setControlledValue] = useState('');
@@ -38,18 +38,18 @@ export const Element: React.FC = () => {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1000px', color: 'var(--color--text-prime)' }}>
-      <h1 style={{ color: 'var(--color--text-prime)' }}>SearchBar Component Demo</h1>
+      <h1 style={{ color: 'var(--color--text-prime)' }}>Input Component Demo</h1>
       
       {/* Basic Usage */}
       <section style={{ marginBottom: '3rem' }}>
         <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Basic Usage</h2>
         <p style={{ marginBottom: '1.5rem', color: 'var(--color--text-secondary)' }}>
-          Basic search bar with default settings
+          Basic input with default settings
         </p>
         
-        <SearchBar 
-          placeholder="Search anything..."
-          onSearch={handleStandardSearch}
+        <Input 
+          placeholder="Type something..."
+          onEnter={handleStandardSearch}
         />
         
         {searchResults.length > 0 && (
@@ -60,7 +60,7 @@ export const Element: React.FC = () => {
             borderRadius: '6px',
             border: '1px solid var(--color--border-prime)'
           }}>
-            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-prime)' }}>Search Results:</h4>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-prime)' }}>Results:</h4>
             {searchResults.map((result, index) => (
               <div key={index} style={{ padding: '0.25rem 0', color: 'var(--color--text-secondary)' }}>
                 {result}
@@ -70,23 +70,37 @@ export const Element: React.FC = () => {
         )}
       </section>
 
+      {/* Search Input Example */}
+      <section style={{ marginBottom: '3rem' }}>
+        <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Search Input Example</h2>
+        <p style={{ marginBottom: '1.5rem', color: 'var(--color--text-secondary)' }}>
+          Input configured as a search bar with prefix icon
+        </p>
+        
+        <Input 
+          prefixIcon="search"
+          placeholder="Search anything..."
+          onEnter={handleStandardSearch}
+        />
+      </section>
+
       {/* Variants */}
       <section style={{ marginBottom: '3rem' }}>
         <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Variants</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Outlined (Default)</h4>
-            <SearchBar variant="outlined" placeholder="Outlined search bar" />
+            <Input variant="outlined" placeholder="Outlined input" />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Filled</h4>
-            <SearchBar variant="filled" placeholder="Filled search bar" />
+            <Input variant="filled" placeholder="Filled input" />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Ghost</h4>
-            <SearchBar variant="ghost" placeholder="Ghost search bar" />
+            <Input variant="ghost" placeholder="Ghost input" />
           </div>
         </div>
       </section>
@@ -97,22 +111,22 @@ export const Element: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Tiny</h4>
-            <SearchBar size="tiny" placeholder="Tiny search" />
+            <Input size="tiny" placeholder="Tiny input" />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Small</h4>
-            <SearchBar size="small" placeholder="Small search" />
+            <Input size="small" placeholder="Small input" />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Medium (Default)</h4>
-            <SearchBar size="medium" placeholder="Medium search" />
+            <Input size="medium" placeholder="Medium input" />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Large</h4>
-            <SearchBar size="large" placeholder="Large search" />
+            <Input size="large" placeholder="Large input" />
           </div>
         </div>
       </section>
@@ -127,9 +141,9 @@ export const Element: React.FC = () => {
             <p style={{ fontSize: '0.9rem', color: 'var(--color--text-tertiary)', marginBottom: '0.5rem' }}>
               Component manages its own state
             </p>
-            <SearchBar 
+            <Input 
               placeholder="Type and press Enter..."
-              onSearch={(value) => alert(`Uncontrolled search: ${value}`)}
+              onEnter={(value) => alert(`Uncontrolled input: ${value}`)}
             />
           </div>
           
@@ -138,12 +152,12 @@ export const Element: React.FC = () => {
             <p style={{ fontSize: '0.9rem', color: 'var(--color--text-tertiary)', marginBottom: '0.5rem' }}>
               Value: "{controlledValue}" | Loading: {isSearching ? 'Yes' : 'No'}
             </p>
-            <SearchBar 
+            <Input 
               value={controlledValue}
               onChange={(value) => setControlledValue(value)}
-              onSearch={handleControlledSearch}
+              onEnter={handleControlledSearch}
               onClear={handleClear(setControlledValue)}
-              placeholder={isSearching ? "Searching..." : "Controlled search"}
+              placeholder={isSearching ? "Searching..." : "Controlled input"}
               disabled={isSearching}
             />
           </div>
@@ -154,13 +168,13 @@ export const Element: React.FC = () => {
       <section style={{ marginBottom: '3rem' }}>
         <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Button Mode (useAsButton)</h2>
         <p style={{ marginBottom: '1.5rem', color: 'var(--color--text-secondary)' }}>
-          When useAsButton is true, the search bar acts as a trigger for complex search interfaces like modals or navigation.
+          When useAsButton is true, the input acts as a trigger for complex interfaces like modals or navigation.
         </p>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Basic Button Mode</h4>
-            <SearchBar 
+            <Input 
               useAsButton
               placeholder="Click to open advanced search"
               onClick={handleButtonClick}
@@ -169,12 +183,57 @@ export const Element: React.FC = () => {
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>With Value Display</h4>
-            <SearchBar 
+            <Input 
               useAsButton
               placeholder="No filters applied"
               value={buttonValue}
               onClick={handleButtonClick}
               onClear={handleClear(setButtonValue)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Icon Examples */}
+      <section style={{ marginBottom: '3rem' }}>
+        <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Icon Examples</h2>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Prefix Icon</h4>
+            <Input 
+              prefixIcon="email"
+              placeholder="Enter your email"
+              onEnter={(value) => console.log('Email submitted:', value)}
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Suffix Icon</h4>
+            <Input 
+              suffixIcon="visibility"
+              placeholder="Password"
+              type="password"
+              onSuffixClick={() => console.log('Toggle password visibility')}
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Both Icons</h4>
+            <Input 
+              prefixIcon="person"
+              suffixIcon="edit"
+              placeholder="Username"
+              onSuffixClick={() => console.log('Edit username')}
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Search with Clear</h4>
+            <Input 
+              prefixIcon="search"
+              placeholder="Search..."
+              onEnter={(value) => console.log('Search:', value)}
             />
           </div>
         </div>
@@ -187,7 +246,7 @@ export const Element: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Auto Focus</h4>
-            <SearchBar 
+            <Input 
               autoFocus
               placeholder="Auto focused on mount"
             />
@@ -195,16 +254,16 @@ export const Element: React.FC = () => {
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Disabled State</h4>
-            <SearchBar 
+            <Input 
               disabled
-              value="Disabled search bar"
+              value="Disabled input"
               placeholder="Cannot interact"
             />
           </div>
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>No Clear Button</h4>
-            <SearchBar 
+            <Input 
               showClearButton={false}
               placeholder="No clear button shown"
             />
@@ -212,13 +271,55 @@ export const Element: React.FC = () => {
           
           <div>
             <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Custom Events</h4>
-            <SearchBar 
+            <Input 
               placeholder="Check console for events"
-              onFocus={() => console.log('SearchBar focused')}
-              onBlur={() => console.log('SearchBar blurred')}
-              onChange={(value) => console.log('SearchBar changed:', value)}
-              onSearch={(value) => console.log('SearchBar search:', value)}
-              onClear={() => console.log('SearchBar cleared')}
+              onFocus={() => console.log('Input focused')}
+              onBlur={() => console.log('Input blurred')}
+              onChange={(value) => console.log('Input changed:', value)}
+              onEnter={(value) => console.log('Input enter:', value)}
+              onClear={() => console.log('Input cleared')}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Input Types */}
+      <section style={{ marginBottom: '3rem' }}>
+        <h2 style={{ color: 'var(--color--text-prime)', marginBottom: '1rem' }}>Input Types</h2>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Text (Default)</h4>
+            <Input 
+              type="text"
+              placeholder="Text input"
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Email</h4>
+            <Input 
+              type="email"
+              prefixIcon="email"
+              placeholder="Enter email"
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Password</h4>
+            <Input 
+              type="password"
+              prefixIcon="lock"
+              placeholder="Enter password"
+            />
+          </div>
+          
+          <div>
+            <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-secondary)' }}>Number</h4>
+            <Input 
+              type="number"
+              prefixIcon="calculate"
+              placeholder="Enter number"
             />
           </div>
         </div>
@@ -236,15 +337,15 @@ export const Element: React.FC = () => {
         }}>
           <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color--text-prime)' }}>Available Shortcuts:</h4>
           <ul style={{ margin: '0', paddingLeft: '1.5rem', color: 'var(--color--text-secondary)' }}>
-            <li><strong>Enter</strong>: Trigger search</li>
+            <li><strong>Enter</strong>: Trigger onEnter event</li>
             <li><strong>Escape</strong>: Clear input (when clear button is enabled)</li>
             <li><strong>Tab</strong>: Navigate to/from component</li>
           </ul>
         </div>
         
-        <SearchBar 
-          placeholder="Try Enter to search, Escape to clear"
-          onSearch={(value) => alert(`Keyboard search: ${value}`)}
+        <Input 
+          placeholder="Try Enter to submit, Escape to clear"
+          onEnter={(value) => alert(`Keyboard input: ${value}`)}
         />
       </section>
 
@@ -262,8 +363,9 @@ export const Element: React.FC = () => {
           }}>
             <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color--text-prime)' }}>Search with Filter Indicator</h4>
             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-              <SearchBar 
+              <Input 
                 variant="filled"
+                prefixIcon="search"
                 placeholder="Search products..."
                 style={{ flex: '1', minWidth: '200px' }}
               />
@@ -297,9 +399,10 @@ export const Element: React.FC = () => {
               border: '1px solid var(--color--border-prime)'
             }}>
               <div style={{ color: 'var(--color--text-prime)', fontWeight: 'bold' }}>Logo</div>
-              <SearchBar 
+              <Input 
                 size="small"
                 variant="ghost"
+                prefixIcon="search"
                 placeholder="Search..."
                 style={{ width: '300px' }}
               />

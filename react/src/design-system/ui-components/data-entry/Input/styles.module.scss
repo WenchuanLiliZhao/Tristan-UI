@@ -1,5 +1,5 @@
 
-.tristan-search-bar {
+.tristan-input {
   position: relative;
   display: flex;
   align-items: center;
@@ -14,9 +14,10 @@
     gap: 6px;
     font-size: 12px;
     
-    .tristan-search-bar__search-icon,
-    .tristan-search-bar__clear-button,
-    .tristan-search-bar__button-indicator {
+    .tristan-input__prefix-icon,
+    .tristan-input__suffix-icon,
+    .tristan-input__clear-button,
+    .tristan-input__button-indicator {
       .material-icons {
         font-size: 14px;
       }
@@ -29,9 +30,10 @@
     gap: 8px;
     font-size: 14px;
     
-    .tristan-search-bar__search-icon,
-    .tristan-search-bar__clear-button,
-    .tristan-search-bar__button-indicator {
+    .tristan-input__prefix-icon,
+    .tristan-input__suffix-icon,
+    .tristan-input__clear-button,
+    .tristan-input__button-indicator {
       .material-icons {
         font-size: 16px;
       }
@@ -44,9 +46,10 @@
     gap: 8px;
     font-size: 14px;
     
-    .tristan-search-bar__search-icon,
-    .tristan-search-bar__clear-button,
-    .tristan-search-bar__button-indicator {
+    .tristan-input__prefix-icon,
+    .tristan-input__suffix-icon,
+    .tristan-input__clear-button,
+    .tristan-input__button-indicator {
       .material-icons {
         font-size: 18px;
       }
@@ -59,9 +62,10 @@
     gap: 12px;
     font-size: 16px;
     
-    .tristan-search-bar__search-icon,
-    .tristan-search-bar__clear-button,
-    .tristan-search-bar__button-indicator {
+    .tristan-input__prefix-icon,
+    .tristan-input__suffix-icon,
+    .tristan-input__clear-button,
+    .tristan-input__button-indicator {
       .material-icons {
         font-size: 20px;
       }
@@ -73,7 +77,7 @@
     background-color: var(--color--bg-prime);
     border: 1px solid var(--color--border-prime);
     
-    &:hover:not(.tristan-search-bar--disabled) {
+    &:hover:not(.tristan-input--disabled) {
       border-color: var(--color--border-secondary);
     }
     
@@ -87,7 +91,7 @@
     background-color: var(--color--bg-secondary);
     border: 1px solid transparent;
     
-    &:hover:not(.tristan-search-bar--disabled) {
+    &:hover:not(.tristan-input--disabled) {
       background-color: var(--color--bg-tertiary);
     }
     
@@ -102,7 +106,7 @@
     background-color: transparent;
     border: 1px solid transparent;
     
-    &:hover:not(.tristan-search-bar--disabled) {
+    &:hover:not(.tristan-input--disabled) {
       background-color: var(--color--bg-secondary);
     }
     
@@ -116,7 +120,7 @@
   &--button-mode {
     cursor: pointer;
     
-    .tristan-search-bar__input {
+    .tristan-input__input {
       cursor: pointer;
       -webkit-user-select: none;
       user-select: none;
@@ -132,10 +136,11 @@
     opacity: 0.6;
     cursor: not-allowed;
     
-    .tristan-search-bar__input,
-    .tristan-search-bar__search-icon,
-    .tristan-search-bar__clear-button,
-    .tristan-search-bar__button-indicator {
+    .tristan-input__input,
+    .tristan-input__prefix-icon,
+    .tristan-input__suffix-icon,
+    .tristan-input__clear-button,
+    .tristan-input__button-indicator {
       cursor: not-allowed;
     }
   }
@@ -146,8 +151,37 @@
   }
 }
 
-// Search icon
-.tristan-search-bar__search-icon {
+// Prefix icon
+.tristan-input__prefix-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color--text-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  
+  &:hover:not(:disabled) {
+    color: var(--color--text-prime);
+    background-color: var(--color--bg-tertiary);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color--semantic-active);
+    outline-offset: 1px;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// Suffix icon
+.tristan-input__suffix-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,7 +210,7 @@
 }
 
 // Input field
-.tristan-search-bar__input {
+.tristan-input__input {
   flex: 1;
   border: none;
   outline: none;
@@ -199,7 +233,7 @@
 }
 
 // Clear button
-.tristan-search-bar__clear-button {
+.tristan-input__clear-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -231,7 +265,7 @@
 }
 
 // Button mode indicator
-.tristan-search-bar__button-indicator {
+.tristan-input__button-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,7 +273,7 @@
   flex-shrink: 0;
   transition: all 0.2s ease;
   
-  .tristan-search-bar--button-mode:hover:not(.tristan-search-bar--disabled) & {
+  .tristan-input--button-mode:hover:not(.tristan-input--disabled) & {
     color: var(--color--text-prime);
   }
 }
@@ -265,7 +299,7 @@
 }
 
 // Focus state management
-.tristan-search-bar:focus-within {
+.tristan-input:focus-within {
   .hover-box {
     opacity: 0 !important;
   }
@@ -273,7 +307,7 @@
 
 // High contrast mode support
 @media (prefers-contrast: high) {
-  .tristan-search-bar {
+  .tristan-input {
     &--outlined {
       border-width: 2px;
     }
@@ -286,15 +320,16 @@
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
-  .tristan-search-bar,
-  .tristan-search-bar__search-icon,
-  .tristan-search-bar__clear-button,
-  .tristan-search-bar__button-indicator,
+  .tristan-input,
+  .tristan-input__prefix-icon,
+  .tristan-input__suffix-icon,
+  .tristan-input__clear-button,
+  .tristan-input__button-indicator,
   .hover-box {
     transition: none;
   }
   
-  .tristan-search-bar__clear-button {
+  .tristan-input__clear-button {
     animation: none;
     opacity: 1;
     transform: scale(1);

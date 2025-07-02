@@ -7,7 +7,8 @@ import IconDemo from "./IconDemo";
 import RichTooltipDemo from "./RichTooltipDemo";
 import DropdownCascaderDemo from "./DropdownCascaderDemo";
 import PropertyDistributionBarDemo from "./PropertyDistributionBarDemo";
-import SearchBarDemo from "./SearchBarDemo";
+import InputDemo from "./InputDemo";
+import SelectDemo from "./SelectDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -19,5 +20,6 @@ export const DebugPages = {
   RichTooltipDemo,
   DropdownCascaderDemo,
   PropertyDistributionBarDemo,
-  SearchBarDemo,
+  InputDemo,
+  SelectDemo,
 }

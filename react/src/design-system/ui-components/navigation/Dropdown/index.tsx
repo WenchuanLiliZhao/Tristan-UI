@@ -114,7 +114,6 @@ export const Dropdown: React.FC<DropdownProps> = ({
             onItemClick={handleItemClick}
             maxHeight={maxHeight}
             width={width}
-            className={styles["dropdown-cascader"]}
           />
         </DropdownPortal>
       )}

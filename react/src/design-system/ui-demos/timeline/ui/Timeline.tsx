@@ -479,10 +479,13 @@ export function Timeline<T = Record<string, unknown>>({
     };
      }, [urlParams, groupByOptions, groupByManagement, urlParamsHook, yearList, startMonth, dayWidth, hasGrouping]);
 
-  // 初始化时滚动到指定日期或今天
+  // 初始化时滚动到指定日期或今天（只在页面刷新时执行）
   useEffect(() => {
     const container = mainScrollRef.current;
     if (!container || yearList.length === 0) return;
+
+    // 只在页面刷新时进行滚动，避免在 URL 参数更新时强制滚动
+    if (!urlParamsHook.isInitialLoad) return;
 
     const sidebarWidth = hasGrouping ? TimelineConst.sidebarWidth : 0;
     
@@ -518,7 +521,7 @@ export function Timeline<T = Record<string, unknown>>({
         }
       }
     }
-  }, [yearList, startMonth, dayWidth, hasGrouping, urlParamsHook.urlCurrentDate, urlParamsHook.urlGroupBy, urlParams?.defaultToday, urlParamsHook]);
+  }, [yearList, startMonth, dayWidth, hasGrouping, urlParamsHook.urlCurrentDate, urlParamsHook.urlGroupBy, urlParams?.defaultToday, urlParamsHook.isInitialLoad]);
 
 
 

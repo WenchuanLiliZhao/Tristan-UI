@@ -20,6 +20,7 @@ import {
   TristanLogo,
 } from "../../../design-system/ui-components";
 import { IssueDetailsConfigBuilder } from "../../../design-system/ui-demos/timeline/issueDetailsConfig";
+import { Input } from "../../../design-system/ui-components/data-entry";
 
 export function Element(): React.ReactElement {
   // 🎯 定义缩放级别配置
@@ -210,7 +211,7 @@ export function Element(): React.ReactElement {
             <NavTitle title="Roadmap of lululemon Initiatives" />,
           ]}
           right={[
-            // 添加一个搜索框
+            <Input />
           ]}
         />
       }

@@ -1,6 +1,7 @@
 import React, { type ReactNode } from "react";
 import styles from "./styles.module.scss";
 import { type BaseComponentProps } from "../../types";
+import { Button } from "../../general/Button";
 
 // ========== Cascader Item Types ==========
 
@@ -27,20 +28,26 @@ export const CascaderItem: React.FC<CascaderItemProps> = ({
   className,
   'data-testid': dataTestId,
 }) => {
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (!disabled && onClick) {
       onClick(value, { key: '', content, value, disabled, onClick });
     }
   };
 
   return (
-    <div
-      className={`${styles["cascader-item"]} ${disabled ? styles["disabled"] : ""} ${className || ""}`}
+    <Button
+      variant="ghost"
+      size="medium"
+      disabled={disabled}
       onClick={handleClick}
+      className={`${styles["cascader-item"]} ${className || ""}`}
       data-testid={dataTestId}
+      widthMode="full width"
     >
       {content}
-    </div>
+    </Button>
   );
 };
 

@@ -12,7 +12,7 @@
  * - 处理默认跳转到今天的逻辑
  */
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { TimelineUrlParamsConfig } from '../types';
 import {
   parseTimelineUrlParams,
@@ -36,6 +36,8 @@ export interface UseTimelineUrlParamsReturn {
     groupBy?: string | null;
     currentDate?: Date | null;
   }) => void;
+  /** 检查是否是页面刷新时的初始状态 */
+  isInitialLoad: boolean;
 }
 
 /**
@@ -62,6 +64,9 @@ export function useTimelineUrlParams(
 
   // 防止循环更新的标志
   const updatingFromUrlRef = useRef(false);
+  
+  // 跟踪是否是初始加载（页面刷新）
+  const isInitialLoadRef = useRef(true);
 
   // 更新分组字段
   const setUrlGroupBy = useCallback((groupBy: string | null) => {
@@ -69,8 +74,6 @@ export function useTimelineUrlParams(
     setUrlGroupByState(groupBy);
     updateTimelineUrlParams(configRef.current, { groupBy });
   }, []);
-
-
 
   // 更新当前日期
   const setUrlCurrentDate = useCallback((date: Date | null) => {
@@ -115,6 +118,16 @@ export function useTimelineUrlParams(
     }
   }, [urlCurrentDate]);
 
+  // 在组件挂载后标记初始加载完成
+  useEffect(() => {
+    // 使用 setTimeout 确保在下一个 tick 执行，此时所有初始状态都已设置
+    const timer = setTimeout(() => {
+      isInitialLoadRef.current = false;
+    }, 0);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return {
     urlGroupBy,
     urlCurrentDate,
@@ -122,5 +135,6 @@ export function useTimelineUrlParams(
     setUrlCurrentDate,
     initializeDefaultDate,
     setStateFromUrl, // 内部使用的状态更新函数
+    isInitialLoad: isInitialLoadRef.current,
   };
 } 

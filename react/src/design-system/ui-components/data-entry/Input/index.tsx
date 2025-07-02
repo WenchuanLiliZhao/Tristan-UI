@@ -1,60 +1,78 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.scss';
 import type { BaseComponentProps, Size } from '../../types';
-import { Icon } from '../Icon';
+import { Icon } from '../../general';
 import { HoverBox } from '../../shared/HoverBox';
 
-export interface SearchBarProps extends BaseComponentProps {
-  /** Search bar variant style */
+export interface InputProps extends BaseComponentProps {
+  /** Input variant style */
   variant?: 'outlined' | 'filled' | 'ghost';
-  /** Size of the search bar */
+  /** Size of the input */
   size?: Size;
-  /** Whether the search bar is disabled */
+  /** Whether the input is disabled */
   disabled?: boolean;
   /** Placeholder text */
   placeholder?: string;
   /** Current value */
   value?: string;
-  /** Use as button mode - clicking opens a fullscreen search instead of input */
+  /** Input type */
+  type?: string;
+  /** Use as button mode - clicking opens a fullscreen input instead of regular input */
   useAsButton?: boolean;
   /** Whether to show clear button when there's content */
   showClearButton?: boolean;
   /** Auto focus on mount */
   autoFocus?: boolean;
+  /** Prefix icon name */
+  prefixIcon?: string;
+  /** Suffix icon name */
+  suffixIcon?: string;
+  /** Button mode indicator icon (when useAsButton is true) */
+  buttonIndicatorIcon?: string;
   /** Custom styles */
   style?: React.CSSProperties;
   
   // Event handlers
   /** Called when input value changes */
   onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Called when search is triggered (Enter key or search icon click) */
-  onSearch?: (value: string) => void;
-  /** Called when search bar is clicked in useAsButton mode */
+  /** Called when Enter key is pressed */
+  onEnter?: (value: string) => void;
+  /** Called when input is clicked in useAsButton mode */
   onClick?: () => void;
   /** Called when clear button is clicked */
   onClear?: () => void;
+  /** Called when prefix icon is clicked */
+  onPrefixClick?: () => void;
+  /** Called when suffix icon is clicked */
+  onSuffixClick?: () => void;
   /** Called when input is focused */
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   /** Called when input loses focus */
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  /** Called when Enter key is pressed */
+  /** Called when any key is pressed */
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({
+export const Input: React.FC<InputProps> = ({
   variant = 'outlined',
   size = 'medium',
   disabled = false,
-  placeholder = 'Search...',
+  placeholder = '',
   value: controlledValue,
+  type = 'text',
   useAsButton = false,
   showClearButton = true,
   autoFocus = false,
+  prefixIcon,
+  suffixIcon,
+  buttonIndicatorIcon,
   style,
   onChange,
-  onSearch,
+  onEnter,
   onClick,
   onClear,
+  onPrefixClick,
+  onSuffixClick,
   onFocus,
   onBlur,
   onKeyDown,
@@ -112,7 +130,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && !useAsButton) {
-      onSearch?.(value);
+      onEnter?.(value);
     }
     
     if (event.key === 'Escape' && hasValue && showClearButton) {
@@ -120,14 +138,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     }
     
     onKeyDown?.(event);
-  };
-
-  const handleSearchIconClick = () => {
-    if (useAsButton) {
-      onClick?.();
-    } else {
-      onSearch?.(value);
-    }
   };
 
   const handleContainerClick = () => {
@@ -138,7 +148,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  const baseClass = 'tristan-search-bar';
+  const baseClass = 'tristan-input';
   const containerClasses = [
     styles[baseClass],
     styles[`${baseClass}--${variant}`],
@@ -159,22 +169,24 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       style={style}
       {...rest}
     >
-      {/* Search Icon */}
-      <button
-        type="button"
-        className={styles[`${baseClass}__search-icon`]}
-        onClick={handleSearchIconClick}
-        disabled={disabled}
-        tabIndex={-1}
-        aria-label="Search"
-      >
-        <Icon name="search" />
-      </button>
+      {/* Prefix Icon */}
+      {prefixIcon && (
+        <button
+          type="button"
+          className={styles[`${baseClass}__prefix-icon`]}
+          onClick={onPrefixClick}
+          disabled={disabled}
+          tabIndex={-1}
+          aria-label={`${prefixIcon} icon`}
+        >
+          <Icon name={prefixIcon} />
+        </button>
+      )}
 
       {/* Input Field */}
       <input
         ref={inputRef}
-        type="text"
+        type={type}
         className={styles[`${baseClass}__input`]}
         value={value}
         placeholder={placeholder}
@@ -184,7 +196,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         onFocus={onFocus}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
-        aria-label={useAsButton ? 'Search trigger' : 'Search input'}
+        aria-label={useAsButton ? 'Input trigger' : 'Input field'}
         style={{ cursor: useAsButton ? 'pointer' : 'text' }}
       />
 
@@ -196,16 +208,30 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           onClick={handleClear}
           disabled={disabled}
           tabIndex={-1}
-          aria-label="Clear search"
+          aria-label="Clear input"
         >
           <Icon name="close" />
+        </button>
+      )}
+
+      {/* Suffix Icon */}
+      {suffixIcon && !hasValue && (
+        <button
+          type="button"
+          className={styles[`${baseClass}__suffix-icon`]}
+          onClick={onSuffixClick}
+          disabled={disabled}
+          tabIndex={-1}
+          aria-label={`${suffixIcon} icon`}
+        >
+          <Icon name={suffixIcon} />
         </button>
       )}
 
       {/* Button Mode Indicator */}
       {useAsButton && (
         <div className={styles[`${baseClass}__button-indicator`]}>
-          <Icon name="arrow_drop_down" />
+          <Icon name={buttonIndicatorIcon || "arrow_drop_down"} />
         </div>
       )}
 
