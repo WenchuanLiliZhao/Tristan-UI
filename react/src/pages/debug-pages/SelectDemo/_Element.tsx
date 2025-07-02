@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Select, type SelectOption } from '../../../design-system/ui-components/data-entry';
+import { Dropdown, Button, Icon, type CascaderGroupProps } from '../../../design-system/ui-components';
+import styles from './SelectStyleDemo.module.scss';
 
 export const Element: React.FC = () => {
   const [basicValue, setBasicValue] = useState<string>();
   const [searchableValue, setSearchableValue] = useState<string>();
   const [controlledValue, setControlledValue] = useState<string>();
   const [sizeValue, setSizeValue] = useState<string>();
+  
+  // Style demo states
+  const [categoryValue, setCategoryValue] = useState<string>();
+  
+  // GroupBySelector-style states
+  const [groupByValue, setGroupByValue] = useState<string>('Category');
+  const [teamValue, setTeamValue] = useState<string>('Frontend Team');
 
   // Sample data
   const fruitOptions: SelectOption[] = [
@@ -43,6 +52,31 @@ export const Element: React.FC = () => {
     { value: 'au', label: 'Australia' },
   ];
 
+  // Style demo options
+  const categoryOptions: SelectOption[] = [
+    { value: 'development', label: 'Development' },
+    { value: 'design', label: 'Design' },
+    { value: 'testing', label: 'Testing' },
+    { value: 'deployment', label: 'Deployment' },
+  ];
+
+
+
+  // GroupBySelector-style options (for Dropdown + Button implementation)
+  const groupBySelectorOptions = [
+    { key: 'category', label: 'Category', value: 'category' },
+    { key: 'priority', label: 'Priority', value: 'priority' },
+    { key: 'status', label: 'Status', value: 'status' },
+    { key: 'team', label: 'Team', value: 'team' },
+  ];
+
+  const teamOptions = [
+    { key: 'frontend', label: 'Frontend Team', value: 'frontend' },
+    { key: 'backend', label: 'Backend Team', value: 'backend' },
+    { key: 'design', label: 'Design Team', value: 'design' },
+    { key: 'qa', label: 'QA Team', value: 'qa' },
+  ];
+
   const handleBasicSelect = (value: string | number, option: SelectOption) => {
     console.log('Basic select:', value, option);
     setBasicValue(value as string);
@@ -69,9 +103,210 @@ export const Element: React.FC = () => {
     };
   };
 
+  // GroupBySelector-style handlers
+  const createGroupByOptions = (): CascaderGroupProps[] => {
+    return [
+      {
+        items: groupBySelectorOptions.map((option) => ({
+          key: option.key,
+          content: (
+            <Button
+              size="medium"
+              widthMode="full width"
+              decoIcon={option.label === groupByValue ? "check" : undefined}
+              variant={option.label === groupByValue ? "filled" : "ghost"}
+              semantic={option.label === groupByValue ? "active" : "default"}
+            >
+              {option.label}
+            </Button>
+          ),
+          value: option.value,
+          interactive: true, // Use optimized interactive mode
+        })),
+      },
+    ];
+  };
+
+  const createTeamOptions = (): CascaderGroupProps[] => {
+    return [
+      {
+        items: teamOptions.map((option) => ({
+          key: option.key,
+          content: (
+            <Button
+              size="medium"
+              widthMode="full width"
+              decoIcon={option.label === teamValue ? "check" : undefined}
+              variant={option.label === teamValue ? "filled" : "ghost"}
+              semantic={option.label === teamValue ? "active" : "default"}
+            >
+              {option.label}
+            </Button>
+          ),
+          value: option.value,
+          interactive: true, // Use optimized interactive mode
+        })),
+      },
+    ];
+  };
+
+  const handleGroupByChange = (value: string | number | object | undefined) => {
+    if (typeof value === "string") {
+      const option = groupBySelectorOptions.find(opt => opt.value === value);
+      if (option) {
+        setGroupByValue(option.label);
+      }
+    }
+  };
+
+  const handleTeamChange = (value: string | number | object | undefined) => {
+    if (typeof value === "string") {
+      const option = teamOptions.find(opt => opt.value === value);
+      if (option) {
+        setTeamValue(option.label);
+      }
+    }
+  };
+
   return (
     <div style={{ padding: '20px', maxWidth: '1000px', color: 'var(--color--text-prime)' }}>
       <h1 style={{ color: 'var(--color--text-prime)' }}>Select Component Demo</h1>
+      
+      {/* Style Demo Section - Inspired by GroupBySelector */}
+      <section className={styles['select-style-demo']}>
+        <h2 className={styles['demo-title']}>GroupBySelector-Inspired Select Styles</h2>
+        <p className={styles['demo-description']}>
+          Select components styled similar to the GroupBySelector component, featuring compact layouts, 
+          labeled containers, and visual feedback for selected values.
+        </p>
+        
+        <div className={styles['demo-grid']}>
+          {/* Original Select components for comparison */}
+          <div className={styles['select-container']}>
+            <div className={styles['select-label']}>Category (Select)</div>
+            <div className={styles['select-wrapper']}>
+              <Select
+                className={styles['select-custom']}
+                options={categoryOptions}
+                value={categoryValue}
+                placeholder="Select category..."
+                onSelect={(value) => setCategoryValue(value as string)}
+                onClear={() => setCategoryValue(undefined)}
+                size="small"
+              />
+            </div>
+            <div className={styles['select-value-info']}>
+              {categoryValue ? `Selected: ${categoryOptions.find(opt => opt.value === categoryValue)?.label}` : 'No selection'}
+            </div>
+          </div>
+
+          {/* GroupBySelector-style Dropdown + Button */}
+          <div className={styles['select-container']}>
+            <div className={styles['select-label']}>Group By (Dropdown)</div>
+            <div className={styles['select-wrapper']}>
+              <Dropdown
+                className={styles['group-by-dropdown']}
+                trigger={
+                  <div className={styles['group-by-value-container']}>
+                    <div className={styles['group-by-value']}>{groupByValue}</div>
+                    <Icon
+                      className={styles['group-by-value-icon']}
+                      name="chevron_right"
+                    />
+                  </div>
+                }
+                groups={createGroupByOptions()}
+                position="right-start"
+                onItemClick={handleGroupByChange}
+                width={160}
+              />
+            </div>
+            <div className={styles['select-value-info']}>
+              Using Dropdown + Button (like GroupBySelector)
+            </div>
+          </div>
+
+          {/* Another GroupBySelector-style example */}
+          <div className={styles['select-container']}>
+            <div className={styles['select-label']}>Team (Dropdown)</div>
+            <div className={styles['select-wrapper']}>
+              <Dropdown
+                className={styles['group-by-dropdown']}
+                trigger={
+                  <div className={styles['group-by-value-container']}>
+                    <div className={styles['group-by-value']}>{teamValue}</div>
+                    <Icon
+                      className={styles['group-by-value-icon']}
+                      name="chevron_right"
+                    />
+                  </div>
+                }
+                groups={createTeamOptions()}
+                position="right-start"
+                onItemClick={handleTeamChange}
+                width={180}
+              />
+            </div>
+            <div className={styles['select-value-info']}>
+              Dropdown with Button content
+            </div>
+          </div>
+        </div>
+
+        {/* Exact GroupBySelector layout replica */}
+        <div className={styles['inline-demo']}>
+          <div className={styles['inline-label']}>Exact GroupBySelector Style:</div>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '2px',
+            padding: '8px',
+            backgroundColor: 'var(--color--bg-secondary)',
+            borderRadius: '4px',
+            border: '1px solid var(--color--border-prime)',
+            minWidth: '200px'
+          }}>
+            <div style={{
+              fontSize: '10px',
+              color: 'var(--color--text-negative)',
+              lineHeight: '12px',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              padding: '0 8px'
+            }}>Group By</div>
+            <Dropdown
+              trigger={
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: '2px',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}>
+                  <div style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: 'var(--color--text-secondary)',
+                    lineHeight: '20px'
+                  }}>{groupByValue}</div>
+                  <Icon style={{
+                    fontSize: '18px',
+                    color: 'var(--color--text-secondary)',
+                    lineHeight: '20px'
+                  }} name="chevron_right" />
+                </div>
+              }
+              groups={createGroupByOptions()}
+              position="right-start"
+              onItemClick={handleGroupByChange}
+              width={160}
+            />
+          </div>
+        </div>
+      </section>
       
       {/* Basic Usage */}
       <section style={{ marginBottom: '3rem' }}>

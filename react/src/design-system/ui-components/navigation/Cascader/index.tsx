@@ -10,6 +10,11 @@ export interface CascaderItemProps extends BaseComponentProps {
   value?: string | number | object;
   disabled?: boolean;
   onClick?: (value: string | number | object | undefined, item: CascaderItemProps) => void;
+  /** 
+   * Set to true when content is already an interactive component (Button, etc.)
+   * This will render content directly without CascaderItem wrapper events
+   */
+  interactive?: boolean;
 }
 
 export interface CascaderGroupProps {
@@ -24,14 +29,39 @@ export const CascaderItem: React.FC<CascaderItemProps> = ({
   value,
   disabled = false,
   onClick,
+  interactive = false,
   className,
   'data-testid': dataTestId,
 }) => {
+  // For interactive content, use minimal wrapper without competing event handlers
+  if (interactive) {
+    const handleInteractiveClick = () => {
+      // Only trigger cascader onClick if the click wasn't handled by inner content
+      // We use a slight delay to let the inner component handle its click first
+      setTimeout(() => {
+        if (!disabled && onClick) {
+          onClick(value, { key: '', content, value, disabled, onClick, interactive });
+        }
+      }, 0);
+    };
+
+    return (
+      <div
+        className={`${styles["cascader-item"]} ${styles["cascader-item--interactive"]} ${disabled ? styles["cascader-item--disabled"] : ""} ${className || ""}`}
+        onClick={handleInteractiveClick}
+        data-testid={dataTestId}
+      >
+        {content}
+      </div>
+    );
+  }
+
+  // Non-interactive content: traditional CascaderItem behavior
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (!disabled && onClick) {
-      onClick(value, { key: '', content, value, disabled, onClick });
+      onClick(value, { key: '', content, value, disabled, onClick, interactive });
     }
   };
 
@@ -40,7 +70,7 @@ export const CascaderItem: React.FC<CascaderItemProps> = ({
       event.preventDefault();
       event.stopPropagation();
       if (!disabled && onClick) {
-        onClick(value, { key: '', content, value, disabled, onClick });
+        onClick(value, { key: '', content, value, disabled, onClick, interactive });
       }
     }
   };

@@ -60,20 +60,57 @@ const groups: CascaderGroupProps[] = [
 
 ### CascaderItemProps
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `key` | `string` | Unique identifier |
-| `content` | `ReactNode` | Content to display (can be any ReactNode) |
-| `value` | `string \| number \| object` | Value passed to onClick |
-| `disabled` | `boolean` | Whether item is disabled |
-| `onClick` | `(value, item) => void` | Click handler |
-| `className` | `string` | Additional CSS class |
-| `data-testid` | `string` | Test identifier |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `key` | `string` | - | Unique identifier |
+| `content` | `ReactNode` | - | Content to display (can be any ReactNode) |
+| `value` | `string \| number \| object` | - | Value passed to onClick |
+| `disabled` | `boolean` | `false` | Whether item is disabled |
+| `interactive` | `boolean` | `false` | Set to true for interactive content (Button, etc.) |
+| `onClick` | `(value, item) => void` | - | Click handler |
+| `className` | `string` | - | Additional CSS class |
+| `data-testid` | `string` | - | Test identifier |
+
+## Interactive Mode
+
+For content that is already interactive (like Button components), use the `interactive` prop to optimize performance and avoid conflicts:
+
+```tsx
+// Non-interactive content (default)
+{
+  key: "text-item",
+  content: "Simple text option",
+  value: "text"
+}
+
+// Interactive content (optimized)
+{
+  key: "button-item", 
+  content: (
+    <Button variant="ghost" size="medium">
+      Interactive Button
+    </Button>
+  ),
+  value: "button",
+  interactive: true // Enables optimized mode
+}
+```
+
+When `interactive: true`:
+- Minimal wrapper styling to avoid conflicts
+- No competing event handlers 
+- Inner component handles its own accessibility
+- Coordinated event handling via setTimeout
 
 ## Features
 
 - **Flexible Content**: Items can contain any ReactNode content
+- **Interactive Mode**: Optimized handling for interactive components
 - **Grouping**: Items can be organized into groups with optional titles
 - **Keyboard Support**: Basic keyboard navigation
 - **Accessibility**: ARIA labels and proper focus management
-- **Customizable**: Supports custom styling and dimensions 
+- **Customizable**: Supports custom styling and dimensions
+
+## Advanced Usage
+
+See [INTERACTIVE_OPTIMIZATION.md](./INTERACTIVE_OPTIMIZATION.md) for detailed information about the interactive mode optimization. 

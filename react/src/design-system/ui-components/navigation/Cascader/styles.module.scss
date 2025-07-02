@@ -75,4 +75,21 @@
       background-color: transparent;
     }
   }
+
+  &.cascader-item--interactive {
+    // Minimal styling for interactive content
+    padding: 4px;
+    
+    &:hover {
+      background-color: transparent;
+    }
+    
+    &:active {
+      background-color: transparent;
+    }
+    
+    &:focus-visible {
+      outline: none;
+    }
+  }
 } 
