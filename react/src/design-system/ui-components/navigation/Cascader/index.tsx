@@ -1,7 +1,6 @@
 import React, { type ReactNode } from "react";
 import styles from "./styles.module.scss";
 import { type BaseComponentProps } from "../../types";
-import { Button } from "../../general/Button";
 
 // ========== Cascader Item Types ==========
 
@@ -28,7 +27,7 @@ export const CascaderItem: React.FC<CascaderItemProps> = ({
   className,
   'data-testid': dataTestId,
 }) => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (!disabled && onClick) {
@@ -36,18 +35,28 @@ export const CascaderItem: React.FC<CascaderItemProps> = ({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!disabled && onClick) {
+        onClick(value, { key: '', content, value, disabled, onClick });
+      }
+    }
+  };
+
   return (
-    <Button
-      variant="ghost"
-      size="medium"
-      disabled={disabled}
-      onClick={handleClick}
-      className={`${styles["cascader-item"]} ${className || ""}`}
+    <div
+      className={`${styles["cascader-item"]} ${disabled ? styles["cascader-item--disabled"] : ""} ${className || ""}`}
+      onClick={disabled ? undefined : handleClick}
+      onKeyDown={disabled ? undefined : handleKeyDown}
+      tabIndex={disabled ? -1 : 0}
+      role="button"
       data-testid={dataTestId}
-      widthMode="full width"
+      {...(disabled && { 'aria-disabled': 'true' })}
     >
       {content}
-    </Button>
+    </div>
   );
 };
 
