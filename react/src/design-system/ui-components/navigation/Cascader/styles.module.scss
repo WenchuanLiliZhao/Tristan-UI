@@ -38,15 +38,6 @@
 }
 
 .cascader-item {
-  // Override Button styles for cascader context
-  border: none !important;
-  background: transparent !important;
-  text-align: left !important;
-  justify-content: flex-start !important;
-  padding: 8px 12px !important;
-  border-radius: 4px !important;
-  min-height: auto !important;
-  width: 100% !important;
   
   // Override ghost button hover behavior for cascader
   &:hover:not(.tristan-button--disabled) {
