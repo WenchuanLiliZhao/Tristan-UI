@@ -21,6 +21,7 @@ export const Element: React.FC = () => {
     { name: 'Dropdown & Cascader Demo', path: '/dropdown-cascader-demo', description: 'Dropdown and Cascader components demonstration - Interactive dropdowns with flexible content and positioning options' },
     { name: 'Property Distribution Bar Demo', path: '/property-distribution-bar-demo', description: 'Property Distribution Bar component demonstration - View different styles and usage patterns of the Property Distribution Bar component' },
     { name: 'Select Demo', path: '/select-demo', description: 'Select component demonstration - View different styles and usage patterns of the Select component' },
+    { name: 'TimePicker Demo', path: '/time-picker-demo', description: 'TimePicker component demonstration - View different styles and usage patterns of the TimePicker component' },
   ];
 
   return (
