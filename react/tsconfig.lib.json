@@ -18,7 +18,7 @@
     "moduleDetection": "force"
   },
   "include": [
-    "src/components/**/*",
+    "src/design-system/**/*",
     "src/index.ts",
     "src/styles/**/*",
     "src/vite-env.d.ts"

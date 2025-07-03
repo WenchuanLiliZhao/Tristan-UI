@@ -10,6 +10,7 @@ export type {
 export * from './general';
 export * from './navigation';
 export * from './data-display';
+export * from './data-entry';
 export * from './layout';
 export * from './shared/dateUtils';
 export * from './shared/useSmartPosition';
