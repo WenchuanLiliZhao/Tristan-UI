@@ -8,7 +8,6 @@ import DropdownCascaderDemo from "./DropdownCascaderDemo";
 import PropertyDistributionBarDemo from "./PropertyDistributionBarDemo";
 import InputDemo from "./InputDemo";
 import SelectDemo from "./SelectDemo";
-import TimePickerDemo from "./TimePickerDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -21,5 +20,4 @@ export const DebugPages = {
   PropertyDistributionBarDemo,
   InputDemo,
   SelectDemo,
-  TimePickerDemo,
 }
