@@ -13,8 +13,24 @@ const iconMapping: Record<string, keyof typeof LucideIcons> = {
   'arrow_forward': 'ArrowRight',
   'expand_more': 'ChevronDown',
   'expand_less': 'ChevronUp',
+  'chevron_up': 'ChevronUp',
+  'chevron_down': 'ChevronDown',
   'chevron_left': 'ChevronLeft',
   'chevron_right': 'ChevronRight',
+
+  'chevrons-up': 'ChevronsUp',
+  'chevrons-down': 'ChevronsDown',
+  'chevrons-left': 'ChevronsLeft',
+  'chevrons-right': 'ChevronsRight',
+
+  'equal': 'Equal',
+  'plus': 'Plus',
+  'minus': 'Minus',
+  'multiply': 'X',
+  'divide': 'Divide',
+
+  'minimize-2': 'Minimize2',
+  'maximize-2': 'Maximize2',
   
   // User and social
   'person': 'User',
