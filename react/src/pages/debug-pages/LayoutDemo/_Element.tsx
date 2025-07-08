@@ -1,4 +1,9 @@
-import { TopNav } from "../../../design-system/ui-components";
+import {
+  NavTitle,
+  TopNav,
+  TristanLogo,
+  TristanNavLinkGroup,
+} from "../../../design-system/ui-components";
 import { TristanLayout } from "../../../design-system/ui-components/layout";
 import { colors } from "../../../styles";
 
@@ -18,7 +23,7 @@ const Main = () => {
 
       {/* 生成足够多的内容来填充高度 */}
       {Array.from({ length: 100 }, (_, i) => (
-        <div key={i} style={{ marginBottom: "16px"}}>
+        <div key={i} style={{ marginBottom: "16px" }}>
           <h3>Section {i + 1}</h3>
           <p>
             This is section {i + 1} of the main content. This content is
@@ -58,8 +63,12 @@ export const Element: React.FC = () => {
     <TristanLayout
       top={
         <TopNav
-          left={[<div>Left nav items</div>]}
-          right={[<div>Right nav items</div>]}
+          left={[
+            <TristanLogo width={32} height={32} />,
+            <NavTitle title="Roadmap of lululemon Initiatives" />,
+            
+          ]}
+          right={[<TristanNavLinkGroup items={[{ to: "/layout-demo", name: "Layout" }, { to: "/test", name: "Test" }]} />]}
         />
       }
       left={

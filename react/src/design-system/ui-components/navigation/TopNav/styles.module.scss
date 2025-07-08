@@ -9,7 +9,8 @@
 
   padding: 0 var(--spacing-nav-padding);
 
-  .left, .right {
+  .left,
+  .right {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -22,4 +23,28 @@
   font-size: 16px;
   line-height: var(--spacing-nav-item-size);
   font-weight: bold;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 14px;
+  height: var(--spacing-nav-size);
+  display: flex;
+  align-items: center;
+
+  .nav-link-active-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color--semantic-active);
+    border-radius: 1px 1px 0 0;
+  }
+}
+
+.nav-link-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
