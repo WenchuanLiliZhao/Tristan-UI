@@ -62,32 +62,44 @@ export const FloatingButtonGroup: React.FC<FloatingButtonGroupProps> = ({
   return (
     <div className={containerClasses} data-testid={dataTestId} {...rest}>
       <div className={styles["container"]}>
+        {(position === "bottom-left" || position === "top-left") && (
+          <>
+            {canBeHidden && (
+              <Button
+                icon={isCollapsed ? "chevron_right" : "chevron_left"}
+                variant="ghost"
+                onClick={handleToggle}
+              />
+            )}
+            {!isCollapsed && canBeHidden && itemGroups.length > 0 && (
+              <ButtonGroupDevider />
+            )}
+          </>
+        )}
         {!isCollapsed &&
           itemGroups.map((itemGroup, index) => (
-            <div
-              key={index}
-              className={styles["item-group"]}
-            >
+            <div key={index} className={styles["item-group"]}>
               {index > 0 && <ButtonGroupDevider />}
               {itemGroup.map((item, index) => (
-                <div
-                  key={index}
-                  className={styles["item"]}
-                >
+                <div key={index} className={styles["item"]}>
                   {item}
                 </div>
               ))}
             </div>
           ))}
-        {!isCollapsed && canBeHidden && itemGroups.length > 0 && (
-          <ButtonGroupDevider />
-        )}
-        {canBeHidden && (
-          <Button
-            icon={isCollapsed ? "chevron_left" : "chevron_right"}
-            variant="ghost"
-            onClick={handleToggle}
-          />
+        {(position === "bottom-right" || position === "top-right") && (
+          <>
+            {!isCollapsed && canBeHidden && itemGroups.length > 0 && (
+              <ButtonGroupDevider />
+            )}
+            {canBeHidden && (
+              <Button
+                icon={isCollapsed ? "chevron_left" : "chevron_right"}
+                variant="ghost"
+                onClick={handleToggle}
+              />
+            )}
+          </>
         )}
       </div>
     </div>

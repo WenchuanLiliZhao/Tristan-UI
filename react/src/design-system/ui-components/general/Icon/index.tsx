@@ -1,24 +1,98 @@
 import React from 'react';
-import './fonts/material-icons.scss';
+import * as LucideIcons from 'lucide-react';
 import type { BaseComponentProps } from '../../types';
 
+// Create a mapping from Material Icons names to Lucide icons
+const iconMapping: Record<string, keyof typeof LucideIcons> = {
+  // Navigation icons
+  'home': 'Home',
+  'menu': 'Menu',
+  'search': 'Search',
+  'settings': 'Settings',
+  'arrow_back': 'ArrowLeft',
+  'arrow_forward': 'ArrowRight',
+  'expand_more': 'ChevronDown',
+  'expand_less': 'ChevronUp',
+  'chevron_left': 'ChevronLeft',
+  'chevron_right': 'ChevronRight',
+  
+  // User and social
+  'person': 'User',
+  'people': 'Users',
+  'favorite': 'Heart',
+  'star': 'Star',
+  'share': 'Share',
+  
+  // Actions
+  'add': 'Plus',
+  'remove': 'Minus',
+  'edit': 'Edit',
+  'delete': 'Trash2',
+  'close': 'X',
+  'check': 'Check',
+  'save': 'Save',
+  'copy': 'Copy',
+  'cut': 'Scissors',
+  'paste': 'Clipboard',
+  
+  // File operations
+  'download': 'Download',
+  'upload': 'Upload',
+  'folder': 'Folder',
+  'file': 'File',
+  'attach_file': 'Paperclip',
+  
+  // Visibility
+  'visibility': 'Eye',
+  'visibility_off': 'EyeOff',
+  
+  // Status and feedback
+  'info': 'Info',
+  'warning': 'AlertTriangle',
+  'error': 'AlertCircle',
+  'check_circle': 'CheckCircle',
+  'cancel': 'XCircle',
+  
+  // Media controls
+  'play_arrow': 'Play',
+  'pause': 'Pause',
+  'stop': 'Square',
+  'volume_up': 'Volume2',
+  'volume_off': 'VolumeX',
+  
+  // Communication
+  'email': 'Mail',
+  'phone': 'Phone',
+  'message': 'MessageSquare',
+  
+  // Common UI
+  'more_vert': 'MoreVertical',
+  'more_horiz': 'MoreHorizontal',
+  'keyboard_arrow_down': 'ChevronDown',
+  'keyboard_arrow_up': 'ChevronUp',
+  'keyboard_arrow_left': 'ChevronLeft',
+  'keyboard_arrow_right': 'ChevronRight',
+};
+
 export interface IconProps extends BaseComponentProps {
-  /** 图标名称 - 使用 Material Symbols 的官方名称 */
+  /** Icon name - uses Material Symbols official names, mapped to Lucide icons */
   name: string;
-  /** 自定义样式 */
+  /** Custom styles */
   style?: React.CSSProperties;
-  /** 是否使用填充（填充）模式 */
+  /** Whether to use filled (filled) mode - simulated with Lucide icons */
   filled?: boolean;
+  /** Icon size in pixels, inherits parent font-size if not specified */
+  size?: number;
 }
 
 /**
- * Icon 组件 - 基于 Material Symbols 字体的图标系统（200字重）
+ * Icon Component - Based on Lucide React icons with Material Icons name compatibility
  * 
  * @example
  * ```tsx
  * <Icon name="home" />
  * <Icon name="person" filled />
- * <Icon name="settings" />
+ * <Icon name="settings" size={24} />
  * ```
  */
 export const Icon: React.FC<IconProps> = ({
@@ -26,22 +100,56 @@ export const Icon: React.FC<IconProps> = ({
   className = '',
   style,
   filled = false,
+  size,
   'data-testid': dataTestId,
   ...rest
 }) => {
-  // 当 filled 为 true 时，覆盖字体的 FILL 轴为 1，实现填充效果
-  const fillStyle: React.CSSProperties | undefined = filled
-    ? { fontVariationSettings: "'FILL' 1" }
-    : undefined;
-
+  // Map Material Icons name to Lucide icon
+  const lucideIconName = iconMapping[name];
+  
+  if (!lucideIconName) {
+    console.warn(`Icon "${name}" not found in mapping. Available icons:`, Object.keys(iconMapping));
+    // Fallback to a default icon
+    const FallbackIcon = LucideIcons.HelpCircle;
+    return (
+      <FallbackIcon
+        className={className}
+        style={{
+          fontSize: size ? `${size}px` : 'inherit',
+          width: size ? `${size}px` : '1em',
+          height: size ? `${size}px` : '1em',
+          ...style,
+        }}
+        data-testid={dataTestId}
+        {...rest}
+      />
+    );
+  }
+  
+  const LucideIcon = LucideIcons[lucideIconName] as React.ComponentType<{
+    className?: string;
+    style?: React.CSSProperties;
+    'data-testid'?: string;
+    fill?: string;
+  }>;
+  
+  // For filled mode, we can adjust the styling or use filled variants where available
+  const iconStyle: React.CSSProperties = {
+    fontSize: size ? `${size}px` : 'inherit',
+    width: size ? `${size}px` : '1em',
+    height: size ? `${size}px` : '1em',
+    // Simulate filled effect by making the icon a bit bolder/darker
+    ...(filled && { fontWeight: 'bold', opacity: 0.9 }),
+    ...style,
+  };
+  
   return (
-    <span
-      className={`${className} material-icons`}
-      style={{ ...style, ...fillStyle }}
+    <LucideIcon
+      className={className}
+      style={iconStyle}
       data-testid={dataTestId}
+      fill={filled ? 'currentColor' : 'none'}
       {...rest}
-    >
-      {name}
-    </span>
+    />
   );
 }; 

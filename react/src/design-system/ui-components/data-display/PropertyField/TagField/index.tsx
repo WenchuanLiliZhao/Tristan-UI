@@ -8,6 +8,7 @@ export interface TagFieldProps {
   color: string;
   icon?: string;
   /** Tag variant */
+  size?: TagProps['size']
   variant?: TagProps['variant']
 }
 
@@ -15,12 +16,13 @@ export const TagField: React.FC<TagFieldProps> = ({
   label,
   name,
   color,
+  size = "small",
   variant = "contained",
 }) => (
   <PropertyFieldColumn
     {...{ label }}
     content={
-      <Tag color={color} variant={variant} size="small">
+      <Tag color={color} variant={variant} size={size}>
         {name}
       </Tag>
     }

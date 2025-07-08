@@ -1,6 +1,6 @@
 {
   "name": "tristan-ui",
-  "version": "0.4.36",
+  "version": "0.4.41",
   "description": "A modern React component library and design system",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -83,5 +83,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.525.0"
   }
 }
