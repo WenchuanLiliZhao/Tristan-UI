@@ -201,7 +201,8 @@
 }
 
 :root[data-theme="dark"] {
-  @include dark-theme;
+  // @include dark-theme;
+  @include light-theme;
 }
 
 // 为了安全起见，我们增加一组 system theme detection 设置：
@@ -213,7 +214,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    @include dark-theme;
+    // @include dark-theme;
+    @include light-theme;
   }
 }
 
