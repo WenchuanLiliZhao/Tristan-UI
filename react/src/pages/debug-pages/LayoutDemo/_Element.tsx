@@ -66,9 +66,15 @@ export const Element: React.FC = () => {
           left={[
             <TristanLogo width={32} height={32} />,
             <NavTitle title="Roadmap of lululemon Initiatives" />,
-            
           ]}
-          right={[<TristanNavLinkGroup items={[{ to: "/layout-demo", name: "Layout" }, { to: "/test", name: "Test" }]} />]}
+          right={[
+            <TristanNavLinkGroup
+              items={[
+                { to: "/layout-demo", name: "Layout" },
+                { to: "/test", name: "Test" },
+              ]}
+            />,
+          ]}
         />
       }
       left={

@@ -99,7 +99,7 @@ export const TristanNavLink: React.FC<TristanNavLinkProps> = ({
   );
 };
 
-interface TristanNavLinkGroupProps extends BaseComponentProps {
+export interface TristanNavLinkGroupProps extends BaseComponentProps {
   items: TristanNavLinkProps[];
 }
 
