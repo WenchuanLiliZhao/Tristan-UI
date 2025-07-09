@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import type { BaseComponentProps } from "../../types";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Button } from "../../general";
 export interface NavigationProps extends BaseComponentProps {
   left: React.ReactNode[];
@@ -66,6 +66,32 @@ interface TristanNavLinkProps extends BaseComponentProps {
   icon?: string;
 }
 
+// Error Boundary for NavLink compatibility
+class NavLinkErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; fallback: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.warn('TristanNavLink: Router context error, using fallback:', error.message);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 export const TristanNavLink: React.FC<TristanNavLinkProps> = ({
   to,
   name,
@@ -74,28 +100,56 @@ export const TristanNavLink: React.FC<TristanNavLinkProps> = ({
   "data-testid": dataTestId,
   ...rest
 }) => {
-  return (
+  const location = useLocation();
+
+  // Render the actual content
+  const renderContent = (isActive: boolean) => (
+    <>
+      <div
+        className={`${styles["nav-link-name"]} ${
+          isActive ? styles["active"] : ""
+        }`}
+      >
+        <Button icon={icon} variant="ghost" size="medium">{name}</Button>
+      </div>
+      {isActive ? (
+        <div className={styles["nav-link-active-indicator"]} />
+      ) : null}
+    </>
+  );
+
+  // Fallback link for when NavLink fails
+  const fallbackLink = (
+    <a
+      href={to}
+      className={`${styles["nav-link"]} ${className}`}
+      data-testid={dataTestId}
+      onClick={(e) => {
+        e.preventDefault();
+        window.history.pushState({}, '', to);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }}
+    >
+      {renderContent(location.pathname === to || location.pathname.startsWith(to + '/'))}
+    </a>
+  );
+
+  // Main NavLink implementation
+  const navLink = (
     <NavLink
       to={to}
       className={`${styles["nav-link"]} ${className}`}
       data-testid={dataTestId}
       {...rest}
     >
-      {({ isActive }) => (
-        <>
-          <div
-            className={`${styles["nav-link-name"]} ${
-              isActive ? styles["active"] : ""
-            }`}
-          >
-            <Button icon={icon} variant="ghost" size="medium">{name}</Button>
-          </div>
-          {isActive ? (
-            <div className={styles["nav-link-active-indicator"]} />
-          ) : null}
-        </>
-      )}
+      {({ isActive }: { isActive: boolean }) => renderContent(isActive)}
     </NavLink>
+  );
+
+  return (
+    <NavLinkErrorBoundary fallback={fallbackLink}>
+      {navLink}
+    </NavLinkErrorBoundary>
   );
 };
 
