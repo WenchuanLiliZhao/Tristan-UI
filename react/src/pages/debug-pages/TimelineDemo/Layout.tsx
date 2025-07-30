@@ -1,24 +1,10 @@
 
 import LuluLogo from "./assets/LuluLogo";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-import { TristanLayout, TopNav, NavTitle, NumericInput, ButtonGroupDevider } from "../../../design-system/ui-components";
+import { TristanLayout, TopNav, NavTitle, NumericInput, ButtonGroupDevider, NavLink } from "../../../design-system/ui-components";
 
-const LiliNavLink = ({ to, name }: { to: string; name: string }) => {
-  return (
-    <NavLink
-      to={to}
-      style={({ isActive }) =>
-        isActive
-          ? { color: `var(--color--text-prime)` }
-          : { color: `var(--color--text-negative)` }
-      }
-    >
-      {name}
-    </NavLink>
-  );
-};
+
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,17 +22,17 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <LuluLogo size={32} blackColor="white" whiteColor="#FF4646" />,
             <NavTitle title="lululemon Initiatives" />,
             <ButtonGroupDevider />,
-            <LiliNavLink to={`/`} name="Overview" />,
+            <NavLink to={`/timeline-demo`}>Overview</NavLink>,
             <ButtonGroupDevider />,
-            <LiliNavLink to={`/a`} name="Quarter 1" />,
-            <LiliNavLink to={`/b`} name="Quarter 2" />,
-            <LiliNavLink to={`/c`} name="Quarter 3" />,
-            <LiliNavLink to={`/d`} name="Quarter 4" />,
+            <NavLink to={`/a`}>Quarter 1</NavLink>,
+            <NavLink to={`/b`}>Quarter 2</NavLink>,
+            <NavLink to={`/c`}>Quarter 3</NavLink>,
+            <NavLink to={`/d`}>Quarter 4</NavLink>,
           ]}
           right={[
-            <LiliNavLink to={`/`} name="Timeline" />,
+            <NavLink to={`/`}>Timeline</NavLink>,
             <div> </div>,
-            <LiliNavLink to={`/table`} name="Intakes" />,
+            <NavLink to={`/table`}>Intakes</NavLink>,
             <div style={{ marginLeft: '16px', display: 'flex', gap: '12px', alignItems: 'center' }}>
               <NumericInput
                 icon="zoom-in"

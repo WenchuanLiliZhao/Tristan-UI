@@ -1,0 +1,41 @@
+.tristan-navlink {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 500;
+  
+  &:hover {
+    text-decoration: none;
+  }
+  
+  // Size variants
+  &--small {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+  
+  &--medium {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  
+  &--large {
+    font-size: 18px;
+    padding: 8px 16px;
+  }
+  
+  // Variant styles
+  &--default {
+    // Default styling - uses CSS variables for colors
+  }
+  
+  &--primary {
+    // Primary variant styling
+  }
+  
+  &--secondary {
+    // Secondary variant styling
+  }
+} 

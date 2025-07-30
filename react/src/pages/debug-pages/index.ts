@@ -10,6 +10,7 @@ import InputDemo from "./InputDemo";
 import SelectDemo from "./SelectDemo";
 import TableDemo from "./TableDemo";
 import { TimelineDemo } from "./TimelineDemo";
+import NavLinkDemo from "./NavLinkDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -24,4 +25,5 @@ export const DebugPages = {
   SelectDemo,
   TableDemo,
   TimelineDemo,
+  NavLinkDemo,
 }
