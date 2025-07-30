@@ -1,8 +1,9 @@
 
 import LuluLogo from "./assets/LuluLogo";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
-import { TristanLayout, TopNav, NavTitle } from "../../../design-system/ui-components";
+import { TristanLayout, TopNav, NavTitle, NumericInput } from "../../../design-system/ui-components";
 
 const LiliNavLink = ({ to, name }: { to: string; name: string }) => {
   return (
@@ -24,6 +25,9 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [zoomValue, setZoomValue] = useState(100);
+  const [speedValue, setSpeedValue] = useState(1);
+
   return (
     <TristanLayout
       top={
@@ -36,6 +40,30 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <LiliNavLink to={`/`} name="Timeline" />,
             <div> </div>,
             <LiliNavLink to={`/table`} name="Intakes" />,
+            <div style={{ marginLeft: '16px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <NumericInput
+                icon="zoom-in"
+                label="Zoom"
+                value={zoomValue}
+                min={10}
+                max={200}
+                step={10}
+                unit="%"
+                size="small"
+                onChange={(value) => setZoomValue(value)}
+              />
+              <NumericInput
+                icon="play"
+                label="Speed"
+                value={speedValue}
+                min={0.1}
+                max={5}
+                step={0.1}
+                unit="x"
+                size="small"
+                onChange={(value) => setSpeedValue(value)}
+              />
+            </div>,
           ]}
         />
       }

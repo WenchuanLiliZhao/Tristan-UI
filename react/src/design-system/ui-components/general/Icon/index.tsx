@@ -7,7 +7,6 @@ const iconMapping: Record<string, keyof typeof LucideIcons> = {
   // Navigation icons
   'home': 'Home',
   'menu': 'Menu',
-  'search': 'Search',
   'settings': 'Settings',
   'arrow_back': 'ArrowLeft',
   'arrow_forward': 'ArrowRight',
@@ -71,6 +70,7 @@ const iconMapping: Record<string, keyof typeof LucideIcons> = {
   
   // Media controls
   'play_arrow': 'Play',
+  'play': 'Play',
   'pause': 'Pause',
   'stop': 'Square',
   'volume_up': 'Volume2',
@@ -88,6 +88,11 @@ const iconMapping: Record<string, keyof typeof LucideIcons> = {
   'keyboard_arrow_up': 'ChevronUp',
   'keyboard_arrow_left': 'ChevronLeft',
   'keyboard_arrow_right': 'ChevronRight',
+  
+  // Zoom and view controls
+  'zoom-in': 'ZoomIn',
+  'zoom-out': 'ZoomOut',
+  'search': 'Search',
 };
 
 export interface IconProps extends BaseComponentProps {

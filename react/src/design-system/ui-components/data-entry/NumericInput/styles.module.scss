@@ -1,0 +1,301 @@
+.tristan-numeric-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s ease;
+  
+  // Size variants
+  &--tiny {
+    gap: 2px;
+    font-size: 12px;
+    
+    .tristan-numeric-input__header {
+      gap: 4px;
+    }
+    
+    .tristan-numeric-input__input-container {
+      height: 24px;
+      padding: 0 6px;
+      gap: 4px;
+    }
+    
+    .tristan-numeric-input__icon {
+      .material-icons {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  &--small {
+    gap: 3px;
+    font-size: 14px;
+    
+    .tristan-numeric-input__header {
+      gap: 6px;
+    }
+    
+    .tristan-numeric-input__input-container {
+      height: 32px;
+      padding: 0 8px;
+      gap: 6px;
+    }
+    
+    .tristan-numeric-input__icon {
+      .material-icons {
+        font-size: 16px;
+      }
+    }
+  }
+  
+  &--medium {
+    gap: 4px;
+    font-size: 14px;
+    
+    .tristan-numeric-input__header {
+      gap: 8px;
+    }
+    
+    .tristan-numeric-input__input-container {
+      height: 40px;
+      padding: 0 12px;
+      gap: 8px;
+    }
+    
+    .tristan-numeric-input__icon {
+      .material-icons {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  &--large {
+    gap: 6px;
+    font-size: 16px;
+    
+    .tristan-numeric-input__header {
+      gap: 10px;
+    }
+    
+    .tristan-numeric-input__input-container {
+      height: 48px;
+      padding: 0 16px;
+      gap: 10px;
+    }
+    
+    .tristan-numeric-input__icon {
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  // Variant styles
+  &--outlined {
+    .tristan-numeric-input__input-container {
+      background-color: var(--color--bg-prime);
+      border: 1px solid var(--color--border-prime);
+      
+      &:hover:not(.tristan-numeric-input--disabled) {
+        border-color: var(--color--border-darken);
+      }
+      
+      &:focus-within {
+        border-color: var(--color--semantic-active);
+        box-shadow: 0 0 0 2px var(--color--semantic-active-pale);
+      }
+    }
+  }
+  
+  &--filled {
+    .tristan-numeric-input__input-container {
+      background-color: var(--color--bg-secondary);
+      border: 1px solid transparent;
+      
+      &:hover:not(.tristan-numeric-input--disabled) {
+        background-color: var(--color--bg-hover);
+      }
+      
+      &:focus-within {
+        background-color: var(--color--bg-prime);
+        border-color: var(--color--semantic-active);
+        box-shadow: 0 0 0 2px var(--color--semantic-active-pale);
+      }
+    }
+  }
+  
+  &--ghost {
+    .tristan-numeric-input__input-container {
+      background-color: transparent;
+      border: 1px solid transparent;
+      
+      &:hover:not(.tristan-numeric-input--disabled) {
+        background-color: var(--color--bg-secondary);
+      }
+      
+      &:focus-within {
+        background-color: var(--color--bg-prime);
+        border-color: var(--color--border-prime);
+      }
+    }
+  }
+  
+  // Disabled state
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    .tristan-numeric-input__input-container,
+    .tristan-numeric-input__input,
+    .tristan-numeric-input__icon {
+      cursor: not-allowed;
+    }
+  }
+  
+  // Required state
+  &--required {
+    .tristan-numeric-input__label {
+      font-weight: 500;
+    }
+  }
+}
+
+// Header (icon and label)
+.tristan-numeric-input__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color--text-secondary);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+// Icon
+.tristan-numeric-input__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color--text-secondary);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+  
+  .tristan-numeric-input:focus-within & {
+    color: var(--color--semantic-active);
+  }
+}
+
+// Label
+.tristan-numeric-input__label {
+  color: var(--color--text-secondary);
+  font-weight: 500;
+  transition: color 0.2s ease;
+  
+  .tristan-numeric-input:focus-within & {
+    color: var(--color--text-prime);
+  }
+}
+
+// Required indicator
+.tristan-numeric-input__required {
+  color: var(--color--semantic-error);
+  margin-left: 2px;
+}
+
+// Input container
+.tristan-numeric-input__input-container {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+// Input field
+.tristan-numeric-input__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color--text-prime);
+  font-size: inherit;
+  font-family: inherit;
+  text-align: right;
+  
+  &::placeholder {
+    color: var(--color--text-negative);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
+  
+  // Remove spinner arrows for webkit browsers
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  // Remove spinner arrows for Firefox
+  &[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+// Unit display
+.tristan-numeric-input__unit {
+  color: var(--color--text-secondary);
+  font-size: 0.9em;
+  font-weight: 500;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+  
+  .tristan-numeric-input:focus-within & {
+    color: var(--color--text-prime);
+  }
+}
+
+// Hover box
+.hover-box {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color--bg-hover);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+// Focus state management
+.tristan-numeric-input:focus-within {
+  .hover-box {
+    opacity: 0 !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .tristan-numeric-input {
+    &--outlined .tristan-numeric-input__input-container {
+      border-width: 2px;
+    }
+    
+    &:focus-within .tristan-numeric-input__input-container {
+      box-shadow: 0 0 0 3px var(--color--semantic-active-pale);
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .tristan-numeric-input,
+  .tristan-numeric-input__input-container,
+  .tristan-numeric-input__icon,
+  .tristan-numeric-input__label,
+  .tristan-numeric-input__unit,
+  .hover-box {
+    transition: none;
+  }
+} 
