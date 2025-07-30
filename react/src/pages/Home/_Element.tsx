@@ -13,6 +13,7 @@ export const Element: React.FC = () => {
   }, []);
 
   const pages = [
+    { name: 'Timeline Demo', path: '/timeline-demo', description: 'Button component demonstration - View all variants, sizes, colors and states of the button component' },
     { name: 'Button Demo', path: '/button-demo', description: 'Button component demonstration - View all variants, sizes, colors and states of the button component' },
     { name: 'Icon Demo', path: '/icon-demo', description: 'Icon component demonstration - View different sizes, predefined and custom icon usage' },
     { name: 'Tag Demo', path: '/tag-demo', description: 'Tag component demonstration - View different styles and usage patterns of the tag component' },

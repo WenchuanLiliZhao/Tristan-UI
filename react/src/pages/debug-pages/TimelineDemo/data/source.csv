@@ -1,0 +1,87 @@
+﻿Name,Type,CN Initiative,Owner,Business Owner,Risk Level,Goal,Function,Status,Date,Intake,Priority,ID
+Digital Hemming 2.0,Tech for Business Foundation,Tech for Business Foundation,James,,On Track,Guest Experience,Retail,Development,2025/08/31,,Medium,1
+xStore – Xmobile enhancement,Tech for Business Foundation,Tech for Business Foundation,Jony Li,,Unknown,Effieciency Improvement,Retail,Business Intake,2025/08/31,,Medium,2
+xStore Upgrade (Further Markdown),Tech for Business Foundation,Tech for Business Foundation,Jony Li,,On Track,Drive Sales,Tech,Operations Handover,2025/06/30,,Medium,5
+Educator Portal,Tech for Tech Foundation,Tech for Tech Foundation,Jony Li,,On Track,Effieciency Improvement,Tech,Development,2025/09/30,,Medium,6
+Label Print 2.0,Tech for Business Foundation,Tech for Business Foundation,Jony Li,,On Track,Effieciency Improvement,Retail,Development,2025/07/31,,Medium,7
+Promotion Service - Foundation,Tech for Business Foundation,Tech for Business Foundation,Jony Li,,On Track,Foundation,Tech,Development,2025/10/31,,Medium,8
+Cloud automation pipeline framework,Tech for Business Foundation,Tech for Business Foundation,Ian,,On Track,Foundation,Tech,Operations Handover,2025/05/31,,Medium,9
+"CMDB - Phase I UI ",Tech for Tech Foundation,Tech for Tech Foundation,Ian,,On Track,Foundation,Tech,Development,2025/09/30,,Medium,10
+Application Observability Tier 1,Tech for Tech Foundation,Tech for Tech Foundation,Loda,,On Track,Foundation,Tech,Operations Handover,2025/05/31,,Medium,11
+Multi-Cloud,Tech for Tech Foundation,Tech for Tech Foundation,Roger,,On Track,Foundation,Tech,Feasibility Study,,F26,Medium,12
+Metrics Mgmt.(Fufillment/Product/Guest),Tech for Tech Foundation,Tech for Tech Foundation,Kano,,On Track,Foundation,Tech,Development,2025/12/31,,Medium,13
+AI Portal 1.0 - Internal Pilot Version,Tech for Tech Foundation,Tech for Tech Foundation,Kano,,On Track,Foundation,Tech,Development,2025/07/31,,Medium,14
+Product Dashboard (e.g. inventory transfer),Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,Development,,Pipeline,Medium,15
+Retail Dashboards - Store 360,Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,Development,2025/10/31,,Medium,16
+Guest Dashboard,Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,Development,,Pipeline,Medium,17
+EC Dashboard - New Channel Analytics,Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,System Deploy,2025/07/31,,Medium,18
+Enterprise Management Dashboard,Tech for China,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,Development,2025/08/31,,Medium,19
+Tech for Business Foundation,Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,Development,2025/07/01,,Medium,20
+FP&A Sales Driven Dashboard,Tech for Business Foundation,Enterprise Business Performance Dashboard,Kano,,On Track,Effieciency Improvement,Corporate,System Deploy,2025/07/31,,Medium,21
+Enterprise Machine Learning Framework,Tech for Tech Foundation,Tech for Tech Foundation,Kano,,Unknown,Foundation,Tech,Business Intake,2025/08/31,,Medium,22
+Data Governance Uplifts,Tech for Tech Foundation,Tech for Tech Foundation,Kano,,Unknown,Foundation,Tech,Business Intake,2025/10/31,,Medium,23
+Carton receiving,Tech for Business Foundation,Agile Fulfillment,Charley,,Manageable Risks,Effieciency Improvement,Fulfillment,Feasibility Study,2026/01/31,,Medium,24
+China DC network + Service Center,Tech for Business Foundation,Tech for Tech Foundation,Charley,,On Track,No Goal,Fulfillment,Feasibility Study,,F26,Medium,25
+Inventory Planning Automation,Tech for Business Foundation,Inventory Efficiency Improvement,Charley,,On Track,Effieciency Improvement,Product,Feasibility Study,2026/01/31,,Medium,26
+Outbound Shipment Standardization & Desensitization,Tech for Business Foundation,Tech for Business Foundation,Charley,,On Track,Compliance,Fulfillment,System Deploy,2025/08/31,,Medium,27
+Priority Shipping & FOH/BOH,Tech for Business Foundation,Agile Fulfillment,Charley,,On Track,Effieciency Improvement,Fulfillment,Operations Handover,2025/04/30,,Medium,28
+Transportation Portal Foundation,Tech for Business Foundation,Agile Fulfillment,Charley,,On Track,Effieciency Improvement,Fulfillment,Operations Handover,2025/02/28,,Medium,29
+Transaction capacity scale up（omni fulfillment performance improvement）,Tech for Business Foundation,Tech for Business Foundation,Jerry,,Unknown,Foundation,Tech,Business Intake,2025/10/31,,Medium,30
+"APS (Advance planning scheduling) Report Automation ",Tech for Business Foundation,Tech for Business Foundation,Charley,,On Track,Effieciency Improvement,Product,Development,2025/08/31,,Medium,31
+Outlet Inventory Mgt / Dashboard,Tech for Business Foundation,GTM Process,Charley,,On Track,Effieciency Improvement,Product,Development,2025/07/31,,Medium,32
+Ship From Store Phase 2 Enrollment,Tech for China,Ship-from-Store,Jony Li,,On Track,Effieciency Improvement,Retail,Development,2025/12/31,,Medium,33
+Team sales inventory management,Tech for Business Foundation,Corporate Sales Business Model & Enablement,Charley,,On Track,Effieciency Improvement,Retail,Operations Handover,2025/03/31,,Medium,34
+E2E Product visualization,Tech for Business Foundation,GTM Process,Charley,,On Track,Effieciency Improvement,Product,Feasibility Study,2026/01/31,,Medium,35
+RPA (Robotic Process Automation) Expansion,Tech for Tech Foundation,Tech for Tech Foundation,Charley,,On Track,Effieciency Improvement,Tech,System Deploy,2025/12/31,,Medium,36
+Finance-Tax Automation Phase II (Reconciliation & Calculation),Tech for Business Foundation,Tech for Business Foundation,Charley,,Unknown,Effieciency Improvement,Corporate,Development,,F26,Medium,37
+Legal Hub,Tech for China,Legal Hub - Phase 1,Charley,,On Track,Compliance,Corporate,Operations Handover,2025/05/31,,Medium,38
+Store floor refill optimization,Tech for Business Foundation,Agile Fulfillment,Charley,,On Track,Effieciency Improvement,Retail,System Deploy,2025/08/31,,Medium,39
+Sample receipt lead time extension,Tech for Business Foundation,Samples Management,Charley,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Operations Handover,2025/03/31,,Medium,40
+Pre-Season assortment automation,Tech for Business Foundation,GTM Process,Charley,,On Track,Effieciency Improvement,Product,Operations Handover,2025/06/30,,Medium,41
+Product Hand off Date Automation,Tech for Business Foundation,GTM Process,Charley,,On Track,Effieciency Improvement,Product,Operations Handover,2025/06/30,,Medium,42
+Product GB Tech Released Portal,Tech for Business Foundation,Tech for Business Foundation,Charley,,On Track,Foundation,Product,System Deploy,2025/09/30,,Medium,43
+E2E Enterprise Product Data Modernization (Global),Tech for Business Foundation,GTM Process,Charley,,On Track,Foundation,Product,Feasibility Study,2025/12/31,,Medium,44
+PDD Channel Roll-out,Tech for Business Foundation,Tech for Business Foundation,James,Angie Yeh,Pending,Drive Sales,E-com,System Deploy,2025/05/31,,Medium,45
+Employee Sales,Tech for Business Foundation,Tech for Business Foundation,James,Angie Yeh,Unknown,Drive Sales,E-com,Business Intake,2025/11/30,,Medium,46
+GEC Platform Enhancements(Chatbot),Tech for Business Foundation,Guest Experience - GEC Digital Educator,James,Angie Yeh,On Track,Guest Experience,E-com,Operations Handover,2025/06/30,,Medium,47
+GEC Platform Enhancements(AI based QA),Tech for Business Foundation,Guest Experience - GEC Digital Educator,James,Angie Yeh,On Track,Guest Experience,E-com,Development,2025/07/31,,Medium,48
+WMP Community Enhancement,Tech for Business Foundation,Tech for Business Foundation,James,Lynn Cheah,On Track,Guest Experience,Brand Marketing,Operations Handover,2025/05/31,,Medium,49
+F&F Digital Coupons,Tech for China,VIP/F&F Digital Coupon,James,,On Track,Drive Sales,Corporate,Operations Handover,2025/07/07,,Medium,50
+Sample Hub,Tech for China,Samples Management,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Development,2025/07/31,,Medium,51
+Ambassador Hub 2.0 - Referral,Tech for Business Foundation,Ambassador Hub 2.0,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Business Intake,2026/01/31,,Medium,52
+Ambassador Hub 2.0 - Product Eduation for Ambassadors,Tech for Business Foundation,Ambassador Hub 2.0,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Business Intake,2026/01/31,,Medium,53
+Ambassador Hub 2.0 - Core Functions,Tech for China,Ambassador Hub 2.0,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Development,2025/07/31,,Medium,54
+Digital Asset Management 2.0 (CNDAM),Tech for Business Foundation,Tech for Business Foundation,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Operations Handover,2025/03/31,,Medium,55
+Guest Profile Enrichment,Tech for China,Guest Experience - GEC Digital Educator,James,Lynn Cheah,On Track,Guest Experience,Brand Marketing,Operations Handover,2025/04/30,,Medium,56
+CRM Modelling & Segmentation,Tech for China,China Membership Strategy & Model,James,Lynn Cheah,On Track,Effieciency Improvement,Brand Marketing,Business Intake,2025/10/31,,Medium,57
+Marketing Automation platform,Tech for China,Tech for Business Foundation,James,Lynn Cheah,Unknown,Effieciency Improvement,Brand Marketing,Business Intake,2025/10/31,,Medium,58
+WMP Revamp,Tech for China,Guest Experience - WMP Guest Experience Enhancement,James,Angie Yeh,Unknown,Guest Experience,E-com,Business Intake,2025/10/31,,Medium,59
+Gift Card,Tech for China,Gift Card,James,,Unknown,Drive Sales,Retail,Business Intake,,Pipeline,Medium,60
+Product Information Hub for Tmall + JD,Tech for Business Foundation,CN Guest Facing Product Attributes,James,Angie Yeh,On Track,Effieciency Improvement,E-com,Development,2025/12/31,,Medium,61
+Omni Shopping Cart + Check out,Tech for Business Foundation,Tech for Business Foundation,James,,On Track,Guest Experience,Tech,Development,2026/01/31,,Medium,62
+Promotion Service - Further Markdown (EC),Tech for Business Foundation,Tech for Business Foundation,James,Angie Yeh,On Track,Drive Sales,E-com,Business Intake,2025/10/31,,Medium,63
+CN Guest Facing Product Attributes,Tech for China,CN Guest Facing Product Attributes,James,Angie Yeh,Unknown,Effieciency Improvement,E-com,Business Intake,,Pipeline,Medium,64
+GEC Tool/Page Optimization(Live800/OMS/After-sales Page),Tech for Business Foundation,Guest Experience - GEC Digital Educator,James,Angie Yeh,Unknown,Effieciency Improvement,E-com,Business Intake,,Pipeline,Medium,65
+Corporate sales,Tech for China,Corporate Sales Business Model & Enablement,James,,Unknown,Drive Sales,Retail,Business Intake,,Pipeline,Medium,66
+Cross platform MPS foundation,Tech for Tech Foundation,Tech for Tech Foundation,James,,On Track,Foundation,Tech,Business Intake,,Pipeline,Medium,67
+WeCom for SSC,Tech for Business Foundation,Tech for Business Foundation,James,,Pending,Effieciency Improvement,Tech,Feasibility Study,,Pipeline,Medium,68
+Wechat Mini Store,Tech for China,Social Commerce Exploration: Rednote Mini Program Wechat Gifts,James,Angie Yeh,Pending,Drive Sales,E-com,Development,2025/08/16,,Medium,69
+WMP Product Recommendation,Tech for China,WMP Product Recommendation Tool (YMAL),James,Angie Yeh,On Track,Drive Sales,E-com,Development,2025/09/30,,Medium,70
+New SSC (Tech Infrastructure),Tech for Tech Foundation,New SSC,Roger,,On Track,Foundation,Corporate,Development,2025/10/31,,Medium,71
+Retail Store VAT refund - Departure,Tech for Business Foundation,Tech for Business Foundation,Jony Li,,On Track,Drive Sales,Retail,Development,2025/09/30,,Medium,72
+Red mini program,Tech for China,Social Commerce Exploration: Rednote Mini Program Wechat Gifts,James,Angie Yeh,On Track,Drive Sales,E-com,Development,2025/07/31,,Medium,73
+New SSC (Command Center Set Up),Tech for China,New SSC,Roger,,Unknown,Foundation,Corporate,Business Intake,,Pipeline,Medium,74
+Cloud automation migration - Core System Part I,Tech for Tech Foundation,Tech for Tech Foundation,Ian,,Unknown,Foundation,Tech,Business Intake,,Pipeline,Medium,75
+New SSC (Digital QR Code Badge),Tech for China,New SSC,James,,On Track,Foundation,Corporate,Feasibility Study,2025/10/31,,Medium,76
+New SSC (Therapy Room),Tech for China,New SSC,James,,On Track,Foundation,Corporate,Feasibility Study,2025/10/31,,Medium,77
+New SSC (Retail Store),Tech for China,New SSC,James,,Pending,Foundation,Corporate,Feasibility Study,,F26,Medium,78
+JAMF Platform migration,Tech for Tech Foundation,Tech for Tech Foundation,Jony Li,,Manageable Risks,Foundation,Tech,Development,2025/08/31,,Medium,79
+Customs Portal- AEO Adoption,Tech for China,AEO,Charley,,On Track,Effieciency Improvement,Fulfillment,Development,2025/09/30,,Medium,80
+Custom Portal  - Document and 3rd Party Data managment.,Tech for China,Custom Portal,Charley,,On Track,Effieciency Improvement,Fulfillment,Operations Handover,2025/06/30,,Medium,81
+Custom Portal Foundation,Tech for China,Custom Portal,Charley,,On Track,Effieciency Improvement,Fulfillment,Operations Handover,2025/04/30,,Medium,82
+Fulfillment Agility Dashboard,Tech for Business Foundation,Agile Fulfillment,Kano,,On Track,Effieciency Improvement,Fulfillment,Operations Handover,2025/06/30,,Medium,83
+NPS (Retail),Tech for China,Guest Experience - Voice of Guest: NPS,James,,On Track,Guest Experience,Retail,Operations Handover,2025/02/28,,Medium,84
+Product Education Tool,Tech for China,Product Education Enhancement,James,,Pending,Effieciency Improvement,Product,System Deploy,2025/04/30,,Medium,85
+PIH (Product Information Hub) for WMP,Tech for Business Foundation,WMP Product Recommendation Tool (YMAL),James,Angie Yeh,On Track,Effieciency Improvement,E-com,Operations Handover,2025/04/30,,Medium,86
+Graded Size Chart Wearer Trial & Consumer Testimonials,Tech for China,Graded Size Chart Wearer Trial & Consumer Testimonials,Unassigned,,Unknown,No Goal,E-com,Business Intake,,Pipeline,Medium,87
+China GP Always On,Tech for Tech Foundation,Tech for Tech Foundation,Roger,,On Track,Foundation,Tech,Development,2025/07/31,,Medium,88

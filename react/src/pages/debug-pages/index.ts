@@ -9,6 +9,7 @@ import PropertyDistributionBarDemo from "./PropertyDistributionBarDemo";
 import InputDemo from "./InputDemo";
 import SelectDemo from "./SelectDemo";
 import TableDemo from "./TableDemo";
+import { TimelineDemo } from "./TimelineDemo";
 
 export const DebugPages = {
   ButtonDemo,
@@ -22,4 +23,5 @@ export const DebugPages = {
   InputDemo,
   SelectDemo,
   TableDemo,
+  TimelineDemo,
 }
