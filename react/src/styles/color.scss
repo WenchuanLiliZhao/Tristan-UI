@@ -201,7 +201,7 @@
 }
 
 :root[data-theme="dark"] {
-  // @include dark-theme;
+  @include dark-theme;
   @include light-theme;
 }
 
@@ -214,7 +214,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    // @include dark-theme;
+    @include dark-theme;
     @include light-theme;
   }
 }
