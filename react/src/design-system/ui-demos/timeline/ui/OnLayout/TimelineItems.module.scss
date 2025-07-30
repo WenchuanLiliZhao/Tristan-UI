@@ -1,0 +1,14 @@
+.timeline-vertical-column-container {
+  .timeline-ruler-column {
+    .timeline-ruler-month-column {
+      border-right: 1px dashed var(--color--border-prime);
+      background-color: var(--color--bg-secondary);
+
+      &:hover {
+        .hover-box {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
