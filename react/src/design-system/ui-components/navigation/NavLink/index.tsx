@@ -20,7 +20,6 @@ export const NavLink: React.FC<NavLinkProps> = ({
   children,
   variant = "default",
   activeColor,
-  inactiveColor,
   className,
   isActive,
   target,
@@ -53,28 +52,23 @@ export const NavLink: React.FC<NavLinkProps> = ({
       ? "var(--color--text-prime)"
       : "var(--color--text-prime)";
   };
-
-  const getInactiveColor = () => {
-    if (inactiveColor) return inactiveColor;
-    return variant === "primary"
-      ? "var(--color--text-negative)"
-      : "var(--color--text-negative)";
-  };
+  
 
   return (
     <a
       href={to}
       className={`${styles["tristan-navlink"]} ${
         styles[`tristan-navlink--${variant}`]
-      } ${isLinkActive ? styles["active"] : ""} ${className || ""}`}
+      } ${className || ""}`}
       style={{
-        color: isLinkActive ? getActiveColor() : getInactiveColor(),
+        color: isLinkActive ? "var(--color--text-prime)" : "var(--color--text-negative)",
       }}
       data-testid={dataTestId}
       target={target}
       rel={rel}
     >
       {children}
+      {isLinkActive && <div className={styles["active-indicator"]} style={{backgroundColor: getActiveColor()}}/>}
     </a>
   );
 };
