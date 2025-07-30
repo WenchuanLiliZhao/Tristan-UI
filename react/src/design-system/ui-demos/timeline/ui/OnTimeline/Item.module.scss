@@ -91,7 +91,7 @@
       
       .timeline-item-tags {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 2px;
       }
     }

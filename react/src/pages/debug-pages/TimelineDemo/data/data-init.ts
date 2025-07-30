@@ -1,4 +1,4 @@
-import type { BaseTimelineItemType } from "tristan-ui";
+import type { BaseTimelineItemType } from "../../../../design-system/ui-demos";
 import { type Function, type Goal, type RistLevel, type Status, type Type } from "./data-types";
 
 export interface ProjectDataType extends BaseTimelineItemType {

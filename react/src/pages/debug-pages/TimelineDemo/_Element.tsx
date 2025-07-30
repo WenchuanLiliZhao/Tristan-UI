@@ -20,7 +20,7 @@ export const Element = () => {
   return (
     <Layout>
       <TimelineView
-        fetchByTimeInterval={[new Date("2025-05-01"), new Date("2025-07-31")]}
+        fetchByTimeInterval={[new Date("2025-11-01"), new Date("2026-01-31")]}
         ref={timelineRef}
         inputData={jiraData}
         groupByOptions={groupByOptions}
@@ -31,7 +31,7 @@ export const Element = () => {
         urlParams={{
           defaultToday: true,
           recordGroupby: true,
-          recordCurrentDate: true,
+          // recordCurrentDate: true,
         }}
       />
     </Layout>

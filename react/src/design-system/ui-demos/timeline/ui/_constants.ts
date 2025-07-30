@@ -32,7 +32,7 @@
  */
 
 export const TimelineConst = {
-  cellHeight: 84,
+  cellHeight: 64,
   groupGap: 0,
   sidebarWidth: 240,
   // 💀 Unused constant

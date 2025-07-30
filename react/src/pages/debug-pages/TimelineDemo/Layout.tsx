@@ -3,7 +3,7 @@ import LuluLogo from "./assets/LuluLogo";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-import { TristanLayout, TopNav, NavTitle, NumericInput } from "../../../design-system/ui-components";
+import { TristanLayout, TopNav, NavTitle, NumericInput, ButtonGroupDevider } from "../../../design-system/ui-components";
 
 const LiliNavLink = ({ to, name }: { to: string; name: string }) => {
   return (
@@ -34,7 +34,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <TopNav
           left={[
             <LuluLogo size={32} blackColor="white" whiteColor="#FF4646" />,
-            <NavTitle title="Roadmap of lululemon Initiatives" />,
+            <NavTitle title="lululemon Initiatives" />,
+            <ButtonGroupDevider />,
+            <LiliNavLink to={`/`} name="Timeline" />,
           ]}
           right={[
             <LiliNavLink to={`/`} name="Timeline" />,
