@@ -7,7 +7,6 @@ export interface NavLinkProps extends BaseComponentProps {
   to: string;
   children: React.ReactNode;
   variant?: 'default' | 'primary' | 'secondary';
-  size?: 'small' | 'medium' | 'large';
   activeColor?: string;
   inactiveColor?: string;
   className?: string;
@@ -17,7 +16,6 @@ export const NavLink: React.FC<NavLinkProps> = ({
   to,
   children,
   variant = 'default',
-  size = 'medium',
   activeColor,
   inactiveColor,
   className,
@@ -40,7 +38,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
   return (
     <RouterNavLink
       to={to}
-      className={`${styles['tristan-navlink']} ${styles[`tristan-navlink--${variant}`]} ${styles[`tristan-navlink--${size}`]} ${className || ''}`}
+      className={`${styles['tristan-navlink']} ${styles[`tristan-navlink--${variant}`]} ${className || ''}`}
       style={({ isActive }) => ({
         color: isActive ? getActiveColor() : getInactiveColor(),
       })}

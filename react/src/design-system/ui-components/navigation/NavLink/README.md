@@ -14,7 +14,6 @@ The NavLink component provides a styled navigation link that automatically handl
 
 ### Optional Props
 - `variant?: 'default' | 'primary' | 'secondary'` - Visual variant of the link (default: 'default')
-- `size?: 'small' | 'medium' | 'large'` - Size of the link (default: 'medium')
 - `activeColor?: string` - Custom color for active state (overrides variant colors)
 - `inactiveColor?: string` - Custom color for inactive state (overrides variant colors)
 - `className?: string` - Additional CSS classes
@@ -31,7 +30,7 @@ import { NavLink } from '@tristan-ui/navigation';
 
 ### With Variants
 ```tsx
-<NavLink to="/profile" variant="primary" size="large">
+<NavLink to="/profile" variant="primary">
   Profile
 </NavLink>
 ```

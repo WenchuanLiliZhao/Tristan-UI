@@ -16,14 +16,7 @@ export const NavLinkDemo: React.FC = () => {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <h2>Size Variants</h2>
-        <div className={styles.navGroup}>
-          <NavLink to="/demo" size="small">Small Link</NavLink>
-          <NavLink to="/demo" size="medium">Medium Link</NavLink>
-          <NavLink to="/demo" size="large">Large Link</NavLink>
-        </div>
-      </section>
+
 
       <section className={styles.section}>
         <h2>Custom Colors</h2>
