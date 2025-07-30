@@ -36,7 +36,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <LuluLogo size={32} blackColor="white" whiteColor="#FF4646" />,
             <NavTitle title="lululemon Initiatives" />,
             <ButtonGroupDevider />,
-            <LiliNavLink to={`/`} name="Timeline" />,
+            <LiliNavLink to={`/`} name="Overview" />,
+            <ButtonGroupDevider />,
+            <LiliNavLink to={`/a`} name="Quarter 1" />,
+            <LiliNavLink to={`/b`} name="Quarter 2" />,
+            <LiliNavLink to={`/c`} name="Quarter 3" />,
+            <LiliNavLink to={`/d`} name="Quarter 4" />,
           ]}
           right={[
             <LiliNavLink to={`/`} name="Timeline" />,
