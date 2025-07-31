@@ -1,7 +1,7 @@
 .timeline-vertical-column-container {
   .timeline-ruler-column {
     .timeline-ruler-month-column {
-      border-right: 1px dashed var(--color--border-prime);
+      border-right: 1px solid var(--color--border-prime-trans);
       background-color: var(--color--bg-secondary);
 
       &:hover {

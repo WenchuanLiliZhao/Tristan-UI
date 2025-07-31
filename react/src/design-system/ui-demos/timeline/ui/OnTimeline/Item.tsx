@@ -168,8 +168,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
       <div
         ref={containerRef}
         className={`${styles["timeline-item-container"]} ${isFocused ? styles["timeline-item-container--focused"] : ""}`}
-        style={{
-          height: cellHeight - TimelineConst.itemVPadding * 2,
+        style={{          height: cellHeight - TimelineConst.itemVPadding * 2,
           width:
             durationInDays * dayWidth -
             TimelineConst.itemHPadding * 2 +
@@ -210,3 +209,4 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
     </div>
   );
 };
+

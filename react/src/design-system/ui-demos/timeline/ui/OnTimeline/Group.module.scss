@@ -1,3 +1,21 @@
 .timeline-group {
   position: relative;
 }
+
+.zebra-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 0; /* 在items底层但不会被父容器覆盖 */
+  pointer-events: none; /* 不影响点击事件 */
+}
+
+.zebra-even {
+  background-color: transparent; /* 偶数行透明 */
+}
+
+.zebra-odd {
+  background-color: rgba(0, 0, 0, 0.03); /* 淡灰色斑马纹背景 */
+}

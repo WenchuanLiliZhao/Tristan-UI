@@ -9,7 +9,7 @@
   .timeline-group-divider {
     position: absolute;
     left: 0;
-    border-bottom: 1px dashed var(--color--border-prime);
+    // border-bottom: 1px solid var(--color--border-prime);
     pointer-events: none;
   }
 } 

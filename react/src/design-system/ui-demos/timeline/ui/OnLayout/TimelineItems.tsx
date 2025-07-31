@@ -213,27 +213,28 @@ const DayRenderer = React.memo<{
         className={styles["timeline-ruler-day-column"]}
         style={{ width: `${dayWidth}px` }}
       >
-        {/* 时间线项目内容 - 只在有项目时渲染 */}
-        {hasItemsOnThisDay && (
-          <div className={styles["timeline-groups"]}>
-            {groupPlacements.map((groupData, groupIndex) => (
-              <React.Fragment key={groupIndex}>
-                <TimelineGroup
-                  groupData={groupData}
-                  year={year}
-                  monthIndex={monthIndex}
-                  dayIndex={dayIndex}
-                  dayWidth={dayWidth}
-                  cellHeight={cellHeight}
-                  groupGap={groupGap}
-                  displayConfig={displayConfig}
-                  onIssueClick={onIssueClick}
-                  selectedItemId={selectedItemId}
-                />
-              </React.Fragment>
-            ))}
-          </div>
-        )}
+        {/* 时间线项目内容 - 始终渲染group结构以保持斑马纹背景 */}
+        <div className={styles["timeline-groups"]}>
+          {groupPlacements.map((groupData, groupIndex) => (
+            <React.Fragment key={groupIndex}>
+              <TimelineGroup
+                groupData={groupData}
+                groupIndex={groupIndex}
+                year={year}
+                monthIndex={monthIndex}
+                dayIndex={dayIndex}
+                dayWidth={dayWidth}
+                cellHeight={cellHeight}
+                groupGap={groupGap}
+                displayConfig={displayConfig}
+                onIssueClick={onIssueClick}
+                selectedItemId={selectedItemId}
+                // 传递是否有items的信息，用于优化渲染
+                hasItemsOnThisDay={hasItemsOnThisDay}
+              />
+            </React.Fragment>
+          ))}
+        </div>
       </div>
     );
   }
