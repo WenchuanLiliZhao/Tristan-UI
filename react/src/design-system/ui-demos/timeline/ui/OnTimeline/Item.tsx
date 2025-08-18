@@ -4,6 +4,7 @@ import {
   type TimelineItemType,
   type TimelineItemDisplayConfig,
   type FieldDisplayConfig,
+  type TimelineColorType,
 } from "../../types";
 import { TimelineConst } from "../_constants";
 import { Icon, ProgressCircle, Tag } from "../../../../ui-components";
@@ -136,6 +137,40 @@ const renderTagField = (
   );
 };
 
+// 获取边框颜色的函数
+const getBorderColor = (
+  item: TimelineItemType,
+  displayConfig?: TimelineItemDisplayConfig
+): string | undefined => {
+  if (!displayConfig?.borderColor) {
+    return undefined;
+  }
+
+  const { field, mapping } = displayConfig.borderColor;
+  const fieldValue = item[field as keyof typeof item];
+
+  if (!mapping) {
+    return undefined;
+  }
+
+  let borderColor: TimelineColorType | undefined;
+
+  if (typeof mapping === "function") {
+    borderColor = mapping(fieldValue, item);
+  } else if (typeof fieldValue === "string" && mapping[fieldValue]) {
+    borderColor = mapping[fieldValue].color;
+  }
+
+  if (!borderColor) {
+    return undefined;
+  }
+
+  // 处理 CSS 变量：如果是变量名则用 var() 包装，否则直接使用
+  return typeof borderColor === "string" && borderColor.startsWith('--') 
+    ? `var(${borderColor})` 
+    : borderColor as string;
+};
+
 export const TimelineItem: React.FC<TimelineItemProps> = ({
   item,
   durationInDays,
@@ -162,6 +197,9 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   };
 
   const spannedMonths = calculateSpannedMonths(item.startDate!, item.endDate!);
+  
+  // 获取边框颜色
+  const borderColor = getBorderColor(item, displayConfig);
 
   return (
     <div className={styles["timeline-item"]}>
@@ -181,6 +219,8 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           }px`,
           left: `${TimelineConst.itemHPadding}px`,
           cursor: onIssueClick ? "pointer" : "default",
+          // 动态设置边框颜色，如果配置了的话
+          ...(borderColor && { borderColor }),
         }}
         role={onIssueClick ? "button" : undefined}
         tabIndex={onIssueClick ? 0 : undefined}

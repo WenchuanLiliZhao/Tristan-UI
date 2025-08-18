@@ -109,6 +109,13 @@ export interface TimelineItemDisplayConfig<T = Record<string, unknown>> {
   graphicFields?: FieldDisplayConfig<T>[];
   /** 标签区域的字段配置 */
   tagFields?: FieldDisplayConfig<T>[];
+  /** 边框颜色配置 - 可以基于数据字段动态配置边框颜色 */
+  borderColor?: {
+    /** 用于获取边框颜色的字段名 */
+    field: keyof (BaseTimelineItemType & T);
+    /** 字段值到颜色的映射 */
+    mapping?: Record<string, { color: TimelineColorType }> | ((fieldValue: unknown, item: TimelineItemType<T>) => TimelineColorType);
+  };
 }
 
 // 分组数据结构 - 通用化
