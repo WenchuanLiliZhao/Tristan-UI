@@ -9,6 +9,7 @@ import {
   DateField,
   ProgressField,
   TagField,
+  LinkField,
   PropertyFieldsTable,
   Button,
 } from "../../../../ui-components";
@@ -161,6 +162,26 @@ export function IssueDetails<T = Record<string, unknown>>({
       );
     }
 
+    if (displayType === "link" && typeof value === "string") {
+      // Handle link template if provided
+      let url = value;
+      if (displayOptions.linkTemplate) {
+        url = displayOptions.linkTemplate.replace("{value}", value);
+      }
+
+      return (
+        <LinkField
+          key={key}
+          label={getLabel(key)}
+          url={url}
+          text={displayOptions.linkText}
+          icon={displayOptions.linkIcon}
+          openInNewTab={displayOptions.openInNewTab}
+          semantic={displayOptions.linkSemantic}
+        />
+      );
+    }
+
     // Auto-detect based on value type
     if (value instanceof Date) {
       return (
@@ -190,6 +211,10 @@ export function IssueDetails<T = Record<string, unknown>>({
     const mappingConfig = config.propertyMappings?.[key as keyof T | string] as
       | PropertyMappingConfig
       | undefined;
+    // If label is explicitly set to empty string, return empty string
+    if (mappingConfig?.label === "") {
+      return "";
+    }
     return mappingConfig?.label || DEFAULT_PROPERTY_LABELS[key] || key;
   };
 

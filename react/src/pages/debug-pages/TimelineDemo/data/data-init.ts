@@ -13,4 +13,5 @@ export interface ProjectDataType extends BaseTimelineItemType {
   "Intake": string;
   "Priority": string;
   "Progress": number;
+  "jiraLink"?: string; // Optional Jira link field
 }

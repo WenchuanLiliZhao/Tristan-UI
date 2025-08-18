@@ -48,6 +48,15 @@ export const groupTitleProperties = [
 export const issueDetailsConfig = IssueDetailsConfigBuilder.create()
   .setTitle("Initiative Details")
   .setPropertyOrder([
+    { 
+      property: "jiraLink", 
+      label: "",
+      displayType: "link",
+      displayOptions: {
+        linkText: "View in Jira",
+        openInNewTab: true
+      }
+    },
     { property: "name", label: "Initivative", displayType: "text" },
     { property: "CN Initiative", label: "CN Initiative", displayType: "text" },
     
@@ -61,4 +70,5 @@ export const issueDetailsConfig = IssueDetailsConfigBuilder.create()
     { property: "Budget Owner", displayType: "text" },
     { property: "Intake", displayType: "text" },
     { property: "Priority", displayType: "tag", valueMapping: Priority },
+    
   ]).build()

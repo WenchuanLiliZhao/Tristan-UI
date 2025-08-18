@@ -93,6 +93,12 @@ const iconMapping: Record<string, keyof typeof LucideIcons> = {
   'zoom-in': 'ZoomIn',
   'zoom-out': 'ZoomOut',
   'search': 'Search',
+  
+  // Link and external
+  'open-in-new': 'ExternalLink',
+  'external-link': 'ExternalLink',
+  'link': 'Link',
+  'open': 'ExternalLink',
 };
 
 export interface IconProps extends BaseComponentProps {

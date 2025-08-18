@@ -1,10 +1,11 @@
 // Import TextField types for internal use
 
 // Property Field Components
-export { ProgressField } from './ProgressField';
-export { TagField } from './TagField';
-export { PlainTextField as TextField } from './PlainTextField';
-export { DateField } from './DateField';
+export { PlainTextField as TextField } from "./PlainTextField";
+export { DateField } from "./DateField";
+export { ProgressField } from "./ProgressField";
+export { TagField } from "./TagField";
+export { LinkField } from "./LinkField";
 export * from './shared';
 
 // Export all types

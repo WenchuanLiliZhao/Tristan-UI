@@ -16,7 +16,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-1"
   },
   {
     id: "2",
@@ -33,7 +34,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-1"
   },
   {
     id: "3",
@@ -50,7 +52,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-1"
   },
   {
     id: "4",
@@ -67,7 +70,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-1"
   },
   {
     id: "5",
@@ -84,7 +88,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-1"
   },
   {
     id: "6",
@@ -101,7 +106,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-1"
   },
   {
     id: "7",
@@ -118,7 +124,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-1"
   },
   {
     id: "8",
@@ -135,7 +142,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-1"
   },
   {
     id: "9",
@@ -152,7 +160,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-1"
   },
   {
     id: "10",
@@ -169,7 +178,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Feasibility Study",
     "Intake": "F26",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-2"
   },
   {
     id: "11",
@@ -186,7 +196,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-2"
   },
   {
     id: "12",
@@ -203,7 +214,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-2"
   },
   {
     id: "13",
@@ -220,7 +232,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-2"
   },
   {
     id: "14",
@@ -237,7 +250,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-2"
   },
   {
     id: "15",
@@ -254,7 +268,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-2"
   },
   {
     id: "16",
@@ -271,7 +286,8 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-2"
   },
   {
     id: "17",
@@ -288,27 +304,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-2"
   },
   {
     id: "18",
-    name: "Tech for Business Foundation",
-    startDate: new Date("2025-07-01"),
-    endDate: new Date("2025-07-31"),
-    "Progress": 50,
-    "Type": "Tech for Business Foundation",
-    "CN Initiative": "Enterprise Business Performance Dashboard",
-    "Owner": "Kano",
-    "Business Owner": "",
-    "Risk Level": "On Track",
-    "Goal": "Effieciency Improvement",
-    "Function": "Corporate",
-    "Status": "Development",
-    "Intake": "",
-    "Priority": "Medium"
-  },
-  {
-    id: "19",
     name: "FP&A Sales Driven Dashboard",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -322,10 +322,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-2"
   },
   {
-    id: "20",
+    id: "19",
     name: "Enterprise Machine Learning Framework",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -339,10 +340,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-2"
   },
   {
-    id: "21",
+    id: "20",
     name: "Data Governance Uplifts",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -356,10 +358,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-3"
   },
   {
-    id: "22",
+    id: "21",
     name: "Carton receiving",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -373,10 +376,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-3"
   },
   {
-    id: "23",
+    id: "22",
     name: "China DC network + Service Center",
     startDate: undefined,
     endDate: undefined,
@@ -390,10 +394,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Feasibility Study",
     "Intake": "F26",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-3"
   },
   {
-    id: "24",
+    id: "23",
     name: "Inventory Planning Automation",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -407,10 +412,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-3"
   },
   {
-    id: "25",
+    id: "24",
     name: "Outbound Shipment Standardization & Desensitization",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -424,10 +430,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-3"
   },
   {
-    id: "26",
+    id: "25",
     name: "Priority Shipping & FOH/BOH",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -441,10 +448,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-3"
   },
   {
-    id: "27",
+    id: "26",
     name: "Transportation Portal Foundation",
     startDate: new Date("2025-02-01"),
     endDate: new Date("2025-02-28"),
@@ -458,10 +466,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-3"
   },
   {
-    id: "28",
+    id: "27",
     name: "Transaction capacity scale up（omni fulfillment performance improvement）",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -475,10 +484,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-3"
   },
   {
-    id: "29",
+    id: "28",
     name: "APS (Advance planning scheduling) Report Automation",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -492,10 +502,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-3"
   },
   {
-    id: "30",
+    id: "29",
     name: "Outlet Inventory Mgt / Dashboard",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -509,10 +520,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-3"
   },
   {
-    id: "31",
+    id: "30",
     name: "Ship From Store Phase 2 Enrollment",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -526,10 +538,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-4"
   },
   {
-    id: "32",
+    id: "31",
     name: "Team sales inventory management",
     startDate: new Date("2025-03-01"),
     endDate: new Date("2025-03-31"),
@@ -543,10 +556,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-4"
   },
   {
-    id: "33",
+    id: "32",
     name: "E2E Product visualization",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -560,10 +574,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-4"
   },
   {
-    id: "34",
+    id: "33",
     name: "RPA (Robotic Process Automation) Expansion",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -577,10 +592,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-4"
   },
   {
-    id: "35",
+    id: "34",
     name: "Finance-Tax Automation Phase II (Reconciliation & Calculation)",
     startDate: undefined,
     endDate: undefined,
@@ -594,10 +610,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "F26",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-4"
   },
   {
-    id: "36",
+    id: "35",
     name: "Legal Hub",
     startDate: new Date("2025-05-01"),
     endDate: new Date("2025-05-31"),
@@ -611,13 +628,14 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-4"
   },
   {
-    id: "37",
+    id: "36",
     name: "Store floor refill optimization",
-    startDate: new Date("2025-08-01"),
-    endDate: new Date("2025-08-31"),
+    startDate: new Date("2025-09-01"),
+    endDate: new Date("2025-09-30"),
     "Progress": 75,
     "Type": "Tech for Business Foundation",
     "CN Initiative": "Agile Fulfillment",
@@ -628,10 +646,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-4"
   },
   {
-    id: "38",
+    id: "37",
     name: "Sample receipt lead time extension",
     startDate: new Date("2025-03-01"),
     endDate: new Date("2025-03-31"),
@@ -645,10 +664,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-4"
   },
   {
-    id: "39",
+    id: "38",
     name: "Pre-Season assortment automation",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -662,10 +682,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-4"
   },
   {
-    id: "40",
+    id: "39",
     name: "Product Hand off Date Automation",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -679,10 +700,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-4"
   },
   {
-    id: "41",
+    id: "40",
     name: "Product GB Tech Released Portal",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -696,10 +718,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-5"
   },
   {
-    id: "42",
+    id: "41",
     name: "E2E Enterprise Product Data Modernization (Global)",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -713,10 +736,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-5"
   },
   {
-    id: "43",
+    id: "42",
     name: "PDD Channel Roll-out",
     startDate: new Date("2025-05-01"),
     endDate: new Date("2025-05-31"),
@@ -730,10 +754,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-5"
   },
   {
-    id: "44",
+    id: "43",
     name: "Employee Sales",
     startDate: new Date("2025-11-01"),
     endDate: new Date("2025-11-30"),
@@ -747,10 +772,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-5"
   },
   {
-    id: "45",
+    id: "44",
     name: "GEC Platform Enhancements(Chatbot)",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -764,10 +790,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-5"
   },
   {
-    id: "46",
+    id: "45",
     name: "GEC Platform Enhancements(AI based QA)",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -781,10 +808,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-5"
   },
   {
-    id: "47",
+    id: "46",
     name: "WMP Community Enhancement",
     startDate: new Date("2025-05-01"),
     endDate: new Date("2025-05-31"),
@@ -798,10 +826,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-5"
   },
   {
-    id: "48",
+    id: "47",
     name: "F&F Digital Coupons",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -815,14 +844,15 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-5"
   },
   {
-    id: "49",
+    id: "48",
     name: "Sample Hub",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
-    "Progress": 50,
+    "Progress": 100,
     "Type": "Tech for China",
     "CN Initiative": "Samples Management",
     "Owner": "James",
@@ -830,12 +860,13 @@ export const jiraData: ProjectDataType[] = [
     "Risk Level": "On Track",
     "Goal": "Effieciency Improvement",
     "Function": "Brand Marketing",
-    "Status": "Development",
+    "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-5"
   },
   {
-    id: "50",
+    id: "49",
     name: "Ambassador Hub 2.0 - Referral",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -849,10 +880,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-5"
   },
   {
-    id: "51",
+    id: "50",
     name: "Ambassador Hub 2.0 - Product Eduation for Ambassadors",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -866,10 +898,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-6"
   },
   {
-    id: "52",
+    id: "51",
     name: "Ambassador Hub 2.0 - Core Functions",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -883,10 +916,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-6"
   },
   {
-    id: "53",
+    id: "52",
     name: "Digital Asset Management 2.0 (CNDAM)",
     startDate: new Date("2025-03-01"),
     endDate: new Date("2025-03-31"),
@@ -900,10 +934,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-6"
   },
   {
-    id: "54",
+    id: "53",
     name: "Guest Profile Enrichment",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -917,10 +952,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-6"
   },
   {
-    id: "55",
+    id: "54",
     name: "CRM Modelling & Segmentation",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -934,10 +970,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-6"
   },
   {
-    id: "56",
+    id: "55",
     name: "Marketing Automation platform",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -951,10 +988,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Brand Marketing",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-6"
   },
   {
-    id: "57",
+    id: "56",
     name: "WMP Revamp",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -968,10 +1006,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-6"
   },
   {
-    id: "58",
+    id: "57",
     name: "Gift Card",
     startDate: undefined,
     endDate: undefined,
@@ -985,10 +1024,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-6"
   },
   {
-    id: "59",
+    id: "58",
     name: "Product Information Hub for Tmall + JD",
     startDate: new Date("2025-12-01"),
     endDate: new Date("2025-12-31"),
@@ -1002,10 +1042,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-6"
   },
   {
-    id: "60",
+    id: "59",
     name: "Omni Shopping Cart + Check out",
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-01-31"),
@@ -1019,10 +1060,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-6"
   },
   {
-    id: "61",
+    id: "60",
     name: "Promotion Service - Further Markdown (EC)",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -1036,10 +1078,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-7"
   },
   {
-    id: "62",
+    id: "61",
     name: "CN Guest Facing Product Attributes",
     startDate: undefined,
     endDate: undefined,
@@ -1053,10 +1096,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-7"
   },
   {
-    id: "63",
+    id: "62",
     name: "GEC Tool/Page Optimization(Live800/OMS/After-sales Page)",
     startDate: undefined,
     endDate: undefined,
@@ -1070,10 +1114,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-7"
   },
   {
-    id: "64",
+    id: "63",
     name: "Corporate sales",
     startDate: undefined,
     endDate: undefined,
@@ -1087,10 +1132,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-7"
   },
   {
-    id: "65",
+    id: "64",
     name: "Cross platform MPS foundation",
     startDate: undefined,
     endDate: undefined,
@@ -1104,10 +1150,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-7"
   },
   {
-    id: "66",
+    id: "65",
     name: "WeCom for SSC",
     startDate: undefined,
     endDate: undefined,
@@ -1121,10 +1168,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Feasibility Study",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-7"
   },
   {
-    id: "67",
+    id: "66",
     name: "Wechat Mini Store",
     startDate: new Date("2025-08-01"),
     endDate: new Date("2025-08-31"),
@@ -1138,10 +1186,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-7"
   },
   {
-    id: "68",
+    id: "67",
     name: "WMP Product Recommendation",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -1155,10 +1204,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-7"
   },
   {
-    id: "69",
+    id: "68",
     name: "New SSC (Tech Infrastructure)",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -1172,10 +1222,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-7"
   },
   {
-    id: "70",
+    id: "69",
     name: "Retail Store VAT refund - Departure",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -1189,14 +1240,15 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-7"
   },
   {
-    id: "71",
+    id: "70",
     name: "Red mini program",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
-    "Progress": 50,
+    "Progress": 100,
     "Type": "Tech for China",
     "CN Initiative": "Social Commerce Exploration: Rednote Mini Program Wechat Gifts",
     "Owner": "James",
@@ -1204,12 +1256,13 @@ export const jiraData: ProjectDataType[] = [
     "Risk Level": "On Track",
     "Goal": "Drive Sales",
     "Function": "E-com",
-    "Status": "Development",
+    "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-8"
   },
   {
-    id: "72",
+    id: "71",
     name: "New SSC (Command Center Set Up)",
     startDate: undefined,
     endDate: undefined,
@@ -1223,10 +1276,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-8"
   },
   {
-    id: "73",
+    id: "72",
     name: "Cloud automation migration - Core System Part I",
     startDate: undefined,
     endDate: undefined,
@@ -1240,10 +1294,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-8"
   },
   {
-    id: "74",
+    id: "73",
     name: "New SSC (Digital QR Code Badge)",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -1257,10 +1312,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-8"
   },
   {
-    id: "75",
+    id: "74",
     name: "New SSC (Therapy Room)",
     startDate: new Date("2025-10-01"),
     endDate: new Date("2025-10-31"),
@@ -1274,10 +1330,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Feasibility Study",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-8"
   },
   {
-    id: "76",
+    id: "75",
     name: "New SSC (Retail Store)",
     startDate: undefined,
     endDate: undefined,
@@ -1291,13 +1348,14 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Corporate",
     "Status": "Feasibility Study",
     "Intake": "F26",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-8"
   },
   {
-    id: "77",
+    id: "76",
     name: "JAMF Platform migration",
-    startDate: new Date("2025-08-01"),
-    endDate: new Date("2025-08-31"),
+    startDate: new Date("2025-09-01"),
+    endDate: new Date("2025-09-30"),
     "Progress": 50,
     "Type": "Tech for Tech Foundation",
     "CN Initiative": "Tech for Tech Foundation",
@@ -1308,10 +1366,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-8"
   },
   {
-    id: "78",
+    id: "77",
     name: "Customs Portal- AEO Adoption",
     startDate: new Date("2025-09-01"),
     endDate: new Date("2025-09-30"),
@@ -1325,10 +1384,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-8"
   },
   {
-    id: "79",
+    id: "78",
     name: "Custom Portal  - Document and 3rd Party Data managment.",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -1342,10 +1402,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-8"
   },
   {
-    id: "80",
+    id: "79",
     name: "Custom Portal Foundation",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -1359,10 +1420,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-8"
   },
   {
-    id: "81",
+    id: "80",
     name: "Fulfillment Agility Dashboard",
     startDate: new Date("2025-06-01"),
     endDate: new Date("2025-06-30"),
@@ -1376,10 +1438,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Fulfillment",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-9"
   },
   {
-    id: "82",
+    id: "81",
     name: "NPS (Retail)",
     startDate: new Date("2025-02-01"),
     endDate: new Date("2025-02-28"),
@@ -1393,10 +1456,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Retail",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/TECH-9"
   },
   {
-    id: "83",
+    id: "82",
     name: "Product Education Tool",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -1410,10 +1474,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Product",
     "Status": "System Deploy",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/RETAIL-9"
   },
   {
-    id: "84",
+    id: "83",
     name: "PIH (Product Information Hub) for WMP",
     startDate: new Date("2025-04-01"),
     endDate: new Date("2025-04-30"),
@@ -1427,10 +1492,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Operations Handover",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/ECOMM-9"
   },
   {
-    id: "85",
+    id: "84",
     name: "Graded Size Chart Wearer Trial & Consumer Testimonials",
     startDate: undefined,
     endDate: undefined,
@@ -1444,10 +1510,11 @@ export const jiraData: ProjectDataType[] = [
     "Function": "E-com",
     "Status": "Business Intake",
     "Intake": "Pipeline",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/FULFILL-9"
   },
   {
-    id: "86",
+    id: "85",
     name: "China GP Always On",
     startDate: new Date("2025-07-01"),
     endDate: new Date("2025-07-31"),
@@ -1461,6 +1528,7 @@ export const jiraData: ProjectDataType[] = [
     "Function": "Tech",
     "Status": "Development",
     "Intake": "",
-    "Priority": "Medium"
+    "Priority": "Medium",
+    "jiraLink": "https://your-jira-domain.atlassian.net/browse/PROJ-9"
   }
 ];

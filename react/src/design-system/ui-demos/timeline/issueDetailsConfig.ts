@@ -11,7 +11,7 @@ export interface PropertyMappingConfig {
   /** Custom label in the UI (optional) */
   label?: string;
   /** Explicit display type override */
-  displayType?: 'text' | 'date' | 'progress' | 'tag';
+  displayType?: 'text' | 'date' | 'progress' | 'tag' | 'link';
   /** Mapping from raw field value to display metadata */
   valueMapping?: Record<string, ValueMappingEntry>;
   /** Additional display options for different field types */
@@ -30,13 +30,19 @@ export interface PropertyMappingConfig {
     progressVariant?: 'default' | 'rounded' | 'square';
     // Tag field options
     tagVariant?: 'contained' | 'outlined';
+    // Link field options
+    linkTemplate?: string; // Template for link URL, e.g. "https://jira.company.com/browse/{value}"
+    linkText?: string; // Custom text for link, defaults to field value
+    openInNewTab?: boolean; // Whether to open link in new tab
+    linkIcon?: string; // Icon for the link button
+    linkSemantic?: "default" | "success" | "active" | "warning" | "error"; // Semantic color of the link button
   };
 }
 
 // Simplified property configuration interface
 export interface PropertyConfig {
   property: string;
-  displayType?: 'text' | 'date' | 'progress' | 'tag';
+  displayType?: 'text' | 'date' | 'progress' | 'tag' | 'link';
   label?: string;
   valueMapping?: Record<string, ValueMappingEntry>;
   displayOptions?: {
@@ -54,6 +60,12 @@ export interface PropertyConfig {
     progressVariant?: 'default' | 'rounded' | 'square';
     // Tag field options
     tagVariant?: 'contained' | 'outlined';
+    // Link field options
+    linkTemplate?: string; // Template for link URL, e.g. "https://jira.company.com/browse/{value}"
+    linkText?: string; // Custom text for link, defaults to field value
+    openInNewTab?: boolean; // Whether to open link in new tab
+    linkIcon?: string; // Icon for the link button
+    linkSemantic?: "default" | "success" | "active" | "warning" | "error"; // Semantic color of the link button
   };
 }
 
