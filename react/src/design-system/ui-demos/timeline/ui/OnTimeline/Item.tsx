@@ -248,6 +248,13 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           }
         }}
       >
+        {/* 左侧竖条 - 贴着 card 边缘 */}
+        <div 
+          className={styles["timeline-item-left-bar"]}
+          style={{
+            backgroundColor: colorConfig?.borderColor || 'var(--color--border-prime)'
+          }}
+        />
         <div className={styles["timeline-item-graphic-info"]}>
           {displayConfig?.graphicFields?.map((config, index) =>
             renderGraphicField(item, config, index)

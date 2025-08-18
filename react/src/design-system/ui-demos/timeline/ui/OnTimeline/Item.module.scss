@@ -63,6 +63,16 @@
       box-shadow: inherit !important;
     }
     
+    .timeline-item-left-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background-color: var(--color--border-prime);
+      z-index: 2; // 确保在其他内容之上
+    }
+    
     .timeline-item-graphic-info {
       display: flex;
       flex-direction: column;
