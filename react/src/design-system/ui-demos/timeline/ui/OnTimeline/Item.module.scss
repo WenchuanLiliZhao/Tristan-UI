@@ -49,8 +49,18 @@
     }
     
     &--focused {
+      // 默认 focused 颜色，可被内联样式覆盖
       border-color: var(--color--semantic-active);
       box-shadow: 0 0 0 2px var(--color--semantic-active-half);
+    }
+    
+    // 确保内联样式具有足够的优先级
+    &[style*="borderColor"] {
+      border-color: inherit !important;
+    }
+    
+    &[style*="boxShadow"] {
+      box-shadow: inherit !important;
     }
     
     .timeline-item-graphic-info {

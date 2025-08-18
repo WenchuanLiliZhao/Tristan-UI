@@ -141,7 +141,7 @@ const renderTagField = (
 const getBorderColor = (
   item: TimelineItemType,
   displayConfig?: TimelineItemDisplayConfig
-): string | undefined => {
+): { borderColor: string; shadowColor?: string } | undefined => {
   if (!displayConfig?.borderColor) {
     return undefined;
   }
@@ -153,22 +153,34 @@ const getBorderColor = (
     return undefined;
   }
 
-  let borderColor: TimelineColorType | undefined;
+  let colorValue: TimelineColorType | undefined;
 
   if (typeof mapping === "function") {
-    borderColor = mapping(fieldValue, item);
+    colorValue = mapping(fieldValue, item);
   } else if (typeof fieldValue === "string" && mapping[fieldValue]) {
-    borderColor = mapping[fieldValue].color;
+    colorValue = mapping[fieldValue].color;
   }
 
-  if (!borderColor) {
+  if (!colorValue) {
     return undefined;
   }
 
   // 处理 CSS 变量：如果是变量名则用 var() 包装，否则直接使用
-  return typeof borderColor === "string" && borderColor.startsWith('--') 
-    ? `var(${borderColor})` 
-    : borderColor as string;
+  const borderColor = typeof colorValue === "string" && colorValue.startsWith('--') 
+    ? `var(${colorValue})` 
+    : colorValue as string;
+
+  // 为 focus 状态准备半透明版本的颜色
+  let shadowColor: string | undefined;
+  if (typeof colorValue === "string" && colorValue.startsWith('--')) {
+    // 尝试使用设计系统的 -half 版本
+    shadowColor = `var(${colorValue}-half)`;
+  } else {
+    // 对于直接颜色值，添加透明度
+    shadowColor = typeof colorValue === "string" ? `${colorValue}40` : undefined;
+  }
+
+  return { borderColor, shadowColor };
 };
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({
@@ -198,8 +210,8 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
 
   const spannedMonths = calculateSpannedMonths(item.startDate!, item.endDate!);
   
-  // 获取边框颜色
-  const borderColor = getBorderColor(item, displayConfig);
+  // 获取边框颜色和阴影颜色
+  const colorConfig = getBorderColor(item, displayConfig);
 
   return (
     <div className={styles["timeline-item"]}>
@@ -220,7 +232,11 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           left: `${TimelineConst.itemHPadding}px`,
           cursor: onIssueClick ? "pointer" : "default",
           // 动态设置边框颜色，如果配置了的话
-          ...(borderColor && { borderColor }),
+          ...(colorConfig && { borderColor: colorConfig.borderColor }),
+          // focused 状态下使用相同的团队颜色作为 box-shadow
+          ...(isFocused && colorConfig?.shadowColor && { 
+            boxShadow: `0 0 0 2px ${colorConfig.shadowColor}` 
+          }),
         }}
         role={onIssueClick ? "button" : undefined}
         tabIndex={onIssueClick ? 0 : undefined}
