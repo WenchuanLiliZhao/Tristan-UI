@@ -30,7 +30,7 @@ export const itemDisplayConfigSimple = {
 
   tagFields: [
     createFieldConfig.tagFromMap<ProjectDataType>("CN Initiative", CNInitiative),
-    createFieldConfig.tagFromMap<ProjectDataType>("Function", Function),
+    // createFieldConfig.tagFromMap<ProjectDataType>("Function", Function),
   ],
 
   // 🎨 配置边框颜色 - 基于团队 (Function) 字段

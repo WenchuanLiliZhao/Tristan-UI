@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   width: 16px;
-  height: 20px;
+  height: 18px;
   font-size: 16px;
   
   // CSS 变量优化：动态颜色占位符
@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   width: 16px;
-  height: 20px;
+  height: 18px;
   
   // CSS 变量优化：进度条颜色占位符
   --progress-color: var(--element-progress-color, var(--color--semantic-active));
@@ -84,29 +84,22 @@
     .timeline-item-text-info {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px; // 减少间距以适应多行标题
       flex: 1;
       min-width: 0;
+      justify-content: center; // 垂直居中对齐
       
       .timeline-item-name {
         font-size: 14px;
-        line-height: 20px;
+        line-height: 18px;
         overflow: hidden;
-        white-space: nowrap;
-        position: relative;
-        
-        // 使用渐变遮罩创建淡出效果
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 20px; // 固定宽度的渐变区域
-          height: 100%;
-          background: linear-gradient(90deg, transparent 0%, var(--color--bg-prime) 100%);
-          pointer-events: none;
-          // z-index: 0;
-        }
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
       
       .timeline-item-tags {
