@@ -175,7 +175,7 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
               : groupHeight;
             const finalMinHeight = group.isEndSpacer
               ? TimelineConstCalc.groupsEndHeight
-              : TimelineConstCalc.groupMinHeight;
+              : cellHeight; // Use configurable cellHeight instead of static constant
 
             return (
               <div

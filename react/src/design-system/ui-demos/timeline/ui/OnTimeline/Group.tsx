@@ -51,8 +51,8 @@ export const TimelineGroup: React.FC<TimelineGroupProps> = React.memo(({
   const finalMinHeight = useMemo(() => {
     return groupData.isEndSpacer 
       ? TimelineConstCalc.groupsEndHeight 
-      : TimelineConstCalc.groupMinHeight;
-  }, [groupData.isEndSpacer]);
+      : cellHeight; // Use configurable cellHeight instead of static constant
+  }, [groupData.isEndSpacer, cellHeight]);
 
   // 🚀 性能优化：缓存渲染项目列表 - 只在有items的日期才渲染实际内容
   const renderedItems = useMemo(() => {

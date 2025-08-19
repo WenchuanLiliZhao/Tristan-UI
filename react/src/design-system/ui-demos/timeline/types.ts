@@ -208,6 +208,16 @@ export interface TimelineProps<T = Record<string, unknown>> {
   issueDetailsConfig?: import('./issueDetailsConfig').IssueDetailsConfig<T>;
   /** URL 参数管理配置 */
   urlParams?: TimelineUrlParamsConfig;
+  /**
+   * 每个时间线项目的高度（单位：像素）
+   * @default 72 (来自 TimelineConst.cellHeight)
+   */
+  cellHeight?: number;
+  /**
+   * 是否显示 cellHeight 调试控件（开发模式下用于测试不同高度）
+   * @default false
+   */
+  showCellHeightControls?: boolean;
 }
 
 // URL 参数管理配置接口

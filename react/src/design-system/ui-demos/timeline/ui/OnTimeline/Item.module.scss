@@ -90,7 +90,8 @@
       justify-content: center; // 垂直居中对齐
       
       .timeline-item-name {
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: bold;
         line-height: 18px;
         overflow: hidden;
         flex-shrink: 0;

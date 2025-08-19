@@ -1,6 +1,6 @@
 {
   "name": "tristan-ui",
-  "version": "0.4.59",
+  "version": "0.4.60",
   "description": "A modern React component library and design system",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

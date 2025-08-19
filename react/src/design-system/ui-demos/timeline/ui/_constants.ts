@@ -11,7 +11,7 @@
  * - 内边距：项目内部的水平和垂直边距
  * 
  * 📏 布局计算：
- * - cellHeight: 每个时间线项目的基础高度（84px）
+ * - cellHeight: 每个时间线项目的基础高度（72px，可通过 TimelineProps.cellHeight 覆盖）
  * - groupGap: 分组之间的间距（当前为0）
  * - yearZoom/monthZoom: 不同时间视图的缩放系数
  * 
@@ -68,7 +68,8 @@ export const TimelineConst = {
 };
 
 export const TimelineConstCalc = {
-  groupMinHeight: TimelineConst.cellHeight * 1,
+  // Note: groupMinHeight is now calculated dynamically using the configurable cellHeight
+  // Instead of: groupMinHeight: TimelineConst.cellHeight * 1,
   groupsEndHeight: "50vh",
 
   rulerHeight: TimelineConst.yearLabelHeight + TimelineConst.monthLabelHeight + TimelineConst.dayLabelHeight,

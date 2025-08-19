@@ -33,6 +33,8 @@ export const Element = () => {
           recordGroupby: true,
           // recordCurrentDate: true,
         }}
+        // showCellHeightControls={true}
+        cellHeight={68}
       />
     </Layout>
   );

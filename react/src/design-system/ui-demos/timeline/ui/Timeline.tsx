@@ -218,6 +218,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
       defaultDayWidth = 12,
       issueDetailsConfig,
       urlParams,
+      cellHeight,
     }: TimelineProps<T>,
     ref: React.Ref<TimelineRef>
   ) {
@@ -268,7 +269,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
     })();
 
     // Constants for layout calculations
-    const cellHeight = TimelineConst.cellHeight; // Height of each item row in pixels
+    const finalCellHeight = cellHeight ?? TimelineConst.cellHeight; // Height of each item row in pixels (configurable)
     const groupGapForTesting = TimelineConst.groupGap;
 
     // 获取当前使用的分组字段
@@ -798,7 +799,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
                   <div className={styles["timeline-sidebar-ruler-placeholder"]}>
                     <TimelineSidebar
                       groupPlacements={groupPlacements}
-                      cellHeight={cellHeight}
+                      cellHeight={finalCellHeight}
                       groupGap={groupGapForTesting}
                       isRulerMode={true}
                       sidebarProperties={sidebarProperties}
@@ -826,7 +827,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
                   <div className={styles["timeline-sidebar"]}>
                     <TimelineSidebar
                       groupPlacements={groupPlacements}
-                      cellHeight={cellHeight}
+                      cellHeight={finalCellHeight}
                       groupGap={groupGapForTesting}
                       sidebarProperties={sidebarProperties}
                     />
@@ -839,7 +840,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
                   {hasGrouping && (
                     <TimelineGroupDividers
                       groupPlacements={groupPlacements}
-                      cellHeight={cellHeight}
+                      cellHeight={finalCellHeight}
                       groupGap={groupGapForTesting}
                       timelineWidth={timelineWidth}
                     />
@@ -850,7 +851,7 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps<any>>(
                     yearList={yearList}
                     startMonth={startMonth}
                     dayWidth={dayWidth}
-                    cellHeight={cellHeight}
+                    cellHeight={finalCellHeight}
                     groupGap={groupGapForTesting}
                     groupPlacements={groupPlacements}
                     displayConfig={init as TimelineItemDisplayConfig}
