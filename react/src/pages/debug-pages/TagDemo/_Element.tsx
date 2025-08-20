@@ -29,17 +29,33 @@ export const Element: React.FC = () => {
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag variant="contained" color="primary">Contained Tag</Tag>
           <Tag variant="outlined" color="primary">Outlined Tag</Tag>
+          <Tag variant="plain" color="primary">Plain Tag</Tag>
           <Tag variant="contained" color="success">Contained Success</Tag>
           <Tag variant="outlined" color="error">Outlined Error</Tag>
+          <Tag variant="plain" color="error">Plain Error</Tag>
         </div>
+        <p style={{ color: 'var(--color--text-secondary)', fontSize: '14px', marginBottom: '0' }}>
+          Plain variant has no border, no background, and no padding - perfect for minimal text labels.
+        </p>
       </section>
 
       <section style={{ marginBottom: '30px' }}>
         <h2 style={{ color: 'var(--color--text-prime)' }}>Different Sizes</h2>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <Tag size="small">Small Size</Tag>
-          <Tag size="medium">Medium Size</Tag>
-          <Tag size="large">Large Size</Tag>
+        <div style={{ marginBottom: '16px' }}>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>Contained Tags</h3>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
+            <Tag size="small">Small Size</Tag>
+            <Tag size="medium">Medium Size</Tag>
+            <Tag size="large">Large Size</Tag>
+          </div>
+        </div>
+        <div>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>Plain Tags</h3>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '0' }}>
+            <Tag size="small" variant="plain" color="primary">Small Plain</Tag>
+            <Tag size="medium" variant="plain" color="success">Medium Plain</Tag>
+            <Tag size="large" variant="plain" color="warning">Large Plain</Tag>
+          </div>
         </div>
       </section>
 
@@ -123,6 +139,9 @@ export const Element: React.FC = () => {
           <Tag size="large" variant="outlined" color="#e74c3c" closable>Large Custom Closable</Tag>
           <Tag variant="contained" color="mediumorchid">Custom Purple</Tag>
           <Tag size="small" color="hsl(180, 100%, 50%)">Small HSL</Tag>
+          <Tag variant="plain" color="#ff6b6b" closable>Plain Closable</Tag>
+          <Tag variant="plain" size="large" color="mediumseagreen">Large Plain</Tag>
+          <Tag variant="plain" disabled color="primary">Disabled Plain</Tag>
         </div>
       </section>
     </div>

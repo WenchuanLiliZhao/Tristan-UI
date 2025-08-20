@@ -6,7 +6,7 @@ import { type RainbowColorName } from "../../../../styles/color";
 
 export interface TagProps extends BaseComponentProps {
   children?: React.ReactNode;
-  variant?: "contained" | "outlined";
+  variant?: "contained" | "outlined" | "plain";
   size?: Size;
   color?: Color | RainbowColorName | string;
   closable?: boolean;

@@ -12,25 +12,29 @@
   max-width: 100%;
   white-space: nowrap;
   
-  // Size variants
+  // Size variants - height controlled by line-height only
   &--small {
-    padding: 2px 8px;
+    padding: 0 5px;
     font-size: 11px;
-    line-height: 14px;
-    padding: 1px 5px;
+    line-height: 16px; // Original total height (1px top + 14px line-height + 1px bottom)
+    height: auto;
     border-radius: 4px;
   }
 
   &--medium {
-    padding: 4px 12px;
+    padding: 0 12px;
     font-size: 14px;
-    min-height: 24px;
+    line-height: 24px; // Original min-height
+    height: auto;
+    border-radius: 6px;
   }
 
   &--large {
-    padding: 6px 16px;
+    padding: 0 16px;
     font-size: 16px;
-    min-height: 28px;
+    line-height: 28px; // Original min-height
+    height: auto;
+    border-radius: 8px;
   }
 
   // Variant styles - Contained
@@ -78,6 +82,40 @@
     background-color: transparent;
     border: 1px solid var(--element-color);
     color: var(--element-color);
+
+    // 预定义语义颜色
+    &.lili-tag--primary {
+      --element-color: var(--color--semantic-active);
+    }
+
+    &.lili-tag--secondary {
+      --element-color: var(--color-chart--neutron-6);
+    }
+
+    &.lili-tag--success {
+      --element-color: var(--color--semantic-success);
+    }
+
+    &.lili-tag--warning {
+      --element-color: var(--color--semantic-warning);
+    }
+
+    &.lili-tag--error {
+      --element-color: var(--color--semantic-error);
+    }
+
+    &.lili-tag--info {
+      --element-color: var(--color--semantic-active);
+    }
+  }
+
+  // Variant styles - Plain (no border, no padding, no background)
+  &--plain {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: var(--element-color);
+    min-height: unset;
 
     // 预定义语义颜色
     &.lili-tag--primary {
@@ -163,5 +201,40 @@
     height: 18px;
     font-size: 16px;
     margin-left: 6px;
+  }
+
+  // Plain variant specific adjustments
+  &--plain {
+    // Reset size-specific paddings for plain variant
+    &.lili-tag--small {
+      padding: 0;
+      font-size: 11px;
+      line-height: 16px; // Same as contained variant for consistency
+    }
+
+    &.lili-tag--medium {
+      padding: 0;
+      font-size: 14px;
+      line-height: 24px; // Same as contained variant for consistency
+    }
+
+    &.lili-tag--large {
+      padding: 0;
+      font-size: 16px;
+      line-height: 28px; // Same as contained variant for consistency
+    }
+
+    // Close button adjustments for plain variant
+    .lili-tag__close {
+      margin-left: 4px;
+    }
+
+    &.lili-tag--small .lili-tag__close {
+      margin-left: 2px;
+    }
+
+    &.lili-tag--large .lili-tag__close {
+      margin-left: 6px;
+    }
   }
 } 

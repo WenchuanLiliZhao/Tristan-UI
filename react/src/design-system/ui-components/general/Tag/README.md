@@ -9,6 +9,7 @@ import { Tag } from '@/design-system';
 
 <Tag>默认标签</Tag>
 <Tag variant="outlined">轮廓标签</Tag>
+<Tag variant="plain">纯文本标签</Tag>
 <Tag closable onClose={() => console.log('关闭')}>可关闭标签</Tag>
 ```
 
@@ -40,6 +41,7 @@ import { Tag } from '@/design-system';
 
 - `contained`（默认）：填充样式，背景色为颜色的浅色版本
 - `outlined`：轮廓样式，透明背景，彩色边框
+- `plain`：纯文本样式，无边框、无背景、无内边距，适用于最简洁的文本标签
 
 ## 尺寸
 
@@ -52,7 +54,7 @@ import { Tag } from '@/design-system';
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|-------|------|
 | `children` | `React.ReactNode` | - | 标签内容 |
-| `variant` | `"contained" \| "outlined"` | `"contained"` | 外观变体 |
+| `variant` | `"contained" \| "outlined" \| "plain"` | `"contained"` | 外观变体 |
 | `size` | `"small" \| "medium" \| "large"` | `"medium"` | 尺寸 |
 | `color` | `string` | `"primary"` | 颜色，支持预定义颜色和自定义颜色 |
 | `closable` | `boolean` | `false` | 是否显示关闭按钮 |
@@ -85,8 +87,11 @@ import { Tag } from '@/ui-components';
 // 预定义颜色
 <Tag color="success" variant="outlined">Success</Tag>
 
+// 纯文本样式 - 无边框无内边距
+<Tag variant="plain" color="primary">Plain Text Label</Tag>
+
 // 自定义颜色 (Timeline 场景)
-<Tag customColor="#8b5cf6" variant="contained">Custom Purple</Tag>
+<Tag color="#8b5cf6" variant="contained">Custom Purple</Tag>
 ```
 
 Perfect for status badges, category labels, timeline items, and any scenario requiring clear, concise labeling with flexible color customization. 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Dropdown, Button, Icon } from "../../../../ui-components";
 import { type CascaderGroupProps } from "../../../../ui-components";
+import { TimelineConstCalc } from "../_constants";
 import styles from "./GroupBySelector.module.scss";
 
 interface GroupBySelectorProps {
@@ -51,7 +52,10 @@ export const GroupBySelector: React.FC<GroupBySelectorProps> = ({
   }
 
   return (
-    <div className={styles["group-by-selector"]}>
+    <div 
+      className={styles["group-by-selector"]}
+      style={{ height: TimelineConstCalc.rulerHeight }}
+    >
       <div className={styles["group-by-container"]}>
         <div className={styles["group-by-label"]}>Group By</div>
 

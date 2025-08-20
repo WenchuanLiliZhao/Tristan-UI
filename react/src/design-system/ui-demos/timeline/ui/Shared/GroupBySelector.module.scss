@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 240px; /* TimelineConst.sidebarWidth */
-  height: 100px; /* TimelineConstCalc.rulerHeight */
+  /* height set dynamically via inline style: TimelineConstCalc.rulerHeight */
   z-index: 200; /* 高于所有其他 timeline 元素 */
   background-color: var(--color--bg-prime);
   border-right: 1px solid var(--color--border-prime);

@@ -126,9 +126,7 @@ const renderTagField = (
   return (
     <Tag
       key={key}
-      variant={
-        (displayProps.variant as "contained" | "outlined") || "contained"
-      }
+      variant="plain"
       size="small"
       color={colorValue || "primary"}
     >

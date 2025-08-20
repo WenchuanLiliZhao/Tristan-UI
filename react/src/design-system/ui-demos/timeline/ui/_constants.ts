@@ -40,8 +40,8 @@ export const TimelineConst = {
   // 💀 Unused constant
   // monthZoom: 24,
 
-  yearLabelHeight: 32,
-  monthLabelHeight: 48,
+  yearLabelHeight: 24,
+  monthLabelHeight: 32,
   dayLabelHeight: 20,
 
   zoomThreshold: 20, // 缩放阈值

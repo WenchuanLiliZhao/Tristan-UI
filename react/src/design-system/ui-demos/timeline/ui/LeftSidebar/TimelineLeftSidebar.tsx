@@ -142,10 +142,7 @@ export const TimelineSidebar = <T = Record<string, unknown>,>({
         <div
           className={styles["timeline-sidebar-ruler-space"]}
           style={{
-            height:
-              TimelineConst.yearLabelHeight +
-              TimelineConst.monthLabelHeight +
-              TimelineConst.dayLabelHeight,
+            height: TimelineConstCalc.rulerHeight,
           }}
         >
           {/* GroupBy 选择器现在由独立的 GroupBySelector 组件处理 */}
