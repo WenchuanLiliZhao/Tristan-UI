@@ -106,6 +106,7 @@ export function IssueDetails<T = Record<string, unknown>>({
             icon={mapped.icon}
             variant={displayOptions.tagVariant}
             size={"medium"}
+            wrap={true}
           />
         );
       } else if (displayType === "tag") {
@@ -118,6 +119,7 @@ export function IssueDetails<T = Record<string, unknown>>({
             color={displayOptions.color || "primary"}
             variant={displayOptions.tagVariant}
             size={"medium"}
+            wrap={true}
           />
         );
       }
@@ -152,6 +154,20 @@ export function IssueDetails<T = Record<string, unknown>>({
     }
 
     if (displayType === "text") {
+      // Handle text with valueMapping - show name instead of key and use color from mapping
+      if (mappingConfig?.valueMapping && typeof value === "string" && mappingConfig.valueMapping[value]) {
+        const mapped = mappingConfig.valueMapping[value];
+        return (
+          <TextField
+            key={key}
+            label={getLabel(key)}
+            value={mapped.name}
+            color={mapped.color}
+          />
+        );
+      }
+      
+      // Fallback for text without mapping
       return (
         <TextField
           key={key}

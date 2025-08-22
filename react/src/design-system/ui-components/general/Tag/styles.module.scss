@@ -149,6 +149,19 @@
     cursor: not-allowed;
   }
 
+  // Wrap modifier - allows text to wrap to multiple lines
+  &--wrap {
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    
+    .lili-tag__content {
+      white-space: normal;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+  }
+
   &__content {
     flex: 1;
     overflow: hidden;

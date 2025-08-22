@@ -132,6 +132,44 @@ export const Element: React.FC = () => {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
+        <h2 style={{ color: 'var(--color--text-prime)' }}>Text Wrapping</h2>
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>Default (No Wrap)</h3>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+            <Tag color="primary">这是一个很长的标签文本，默认情况下不会换行</Tag>
+            <Tag color="success" variant="outlined">Another very long tag text that won't wrap by default</Tag>
+            <Tag color="warning" variant="plain">第三个很长的标签文本，纯文本样式也不会换行</Tag>
+          </div>
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>With Wrap Enabled</h3>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+            <Tag color="primary" wrap>这是一个很长的标签文本，启用换行后可以自动换行显示</Tag>
+            <Tag color="success" variant="outlined" wrap>Another very long tag text that will wrap when wrap is enabled</Tag>
+            <Tag color="warning" variant="plain" wrap>第三个很长的标签文本，纯文本样式也可以换行</Tag>
+          </div>
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>Different Sizes with Wrap</h3>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+            <Tag size="small" color="info" wrap>小尺寸标签，长文本换行示例</Tag>
+            <Tag size="medium" color="error" wrap>中等尺寸标签，长文本换行示例</Tag>
+            <Tag size="large" color="secondary" wrap>大尺寸标签，长文本换行示例</Tag>
+          </div>
+        </div>
+        <div>
+          <h3 style={{ color: 'var(--color--text-prime)', fontSize: '16px', marginBottom: '8px' }}>Closable Tags with Wrap</h3>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '0' }}>
+            <Tag color="primary" closable wrap>可关闭的长文本标签，支持换行显示</Tag>
+            <Tag color="success" variant="outlined" closable wrap>Another closable long text tag with wrapping enabled</Tag>
+          </div>
+        </div>
+        <p style={{ color: 'var(--color--text-secondary)', fontSize: '14px', marginTop: '16px', marginBottom: '0' }}>
+          Use the <code>wrap</code> prop to allow long text content to wrap to multiple lines instead of being truncated.
+        </p>
+      </section>
+
+      <section style={{ marginBottom: '30px' }}>
         <h2 style={{ color: 'var(--color--text-prime)' }}>Mixed Examples</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
           <Tag size="small" variant="outlined" color="info">Small Info</Tag>

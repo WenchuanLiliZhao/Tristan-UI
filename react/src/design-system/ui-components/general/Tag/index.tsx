@@ -12,6 +12,7 @@ export interface TagProps extends BaseComponentProps {
   closable?: boolean;
   onClose?: () => void;
   disabled?: boolean;
+  wrap?: boolean;
 }
 
 export const Tag: React.FC<TagProps> = ({
@@ -22,6 +23,7 @@ export const Tag: React.FC<TagProps> = ({
   closable = false,
   onClose,
   disabled = false,
+  wrap = false,
   className = "",
   "data-testid": dataTestId,
   ...rest
@@ -39,6 +41,7 @@ export const Tag: React.FC<TagProps> = ({
     // 只有预定义颜色才使用颜色类
     isPredefinedColor && styles[`${baseClass}--${color}`],
     disabled && styles[`${baseClass}--disabled`],
+    wrap && styles[`${baseClass}--wrap`],
     className,
   ]
     .filter(Boolean)

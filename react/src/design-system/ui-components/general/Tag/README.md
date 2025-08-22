@@ -11,6 +11,7 @@ import { Tag } from '@/design-system';
 <Tag variant="outlined">轮廓标签</Tag>
 <Tag variant="plain">纯文本标签</Tag>
 <Tag closable onClose={() => console.log('关闭')}>可关闭标签</Tag>
+<Tag wrap>支持换行的长文本标签，当内容过长时可以自动换行显示</Tag>
 ```
 
 ## 颜色系统
@@ -60,6 +61,7 @@ import { Tag } from '@/design-system';
 | `closable` | `boolean` | `false` | 是否显示关闭按钮 |
 | `onClose` | `() => void` | - | 关闭回调函数 |
 | `disabled` | `boolean` | `false` | 是否禁用 |
+| `wrap` | `boolean` | `false` | 是否允许文字换行，默认为 false（不换行） |
 | `className` | `string` | `""` | 自定义类名 |
 | `data-testid` | `string` | - | 测试标识符 |
 
@@ -69,6 +71,7 @@ import { Tag } from '@/design-system';
 - **现代 CSS 功能**：使用 `color-mix()` 函数自动生成浅色背景
 - **灵活的颜色支持**：支持所有 CSS 颜色格式
 - **响应式设计**：适配不同尺寸需求
+- **文字换行支持**：可选的文字换行功能，适用于长文本标签
 - **无障碍支持**：关闭按钮包含适当的 aria-label
 
 ## Files
